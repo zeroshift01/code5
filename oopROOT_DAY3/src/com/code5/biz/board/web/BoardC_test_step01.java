@@ -15,7 +15,7 @@ public class BoardC_test_step01 {
 	public static void main(String[] args) {
 
 		Box box = new BoxLocal();
-		Box.setThreadLocal(box);
+		Box.setThread(box);
 
 		BoardC boardC = new BoardC();
 
