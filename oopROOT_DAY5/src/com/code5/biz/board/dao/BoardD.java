@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author seuk
- *
+ * .
  */
 public class BoardD {
 
