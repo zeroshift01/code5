@@ -20,6 +20,8 @@ public class BoardC {
 
 		// http://localhost:11118/waf/listContents?pageNo=2
 
+		BoardC.checkPageNo();
+
 		Box box = Box.getThread();
 
 		String pageNo = box.s("pageNo");
@@ -29,6 +31,19 @@ public class BoardC {
 		box.put("listContents", listContents);
 
 		return "/biz/board/listContents.jsp";
+	}
+
+	/**
+	 * 
+	 */
+	private static void checkPageNo() {
+
+		Box box = Box.getThread();
+		String pageNo = box.s("pageNo");
+		if ("".equals(pageNo)) {
+			throw new RuntimeException();
+		}
+
 	}
 
 }
