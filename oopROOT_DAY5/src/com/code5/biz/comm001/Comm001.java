@@ -17,7 +17,7 @@ public class Comm001 extends SubController {
 	/**
 	 * @return
 	 */
-	public void start() {
+	protected void start() {
 		Box box = Box.getThread();
 		box.put("NAME", "BoardC");
 	}
