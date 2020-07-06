@@ -9,7 +9,7 @@ import com.code5.fw.web.SubController;
 /**
  * @author seuk
  * 
- *         공지사항
+ *         게시판
  *
  */
 public class Comm001 extends SubController {
@@ -19,13 +19,13 @@ public class Comm001 extends SubController {
 	 */
 	protected void start() {
 		Box box = Box.getThread();
-		box.put("NAME", "BoardC");
+		box.put("NAME", "게시판");
 	}
 
 	/**
 	 * @return
 	 * 
-	 *         공지사항 리스트
+	 *         게시판 리스트
 	 */
 	public String comm00101() {
 
@@ -42,7 +42,7 @@ public class Comm001 extends SubController {
 	/**
 	 * @return
 	 * 
-	 *         공지사항 게시물 보기
+	 *         게시물 보기
 	 * 
 	 */
 	public String comm00102() {
@@ -53,7 +53,7 @@ public class Comm001 extends SubController {
 	/**
 	 * @return
 	 * 
-	 *         공지사항 저장
+	 *         게시물 저장
 	 */
 	public String comm00103() {
 

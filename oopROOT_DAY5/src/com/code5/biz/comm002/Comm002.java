@@ -7,7 +7,7 @@ import com.code5.fw.web.SubController;
 /**
  * @author seuk
  * 
- *         중요공지사항
+ *         공지사항
  *
  */
 public class Comm002 extends SubController {
@@ -17,13 +17,13 @@ public class Comm002 extends SubController {
 	 */
 	public void start() {
 		Box box = Box.getThread();
-		box.put("NAME", "InformationC");
+		box.put("NAME", "공지사항");
 	}
 
 	/**
 	 * @return
 	 * 
-	 *         중요 공지사항 리스트 보기
+	 *         공지사항 리스트 보기
 	 */
 	public String comm00201() {
 
@@ -36,7 +36,7 @@ public class Comm002 extends SubController {
 	/**
 	 * @return
 	 * 
-	 *         중요 공지사항 게시물 보기
+	 *         공지사항 선택 보기
 	 * 
 	 */
 	public String comm00202() {
