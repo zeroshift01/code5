@@ -33,4 +33,17 @@ public class MasterControllerD {
 		throw new Exception();
 	}
 
+	/**
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	String getJspByKey(String key) throws Exception {
+		if ("comm00101".equals(key)) {
+			return "/WEB-INF/classes/com/code5/biz/comm001/jsp/comm00101.jsp";
+		}
+
+		throw new Exception();
+	}
+
 }
