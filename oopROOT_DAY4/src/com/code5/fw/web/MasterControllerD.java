@@ -20,9 +20,24 @@ public class MasterControllerD {
 
 		}
 
-		if ("loadContent".equals(pathInfo)) {
+		if ("infoContents".equals(pathInfo)) {
 
-			return new String[] { "com.code5.biz.board.web.BoardC", "loadContent" };
+			return new String[] { "com.code5.biz.board.web.BoardC", "infoContents" };
+
+		}
+
+		throw new Exception();
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	String getJspByKey(String key) throws Exception {
+
+		if ("listContents".equals(key)) {
+			return "/biz/board/listContents.jsp";
 		}
 
 		throw new Exception();

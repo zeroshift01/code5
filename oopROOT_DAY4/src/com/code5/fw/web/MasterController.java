@@ -22,14 +22,12 @@ public class MasterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * @param className
+	 * @param methodName
 	 * @return
+	 * @throws Exception
 	 */
-	private String execSubController() throws Exception {
-
-		MasterControllerD dao = new MasterControllerD();
-		String[] str = dao.getSubController();
-		String className = str[0];
-		String methodName = str[1];
+	private String execSubController(String className, String methodName) throws Exception {
 
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(className);
@@ -67,9 +65,16 @@ public class MasterController extends HttpServlet {
 
 			box.put("pathInfo", pathInfo);
 
-			String jsp = execSubController();
+			MasterControllerD dao = new MasterControllerD();
+			String[] str = dao.getSubController();
+			String className = str[0];
+			String methodName = str[1];
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
+			String jspKey = execSubController(className, methodName);
+
+			String jspUrl = dao.getJspByKey(jspKey);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(jspUrl);
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
