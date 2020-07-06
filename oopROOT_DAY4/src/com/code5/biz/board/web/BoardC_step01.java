@@ -1,12 +1,13 @@
 package com.code5.biz.board.web;
 
 import com.code5.fw.web.Box;
+import com.code5.fw.web.SubController;
 
 /**
  * @author seuk
  *
  */
-public class BoardC_step01 {
+public class BoardC_step01 extends SubController {
 
 	/**
 	 * @return

@@ -11,5 +11,11 @@ public abstract class SubController_step01 {
 	 */
 	protected void start() {
 	}
+	
+	/**
+	 * 
+	 */
+	protected void end() {
+	}
 
 }

@@ -23,8 +23,6 @@ public class InformationC extends SubController {
 	 */
 	public String infoListContents() {
 
-		start();
-
 		// infoListContents ±¸Çö
 
 		return "/biz/board/listContents.jsp";

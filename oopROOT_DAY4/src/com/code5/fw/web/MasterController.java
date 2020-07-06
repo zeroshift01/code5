@@ -35,18 +35,16 @@ public class MasterController extends HttpServlet {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		Constructor constructor = newClass.getConstructor();
 
+		// [1]
 		SubController instance = (SubController) constructor.newInstance();
 
+		// [2]
 		instance.start();
-
-		String startAndReturn = instance.startAndReturn();
-		if (startAndReturn != null) {
-			return startAndReturn;
-		}
 
 		Method method = instance.getClass().getDeclaredMethod(methodName);
 		String invoke = (String) method.invoke(instance);
 
+		// [3]
 		instance.end();
 
 		return invoke;
