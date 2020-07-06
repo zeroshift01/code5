@@ -14,15 +14,20 @@ public class MasterControllerD {
 		Box box = Box.getThread();
 		String pathInfo = box.s("pathInfo");
 
-		if ("listContents".equals(pathInfo)) {
+		if ("comm00101".equals(pathInfo)) {
 
-			return new String[] { "com.code5.biz.board.web.BoardC", "listContents" };
+			return new String[] { "com.code5.biz.comm001.Comm001", "comm00101" };
 
 		}
 
-		if ("loadContent".equals(pathInfo)) {
+		if ("comm00102".equals(pathInfo)) {
 
-			return new String[] { "com.code5.biz.board.web.BoardC", "loadContent" };
+			return new String[] { "com.code5.biz.comm001.Comm001", "comm00102" };
+		}
+
+		if ("comm00201".equals(pathInfo)) {
+
+			return new String[] { "com.code5.biz.comm002.comm002", "comm00201" };
 		}
 
 		throw new Exception();
