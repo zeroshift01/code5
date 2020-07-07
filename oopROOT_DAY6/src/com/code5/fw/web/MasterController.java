@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.code5.fw.db.Transaction;
+
 /**
  * @author seuk
  *
@@ -59,6 +61,9 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		Box.setThread(box);
 
+		Transaction transaction = Transaction.getTransaction("com.code5.fw.db.Transaction_MYSQL_POOL");
+		TransactionContext.setThread(transaction);
+
 		try {
 
 			String pathInfo = request.getPathInfo().substring(1);
@@ -80,9 +85,17 @@ public class MasterController extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
+
+			transaction.rollback();
+
 			throw new ServletException(ex);
+
 		} finally {
+
+			transaction.commit();
+
 			Box.removeThread();
+			TransactionContext.getThread();
 		}
 
 	}
