@@ -9,6 +9,11 @@ import junit.framework.TestCase;
 public class Table_test extends TestCase {
 
 	public void test_Table_생성() {
+		
+		String s1 = "abcd";
+		String s2 = "abcd";
+		
+		System.out.println(s1.hashCode()==s2.hashCode());
 
 		String[][] data = { { "1", "홍길동" }, { "2", "홍길순" } };
 		String[] cols = { "번호", "이름" };

@@ -24,12 +24,12 @@ public class Table {
 	private HashMap<String, BigDecimal> colsNameMap = null;
 
 	/**
-	 * 
+	 * [1] 추가데이터를 관리하는 컬랙션 객체
 	 */
 	private HashMap<String, String> addData = null;
 
 	/**
-	 * 
+	 * [2] 추가데이터가 지정한 최대 row 값이 maxLength
 	 */
 	private int maxLength = -1;
 
@@ -80,11 +80,11 @@ public class Table {
 	}
 
 	/**
-	 * @param col
+	 * @param colName
 	 * @param row
 	 * @return
 	 */
-	public String s(String colName, int row) {
+	public String getRowData(String colName, int row) {
 
 		BigDecimal colB = colsNameMap.get(colName);
 		if (colB == null) {
@@ -93,29 +93,56 @@ public class Table {
 
 		int col = colB.intValue();
 
-		if (data.length > col) {
-
-			if (data[col].length > row) {
-
-				String thisData = data[col][row];
-				if (thisData == null) {
-					return "";
-				}
-
-				// 초기데이터집합에 있을경우 리턴
-				return thisData;
-			}
-
-		}
-
-		// 추가된 데이터가 리턴
-		String key = colName + "_" + row;
-		String data = addData.get(key);
-		if (data == null) {
+		if (data.length < col) {
 			return "";
 		}
 
-		return data;
+		if (data[col].length < row) {
+			return "";
+		}
+
+		String thisData = data[col][row];
+		if (thisData == null) {
+			return "";
+		}
+		return thisData;
+
+	}
+
+	/**
+	 * @param colName
+	 * @param row
+	 * @return
+	 */
+	public String getData(String colName, int row) {
+		return s(colName, row);
+	}
+
+	/**
+	 * @param col
+	 * @param row
+	 * @return
+	 * 
+	 *         [3] 개발자가 조정한 데이터를 우선 리턴하고 업으면 생성자의 데이터를 린턴한다.
+	 */
+	public String s(String colName, int row) {
+
+		BigDecimal colB = colsNameMap.get(colName);
+		if (colB == null) {
+			throw new RuntimeException();
+		}
+
+		if (addData == null) {
+			return getRowData(colName, row);
+		}
+
+		String key = colName + "_" + row;
+		String data = addData.get(key);
+		if (data != null) {
+			return data;
+		}
+
+		return getRowData(colName, row);
 
 	}
 
@@ -123,6 +150,8 @@ public class Table {
 	 * @param colName
 	 * @param row
 	 * @param data
+	 * 
+	 *                [4] 컬랙션 객체의 장점을 살려 추가데이터는 Map 형태로 저장한다.
 	 */
 	public void addData(String colName, int row, String data) {
 
@@ -132,6 +161,7 @@ public class Table {
 		}
 
 		String key = colName + "_" + row;
+		
 
 		if (addData == null) {
 			addData = new HashMap<String, String>();
