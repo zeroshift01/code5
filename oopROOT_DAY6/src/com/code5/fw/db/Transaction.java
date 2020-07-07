@@ -39,7 +39,7 @@ public abstract class Transaction {
 	 * @return
 	 */
 	public static Transaction getTransaction() {
-		return getTransaction("com.code5.fw.db.Transaction_MYSQL_JDBC");
+		return getTransaction("com.code5.fw.db.Transaction_SQLITE_JDBC");
 	}
 
 	/**
@@ -53,6 +53,14 @@ public abstract class Transaction {
 
 		if ("com.code5.fw.db.Transaction_MYSQL_POOL".equals(DB_CLASS_NAME)) {
 			return new Transaction_MYSQL_POOL();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC".equals(DB_CLASS_NAME)) {
+			return new Transaction_SQLITE_JDBC();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(DB_CLASS_NAME)) {
+			return new Transaction_SQLITE_JDBC();
 		}
 
 		throw new RuntimeException();

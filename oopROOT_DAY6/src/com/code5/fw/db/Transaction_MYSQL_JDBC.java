@@ -24,6 +24,7 @@ public class Transaction_MYSQL_JDBC extends Transaction {
 			return this.conn;
 		}
 
+		// 실무에서는 아이디/패스워드/url 을 코드에서 알아 볼수 없도록 처리합니다.
 		Properties properties = new Properties();
 		properties.put("user", "DB이름");
 		properties.put("password", "패스워드");
