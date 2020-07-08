@@ -23,7 +23,7 @@ public class Sql {
 	/**
 	 * 
 	 */
-	private SqlRunner sqlRunner = new SqlRunnerByComplexImpl();
+	private SqlRunner sqlRunner = new SqlRunner();
 
 	/**
 	 * 

@@ -93,6 +93,7 @@ public class MasterController extends HttpServlet {
 		} finally {
 
 			transaction.commit();
+			transaction.close();
 
 			Box.removeThread();
 			TransactionContext.getThread();

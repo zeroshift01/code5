@@ -1,6 +1,7 @@
 package com.code5.fw.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.sqlite.SQLiteConfig;
 
@@ -18,7 +19,7 @@ class Transaction_SQLITE_POOL extends Transaction {
 	/**
 	 *
 	 */
-	protected Connection getConnection() throws Exception {
+	protected Connection getConnection() throws SQLException {
 
 		if (this.conn != null) {
 			return this.conn;
@@ -30,28 +31,6 @@ class Transaction_SQLITE_POOL extends Transaction {
 
 		return this.conn;
 
-	}
-
-	/**
-	 * 
-	 */
-	public void commit() {
-		try {
-			this.conn.commit();
-		} catch (Exception ex) {
-
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void rollback() {
-		try {
-			this.conn.rollback();
-		} catch (Exception ex) {
-
-		}
 	}
 
 }

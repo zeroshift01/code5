@@ -60,21 +60,21 @@ public class Table {
 	 * @param data
 	 * @return
 	 */
-	public void addRecode(String[] data) {
+	public void addRecode(String[] recode) {
 
 		if (recodes.size() + 1 > MAX_RECODE_COUNT) {
 			throw new RuntimeException();
 		}
 
-		if (data == null) {
+		if (recode == null) {
 			throw new RuntimeException();
 		}
 
-		if (colNameMap.size() != data.length) {
+		if (colNameMap.size() != recode.length) {
 			throw new RuntimeException();
 		}
 
-		recodes.add(data);
+		recodes.add(recode);
 
 	}
 
