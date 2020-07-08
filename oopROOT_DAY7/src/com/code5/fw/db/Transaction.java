@@ -68,7 +68,7 @@ public abstract class Transaction {
 		}
 
 		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(DB_CLASS_NAME)) {
-			return new Transaction_SQLITE_JDBC();
+			return new Transaction_SQLITE_POOL();
 		}
 
 		throw new RuntimeException();
