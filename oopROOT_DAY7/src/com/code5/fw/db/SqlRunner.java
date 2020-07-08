@@ -112,7 +112,7 @@ class SqlRunner {
 
 			exeSql = exeSql.replace("?", "'" + data + "'");
 		}
-		
+
 		System.out.println(exeSql);
 
 		ResultSet rs = transaction.getResultSet(ps);
@@ -135,7 +135,10 @@ class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			table.addRecode(recode);
+			boolean isAddRecode = table.addRecode(recode);
+			if (!isAddRecode) {
+				break;
+			}
 		}
 
 		return table;
@@ -158,7 +161,7 @@ class SqlRunner {
 
 			exeSql = exeSql.replace("?", "'" + data + "'");
 		}
-		
+
 		System.out.println(exeSql);
 
 		return ps.executeUpdate();

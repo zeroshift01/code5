@@ -11,7 +11,6 @@ import com.code5.fw.web.BoxLocal;
 /**
  * @author seuk
  * 
- *         블럭단위 배열 관리를 하면 성능이 개선
  *
  */
 public class Table {
@@ -20,6 +19,25 @@ public class Table {
 	 * 
 	 */
 	private static int MAX_RECODE_COUNT = 10000;
+
+	/**
+	 * 
+	 */
+	private boolean isNextRecode = false;
+
+	/**
+	 * @return
+	 */
+	public boolean isNextRecode() {
+		return isNextRecode;
+	}
+
+	/**
+	 * @return
+	 */
+	public static int MAX_RECODE_COUNT() {
+		return MAX_RECODE_COUNT;
+	}
 
 	/**
 	 * 
@@ -60,10 +78,11 @@ public class Table {
 	 * @param data
 	 * @return
 	 */
-	public void addRecode(String[] recode) {
+	public boolean addRecode(String[] recode) {
 
 		if (recodes.size() + 1 > MAX_RECODE_COUNT) {
-			throw new RuntimeException();
+			this.isNextRecode = true;
+			return false;
 		}
 
 		if (recode == null) {
@@ -75,20 +94,24 @@ public class Table {
 		}
 
 		recodes.add(recode);
+		return true;
 
 	}
 
 	/**
 	 * 
 	 */
-	public void addRecode() {
+	public boolean addRecode() {
 
 		if (recodes.size() + 1 > MAX_RECODE_COUNT) {
-			throw new RuntimeException();
+			this.isNextRecode = true;
+			return false;
 		}
 
 		String[] data = new String[colNameMap.size()];
 		recodes.add(data);
+
+		return true;
 
 	}
 

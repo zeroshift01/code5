@@ -65,7 +65,6 @@ public class Table_test extends TestCase {
 
 		assertNotNull(exx);
 
-
 	}
 
 	public void test_Table_데이터추가_3() {
@@ -90,6 +89,22 @@ public class Table_test extends TestCase {
 
 		assertEquals("홍길동친구", table.s("별명", 5));
 		assertEquals("", table.s("별명", 4));
+
+	}
+
+	public void test_Table_데이터만건추가() {
+
+		String[] cols = { "번호", "이름" };
+
+		Table table = new Table(cols);
+		for (int i = 0; i < 10000; i++) {
+			table.addRecode(new String[] { "1", "홍길동" });
+			assertEquals(table.isNextRecode(), false);
+		}
+
+		assertEquals(table.length(), Table.MAX_RECODE_COUNT());
+		assertEquals(table.addRecode(new String[] { "1", "홍길동" }), false);
+		assertEquals(table.isNextRecode(), true);
 
 	}
 }
