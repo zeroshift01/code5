@@ -24,11 +24,10 @@ public class MasterControllerD {
 	 * @return
 	 * @throws SQLException
 	 */
-	Box getSubController() throws SQLException {
+	Box getSubController(String URL) throws SQLException {
 
 		Box box = Box.getThread();
-		String KEY = box.s("pathInfo");
-		box.put("KEY", KEY);
+		box.put("URL", URL);
 
 		Sql sql = Sql.getSql();
 
@@ -41,10 +40,11 @@ public class MasterControllerD {
 	 * @return
 	 * @throws Exception
 	 */
-	Box getJspByKey(String JSP_KEY) throws SQLException {
+	Box getJspByKey(String KEY) throws SQLException {
 
 		Box box = Box.getThread();
-		box.put("JSP_KEY", JSP_KEY);
+
+		box.put("KEY", KEY);
 
 		Sql sql = Sql.getSql();
 

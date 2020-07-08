@@ -61,18 +61,18 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		Box.setThread(box);
 
-		Transaction transaction = Transaction.getTransaction("com.code5.fw.db.Transaction_MYSQL_POOL");
+		Transaction transaction = Transaction.getTransaction("com.code5.fw.db.Transaction_SQLITE_POOL");
 		TransactionContext.setThread(transaction);
 
 		try {
 
 			String pathInfo = request.getPathInfo().substring(1);
-
 			box.put("pathInfo", pathInfo);
 
 			MasterControllerD dao = new MasterControllerD();
 
-			Box subController = dao.getSubController();
+			Box subController = dao.getSubController(pathInfo);
+
 			String CLASS_NAME = subController.s("CLASS_NAME");
 			String METHOD_NAME = subController.s("METHOD_NAME");
 
@@ -81,6 +81,7 @@ public class MasterController extends HttpServlet {
 			Box jspByKey = dao.getJspByKey(JSP_KEY);
 			String JSP_URL = jspByKey.s("JSP_URL");
 
+			System.out.println(JSP_URL);
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP_URL);
 			dispatcher.forward(request, response);
 

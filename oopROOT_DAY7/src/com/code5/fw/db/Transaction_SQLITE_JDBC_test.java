@@ -3,7 +3,6 @@ package com.code5.fw.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @author seuk
