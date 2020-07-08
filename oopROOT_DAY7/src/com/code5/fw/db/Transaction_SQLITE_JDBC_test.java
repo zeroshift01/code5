@@ -6,7 +6,7 @@ import java.sql.Connection;
  * @author seuk
  *
  */
-public class Transaction_SQLITE_JDBC_test {
+class Transaction_SQLITE_JDBC_test {
 
 	public static void main(String[] xxx) throws Exception {
 
@@ -16,4 +16,7 @@ public class Transaction_SQLITE_JDBC_test {
 		conn.createStatement().execute("INSERT INTO SS(A,B) VALUES (1,2)");
 
 	}
+	
+	
+	
 }

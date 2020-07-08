@@ -8,7 +8,7 @@ import org.sqlite.SQLiteConfig;
  * @author seuk
  *
  */
-class Transaction_SQLITE_JDBC extends Transaction {
+class Transaction_SQLITE_POOL extends Transaction {
 
 	/**
 	 * 

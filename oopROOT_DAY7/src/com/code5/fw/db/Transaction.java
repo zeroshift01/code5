@@ -10,30 +10,19 @@ public abstract class Transaction {
 
 	/**
 	 * @return
+	 * @throws Exception
 	 */
 	protected abstract Connection getConnection() throws Exception;
 
 	/**
 	 * 
 	 */
-	public void commit() {
-		try {
-			getConnection().commit();
-		} catch (Exception ex) {
-			// Exception 발생을 로그로 기록할 예정
-		}
-	}
+	public abstract void commit();
 
 	/**
 	 * 
 	 */
-	public void rollback() {
-		try {
-			getConnection().rollback();
-		} catch (Exception ex) {
-			// Exception 발생을 로그로 기록할 예정
-		}
-	}
+	public abstract void rollback();
 
 	/**
 	 * @return
@@ -46,14 +35,6 @@ public abstract class Transaction {
 	 * @return
 	 */
 	public static Transaction getTransaction(String DB_CLASS_NAME) {
-
-		if ("com.code5.fw.db.Transaction_MYSQL_JDBC".equals(DB_CLASS_NAME)) {
-			return new Transaction_MYSQL_JDBC();
-		}
-
-		if ("com.code5.fw.db.Transaction_MYSQL_POOL".equals(DB_CLASS_NAME)) {
-			return new Transaction_MYSQL_POOL();
-		}
 
 		if ("com.code5.fw.db.Transaction_SQLITE_JDBC".equals(DB_CLASS_NAME)) {
 			return new Transaction_SQLITE_JDBC();

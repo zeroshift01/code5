@@ -1,39 +1,59 @@
 package com.code5.biz.comm001;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
 
+import com.code5.fw.data.Table;
+import com.code5.fw.db.Sql;
 import com.code5.fw.web.Box;
 
 /**
  * @author seuk
  * 
- *         공지사항 DAO
+ *         게시판
  *
  */
 public class Comm001D {
 
 	/**
-	 * @param pageNo
-	 * @return
 	 * 
-	 *         공지사항 리스트 조회
 	 */
-	List<Map<String, String>> comm00101() {
+	private Sql sql = Sql.getSql();
 
-		Box box = Box.getThread();
-		String pageNo = box.s("pageNo");
+	/**
+	 * 
+	 */
+	private static String FORM_NO_01 = "COMM001D_01";
 
-		// DAO 부분은 나중에 완성됩니다.
-		pageNo.toString();
+	/**
+	 * 
+	 */
+	private static String FORM_NO_02 = "COMM001D_02";
 
-		Map<String, String> hm = new HashMap<String, String>();
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+	/**
+	 * 
+	 */
+	private static String FORM_NO_03 = "COMM001D_03";
 
-		list.add(hm);
+	/**
+	 * @return
+	 */
+	Table comm00101() throws SQLException {
 
-		return list;
+		return sql.getTable(FORM_NO_01);
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	Box comm00102() throws SQLException {
+		return sql.getTable(FORM_NO_02).getBox();
+	}
+
+	/**
+	 * @throws SQLException
+	 */
+	int comm00103() throws SQLException {
+		return sql.executeSql(FORM_NO_03);
 	}
 }

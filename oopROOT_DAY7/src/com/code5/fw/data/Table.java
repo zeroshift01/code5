@@ -222,4 +222,17 @@ public class Table {
 
 	}
 
+	/**
+	 * @return
+	 */
+	public Box getBox() {
+
+		if (recodes.size() != 1) {
+			throw new RuntimeException();
+		}
+
+		return getBox(0);
+
+	}
+
 }

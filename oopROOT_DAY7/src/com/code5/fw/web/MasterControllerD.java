@@ -1,6 +1,8 @@
 package com.code5.fw.web;
 
-import com.code5.fw.data.Table;
+import java.sql.SQLException;
+
+import com.code5.fw.db.Sql;
 
 /**
  * @author seuk
@@ -8,43 +10,30 @@ import com.code5.fw.data.Table;
  */
 public class MasterControllerD {
 
-	private Table getSubControllerTable() {
-		String[][] data = { { "comm00101", "com.code5.biz.comm001.Comm001", "comm00101" },
-				{ "comm00102", "com.code5.biz.comm001.Comm001", "comm00102" },
-				{ "comm00103", "com.code5.biz.comm002.comm002", "comm00201" } };
-		String[] cols = { "KEY", "CLASS_NAME", "METHOD_NAME" };
-		return new Table(cols, data);
+	/**
+	 * 
+	 */
+	private static String FORM_NO_01 = "MASTERCONTROLLERD_01";
 
-	}
+	/**
+	 * 
+	 */
+	private static String FORM_NO_02 = "MASTERCONTROLLERD_02";
 
 	/**
 	 * @return
+	 * @throws SQLException
 	 */
-	private Table getJspTable() {
-		String[][] data = { { "comm00101", "/WEB-INF/classes/com/code5/biz/comm001/jsp/comm00101.jsp" },
-				{ "comm00102", "/WEB-INF/classes/com/code5/biz/comm001/jsp/comm00102.jsp" } };
-		String[] cols = { "KEY", "JSP_URL" };
-		return new Table(cols, data);
-
-	}
-
-	/**
-	 * @return
-	 */
-	Box getSubController() throws Exception {
-
-		Table table = getSubControllerTable();
+	Box getSubController() throws SQLException {
 
 		Box box = Box.getThread();
 		String KEY = box.s("pathInfo");
+		box.put("KEY", KEY);
 
-		for (int i = 0; i < table.length(); i++) {
-			if (KEY.equals(table.s("KEY", i))) {
-				return table.getBox(i);
-			}
-		}
+		Sql sql = Sql.getSql();
 
-		throw new Exception();
+		return sql.getTable(FORM_NO_01).getBox(0);
+
 	}
 
 	/**
@@ -52,17 +41,14 @@ public class MasterControllerD {
 	 * @return
 	 * @throws Exception
 	 */
-	Box getJspByKey(String JSP_KEY) throws Exception {
+	Box getJspByKey(String JSP_KEY) throws SQLException {
 
-		Table table = getJspTable();
+		Box box = Box.getThread();
+		box.put("JSP_KEY", JSP_KEY);
 
-		for (int i = 0; i < table.length(); i++) {
-			if (JSP_KEY.equals(table.s("KEY", i))) {
-				return table.getBox(i);
-			}
-		}
+		Sql sql = Sql.getSql();
 
-		throw new Exception();
+		return sql.getTable(FORM_NO_02).getBox(0);
 	}
 
 }
