@@ -14,7 +14,7 @@ import com.code5.biz.board.web.BoardC;
  * @author seuk
  *
  */
-public class MasterController extends HttpServlet {
+public class MasterController_step02 extends HttpServlet {
 
 	/**
 	 * 
