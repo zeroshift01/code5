@@ -14,9 +14,9 @@ public class BoardC_test_step02 {
 	 */
 	public static void main(String[] args) {
 
-		
 		Box box = new BoxLocal();
-		// [4]
+
+		// [1]
 		box.setAttribute("name", "hello world!");
 
 		BoardC boardC = new BoardC();
