@@ -7,20 +7,19 @@ import com.code5.fw.web.BoxLocal;
  * @author seuk
  *
  */
-public class BoardC_test {
+public class BoardC_test_step02 {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
+		
 		Box box = new BoxLocal();
-		box.
-		
-		
+		// [4]
+		box.setAttribute("name", "hello world!");
+
 		BoardC boardC = new BoardC();
-		Box box = new BoxLocal();
-		box.put("pageNo", "1");
 
 		boardC.welcome(box);
 

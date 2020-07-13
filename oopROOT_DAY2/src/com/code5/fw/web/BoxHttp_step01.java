@@ -4,17 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author seuk
+ * 
+ *         [1]
  *
  */
 public class BoxHttp_step01 extends Box_step01 {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * 
+	 * [2]
 	 */
 	private HttpServletRequest request = null;
 

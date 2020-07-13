@@ -25,30 +25,13 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String pathInfo = request.getPathInfo().substring(1);
-		String mode = request.getParameter("mode");
-		String jsp = "error.jsp";
-
+		// [1]
 		Box box = new BoxHttp(request);
+		request.setAttribute("com.code5.fw.web.Box", box);
 
-		if ("BoardC".equals(pathInfo)) {
+		BoardC boardC = new BoardC();
 
-			BoardC boardC = new BoardC();
-
-			if ("listContents".equals(mode)) {
-
-				jsp = boardC.listContents(box);
-
-			} else if ("loadContent".equals(mode)) {
-
-				// jsp = boardC.loadContent(request);
-
-			} else if ("saveContent".equals(mode)) {
-
-				// jsp = boardC.saveContent(request);
-
-			}
-		}
+		String jsp = boardC.welcome(box);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);

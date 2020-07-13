@@ -1,9 +1,5 @@
 package com.code5.biz.board.web;
 
-import java.util.List;
-import java.util.Map;
-
-import com.code5.biz.board.dao.BoardD;
 import com.code5.fw.web.Box;
 
 /**
@@ -13,18 +9,19 @@ import com.code5.fw.web.Box;
 public class BoardC {
 
 	/**
-	 * @param request
+	 * @param box
 	 * @return
+	 * 
 	 */
-	public String listContents(Box box) {
+	public String welcome(Box box) {
 
-		String pageNo = box.s("pageNo");
+		String name = box.getString("name");
 
-		BoardD dao = new BoardD();
-		List<Map<String, String>> listContents = dao.listContents(pageNo);
-		box.put("listContents", listContents);
+		String ret = "welcome:" + name;
 
-		return "/board/listContents.jsp";
+		box.put("ret", ret);
+
+		return "/biz/board/welcome.jsp";
 	}
 
 }

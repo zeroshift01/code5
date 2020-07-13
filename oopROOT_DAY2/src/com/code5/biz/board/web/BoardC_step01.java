@@ -1,11 +1,7 @@
 package com.code5.biz.board.web;
 
-import javax.servlet.http.HttpServletRequest;
+import com.code5.fw.web.Box;
 
-/**
- * @author seuk
- *
- */
 /**
  * @author seuk
  *
@@ -13,24 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 public class BoardC_step01 {
 
 	/**
-	 * @param args
+	 * @param box
+	 * @return
+	 * 
+	 *         [2]
 	 */
-	public static void main(String[] args) {
+	public String welcome(Box box) {
 
-		BoardC boardC = new BoardC();
+		String name = box.getParameter("name");
 
-		// HttpServletRequest 는 추상화 클래스로 객체로 생성이 불가능
-		HttpServletRequest request = null;
+		String ret = "welcome:" + name;
 
-		// HttpServletRequest 를 객체로 생성했다 하더라도 setParameter 메소드가 없음
-		request.setParameter("pageNo", "1");
+		box.setAttribute("ret", ret);
 
-		// setParameter 대신 setAttribute 를 썻지만
-		// 비즈니스를 구현한 코드에는 getParameter 를 사용한다.
-		request.setAttribute("pateNo", "1");
-
-		boardC.listContents(request);
-
+		return "/biz/board/welcome.jsp";
 	}
 
 }

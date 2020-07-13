@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 /**
  * @author seuk
- *
+ * 
+ *         [1]
  */
 public class BoxLocal_step01 extends Box_step01 {
 
@@ -14,7 +15,7 @@ public class BoxLocal_step01 extends Box_step01 {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * [2]
 	 */
 	private HashMap<String, Object> hm = new HashMap<String, Object>();
 
