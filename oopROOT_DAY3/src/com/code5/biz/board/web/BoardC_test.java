@@ -13,11 +13,13 @@ public class BoardC_test {
 	 */
 	public static void main(String[] args) {
 
+		// [1]
 		Box box = Box.getThread();
-		box.put("pageNo", "1");
+
+		box.put("name", "hello world!");
 
 		BoardC boardC = new BoardC();
-		boardC.listContents();
+		boardC.welcome();
 
 	}
 

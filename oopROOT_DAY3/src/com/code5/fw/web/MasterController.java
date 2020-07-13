@@ -1,14 +1,14 @@
 package com.code5.fw.web;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.code5.biz.board.web.BoardC;
 
 /**
  * @author seuk
@@ -21,48 +21,30 @@ public class MasterController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @return
-	 */
-	private String execSubController() throws Exception {
-
-		MasterControllerD dao = new MasterControllerD();
-		String[] str = dao.getSubController();
-		String className = str[0];
-		String methodName = str[1];
-
-		@SuppressWarnings("rawtypes")
-		Class newClass = Class.forName(className);
-
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		Constructor constructor = newClass.getConstructor();
-		Object instance = constructor.newInstance();
-
-		Method method = instance.getClass().getDeclaredMethod(methodName);
-		return (String) method.invoke(instance);
-	}
-
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Box box = new BoxHttp(request);
-		Box.setThread(box);
-
+		// [3]
 		try {
 
-			String pathInfo = request.getPathInfo().substring(1);
+			Box box = new BoxHttp(request);
+			// [1]
+			Box.setThread(box);
 
-			box.put("pathInfo", pathInfo);
-
-			String jsp = execSubController();
+			BoardC boardC = new BoardC();
+			String jsp = boardC.welcome();
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
+
 			throw new ServletException(ex);
+
 		} finally {
+
+			// [2]
 			Box.removeThread();
 		}
 

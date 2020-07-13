@@ -9,15 +9,21 @@ import java.io.Serializable;
 public abstract class Box implements Serializable {
 
 	/**
-	 * 
+	 * [1]
 	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
 	 * @param box
+	 * 
+	 *            [2]
 	 */
 	public static Box getThread() {
+
 		Box box = TL.get();
+
+		// [3]
+
 		if (box != null) {
 			return box;
 		}

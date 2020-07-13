@@ -15,12 +15,11 @@ public class BoardC_test {
 	public static void main(String[] args) {
 
 		Box box = new BoxLocal();
-		box.
-		
-		
+
+		// [1]
+		box.setAttribute("name", "hello world!");
+
 		BoardC boardC = new BoardC();
-		Box box = new BoxLocal();
-		box.put("pageNo", "1");
 
 		boardC.welcome(box);
 
