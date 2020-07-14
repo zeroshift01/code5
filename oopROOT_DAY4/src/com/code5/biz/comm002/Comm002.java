@@ -27,7 +27,7 @@ public class Comm002 {
 		box.put("ret", ret);
 
 		// [4]
-		return "/WEB-INF/classes/com/code5/biz/comm002/comm00201.jsp";
+		return "/WEB-INF/classes/com/code5/biz/comm002/jsp/comm00201.jsp";
 	}
 
 }
