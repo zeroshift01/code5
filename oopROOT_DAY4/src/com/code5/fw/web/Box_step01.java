@@ -6,36 +6,24 @@ import java.io.Serializable;
  * @author seuk
  *
  */
-public abstract class Box implements Serializable {
+public abstract class Box_step01 implements Serializable {
 
 	/**
-	 * [1]
+	 * 
 	 */
-	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
+	private static ThreadLocal<Box_step01> TL = new ThreadLocal<Box_step01>();
 
 	/**
 	 * @param box
-	 * 
-	 *            [2]
 	 */
-	public static Box getThread() {
-
-		Box box = TL.get();
-
-		// [3]
-
-		if (box != null) {
-			return box;
-		}
-		box = new BoxLocal();
-		setThread(box);
-		return box;
+	public static Box_step01 getThread() {
+		return TL.get();
 	}
 
 	/**
 	 * @param box
 	 */
-	static void setThread(Box box) {
+	static void setThread(Box_step01 box) {
 		TL.set(box);
 	}
 
