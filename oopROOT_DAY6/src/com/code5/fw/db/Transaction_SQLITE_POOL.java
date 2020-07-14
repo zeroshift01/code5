@@ -1,13 +1,17 @@
 package com.code5.fw.db;
 
 import java.sql.Connection;
-import java.sql.Driver;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 /**
  * @author seuk
  *
  */
-public class Transaction_SQLITE_POOL extends Transaction {
+class Transaction_SQLITE_POOL extends Transaction {
 
 	/**
 	 * 
@@ -17,17 +21,24 @@ public class Transaction_SQLITE_POOL extends Transaction {
 	/**
 	 *
 	 */
-	protected Connection getConnection() throws Exception {
+	protected Connection getConnection() throws SQLException {
 
 		if (this.conn != null) {
 			return this.conn;
 		}
 
-		// [1]
-		Driver driver = (Driver) Class.forName("tomct.jdbc.pool.Driver").getConstructor().newInstance();
-		this.conn = driver.connect("jdbc:tomcat:pool:sqlite", null);
+		try {
 
-		return this.conn;
+			Context context = new InitialContext();
+			DataSource dataSource = (DataSource) context.lookup("java:/jdbc/sqlite/sqlitecode5");
+			this.conn = dataSource.getConnection();
+
+			return this.conn;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 
 	}
 

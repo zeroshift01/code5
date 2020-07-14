@@ -14,9 +14,6 @@ public class TransactionContext {
 	private static ThreadLocal<Transaction> TL = new ThreadLocal<Transaction>();
 
 	/**
-	 * 
-	 * [1]
-	 * 
 	 * @return
 	 */
 	public static Transaction getThread() {
@@ -32,9 +29,6 @@ public class TransactionContext {
 	}
 
 	/**
-	 * 
-	 * [2]
-	 * 
 	 * @param transaction
 	 */
 	static void setThread(Transaction transaction) {
@@ -42,7 +36,7 @@ public class TransactionContext {
 	}
 
 	/**
-	 * [3]
+	 * 
 	 */
 	static void removeThread() {
 		TL.remove();
