@@ -1,14 +1,13 @@
 package com.code5.fw.db;
 
 import java.sql.Connection;
-
-import org.sqlite.SQLiteConfig;
+import java.sql.Driver;
 
 /**
  * @author seuk
  *
  */
-public class Transaction_SQLITE_JDBC extends Transaction {
+public class Transaction_SQLITE_POOL extends Transaction {
 
 	/**
 	 * 
@@ -20,15 +19,13 @@ public class Transaction_SQLITE_JDBC extends Transaction {
 	 */
 	protected Connection getConnection() throws Exception {
 
-		// [2]
 		if (this.conn != null) {
 			return this.conn;
 		}
 
 		// [1]
-		SQLiteConfig config = new SQLiteConfig();
-		this.conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\onedrive\\public\\sqlitecode5.db",
-				config.toProperties());
+		Driver driver = (Driver) Class.forName("tomct.jdbc.pool.Driver").getConstructor().newInstance();
+		this.conn = driver.connect("jdbc:tomcat:pool:sqlite", null);
 
 		return this.conn;
 

@@ -10,33 +10,37 @@ public abstract class Transaction {
 
 	/**
 	 * @return
+	 * 
+	 *         [1]
 	 */
 	protected abstract Connection getConnection() throws Exception;
 
 	/**
-	 * 
+	 * [2]
 	 */
 	public void commit() {
 		try {
 			getConnection().commit();
 		} catch (Exception ex) {
-			// Exception 발생을 로그로 기록할 예정
+			ex.printStackTrace();
 		}
 	}
 
 	/**
-	 * 
+	 * [3]
 	 */
 	public void rollback() {
 		try {
 			getConnection().rollback();
 		} catch (Exception ex) {
-			// Exception 발생을 로그로 기록할 예정
+			ex.printStackTrace();
 		}
 	}
 
 	/**
 	 * @return
+	 * 
+	 *         [4]
 	 */
 	public static Transaction getTransaction() {
 		return getTransaction("com.code5.fw.db.Transaction_SQLITE_JDBC");
@@ -44,6 +48,8 @@ public abstract class Transaction {
 
 	/**
 	 * @return
+	 * 
+	 *         [5]
 	 */
 	public static Transaction getTransaction(String DB_CLASS_NAME) {
 
