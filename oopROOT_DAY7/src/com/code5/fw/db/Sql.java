@@ -10,18 +10,10 @@ import com.code5.fw.web.TransactionContext;
  * @author seuk
  *
  */
-/**
- * @author seuk
- *
- */
-/**
- * @author seuk
- *
- */
 public class Sql {
 
 	/**
-	 * 
+	 * [1]
 	 */
 	private SqlRunner sqlRunner = new SqlRunner();
 
@@ -38,6 +30,9 @@ public class Sql {
 	}
 
 	/**
+	 * 
+	 * [2]
+	 * 
 	 * @return
 	 */
 	public static Sql getSql() {
@@ -45,6 +40,9 @@ public class Sql {
 	}
 
 	/**
+	 * 
+	 * [3]
+	 * 
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
@@ -58,6 +56,9 @@ public class Sql {
 	}
 
 	/**
+	 * 
+	 * [4]
+	 * 
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException

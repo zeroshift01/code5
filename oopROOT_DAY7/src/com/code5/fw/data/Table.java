@@ -16,7 +16,7 @@ import com.code5.fw.web.BoxLocal;
 public class Table {
 
 	/**
-	 * 
+	 * [1]
 	 */
 	private static int MAX_RECODE_COUNT = 10000;
 
@@ -26,6 +26,8 @@ public class Table {
 	private boolean isNextRecode = false;
 
 	/**
+	 * [2]
+	 * 
 	 * @return
 	 */
 	public boolean isNextRecode() {
@@ -41,6 +43,8 @@ public class Table {
 
 	/**
 	 * 
+	 * [3]
+	 * 
 	 */
 	private ArrayList<String[]> recodes = new ArrayList<String[]>();
 
@@ -50,11 +54,17 @@ public class Table {
 	private HashMap<String, BigDecimal> colNameMap = new HashMap<String, BigDecimal>();;
 
 	/**
+	 * 
+	 * [4]
+	 * 
 	 * 추가데이터를 관리하는 컬랙션 객체
 	 */
 	private HashMap<String, String> addDatas = null;
 
 	/**
+	 * 
+	 * [5]
+	 * 
 	 * @param colNames
 	 */
 	public Table(String[] colNames) {
@@ -70,11 +80,16 @@ public class Table {
 
 	/**
 	 * 
+	 * [6]
+	 * 
 	 */
 	public Table() {
 	}
 
 	/**
+	 * 
+	 * [8]
+	 * 
 	 * @param data
 	 * @return
 	 */
@@ -136,6 +151,9 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * [7]
+	 * 
 	 * @param colName
 	 * @param row
 	 * @return
@@ -190,6 +208,9 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * [9] 
+	 * 
 	 * @param colName
 	 * @param row
 	 * @param data
@@ -228,6 +249,9 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * [10]
+	 * 
 	 * @param row
 	 * @return
 	 */
@@ -246,6 +270,9 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * [11]
+	 * 
 	 * @return
 	 */
 	public Box getBox() {
