@@ -1,57 +1,33 @@
+// [1]
 package com.code5.biz.comm002;
 
-import com.code5.biz.comm001.Comm001;
 import com.code5.fw.web.Box;
-import com.code5.fw.web.SubController;
 
 /**
  * @author seuk
  * 
- *         공지사항
- *
+ *         [2]
  */
-public class Comm002 extends SubController {
+public class Comm002 {
 
 	/**
-	 * @return
-	 */
-	public void start() {
-		Box box = Box.getThread();
-		box.put("NAME", "공지사항");
-	}
-
-	/**
+	 * @param box
 	 * @return
 	 * 
-	 *         공지사항 리스트 보기
+	 *         [3]
 	 */
 	public String comm00201() {
 
-		Comm001 comm001 = new Comm001();
-		comm001.comm00101();
+		Box box = Box.getThread();
 
-		return "comm00201";
+		String name = box.getString("name");
+
+		String ret = "welcome:" + name;
+
+		box.put("ret", ret);
+
+		// [4]
+		return "/WEB-INF/classes/com/code5/biz/comm002/jsp/comm00201.jsp";
 	}
 
-	/**
-	 * @return
-	 * 
-	 *         공지사항 선택 보기
-	 * 
-	 */
-	public String comm00202() {
-
-		return "comm00202";
-	}
-
-	/**
-	 * @return
-	 * 
-	 *         공지사항 저장
-	 */
-	public String comm00203() {
-
-		// 저장 후 리스트로 이동
-		return comm00201();
-	}
 }

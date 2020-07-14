@@ -1,5 +1,6 @@
 package com.code5.fw.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -22,6 +23,10 @@ public class BoxLocal extends Box {
 	 * 
 	 */
 	public BoxLocal() {
+
+ArrayList<String> data2 = new ArrayList<String>();
+data2.add("abcd1");
+data2.add("abcd2");
 	}
 
 	/**
