@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.code5.fw.db.Transaction;
+
 /**
  * @author seuk
  *
@@ -59,28 +61,43 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		Box.setThread(box);
 
+		Transaction transaction = Transaction.getTransaction("com.code5.fw.db.Transaction_SQLITE_POOL");
+		TransactionContext.setThread(transaction);
+
 		try {
 
 			String pathInfo = request.getPathInfo().substring(1);
-
 			box.put("pathInfo", pathInfo);
 
 			MasterControllerD dao = new MasterControllerD();
-			String[] str = dao.getSubController();
-			String className = str[0];
-			String methodName = str[1];
 
-			String jspKey = execSubController(className, methodName);
+			Box subController = dao.getSubController(pathInfo);
 
-			String jspUrl = dao.getJspByKey(jspKey);
+			String CLASS_NAME = subController.s("CLASS_NAME");
+			String METHOD_NAME = subController.s("METHOD_NAME");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(jspUrl);
+			String JSP_KEY = execSubController(CLASS_NAME, METHOD_NAME);
+
+			Box jspByKey = dao.getJspByKey(JSP_KEY);
+			String JSP_URL = jspByKey.s("JSP_URL");
+
+			System.out.println(JSP_URL);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP_URL);
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
+
+			transaction.rollback();
+
 			throw new ServletException(ex);
+
 		} finally {
+
+			transaction.commit();
+			transaction.close();
+
 			Box.removeThread();
+			TransactionContext.getThread();
 		}
 
 	}
