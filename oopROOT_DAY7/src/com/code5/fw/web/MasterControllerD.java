@@ -1,9 +1,5 @@
 package com.code5.fw.web;
 
-import java.sql.SQLException;
-
-import com.code5.fw.db.Sql;
-
 /**
  * @author seuk
  *
@@ -11,28 +7,30 @@ import com.code5.fw.db.Sql;
 public class MasterControllerD {
 
 	/**
-	 * 
-	 */
-	private static String FORM_NO_01 = "MASTERCONTROLLERD_01";
-
-	/**
-	 * 
-	 */
-	private static String FORM_NO_02 = "MASTERCONTROLLERD_02";
-
-	/**
 	 * @return
-	 * @throws SQLException
 	 */
-	Box getSubController(String URL) throws SQLException {
+	String[] getSubController() throws Exception {
 
 		Box box = Box.getThread();
-		box.put("URL", URL);
+		String pathInfo = box.s("pathInfo");
 
-		Sql sql = Sql.getSql();
+		if ("comm00101".equals(pathInfo)) {
 
-		return sql.getTable(FORM_NO_01).getBox(0);
+			return new String[] { "com.code5.biz.comm001.Comm001", "comm00101" };
 
+		}
+
+		if ("comm00102".equals(pathInfo)) {
+
+			return new String[] { "com.code5.biz.comm001.Comm001", "comm00102" };
+		}
+
+		if ("comm00201".equals(pathInfo)) {
+
+			return new String[] { "com.code5.biz.comm002.comm002", "comm00201" };
+		}
+
+		throw new Exception();
 	}
 
 	/**
@@ -40,15 +38,12 @@ public class MasterControllerD {
 	 * @return
 	 * @throws Exception
 	 */
-	Box getJspByKey(String KEY) throws SQLException {
+	String getJspByKey(String key) throws Exception {
+		if ("comm00101".equals(key)) {
+			return "/WEB-INF/classes/com/code5/biz/comm001/jsp/comm00101.jsp";
+		}
 
-		Box box = Box.getThread();
-
-		box.put("KEY", KEY);
-
-		Sql sql = Sql.getSql();
-
-		return sql.getTable(FORM_NO_02).getBox(0);
+		throw new Exception();
 	}
 
 }
