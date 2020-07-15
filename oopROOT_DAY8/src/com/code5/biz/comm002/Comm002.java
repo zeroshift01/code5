@@ -6,7 +6,6 @@ import com.code5.fw.web.Box;
 /**
  * @author seuk
  * 
- *         [2]
  */
 public class Comm002 {
 
@@ -24,7 +23,7 @@ public class Comm002 {
 
 		box.put("ret", ret);
 
-		// [4]
+		// [1]
 		return "comm00201";
 	}
 
