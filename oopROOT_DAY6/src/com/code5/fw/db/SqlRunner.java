@@ -25,7 +25,7 @@ class SqlRunner {
 	 */
 	String getSQL(Transaction transaction, String KEY) throws SQLException {
 
-		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FRAME_SQL WHERE KEY = ?");
+		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE KEY = ?");
 		ps.setString(1, KEY);
 
 		ResultSet rs = transaction.getResultSet(ps);
