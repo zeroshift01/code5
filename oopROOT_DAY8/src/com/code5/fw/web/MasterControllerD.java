@@ -21,34 +21,33 @@ public class MasterControllerD {
 	private static String FORM_NO_02 = "MASTERCONTROLLERD_02";
 
 	/**
+	 * 
+	 * [1]
+	 * 
+	 * @param KEY
 	 * @return
 	 * @throws SQLException
 	 */
-	Box getSubController(String URL) throws SQLException {
+	Box getController(String KEY) throws SQLException {
 
 		Box box = Box.getThread();
-		box.put("URL", URL);
-
-		Sql sql = Sql.getSql();
-
-		return sql.getTable(FORM_NO_01).getBox(0);
-
+		box.put("KEY", KEY);
+		return Sql.getSql().getTable(FORM_NO_01).getBox();
 	}
 
 	/**
-	 * @param key
+	 * 
+	 * [2]
+	 * 
+	 * @param KEY
 	 * @return
-	 * @throws Exception
+	 * @throws SQLException
 	 */
-	Box getJspByKey(String KEY) throws SQLException {
+	Box getView(String KEY) throws SQLException {
 
 		Box box = Box.getThread();
-
 		box.put("KEY", KEY);
-
-		Sql sql = Sql.getSql();
-
-		return sql.getTable(FORM_NO_02).getBox(0);
+		return Sql.getSql().getTable(FORM_NO_02).getBox();
 	}
 
 }

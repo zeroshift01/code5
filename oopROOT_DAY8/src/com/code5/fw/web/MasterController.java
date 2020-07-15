@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.code5.fw.data.InitProperty;
 import com.code5.fw.db.Transaction;
 
 /**
@@ -23,83 +24,75 @@ public class MasterController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param className
-	 * @param methodName
-	 * @return
-	 * @throws Exception
-	 */
-	private String execSubController(String className, String methodName) throws Exception {
-
-		@SuppressWarnings("rawtypes")
-		Class newClass = Class.forName(className);
-
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		Constructor constructor = newClass.getConstructor();
-
-		SubController instance = (SubController) constructor.newInstance();
-
-		instance.start();
-
-		String startAndReturn = instance.startAndReturn();
-		if (startAndReturn != null) {
-			return startAndReturn;
-		}
-
-		Method method = instance.getClass().getDeclaredMethod(methodName);
-		String invoke = (String) method.invoke(instance);
-
-		instance.end();
-
-		return invoke;
-	}
-
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Box box = new BoxHttp(request);
-		Box.setThread(box);
-
-		Transaction transaction = Transaction.getTransaction("com.code5.fw.db.Transaction_SQLITE_POOL");
-		TransactionContext.setThread(transaction);
-
 		try {
 
-			String pathInfo = request.getPathInfo().substring(1);
-			box.put("pathInfo", pathInfo);
+			String DBMS_NAME_WAS = InitProperty.DBMS_NAME_WAS();
+			Transaction transaction = Transaction.getTransaction(DBMS_NAME_WAS);
+			TransactionContext.setThread(transaction);
 
-			MasterControllerD dao = new MasterControllerD();
+			Box box = new BoxHttp(request);
+			Box.setThread(box);
 
-			Box subController = dao.getSubController(pathInfo);
+			// [1]
+			String KEY = request.getPathInfo().substring(1);
 
-			String CLASS_NAME = subController.s("CLASS_NAME");
-			String METHOD_NAME = subController.s("METHOD_NAME");
+			String JSP = execute(KEY);
 
-			String JSP_KEY = execSubController(CLASS_NAME, METHOD_NAME);
-
-			Box jspByKey = dao.getJspByKey(JSP_KEY);
-			String JSP_URL = jspByKey.s("JSP_URL");
-
-			System.out.println(JSP_URL);
-			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP_URL);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
+
+			TransactionContext.getThread().commit();
 
 		} catch (Exception ex) {
 
-			transaction.rollback();
-
+			TransactionContext.getThread().rollback();
 			throw new ServletException(ex);
 
 		} finally {
 
-			transaction.commit();
-			transaction.close();
-
+			TransactionContext.removeThread();
 			Box.removeThread();
-			TransactionContext.getThread();
 		}
 
+	}
+
+	/**
+	 * 
+	 * [2]
+	 * 
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
+	public static String execute(String KEY) throws Exception {
+
+		MasterControllerD dao = new MasterControllerD();
+		
+
+		// [3]
+		Box controller = dao.getController(KEY);
+		String CLASS_NAME = controller.s("CLASS_NAME");
+		String METHOD_NAME = controller.s("METHOD_NAME");
+
+		// [4]
+		@SuppressWarnings("rawtypes")
+		Class newClass = Class.forName(CLASS_NAME);
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		Constructor constructor = newClass.getConstructor();
+
+		Object instance = constructor.newInstance();
+
+		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
+		String JSP_KEY = (String) method.invoke(instance);
+
+		// [5]
+		Box view = dao.getView(JSP_KEY);
+		return view.s("JSP");
 	}
 
 }

@@ -30,7 +30,7 @@ class Transaction_SQLITE_POOL extends Transaction {
 		try {
 
 			Context context = new InitialContext();
-			DataSource dataSource = (DataSource) context.lookup("java:/jdbc/sqlite/sqlitecode5");
+			DataSource dataSource = (DataSource) context.lookup("java:/jdbc/sqlite/sqlitecode5.db");
 			this.conn = dataSource.getConnection();
 
 			return this.conn;

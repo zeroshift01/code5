@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.code5.fw.data.InitProperty;
+
 /**
  * @author seuk
  *
@@ -52,10 +54,14 @@ public abstract class Transaction {
 	}
 
 	/**
+	 * 
+	 * [2]
+	 * 
 	 * @return
 	 */
 	public static Transaction getTransaction() {
-		return getTransaction("com.code5.fw.db.Transaction_SQLITE_JDBC");
+		String DBMS_NAME_DEFAULT = InitProperty.DBMS_NAME_DEFAULT();
+		return getTransaction(DBMS_NAME_DEFAULT);
 	}
 
 	/**
