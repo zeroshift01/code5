@@ -1,5 +1,5 @@
 // [1]
-package com.code5.biz.comm002;
+package com.code5.biz.comm999;
 
 import com.code5.fw.web.Box;
 
@@ -7,7 +7,7 @@ import com.code5.fw.web.Box;
  * @author seuk
  * 
  */
-class Comm002 {
+public class Comm002 {
 
 	/**
 	 * @param box
