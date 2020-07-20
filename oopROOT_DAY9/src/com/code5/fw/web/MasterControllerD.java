@@ -22,32 +22,29 @@ public class MasterControllerD {
 
 	/**
 	 * 
-	 * [1]
-	 * 
 	 * @param KEY
 	 * @return
 	 * @throws SQLException
 	 */
 	Box getController(String KEY) throws SQLException {
 
-		Box box = Box.getThread();
+		// [1]
+		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return Sql.getSql().getTable(FORM_NO_01).getBox();
+		return Sql.getSql().getTable(box, FORM_NO_01).getBox();
 	}
 
 	/**
-	 * 
-	 * [2]
-	 * 
 	 * @param KEY
 	 * @return
 	 * @throws SQLException
 	 */
 	Box getView(String KEY) throws SQLException {
 
-		Box box = Box.getThread();
+		// [2]
+		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return Sql.getSql().getTable(FORM_NO_02).getBox();
+		return Sql.getSql().getTable(box, FORM_NO_02).getBox();
 	}
 
 }

@@ -70,4 +70,16 @@ public class Sql {
 		return sqlRunner.executeSql(transaction, box, FORM_NO);
 	}
 
+	/**
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Table getTable(Box box, String FORM_NO) throws SQLException {
+
+		Transaction transaction = TransactionContext.getThread();
+
+		return sqlRunner.getTable(transaction, box, FORM_NO);
+	}
 }
