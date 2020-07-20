@@ -10,12 +10,12 @@ import com.code5.fw.db.Sql;
  * @author seuk
  * 
  */
-public class Comm003D {
+public class Com003D {
 
 	/**
 	 * 
 	 */
-	private static String FORM_NO_01 = "COMM003D_01";
+	private static String FORM_NO_01 = "COM003D_01";
 
 	/**
 	 * 

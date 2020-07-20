@@ -50,21 +50,4 @@ public class BoxHttp extends Box {
 		request.setAttribute(key, obj);
 	}
 
-	/**
-	 * 
-	 */
-	public void setSessionB(SessionB user) {
-
-		request.getSession().setAttribute(Box.SESSIONB_KEY, user);
-	}
-
-	/**
-	 *
-	 */
-	public SessionB getSessionB() {
-
-		return (SessionB) request.getSession().getAttribute(Box.SESSIONB_KEY);
-
-	}
-
 }

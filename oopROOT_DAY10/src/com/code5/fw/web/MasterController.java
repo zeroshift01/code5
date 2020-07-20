@@ -37,10 +37,13 @@ public class MasterController extends HttpServlet {
 			Box box = new BoxHttp(request);
 			Box.setThread(box);
 
-			// [1]
 			String KEY = request.getPathInfo().substring(1);
 
-			String JSP = execute(KEY);
+			String JSP_KEY = execute(KEY);
+
+			MasterControllerD dao = new MasterControllerD();
+			Box view = dao.getView(JSP_KEY);
+			String JSP = view.s("JSP");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
@@ -88,10 +91,8 @@ public class MasterController extends HttpServlet {
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 		String JSP_KEY = (String) method.invoke(instance);
+		return JSP_KEY;
 
-		// [5]
-		Box view = dao.getView(JSP_KEY);
-		return view.s("JSP");
 	}
 
 }

@@ -46,21 +46,4 @@ public class BoxLocal extends Box {
 		return hm.get(key);
 	}
 
-	/**
-	 *
-	 */
-	public void setSessionB(SessionB user) {
-
-		hm.put(Box.SESSIONB_KEY, user);
-	}
-
-	/**
-	 *
-	 */
-	public SessionB getSessionB() {
-
-		return (SessionB) hm.get(Box.SESSIONB_KEY);
-
-	}
-
 }

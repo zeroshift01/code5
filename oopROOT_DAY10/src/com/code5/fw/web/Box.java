@@ -13,11 +13,6 @@ public abstract class Box implements Serializable {
 	/**
 	 * 
 	 */
-	public static final String SESSIONB_KEY = "com.code5.fw.web.Box.SESSIONB_KEY";
-
-	/**
-	 * 
-	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
@@ -119,7 +114,7 @@ public abstract class Box implements Serializable {
 			return (Table) obj;
 		}
 
-		// Table ÀÌ ¾ø´õ¶óµµ null ÀÌ ¾Æ´Ñ ºó Table À» ¸®ÅÏ
+		// ë¹ˆ ê°ì²´ê°€ ì•„ë‹Œ ë””í´íŠ¸ ë¦¬í„´
 		return new Table();
 
 	}
@@ -136,19 +131,9 @@ public abstract class Box implements Serializable {
 			return (Box) obj;
 		}
 
-		// Box ¾ø´õ¶óµµ null ÀÌ ¾Æ´Ñ ºó Box À» ¸®ÅÏ
+		// ë¹ˆ ê°ì²´ê°€ ì•„ë‹Œ ë””í´íŠ¸ ë¦¬í„´
 		return new BoxLocal();
 
 	}
-
-	/**
-	 * 
-	 */
-	public abstract void setSessionB(SessionB user);
-
-	/**
-	 * 
-	 */
-	public abstract SessionB getSessionB();
 
 }

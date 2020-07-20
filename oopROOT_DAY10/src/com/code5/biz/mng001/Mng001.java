@@ -23,12 +23,16 @@ public class Mng001 {
 
 		Box box = Box.getThread();
 
+		if ("".equals(box.s("KEY"))) {
+			return "mng00110";
+		}
+
 		Mng001D dao = new Mng001D();
 		Box thisBox = dao.mng00110();
 
 		box.put("thisBox", thisBox);
 
-		return "mng00101";
+		return "mng00110";
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class Mng001 {
 			dao.mng00111_2();
 		}
 
-		return MasterController.execute("mng00101");
+		return MasterController.execute("mng00110");
 	}
 
 	/**
@@ -58,6 +62,10 @@ public class Mng001 {
 	public String mng00120() throws Exception {
 
 		Box box = Box.getThread();
+
+		if ("".equals(box.s("KEY"))) {
+			return "mng00120";
+		}
 
 		Mng001D dao = new Mng001D();
 		Box thisBox = dao.mng00120();
@@ -93,6 +101,10 @@ public class Mng001 {
 	public String mng00130() throws Exception {
 
 		Box box = Box.getThread();
+
+		if ("".equals(box.s("KEY"))) {
+			return "mng00130";
+		}
 
 		Mng001D dao = new Mng001D();
 		Box thisBox = dao.mng00130();
