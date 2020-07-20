@@ -15,11 +15,11 @@ import com.code5.fw.web.Box;
 public class Mng001D {
 
 	/**
-	 * [1]
+	 * [9]
 	 */
 	private Sql sql = Sql.getSql();
 
-	// [2]
+	// [10]
 	private static String FORM_NO_01 = "MNG001D_01";
 	private static String FORM_NO_02 = "MNG001D_02";
 	private static String FORM_NO_03 = "MNG001D_03";
@@ -31,6 +31,9 @@ public class Mng001D {
 	private static String FORM_NO_09 = "MNG001D_09";
 
 	/**
+	 * 
+	 * [11]
+	 * 
 	 * @return
 	 * @throws SQLException
 	 */

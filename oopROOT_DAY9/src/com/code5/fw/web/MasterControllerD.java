@@ -29,7 +29,9 @@ public class MasterControllerD {
 	Box getController(String KEY) throws SQLException {
 
 		// [1]
+		// Box box = Box.getThread();
 		Box box = new BoxLocal();
+
 		box.put("KEY", KEY);
 		return Sql.getSql().getTable(box, FORM_NO_01).getBox();
 	}

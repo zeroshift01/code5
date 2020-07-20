@@ -3,10 +3,8 @@
 <%
 
 	Box box = Box.getThread();
-
-	String ret = box.s("ret");
 	
-	// [1]
+	// [13]
 	Box thisBox = box.getBox("thisBox");
 	
 %>

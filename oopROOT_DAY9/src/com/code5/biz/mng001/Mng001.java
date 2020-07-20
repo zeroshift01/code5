@@ -14,6 +14,8 @@ public class Mng001 {
 
 	/**
 	 * 
+	 * [1]
+	 * 
 	 * FW_SQL 조회
 	 * 
 	 * @param box
@@ -23,19 +25,24 @@ public class Mng001 {
 
 		Box box = Box.getThread();
 
+		// [3]
 		if ("".equals(box.s("KEY"))) {
 			return "mng00110";
 		}
 
+		// [4]
 		Mng001D dao = new Mng001D();
 		Box thisBox = dao.mng00110();
 
+		// [5]
 		box.put("thisBox", thisBox);
 
 		return "mng00110";
 	}
 
 	/**
+	 * 
+	 * [2]
 	 * 
 	 * FW_SQL 등록/수정
 	 * 
@@ -45,14 +52,21 @@ public class Mng001 {
 	public String mng00111() throws Exception {
 
 		Mng001D dao = new Mng001D();
+
+		// [6]
 		if (dao.mng00111_1() == 0) {
+
+			// [7]
 			dao.mng00111_2();
 		}
 
+		// [8]
 		return MasterController.execute("mng00110");
 	}
 
 	/**
+	 * 
+	 * [12]
 	 * 
 	 * FW_CONTROLLER 조회
 	 * 
