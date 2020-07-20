@@ -35,7 +35,6 @@ public class InitProperty {
 			DBMS_NAME_WAS = resourceBundle.getString("DBMS_NAME_WAS");
 
 		} catch (Exception ex) {
-			// [1]
 			ex.printStackTrace();
 		}
 
