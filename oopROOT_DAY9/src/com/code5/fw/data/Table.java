@@ -146,7 +146,7 @@ public class Table {
 	/**
 	 * @return
 	 */
-	public int length() {
+	public int size() {
 		return recodes.size();
 	}
 
@@ -209,7 +209,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [9] 
+	 * [9]
 	 * 
 	 * @param colName
 	 * @param row

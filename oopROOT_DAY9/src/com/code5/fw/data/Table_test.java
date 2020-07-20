@@ -18,7 +18,7 @@ public class Table_test extends TestCase {
 		table.addRecode(new String[] { "2", "홍길순" });
 		table.addRecode(new String[] { "3", "로버트" });
 
-		assertEquals(3, table.length());
+		assertEquals(3, table.size());
 		assertEquals("홍길순", table.s("이름", 1));
 		assertEquals("홍길순", table.getBox(1).s("이름"));
 	}
@@ -39,7 +39,7 @@ public class Table_test extends TestCase {
 
 		table.setData("별명", 1, "홍길동친구");
 
-		assertEquals(3, table.length());
+		assertEquals(3, table.size());
 		assertEquals("홍길동친구", table.s("별명", 1));
 		assertEquals("홍길동친구", table.getBox(1).s("별명"));
 	}
@@ -85,7 +85,7 @@ public class Table_test extends TestCase {
 
 		table.setData("별명", 5, "홍길동친구");
 
-		assertEquals(6, table.length());
+		assertEquals(6, table.size());
 
 		assertEquals("홍길동친구", table.s("별명", 5));
 		assertEquals("", table.s("별명", 4));
@@ -102,7 +102,7 @@ public class Table_test extends TestCase {
 			assertEquals(table.isNextRecode(), false);
 		}
 
-		assertEquals(table.length(), Table.MAX_RECODE_COUNT());
+		assertEquals(table.size(), Table.MAX_RECODE_COUNT());
 		assertEquals(table.addRecode(new String[] { "1", "홍길동" }), false);
 		assertEquals(table.isNextRecode(), true);
 

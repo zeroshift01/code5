@@ -1,8 +1,10 @@
 // [1]
 package com.code5.biz.comm003;
 
+import com.code5.fw.data.Table;
 import com.code5.fw.web.Box;
 import com.code5.fw.web.MasterController;
+import com.code5.fw.web.SessionB;
 
 /**
  * 
@@ -38,15 +40,35 @@ class Comm003 {
 		String PIN = box.s("PIN");
 
 		Comm003D dao = new Comm003D();
-		Box user = dao.comm00302();
 
-		if (!PIN.equals(user.s("PIN"))) {
+		Table comm00302 = dao.comm00302();
+
+		if (comm00302.size() != 1) {
+			box.put("MSG", "아이디나 패스워드가 존재하지 않습니다.");
 			return MasterController.execute("comm00301");
 		}
+
+		Box thisUser = comm00302.getBox();
+
+		if (!PIN.equals(thisUser.s("PIN"))) {
+			box.put("MSG", "아이디나 패스워드가 존재하지 않습니다.");
+
+			if (dao.comm00302_2() != 1) {
+				throw new Exception();
+			}
+
+			return MasterController.execute("comm00301");
+		}
+
+		String ID = thisUser.s("ID");
+		String AUTH = thisUser.s("AUTH");
+		// String ID = comm00302.s("ID");
+
+		SessionB user = new SessionB(ID, AUTH);
+		box.setSessionB(user);
 
 		return MasterController.execute("comm00202");
 
 	}
-
 
 }

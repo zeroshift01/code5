@@ -1,7 +1,6 @@
 package com.code5.fw.data;
 
-import java.io.InputStream;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * @author seuk
@@ -29,14 +28,11 @@ public class InitProperty {
 
 		try {
 
-			Properties properties = new Properties();
-			InputStream input = properties.getClass().getClassLoader().getResourceAsStream("init");
-			properties.load(input);
-			input.close();
+			ResourceBundle resourceBundle = ResourceBundle.getBundle("init");
 
-			DBMS_NAME_DEFAULT = properties.getProperty("DBMS_NAME_DEFAULT");
+			DBMS_NAME_DEFAULT = resourceBundle.getString("DBMS_NAME_DEFAULT");
 
-			DBMS_NAME_WAS = properties.getProperty("DBMS_NAME_WAS");
+			DBMS_NAME_WAS = resourceBundle.getString("DBMS_NAME_WAS");
 
 		} catch (Exception ex) {
 			// [1]

@@ -24,11 +24,6 @@ public class SessionB implements Serializable {
 	private String auth = null;
 
 	/**
-	 * 
-	 */
-	private String site = null;
-
-	/**
 	 * @return
 	 */
 	public String getId() {
@@ -43,22 +38,14 @@ public class SessionB implements Serializable {
 	}
 
 	/**
-	 * @return
-	 */
-	public String getsite() {
-		return site;
-	}
-
-	/**
 	 * @param id
 	 * @param auth
 	 * @param site
 	 */
-	public SessionB(String id, String auth, String site) {
+	public SessionB(String id, String auth) {
 
 		this.id = id;
 		this.auth = auth;
-		this.site = site;
 	}
 
 }
