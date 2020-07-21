@@ -2,6 +2,7 @@ package com.code5.fw.web;
 
 import java.io.Serializable;
 
+import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 
 /**
@@ -9,6 +10,11 @@ import com.code5.fw.data.Table;
  *
  */
 public abstract class Box implements Serializable {
+
+	/**
+	 * 
+	 */
+	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 
 	/**
 	 * 
@@ -135,5 +141,15 @@ public abstract class Box implements Serializable {
 		return new BoxLocal();
 
 	}
+
+	/**
+	 * @return
+	 */
+	public abstract SessionB getSessionB();
+
+	/**
+	 * @param sessionB
+	 */
+	public abstract void setSessionB(SessionB sessionB);
 
 }

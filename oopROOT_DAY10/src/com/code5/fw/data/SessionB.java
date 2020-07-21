@@ -1,4 +1,4 @@
-package com.code5.fw.web;
+package com.code5.fw.data;
 
 import java.io.Serializable;
 

@@ -2,6 +2,8 @@ package com.code5.fw.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.code5.fw.data.SessionB;
+
 /**
  * @author seuk
  *
@@ -48,6 +50,20 @@ public class BoxHttp extends Box {
 	 */
 	void setAttribute(String key, Object obj) {
 		request.setAttribute(key, obj);
+	}
+
+	/**
+	 *
+	 */
+	public SessionB getSessionB() {
+		return (SessionB) request.getSession().getAttribute(KEY_SESSIONB);
+	}
+
+	/**
+	 *
+	 */
+	public void setSessionB(SessionB sessionB) {
+		request.getSession().setAttribute(KEY_SESSIONB, sessionB);
 	}
 
 }

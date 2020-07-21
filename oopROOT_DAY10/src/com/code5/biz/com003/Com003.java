@@ -1,9 +1,9 @@
 package com.code5.biz.com003;
 
+import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.Box;
 import com.code5.fw.web.MasterController;
-import com.code5.fw.web.SessionB;
 
 /**
  * 
@@ -37,21 +37,21 @@ public class Com003 {
 		// String ID = box.s("ID");
 		String PIN = box.s("PIN");
 
-		com003D dao = new com003D();
+		Com003D dao = new Com003D();
 
-		Table com00302 = dao.com00302();
+		Table com00311_1 = dao.com00311_1();
 
-		if (com00302.size() != 1) {
+		if (com00311_1.size() != 1) {
 			box.put("MSG", "아이디가 없거나 패스워드가 일치하지 않습니다.");
 			return MasterController.execute("com00301");
 		}
 
-		Box thisUser = com00302.getBox();
+		Box thisUser = com00311_1.getBox();
 
 		if (!PIN.equals(thisUser.s("PIN"))) {
 			box.put("MSG", "아이디가 없거나 패스워드가 일치하지 않습니다.");
 
-			if (dao.com00302_2() != 1) {
+			if (dao.com00311_2() != 1) {
 				throw new Exception();
 			}
 
@@ -60,10 +60,13 @@ public class Com003 {
 
 		String ID = thisUser.s("ID");
 		String AUTH = thisUser.s("AUTH");
-		// String ID = com00302.s("ID");
 
 		SessionB user = new SessionB(ID, AUTH);
 		box.setSessionB(user);
+
+		if (dao.com00311_3() != 1) {
+			throw new Exception();
+		}
 
 		return MasterController.execute("com00202");
 
