@@ -152,4 +152,17 @@ public abstract class Box implements Serializable {
 	 */
 	public abstract void setSessionB(SessionB sessionB);
 
+	/**
+	 * @param key
+	 * @return
+	 */
+	public int getInt(String key) {
+		try {
+			return Integer.parseInt(getString(key));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		}
+	}
+
 }

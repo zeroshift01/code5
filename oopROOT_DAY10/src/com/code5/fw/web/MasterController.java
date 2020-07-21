@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 
 /**
@@ -65,8 +66,6 @@ public class MasterController extends HttpServlet {
 
 	/**
 	 * 
-	 * [2]
-	 * 
 	 * @param url
 	 * @return
 	 * @throws Exception
@@ -75,12 +74,22 @@ public class MasterController extends HttpServlet {
 
 		MasterControllerD dao = new MasterControllerD();
 
-		// [3]
 		Box controller = dao.getController(KEY);
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
+		
+		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
 
-		// [4]
+		if ("Y".equals(SESSION_CHECK_YN)) {
+
+			Box box = Box.getThread();
+			SessionB user = box.getSessionB();
+			if (user == null) {
+				throw new Exception();
+			}
+
+		}
+
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
 

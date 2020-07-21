@@ -42,20 +42,26 @@ public class Com003 {
 		Table com00311_1 = dao.com00311_1();
 
 		if (com00311_1.size() != 1) {
-			box.put("MSG", "아이디가 없거나 패스워드가 일치하지 않습니다.");
-			return MasterController.execute("com00301");
+			box.put("ret", "아이디가 없거나 패스워드가 일치하지 않습니다.");
+			return MasterController.execute("com00310");
 		}
 
 		Box thisUser = com00311_1.getBox();
 
 		if (!PIN.equals(thisUser.s("PIN"))) {
-			box.put("MSG", "아이디가 없거나 패스워드가 일치하지 않습니다.");
+			box.put("ret", "아이디가 없거나 패스워드가 일치하지 않습니다.");
 
 			if (dao.com00311_2() != 1) {
 				throw new Exception();
 			}
 
-			return MasterController.execute("com00301");
+			return MasterController.execute("com00310");
+		}
+
+		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
+		if (FAIL_CNT > 5) {
+			box.put("ret", "패스워드를 5회 이상 실패하였습니다.");
+			return MasterController.execute("com00310");
 		}
 
 		String ID = thisUser.s("ID");
@@ -68,7 +74,7 @@ public class Com003 {
 			throw new Exception();
 		}
 
-		return MasterController.execute("com00202");
+		return MasterController.execute("com00320");
 
 	}
 
