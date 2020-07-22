@@ -88,4 +88,15 @@ public class Com003 {
 	public String com00320() throws Exception {
 		return "com00320";
 	}
+
+	/**
+	 * 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String com00330() throws Exception {
+
+		return MasterController.execute("mng00110");
+	}
 }

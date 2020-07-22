@@ -75,20 +75,11 @@ public class MasterController extends HttpServlet {
 		MasterControllerD dao = new MasterControllerD();
 
 		Box controller = dao.getController(KEY);
+
+		checkSessionB(controller);
+
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
-		
-		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
-
-		if ("Y".equals(SESSION_CHECK_YN)) {
-
-			Box box = Box.getThread();
-			SessionB user = box.getSessionB();
-			if (user == null) {
-				throw new Exception();
-			}
-
-		}
 
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
@@ -101,6 +92,39 @@ public class MasterController extends HttpServlet {
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 		String JSP_KEY = (String) method.invoke(instance);
 		return JSP_KEY;
+
+	}
+
+	/**
+	 * @param controller
+	 * @throws Exception
+	 */
+	private static void checkSessionB(Box controller) throws Exception {
+
+		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
+
+		if (!"Y".equals(SESSION_CHECK_YN)) {
+			return;
+		}
+
+		Box box = Box.getThread();
+		SessionB user = box.getSessionB();
+		if (user == null) {
+			throw new Exception();
+		}
+
+		String AUTH = controller.s("AUTH");
+
+		if ("".equals(AUTH)) {
+			return;
+		}
+
+		if (AUTH.indexOf(user.getAuth()) >= 0) {
+			return;
+		}
+
+		// 여기까지 오면 오류
+		throw new Exception();
 
 	}
 

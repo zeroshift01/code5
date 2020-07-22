@@ -2,12 +2,17 @@ ALTER TABLE FW_CONTROLLER ADD SESSION_CHECK_YN;
 
 UPDATE FW_CONTROLLER SET SESSION_CHECK_YN = 'Y' WHERE SESSION_CHECK_YN IS NULL;
 
+ALTER TABLE FW_CONTROLLER ADD AUTH;
+
+update FW_CONTROLLER set auth = 'A1,A2,A0' where key like 'mng%';
+
 
 UPDATE FW_SQL SET SQL = 'SELECT
 KEY
 , CLASS_NAME
 , METHOD_NAME
 , SESSION_CHECK_YN
+, AUTH
 FROM FW_CONTROLLER
 WHERE KEY = [KEY]
 '
@@ -25,9 +30,17 @@ ID PRIMARY KEY
 
 
 INSERT INTO BZ_ID values (
-'id01'
+'idA0'
 , 'abcd1111'
 , 'A0'
+, '0'
+, ''
+);
+
+INSERT INTO BZ_ID values (
+'idU0'
+, 'abcd1111'
+, 'U0'
 , '0'
 , ''
 );
@@ -65,7 +78,8 @@ INSERT INTO FW_CONTROLLER VALUES (
 'com00310'
 ,'com.code5.biz.com003.Com003'
 ,'com00310'
-,'N' 
+,'N'
+,''
 );
 
 INSERT INTO FW_CONTROLLER VALUES (
@@ -73,6 +87,7 @@ INSERT INTO FW_CONTROLLER VALUES (
 ,'com.code5.biz.com003.Com003'
 ,'com00311'
 ,'N'
+,''
 );
 
 
@@ -81,6 +96,15 @@ INSERT INTO FW_CONTROLLER VALUES (
 ,'com.code5.biz.com003.Com003'
 ,'com00320'
 ,'Y'
+,''
+);
+
+INSERT INTO FW_CONTROLLER VALUES (
+'com00330'
+,'com.code5.biz.com003.Com003'
+,'com00330'
+,'Y'
+,''
 );
 
 INSERT INTO FW_VIEW VALUES (
