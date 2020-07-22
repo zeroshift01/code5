@@ -86,6 +86,11 @@ public class Com003 {
 	 * @throws Exception
 	 */
 	public String com00320() throws Exception {
+
+		Box box = Box.getThread();
+		boolean is_mng00110 = MasterController.checkUrlAuth("mng00110");
+		box.put("is_mng00110", is_mng00110);
+
 		return "com00320";
 	}
 
@@ -96,7 +101,6 @@ public class Com003 {
 	 * @throws Exception
 	 */
 	public String com00330() throws Exception {
-
 		return MasterController.execute("mng00110");
 	}
 }

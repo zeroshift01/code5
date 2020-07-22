@@ -18,7 +18,7 @@ import com.code5.fw.db.Transaction;
  * @author seuk
  *
  */
-public class MasterController extends HttpServlet {
+public class MasterController_step01 extends HttpServlet {
 
 	/**
 	 * 
@@ -76,10 +76,7 @@ public class MasterController extends HttpServlet {
 
 		Box controller = dao.getController(KEY);
 
-		boolean checkUrlAuth = checkUrlAuth(controller);
-		if (!checkUrlAuth) {
-			throw new Exception();
-		}
+		checkSessionB(controller);
 
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
@@ -100,15 +97,14 @@ public class MasterController extends HttpServlet {
 
 	/**
 	 * @param controller
-	 * @return
 	 * @throws Exception
 	 */
-	private static boolean checkUrlAuth(Box controller) throws Exception {
+	private static void checkSessionB(Box controller) throws Exception {
 
 		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
 
 		if (!"Y".equals(SESSION_CHECK_YN)) {
-			return true;
+			return;
 		}
 
 		Box box = Box.getThread();
@@ -120,30 +116,16 @@ public class MasterController extends HttpServlet {
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
-			return true;
+			return;
 		}
 
 		if (AUTH.indexOf(user.getAuth()) >= 0) {
-			return true;
+			return;
 		}
 
 		// 여기까지 오면 오류
-		return false;
+		throw new Exception();
 
 	}
 
-	/**
-	 * @param KEY
-	 * @return
-	 * @throws Exception
-	 */
-	public static boolean checkUrlAuth(String KEY) throws Exception {
-
-		MasterControllerD dao = new MasterControllerD();
-
-		Box controller = dao.getController(KEY);
-
-		return checkUrlAuth(controller);
-
-	}
 }
