@@ -27,17 +27,53 @@ public class BizException extends Exception {
 	}
 
 	/**
+	 *
+	 */
+	public String getMessage() {
+		String message = this.exception.getMessage();
+		if (message == null) {
+			return "알수 없는 오류가 발생했습니다.";
+		}
+
+		return message;
+	}
+
+	/**
 	 * @return
 	 */
-	public String printError() {
-		PrintWriter pw = new PrintWriter(new StringWriter());
+	public String getPrintStackTrace() {
+		PrintWriter pw = null;
+		StringWriter sw = null;
 		try {
+
+			sw = new StringWriter();
+			pw = new PrintWriter(sw);
+
 			this.exception.printStackTrace(pw);
+
+			return sw.toString();
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			return "";
 		} finally {
-			pw.close();
+
+			try {
+				if (sw != null) {
+					sw.close();
+				}
+			} catch (Exception exx) {
+				exx.printStackTrace();
+			}
+
+			try {
+				if (pw != null) {
+					pw.close();
+				}
+			} catch (Exception exx) {
+				exx.printStackTrace();
+			}
 		}
-		return pw.toString();
+
 	}
 }

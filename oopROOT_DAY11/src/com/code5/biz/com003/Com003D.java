@@ -12,7 +12,7 @@ import com.code5.fw.db.Sql;
  */
 public class Com003D {
 
-	private static String FORM_NO_01 = "COM003D_01";
+	private static String FORM_NO_01 = "COM003D_01_2";
 	private static String FORM_NO_02 = "COM003D_02";
 	private static String FORM_NO_03 = "COM003D_03";
 

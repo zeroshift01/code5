@@ -31,7 +31,7 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String JSP = "/WEB-INF/classes/com/code4/fw/jsp/error500.jsp";
+		String JSP = "/WEB-INF/classes/com/code5/fw/jsp/error500.jsp";
 
 		try {
 
@@ -55,19 +55,18 @@ public class MasterController extends HttpServlet {
 		} catch (BizException bizException) {
 
 			request.setAttribute("bizException", bizException);
-			JSP = "/WEB-INF/classes/com/code4/fw/jsp/errorBizException.jsp";
+			JSP = "/WEB-INF/classes/com/code5/fw/jsp/errorBizException.jsp";
 
 		} catch (SessionException ex) {
 
-			JSP = "/WEB-INF/classes/com/code4/biz/com003/jsp/com00330.jsp";
+			JSP = "/WEB-INF/classes/com/code5/biz/com003/jsp/com00330.jsp";
 
-		} catch (Exception ex) {
-
-			ex.printStackTrace();
+		} catch (Exception exception) {
 
 			TransactionContext.getThread().rollback();
 
-			JSP = "/WEB-INF/classes/com/code4/fw/jsp/error500.jsp";
+			request.setAttribute("exception", exception);
+			JSP = "/WEB-INF/classes/com/code5/fw/jsp/error500.jsp";
 
 		} finally {
 
@@ -91,20 +90,11 @@ public class MasterController extends HttpServlet {
 		MasterControllerD dao = new MasterControllerD();
 
 		Box controller = dao.getController(KEY);
+
+		checkSessionB(controller);
+
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
-
-		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
-
-		if ("Y".equals(SESSION_CHECK_YN)) {
-
-			Box box = Box.getThread();
-			SessionB user = box.getSessionB();
-			if (user == null) {
-				throw new SessionException();
-			}
-
-		}
 
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
@@ -120,6 +110,7 @@ public class MasterController extends HttpServlet {
 		try {
 			JSP_KEY = (String) method.invoke(instance);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new BizException(ex);
 		}
 
@@ -127,4 +118,36 @@ public class MasterController extends HttpServlet {
 
 	}
 
+	/**
+	 * @param controller
+	 * @throws Exception
+	 */
+	private static void checkSessionB(Box controller) throws Exception {
+
+		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
+
+		if (!"Y".equals(SESSION_CHECK_YN)) {
+			return;
+		}
+
+		Box box = Box.getThread();
+		SessionB user = box.getSessionB();
+		if (user == null) {
+			throw new SessionException();
+		}
+
+		String AUTH = controller.s("AUTH");
+
+		if ("".equals(AUTH)) {
+			return;
+		}
+
+		if (AUTH.indexOf(user.getAuth()) >= 0) {
+			return;
+		}
+
+		// 여기까지 오면 오류
+		throw new Exception("알수 없는 오류입니다.");
+
+	}
 }

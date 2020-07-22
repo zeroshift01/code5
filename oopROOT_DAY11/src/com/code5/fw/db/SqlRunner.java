@@ -17,8 +17,6 @@ class SqlRunner {
 
 	/**
 	 * 
-	 * [3]
-	 * 
 	 * @param transaction
 	 * @param SQL
 	 * @return
@@ -80,11 +78,9 @@ class SqlRunner {
 
 	/**
 	 * 
-	 * 
 	 * @param sql
 	 * @return
 	 * 
-	 *         SQL 을 분석해서 파라메터 부분을 인식하고 바인트처리를 위한 SQL 변환을 한다.
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
 
@@ -100,7 +96,6 @@ class SqlRunner {
 	}
 
 	/**
-	 * [1]
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -140,7 +135,6 @@ class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			// [3]
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
@@ -151,7 +145,7 @@ class SqlRunner {
 	}
 
 	/**
-	 * [2]
+	 * 
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -165,7 +159,7 @@ class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
-			// [4]
+			// 
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
