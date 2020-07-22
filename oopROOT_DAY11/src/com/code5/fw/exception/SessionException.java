@@ -1,6 +1,7 @@
 package com.code5.fw.exception;
 
 /**
+ * 
  * @author seuk
  *
  */

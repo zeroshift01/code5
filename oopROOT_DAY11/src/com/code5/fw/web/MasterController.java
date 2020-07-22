@@ -26,11 +26,14 @@ public class MasterController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * [1]
+	 */
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String JSP = "/WEB-INF/classes/com/code5/fw/jsp/error500.jsp";
+		String JSP = null;
 
 		try {
 
@@ -53,17 +56,20 @@ public class MasterController extends HttpServlet {
 
 		} catch (SessionException ex) {
 
+			// [2]
 			JSP = "/WEB-INF/classes/com/code5/biz/com003/jsp/com00330.jsp";
 
 		} catch (Exception exception) {
 
 			TransactionContext.getThread().rollback();
 
+			// [3]
 			request.setAttribute("exception", exception);
 			JSP = "/WEB-INF/classes/com/code5/fw/jsp/error500.jsp";
 
 		} finally {
 
+			// [4]
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
 
@@ -85,9 +91,9 @@ public class MasterController extends HttpServlet {
 
 		Box controller = dao.getController(KEY);
 
-		// [1]
 		boolean checkUrlAuth = checkUrlAuth(controller);
 		if (!checkUrlAuth) {
+			// [5]
 			throw new Exception("사용할 수 없는 서비스 입니다.");
 		}
 
@@ -118,7 +124,6 @@ public class MasterController extends HttpServlet {
 
 		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
 
-		// [2]
 		if (!"Y".equals(SESSION_CHECK_YN)) {
 			return true;
 		}
@@ -126,11 +131,10 @@ public class MasterController extends HttpServlet {
 		Box box = Box.getThread();
 		SessionB user = box.getSessionB();
 		if (user == null) {
-			// [3]
+			// [6]
 			throw new SessionException();
 		}
 
-		// [4]
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
@@ -141,14 +145,11 @@ public class MasterController extends HttpServlet {
 			return true;
 		}
 
-		// [5]
 		return false;
 
 	}
 
 	/**
-	 * 
-	 * [6]
 	 * 
 	 * @param KEY
 	 * @return
