@@ -76,6 +76,7 @@ public class MasterController extends HttpServlet {
 
 		Box controller = dao.getController(KEY);
 
+		// [1]
 		boolean checkUrlAuth = checkUrlAuth(controller);
 		if (!checkUrlAuth) {
 			throw new Exception();
@@ -105,8 +106,10 @@ public class MasterController extends HttpServlet {
 	 */
 	private static boolean checkUrlAuth(Box controller) throws Exception {
 
+		
 		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
-
+		
+		// [2]
 		if (!"Y".equals(SESSION_CHECK_YN)) {
 			return true;
 		}
@@ -114,9 +117,11 @@ public class MasterController extends HttpServlet {
 		Box box = Box.getThread();
 		SessionB user = box.getSessionB();
 		if (user == null) {
+			// [3]
 			throw new Exception();
 		}
 
+		// [4]
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
@@ -127,12 +132,15 @@ public class MasterController extends HttpServlet {
 			return true;
 		}
 
-		// 여기까지 오면 오류
+		// [5]
 		return false;
 
 	}
 
 	/**
+	 * 
+	 * [6]
+	 * 
 	 * @param KEY
 	 * @return
 	 * @throws Exception

@@ -143,11 +143,17 @@ public abstract class Box implements Serializable {
 	}
 
 	/**
+	 * 
+	 * [3]
+	 * 
 	 * @return
 	 */
 	public abstract SessionB getSessionB();
 
 	/**
+	 * 
+	 * [4]
+	 * 
 	 * @param sessionB
 	 */
 	public abstract void setSessionB(SessionB sessionB);

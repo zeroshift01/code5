@@ -49,13 +49,15 @@ public class BoxLocal extends Box {
 	}
 
 	/**
-	 *
+	 * [7]
 	 */
 	public SessionB getSessionB() {
 		return (SessionB) hm.get(KEY_SESSIONB);
 	}
 
 	/**
+	 *
+	 * [8]
 	 *
 	 */
 	public void setSessionB(SessionB sessionB) {
