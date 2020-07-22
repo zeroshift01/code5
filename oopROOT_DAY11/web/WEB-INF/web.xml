@@ -14,4 +14,20 @@
 	</servlet-mapping>
 
 
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+
+
 </web-app>

@@ -54,12 +54,16 @@ public class BoxHttp extends Box {
 
 	/**
 	 *
+	 * [5]
+	 *
 	 */
 	public SessionB getSessionB() {
 		return (SessionB) request.getSession().getAttribute(KEY_SESSIONB);
 	}
 
 	/**
+	 * 
+	 * [6]
 	 *
 	 */
 	public void setSessionB(SessionB sessionB) {

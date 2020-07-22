@@ -1,7 +1,6 @@
 package com.code5.fw.web;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.code5.fw.data.SessionB;
 

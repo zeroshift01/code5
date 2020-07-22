@@ -1,3 +1,26 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	Exception exception = (Exception) request.getAttribute("exception");
 
-오류가 발생했습니다.
+	
+	String message = "알수 없는 오류가 발생했습니다.";
+	
+	if (exception != null) {
+		message = exception.getMessage();
+		//exception.printStackTrace(new PrintWriter(out));
+	}
+%>
+아래는 사용자에게 보이는 정보입니다.
+<br>[<%=message %>]
+
+<pre>
+아래는 개발자에게만 보이는 정보입니다.
+
+<%
+	if (exception != null) {
+		exception.printStackTrace(new PrintWriter(out));	
+	}
+%>
+
+</pre>

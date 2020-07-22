@@ -143,11 +143,17 @@ public abstract class Box implements Serializable {
 	}
 
 	/**
+	 * 
+	 * [3]
+	 * 
 	 * @return
 	 */
 	public abstract SessionB getSessionB();
 
 	/**
+	 * 
+	 * [4]
+	 * 
 	 * @param sessionB
 	 */
 	public abstract void setSessionB(SessionB sessionB);
@@ -165,4 +171,32 @@ public abstract class Box implements Serializable {
 		}
 	}
 
+	/**
+	 * @param KEY
+	 * @param x
+	 */
+	public void put(String KEY, int x) {
+		put(KEY, "" + x);
+	}
+
+	/**
+	 * @param KEY
+	 * @param x
+	 */
+	public void put(String KEY, boolean x) {
+		put(KEY, "" + x);
+
+	}
+
+	/**
+	 * @param KEY
+	 * @return
+	 */
+	public boolean getBoolean(String KEY) {
+		if ("true".equals(s(KEY))) {
+			return true;
+		}
+		return false;
+
+	}
 }

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.exception.BizException;
 import com.code5.fw.exception.SessionException;
 
 /**
@@ -52,11 +51,6 @@ public class MasterController extends HttpServlet {
 
 			TransactionContext.getThread().commit();
 
-		} catch (BizException bizException) {
-
-			request.setAttribute("bizException", bizException);
-			JSP = "/WEB-INF/classes/com/code5/fw/jsp/errorBizException.jsp";
-
 		} catch (SessionException ex) {
 
 			JSP = "/WEB-INF/classes/com/code5/biz/com003/jsp/com00330.jsp";
@@ -91,7 +85,11 @@ public class MasterController extends HttpServlet {
 
 		Box controller = dao.getController(KEY);
 
-		checkSessionB(controller);
+		// [1]
+		boolean checkUrlAuth = checkUrlAuth(controller);
+		if (!checkUrlAuth) {
+			throw new Exception("사용할 수 없는 서비스 입니다.");
+		}
 
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
@@ -106,48 +104,63 @@ public class MasterController extends HttpServlet {
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 
-		String JSP_KEY = null;
-		try {
-			JSP_KEY = (String) method.invoke(instance);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new BizException(ex);
-		}
-
+		String JSP_KEY = (String) method.invoke(instance);
 		return JSP_KEY;
 
 	}
 
 	/**
 	 * @param controller
+	 * @return
 	 * @throws Exception
 	 */
-	private static void checkSessionB(Box controller) throws Exception {
+	private static boolean checkUrlAuth(Box controller) throws Exception {
 
 		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
 
+		// [2]
 		if (!"Y".equals(SESSION_CHECK_YN)) {
-			return;
+			return true;
 		}
 
 		Box box = Box.getThread();
 		SessionB user = box.getSessionB();
 		if (user == null) {
+			// [3]
 			throw new SessionException();
 		}
 
+		// [4]
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
-			return;
+			return true;
 		}
 
 		if (AUTH.indexOf(user.getAuth()) >= 0) {
-			return;
+			return true;
 		}
 
-		// 여기까지 오면 오류
-		throw new Exception("알수 없는 오류입니다.");
+		// [5]
+		return false;
+
+	}
+
+	/**
+	 * 
+	 * [6]
+	 * 
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean checkUrlAuth(String KEY) throws Exception {
+
+		MasterControllerD dao = new MasterControllerD();
+
+		Box controller = dao.getController(KEY);
+
+		return checkUrlAuth(controller);
 
 	}
 }
