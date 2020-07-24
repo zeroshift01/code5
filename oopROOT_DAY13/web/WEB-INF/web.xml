@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+
+	<servlet>
+		<servlet-name>waf</servlet-name>
+		<servlet-class>com.code5.fw.web.MasterController
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>waf</servlet-name>
+		<url-pattern>/waf/*</url-pattern>
+	</servlet-mapping>
+
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/classes/com/code5/fw/jsp/error500.jsp</location>
+	</error-page>
+
+
+</web-app>
