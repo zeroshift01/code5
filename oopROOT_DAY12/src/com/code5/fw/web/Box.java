@@ -19,6 +19,11 @@ public abstract class Box implements Serializable {
 	/**
 	 * 
 	 */
+	public static String KEY_URL = "com.code5.fw.web.KEY_URL";
+
+	/**
+	 * 
+	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
@@ -196,5 +201,20 @@ public abstract class Box implements Serializable {
 		}
 		return false;
 
+	}
+
+	/**
+	 * @return
+	 */
+	public String getUrl() {
+		return s(KEY_URL);
+	}
+
+	/**
+	 * @param serviceName
+	 * @return
+	 */
+	void setUrl(String url) {
+		put(KEY_URL, url);
 	}
 }

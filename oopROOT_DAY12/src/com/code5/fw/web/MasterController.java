@@ -46,6 +46,9 @@ public class MasterController extends HttpServlet {
 
 			String KEY = request.getPathInfo().substring(1);
 
+			// TODO
+			box.setUrl(KEY);
+
 			String JSP_KEY = execute(KEY);
 
 			MasterControllerD dao = new MasterControllerD();
