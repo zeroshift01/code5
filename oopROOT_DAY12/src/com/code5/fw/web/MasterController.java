@@ -14,6 +14,7 @@ import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.exception.SessionException;
+import com.code5.fw.trace.Trace;
 
 /**
  * @author seuk
@@ -36,6 +37,9 @@ public class MasterController extends HttpServlet {
 		String JSP = null;
 
 		try {
+			
+			// TODO
+			Trace.getTrace().init(request);
 
 			String DBMS_NAME_WAS = InitProperty.DBMS_NAME_WAS();
 			Transaction transaction = Transaction.getTransaction(DBMS_NAME_WAS);
@@ -161,5 +165,11 @@ public class MasterController extends HttpServlet {
 
 		return checkUrlAuth(controller);
 
+	}
+
+	@Override
+	public void destroy() {
+		Trace.getTrace().flush();
+		super.destroy();
 	}
 }

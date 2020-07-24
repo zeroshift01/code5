@@ -1,6 +1,7 @@
 package com.code5.fw.trace;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public final class Trace {
 	/**
 	 * 
 	 */
-	private String serviceName = null;
+	private String serviceName = "notInit";
 
 	/**
 	 * 
@@ -89,7 +90,6 @@ public final class Trace {
 			return;
 		}
 
-		this.isInit = true;
 		this.isMulti = true;
 		this.serviceName = "p" + request.getServerPort();
 
@@ -105,7 +105,6 @@ public final class Trace {
 			return;
 		}
 
-		this.isInit = true;
 		this.isMulti = false;
 		this.serviceName = serviceName;
 
@@ -125,8 +124,10 @@ public final class Trace {
 			this.isInit = true;
 
 			// TODO
-			if (this.isMulti) {
-				System.setOut(new TraceNotPrintStream());
+			if (this.isLog) {
+				if (this.isMulti) {
+					System.setOut(new TraceNotPrintStream());
+				}
 			}
 
 			// TODO
@@ -284,4 +285,18 @@ public final class Trace {
 
 	}
 
+	/**
+	 * 
+	 */
+	public void flush() {
+
+		Iterator<String> iterator = traceWriterMap.keySet().iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			TraceWriter traceWriter = traceWriterMap.get(key);
+			traceWriter.flush();
+		}
+
+	}
 }

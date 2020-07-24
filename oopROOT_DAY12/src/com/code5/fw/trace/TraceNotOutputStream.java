@@ -15,6 +15,7 @@ class TraceNotOutputStream extends OutputStream {
 	 */
 	public void write(int b) throws IOException {
 		// TODO
+		"".toCharArray();
 	}
 
 }
