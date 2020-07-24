@@ -7,8 +7,8 @@
 	String message = "알수 없는 오류가 발생했습니다.";
 	
 	if (exception != null) {
+		// [1]
 		message = exception.getMessage();
-		//exception.printStackTrace(new PrintWriter(out));
 	}
 %>
 아래는 사용자에게 보이는 정보입니다.
@@ -19,6 +19,7 @@
 
 <%
 	if (exception != null) {
+		// [2]
 		exception.printStackTrace(new PrintWriter(out));	
 	}
 %>
