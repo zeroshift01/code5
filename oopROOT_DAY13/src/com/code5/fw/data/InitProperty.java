@@ -51,10 +51,6 @@ public class InitProperty {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
-		DBMS_NAME_DEFAULT = "com.code5.fw.db.Transaction_SQLITE_JDBC";
-		DBMS_NAME_WAS = "com.code5.fw.db.Transaction_SQLITE_JDBC";
-
 	}
 
 	/**

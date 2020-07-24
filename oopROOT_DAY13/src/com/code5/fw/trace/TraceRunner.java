@@ -1,13 +1,17 @@
 package com.code5.fw.trace;
 
 import java.io.File;
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
+import com.code5.fw.data.Table;
+import com.code5.fw.db.Sql;
 import com.code5.fw.util.DateTime;
 import com.code5.fw.util.StringUtil;
 import com.code5.fw.web.Box;
@@ -27,6 +31,7 @@ public final class TraceRunner {
 	 * 
 	 */
 	private TraceRunner() {
+		readTraceProperties();
 	}
 
 	/**
@@ -145,12 +150,15 @@ public final class TraceRunner {
 	}
 
 	/**
+	 * 
+	 * TODO
+	 * 
 	 * @param log
 	 * @return
 	 */
-	private String makeLogStr(String classNameShort, String log) {
+	private String makeLogStr(String className, String log, Box box) {
 
-		Box box = Box.getThread();
+		String classNameShort = makeClassNameShort(className);
 
 		String dtm = DateTime.getThisDTM();
 		String url = box.getUrl();
@@ -217,12 +225,20 @@ public final class TraceRunner {
 
 	/**
 	 * @param logKey
+	 * @param className
 	 * @param classNameShort
 	 * @param log
 	 */
-	void write(String logKey, String classNameShort, String log) {
+	void write(String logKey, String className, String log) {
 
-		log = makeLogStr(classNameShort, log);
+		Box box = Box.getThread();
+
+		boolean isNotLogWrite = isNotLogWrite(className, box);
+		if (isNotLogWrite) {
+			return;
+		}
+
+		log = makeLogStr(className, log, box);
 
 		if (!this.isLog) {
 			System.out.println(log);
@@ -286,4 +302,93 @@ public final class TraceRunner {
 		}
 
 	}
+
+	/**
+	 * @param className
+	 * @param box
+	 * @return
+	 */
+	boolean isNotLogWrite(String className, Box box) {
+
+		String url = box.getUrl();
+
+		// TODO
+		if (isNotLogWriteMap.containsKey("isNotLogWrite")) {
+			return true;
+		}
+
+		if (isNotLogWriteMap.containsKey("url_" + url)) {
+			return true;
+		}
+
+		if (isNotLogWriteMap.containsKey("className_" + className)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * 
+	 */
+	private ConcurrentHashMap<String, String> isNotLogWriteMap = new ConcurrentHashMap<String, String>();
+
+	/**
+	 * 
+	 */
+	private void readTraceProperties() {
+
+		try {
+
+			ResourceBundle resourceBundle = ResourceBundle.getBundle("trace");
+
+			Enumeration<String> list = resourceBundle.getKeys();
+
+			while (list.hasMoreElements()) {
+				String KEY = list.nextElement();
+				isNotLogWriteMap.put(KEY, "isNotLogWrite");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void reload() {
+
+		isNotLogWriteMap.clear();
+
+		try {
+			Table table = Sql.getSql().getTable("TRACERUNNER_01");
+
+			for (int i = 0; i < table.size(); i++) {
+
+				String KEY = table.s("KEY", i);
+				isNotLogWriteMap.put(KEY, "isNotLogWrite");
+
+			}
+		} catch (Exception ex) {
+			// TODO 재귀 오류 제거
+			ex.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	private String makeClassNameShort(String className) {
+
+		int x = className.lastIndexOf(".");
+		if (x >= 1) {
+			return className.substring(x + 1);
+		}
+
+		return className;
+	}
+
 }

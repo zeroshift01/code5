@@ -5,4 +5,5 @@ encoding//src/com/code5/fw/data=ISO-8859-1
 encoding//src/com/code5/fw/exception/SessionException.java=UTF-8
 encoding//src/com/code5/fw/web/Box.java=UTF-8
 encoding//src/init.properties=utf-8
+encoding//src/trace.properties=UTF-8
 encoding/src=utf-8

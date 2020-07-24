@@ -1,6 +1,7 @@
 package com.code5.biz.mng001;
 
 import com.code5.fw.db.Sql;
+import com.code5.fw.trace.TraceRunner;
 import com.code5.fw.web.Box;
 import com.code5.fw.web.MasterController;
 
@@ -144,7 +145,7 @@ public class Mng001 {
 	public String mng00140() throws Exception {
 
 		Sql.getSql().reload();
-
+		TraceRunner.getTraceRunner().reload();
 		return "null";
 	}
 }
