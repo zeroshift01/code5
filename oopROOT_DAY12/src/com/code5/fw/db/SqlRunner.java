@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.code5.fw.data.Table;
+import com.code5.fw.trace.Trace;
 import com.code5.fw.web.Box;
 
 /**
@@ -14,6 +15,11 @@ import com.code5.fw.web.Box;
  *
  */
 class SqlRunner {
+
+	/**
+	 * TODO
+	 */
+	private Trace trace = Trace.getTrace();
 
 	/**
 	 * 
@@ -92,9 +98,7 @@ class SqlRunner {
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
 		sqlRunnerB.key = KEY;
 
-		System.out.println(sqlRunnerB.sqlOrg);
-		System.out.println(sqlRunnerB.sql);
-		System.out.println(sqlRunnerB.key);
+		trace.write(sqlRunnerB.key);
 
 		return sqlRunnerB;
 	}
@@ -118,7 +122,7 @@ class SqlRunner {
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
-		System.out.println(exeSql);
+		trace.write(exeSql);
 
 		ResultSet rs = transaction.getResultSet(ps);
 
@@ -140,7 +144,7 @@ class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			// 
+			//
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
@@ -165,11 +169,10 @@ class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
-			// 
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
-		System.out.println(exeSql);
+		trace.write(exeSql);
 
 		return ps.executeUpdate();
 	}

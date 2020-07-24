@@ -131,7 +131,7 @@ public final class Trace {
 			}
 
 			// TODO
-			this.logFileDir = this.logFileDirRoot + File.pathSeparator + this.serviceName;
+			this.logFileDir = this.logFileDirRoot + File.separatorChar + this.serviceName;
 
 			File file = new File(this.logFileDir);
 			if (!file.isDirectory()) {
@@ -194,7 +194,7 @@ public final class Trace {
 	 */
 	private String makeLogFileUrl(String logKey) {
 
-		return this.logFileDir + File.pathSeparatorChar + this.logFilePrefix + "." + logKey + ".log";
+		return this.logFileDir + File.separatorChar + this.logFilePrefix + "." + logKey + ".log";
 	}
 
 	/**

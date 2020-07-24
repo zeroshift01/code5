@@ -25,6 +25,11 @@ public class MasterController extends HttpServlet {
 	/**
 	 * 
 	 */
+	private static Trace trace = Trace.getTrace();
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -37,7 +42,7 @@ public class MasterController extends HttpServlet {
 		String JSP = null;
 
 		try {
-			
+
 			// TODO
 			Trace.getTrace().init(request);
 
@@ -74,6 +79,7 @@ public class MasterController extends HttpServlet {
 
 		} finally {
 
+			trace.write("JSP [" + JSP + "]");
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
 
@@ -91,6 +97,8 @@ public class MasterController extends HttpServlet {
 	 */
 	public static String execute(String KEY) throws Exception {
 
+		trace.write("URL [" + KEY + "]");
+
 		MasterControllerD dao = new MasterControllerD();
 
 		Box controller = dao.getController(KEY);
@@ -102,6 +110,8 @@ public class MasterController extends HttpServlet {
 
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
+
+		trace.write("METHOD_NAME [" + METHOD_NAME + "]");
 
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
