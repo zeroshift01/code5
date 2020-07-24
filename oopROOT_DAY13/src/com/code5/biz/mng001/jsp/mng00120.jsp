@@ -38,6 +38,12 @@ function mng00121(){
 <br>METHOD_NAME
 <br><input type="text" name="METHOD_NAME" value = "<%=thisBox.s("METHOD_NAME")%>">
 
+<br>SESSION_CHECK_YN
+<br><input type="text" name="SESSION_CHECK_YN" value = "<%=thisBox.s("SESSION_CHECK_YN")%>">
+
+<br>AUTH
+<br><input type="text" name="AUTH" value = "<%=thisBox.s("AUTH")%>">
+
 </form>
 
 <button onclick="mng00120()">조회</button>

@@ -6,6 +6,9 @@ package com.code5.fw.trace;
  */
 public class Trace {
 
+	/**
+	 * 
+	 */
 	private TraceRunner traceRunner = TraceRunner.getTraceRunner();
 
 	/**
