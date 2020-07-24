@@ -15,6 +15,7 @@ import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.exception.SessionException;
 import com.code5.fw.trace.Trace;
+import com.code5.fw.trace.TraceRunner;
 
 /**
  * @author seuk
@@ -25,7 +26,7 @@ public class MasterController extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static Trace trace = Trace.getTrace();
+	private static Trace trace = new Trace(MasterController.class);
 
 	/**
 	 * 
@@ -44,7 +45,7 @@ public class MasterController extends HttpServlet {
 		try {
 
 			// TODO
-			Trace.getTrace().init(request);
+			TraceRunner.getTraceRunner().init(request);
 
 			String DBMS_NAME_WAS = InitProperty.DBMS_NAME_WAS();
 			Transaction transaction = Transaction.getTransaction(DBMS_NAME_WAS);
@@ -179,7 +180,7 @@ public class MasterController extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		Trace.getTrace().flush();
+		TraceRunner.getTraceRunner().flush();
 		super.destroy();
 	}
 }

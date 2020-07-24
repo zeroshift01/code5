@@ -19,7 +19,7 @@ class SqlRunner {
 	/**
 	 * TODO
 	 */
-	private Trace trace = Trace.getTrace();
+	private Trace trace = new Trace(this);
 
 	/**
 	 * 
@@ -90,7 +90,6 @@ class SqlRunner {
 	 * @param sql
 	 * @return
 	 * 
-	 *         SQL �� �м��ؼ� �Ķ���� �κ��� �ν��ϰ� ����Ʈó���� ���� SQL ��ȯ�� �Ѵ�.
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
 

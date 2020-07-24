@@ -107,7 +107,7 @@ public class Sql {
 	/**
 	 * TODO
 	 */
-	private Trace trace = Trace.getTrace();
+	private Trace trace = new Trace(this);
 
 	/**
 	 * 
