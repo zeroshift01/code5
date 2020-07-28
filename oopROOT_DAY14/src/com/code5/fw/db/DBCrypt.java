@@ -147,7 +147,7 @@ public class DBCrypt {
 
 			byte[] plan = planStr.getBytes();
 
-			byte[] enc = crypt.decrypt_CBC_PKCS7(plan);
+			byte[] enc = crypt.encrypt_CBC_PKCS7(plan);
 
 			String ret = StringUtil.byteToHex(enc);
 
