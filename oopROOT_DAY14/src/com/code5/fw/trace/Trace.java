@@ -65,7 +65,7 @@ public class Trace {
 			pw = new PrintWriter(sw);
 			ex.printStackTrace(pw);
 
-			traceRunner.write("err", this.className, pw.toString());
+			traceRunner.write("err", this.className, sw.toString());
 
 		} catch (Exception exx) {
 			try {

@@ -1,4 +1,4 @@
-package com.code5.fw.security;
+package com.code5.fw.db;
 
 import junit.framework.TestCase;
 
@@ -6,23 +6,20 @@ import junit.framework.TestCase;
  * @author seuk
  *
  */
-public class Aes_test extends TestCase {
+public class DBCrypt_test extends TestCase {
 
 	/**
 	 * @throws Exception
 	 */
 	public void test_한단어테스트() throws Exception {
 
-		byte[] key = new byte[16];
-		byte[] iv = new byte[16];
-
-		Aes aes = new Aes(key, iv);
+		DBCrypt dbCrypt = DBCrypt.getDBCrypt();
 
 		String plan = "abcd 1234 가나다라 !@#$";
 
-		String enc = aes.encrypt(plan);
+		String enc = dbCrypt.encrypt(plan);
 
-		String plan2 = aes.decrypt(enc);
+		String plan2 = dbCrypt.decrypt(enc);
 
 		assertEquals(plan, plan2);
 
@@ -33,18 +30,15 @@ public class Aes_test extends TestCase {
 	 */
 	public void test_스트레스테스트() throws Exception {
 
-		byte[] key = new byte[16];
-		byte[] iv = new byte[16];
-
-		Aes aes = new Aes(key, iv);
+		DBCrypt dbCrypt = DBCrypt.getDBCrypt();
 
 		for (int i = 0; i < 100000; i++) {
 
 			String plan = i + "abcd 1234 가나다라 !@#$" + i;
 
-			String enc = aes.encrypt(plan);
+			String enc = dbCrypt.encrypt(plan);
 
-			String plan2 = aes.decrypt(enc);
+			String plan2 = dbCrypt.decrypt(enc);
 
 			assertEquals(plan, plan2);
 
@@ -57,37 +51,28 @@ public class Aes_test extends TestCase {
 	 */
 	public void test_쓰레드안전성() throws Exception {
 
-		byte[] key = new byte[16];
-		byte[] iv = new byte[16];
-
-		Aes aes = new Aes(key, iv);
-
-		Aes$[] aes$ = new Aes$[20];
-		for (int i = 0; i < aes$.length; i++) {
-			aes$[i] = new Aes$(aes);
-			aes$[i].start();
+		DBCrypt_test$[] dbCrypt_test$ = new DBCrypt_test$[20];
+		for (int i = 0; i < dbCrypt_test$.length; i++) {
+			dbCrypt_test$[i] = new DBCrypt_test$();
+			dbCrypt_test$[i].start();
 		}
 
-		for (int i = 0; i < aes$.length; i++) {
-			aes$[i].join();
-			assertEquals(aes$[i].isOK, true);
+		for (int i = 0; i < dbCrypt_test$.length; i++) {
+			dbCrypt_test$[i].join();
+			assertEquals(dbCrypt_test$[i].isOK, true);
 		}
 
 	}
 }
 
-class Aes$ extends Thread {
-
-	private Aes aes = null;
+class DBCrypt_test$ extends Thread {
 
 	boolean isOK = false;
 
-	Aes$(Aes aes) {
-		this.aes = aes;
-	}
-
 	@Override
 	public void run() {
+
+		DBCrypt dbCrypt = DBCrypt.getDBCrypt();
 
 		try {
 
@@ -95,9 +80,9 @@ class Aes$ extends Thread {
 
 				String plan = i + "abcd 1234 가나다라 !@#$" + i;
 
-				String enc = aes.encrypt(plan);
+				String enc = dbCrypt.encrypt(plan);
 
-				String plan2 = aes.decrypt(enc);
+				String plan2 = dbCrypt.decrypt(enc);
 
 				if (!plan.equals(plan2)) {
 					isOK = false;

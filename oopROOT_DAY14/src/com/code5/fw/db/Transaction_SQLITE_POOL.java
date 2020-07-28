@@ -14,6 +14,13 @@ import javax.sql.DataSource;
 class Transaction_SQLITE_POOL extends Transaction {
 
 	/**
+	 *
+	 */
+	public String defaultCrypt() {
+		return "ARIA";
+	}
+
+	/**
 	 * 
 	 */
 	private Connection conn = null;

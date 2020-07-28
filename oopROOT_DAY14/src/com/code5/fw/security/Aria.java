@@ -6,10 +6,16 @@ import kr.re.nsri.aria.ARIAEngine;
  * @author seuk
  *
  */
-public class Aria {
+public class Aria implements Crypt {
 
+	/**
+	 * 
+	 */
 	private static final int BLOCK_LENGTH = 16;
 
+	/**
+	 * 
+	 */
 	private byte[] iv = null;
 
 	/**
@@ -35,7 +41,7 @@ public class Aria {
 	 * @return
 	 * @throws Exception
 	 */
-	byte[] encryptBlock(byte[] plan) throws Exception {
+	public byte[] encryptBlock(byte[] plan) throws Exception {
 		return ariaEngine.encrypt(plan, 0);
 	}
 
@@ -44,7 +50,7 @@ public class Aria {
 	 * @return
 	 * @throws Exception
 	 */
-	byte[] decryptBlock(byte[] enc) throws Exception {
+	public byte[] decryptBlock(byte[] enc) throws Exception {
 		return ariaEngine.decrypt(enc, 0);
 	}
 

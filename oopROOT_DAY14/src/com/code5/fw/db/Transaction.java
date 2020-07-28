@@ -15,6 +15,11 @@ import com.code5.fw.data.InitProperty;
 public abstract class Transaction {
 
 	/**
+	 * @return
+	 */
+	public abstract String defaultCrypt();
+
+	/**
 	 * 
 	 */
 	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();

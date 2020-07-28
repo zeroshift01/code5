@@ -12,6 +12,13 @@ import org.sqlite.SQLiteConfig;
 class Transaction_SQLITE_JDBC extends Transaction {
 
 	/**
+	 *
+	 */
+	public String defaultCrypt() {
+		return "ARIA";
+	}
+
+	/**
 	 * 
 	 */
 	private Connection conn = null;
@@ -28,7 +35,7 @@ class Transaction_SQLITE_JDBC extends Transaction {
 		SQLiteConfig config = new SQLiteConfig();
 		this.conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\onedrive\\public\\sqlitecode5.db",
 				config.toProperties());
-		
+
 		this.conn.setAutoCommit(false);
 
 		return this.conn;
