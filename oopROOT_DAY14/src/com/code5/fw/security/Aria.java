@@ -53,7 +53,7 @@ public class Aria {
 	 * @return
 	 * @throws Exception
 	 */
-	public byte[] encrypt(byte[] plan) throws Exception {
+	public byte[] encrypt_CBC_PKCS7(byte[] plan) throws Exception {
 
 		if (plan == null) {
 			return null;
@@ -109,6 +109,86 @@ public class Aria {
 		}
 
 		return enc;
+	}
+
+	/**
+	 * @param endBlock
+	 * @return
+	 */
+	private static int getPaddingCntPKCS7(byte[] endBlock) {
+
+		byte paddingCnt = endBlock[endBlock.length - 1];
+		if (paddingCnt > 16) {
+			return 0;
+		}
+
+		if (paddingCnt < 0) {
+			return 0;
+		}
+
+		for (int i = (16 - paddingCnt); i < endBlock.length; i++) {
+			if (endBlock[i] != paddingCnt) {
+				return 0;
+			}
+		}
+
+		return paddingCnt;
+
+	}
+
+	/**
+	 * @param enc
+	 * @return
+	 * @throws Exception
+	 */
+	public byte[] decrypt_CBC_PKCS7(byte[] enc) throws Exception {
+
+		if (enc == null) {
+			return null;
+		}
+
+		if (enc.length == 0) {
+			return enc;
+		}
+
+		byte[] cbcBlock = new byte[BLOCK_LENGTH];
+
+		byte[] plan = new byte[enc.length];
+
+		System.arraycopy(this.iv, 0, cbcBlock, 0, BLOCK_LENGTH);
+
+		int forCnt = enc.length / BLOCK_LENGTH;
+
+		int srcPos = 0;
+
+		byte[] planBlock = null;
+
+		for (int i = 0; i < forCnt; i++) {
+
+			byte[] encBlock = new byte[BLOCK_LENGTH];
+			System.arraycopy(enc, srcPos, encBlock, 0, BLOCK_LENGTH);
+
+			planBlock = ariaEngine.decrypt(encBlock, 0);
+
+			xor16ToX(planBlock, cbcBlock);
+
+			System.arraycopy(planBlock, 0, plan, srcPos, BLOCK_LENGTH);
+
+			cbcBlock = encBlock;
+
+			srcPos = srcPos + encBlock.length;
+
+		}
+
+		int cntPKCS7 = getPaddingCntPKCS7(planBlock);
+		if (cntPKCS7 == 0) {
+			return plan;
+		}
+
+		byte[] newPlan = new byte[plan.length - cntPKCS7];
+		System.arraycopy(plan, 0, newPlan, 0, newPlan.length);
+		return newPlan;
+
 	}
 
 	/**

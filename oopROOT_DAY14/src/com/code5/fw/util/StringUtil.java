@@ -39,7 +39,7 @@ public class StringUtil {
 	 * @param s
 	 * @return
 	 */
-	public static byte[] hexStringToByteArray(String s) {
+	public static byte[] hexToByte(String s) {
 		int len = s.length();
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) {
@@ -52,7 +52,7 @@ public class StringUtil {
 	 * @param bytes
 	 * @return
 	 */
-	public static String byteArrayToHexString(byte[] bytes) {
+	public static String byteToHex(byte[] bytes) {
 
 		StringBuilder sb = new StringBuilder();
 
