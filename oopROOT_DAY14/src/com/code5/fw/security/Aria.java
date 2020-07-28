@@ -9,7 +9,7 @@ import kr.re.nsri.aria.ARIAEngine;
 public class Aria implements Crypt {
 
 	/**
-	 * 
+	 * TODO [1] 
 	 */
 	private static final int BLOCK_LENGTH = 16;
 

@@ -16,7 +16,6 @@ import java.io.PrintStream;
 import java.security.InvalidKeyException;
 import java.util.Date;
 
-// TODO
 public class ARIAEngine {
 	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
 			'e', 'f' };
@@ -141,7 +140,6 @@ public class ARIAEngine {
 		}
 	}
 
-	// TODO
 	public void setKey(byte[] masterKey) throws InvalidKeyException {
 		if (masterKey.length * 8 < keySize)
 			throw new InvalidKeyException("masterKey size=" + masterKey.length);
@@ -291,7 +289,6 @@ public class ARIAEngine {
 		doCrypt(i, ioffset, this.encRoundKeys, this.numberOfRounds, o, ooffset);
 	}
 
-	// TODO
 	public byte[] encrypt(byte[] i, int ioffset) throws InvalidKeyException {
 		byte[] o = new byte[16];
 		this.encrypt(i, ioffset, o, 0);
@@ -309,7 +306,6 @@ public class ARIAEngine {
 		doCrypt(i, ioffset, this.decRoundKeys, this.numberOfRounds, o, ooffset);
 	}
 
-	// TODO
 	public byte[] decrypt(byte[] i, int ioffset) throws InvalidKeyException {
 		byte[] o = new byte[16];
 		this.decrypt(i, ioffset, o, 0);
