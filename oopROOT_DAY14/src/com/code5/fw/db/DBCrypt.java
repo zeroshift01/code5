@@ -36,7 +36,7 @@ public class DBCrypt {
 	/**
 	 * 
 	 */
-	private static String CRYPT_KEY = "com.code5.fw.db.Crypt";
+	private static String KEY_CRYPT = "com.code5.fw.db.Crypt";
 
 	/**
 	 * @return
@@ -45,7 +45,7 @@ public class DBCrypt {
 
 		Box box = Box.getThread();
 
-		Crypt crypt = (Crypt) box.get(CRYPT_KEY);
+		Crypt crypt = (Crypt) box.get(KEY_CRYPT);
 		if (crypt != null) {
 			return crypt;
 		}
@@ -56,18 +56,18 @@ public class DBCrypt {
 		byte[] key = StringUtil.hexToByte("D8D91CB33B6A77B43E92AF3D509152B2");
 
 		if ("ARIA".equals(defaultCrypt)) {
-			//crypt = new Aria(key, iv);
-			//box.put(CRYPT_KEY, crypt);
-			//return crypt;
-			
-			crypt = new Aes(key, iv);
-			box.put(CRYPT_KEY, crypt);
+			crypt = new Aria(key, iv);
+			box.put(KEY_CRYPT, crypt);
 			return crypt;
+
+//			crypt = new Aes(key, iv);
+//			box.put(KEY_CRYPT, crypt);
+//			return crypt;
 		}
 
 		if ("AES".equals(defaultCrypt)) {
 			crypt = new Aes(key, iv);
-			box.put(CRYPT_KEY, crypt);
+			box.put(KEY_CRYPT, crypt);
 			return crypt;
 		}
 
@@ -95,11 +95,20 @@ public class DBCrypt {
 				return "";
 			}
 
+			Box box = Box.getThread();
+			String s = box.s(KEY_CRYPT + "_" + encStr);
+			if (!"".equals(s)) {
+				return s;
+			}
+
 			byte[] enc = StringUtil.hexToByte(encStr);
 
 			byte[] plan = crypt.decrypt_CBC_PKCS7(enc);
 
-			return new String(plan, "UTF-8");
+			String ret = new String(plan);
+
+			box.put(KEY_CRYPT + "_" + encStr, ret);
+			return ret;
 
 		} catch (Exception ex) {
 			Trace trace = new Trace(this);
@@ -130,12 +139,19 @@ public class DBCrypt {
 				return "";
 			}
 
-			byte[] plan = planStr.getBytes("UTF-8");
+			Box box = Box.getThread();
+			String s = box.s(KEY_CRYPT + "_" + planStr);
+			if (!"".equals(s)) {
+				return s;
+			}
+
+			byte[] plan = planStr.getBytes();
 
 			byte[] enc = crypt.decrypt_CBC_PKCS7(plan);
 
 			String ret = StringUtil.byteToHex(enc);
 
+			box.put(KEY_CRYPT + "_" + planStr, ret);
 			return ret;
 
 		} catch (Exception ex) {
