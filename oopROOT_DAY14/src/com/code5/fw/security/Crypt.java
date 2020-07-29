@@ -11,13 +11,13 @@ public interface Crypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public byte[] encrypt_CBC_PKCS7(byte[] plan) throws Exception;
+	public byte[] encrypt(byte[] plan) throws Exception;
 
 	/**
 	 * @param enc
 	 * @return
 	 * @throws Exception
 	 */
-	public byte[] decrypt_CBC_PKCS7(byte[] enc) throws Exception;
+	public byte[] decrypt(byte[] enc) throws Exception;
 
 }

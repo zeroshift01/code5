@@ -6,17 +6,12 @@ import kr.re.nsri.aria.ARIAEngine;
  * @author seuk
  *
  */
-public class Aria implements Crypt {
+public class Aria_ECB_ZERO implements Crypt {
 
 	/**
-	 * TODO [1] 
+	 * TODO [1]
 	 */
 	private static final int BLOCK_LENGTH = 16;
-
-	/**
-	 * 
-	 */
-	private byte[] iv = null;
 
 	/**
 	 * 
@@ -28,12 +23,10 @@ public class Aria implements Crypt {
 	 * @param iv
 	 * @throws Exception
 	 */
-	public Aria(byte[] key, byte[] iv) throws Exception {
+	public Aria_ECB_ZERO(byte[] key) throws Exception {
 
 		ariaEngine = new ARIAEngine(key.length * 8);
 		ariaEngine.setKey(key);
-
-		this.iv = iv;
 	}
 
 	/**
@@ -41,25 +34,7 @@ public class Aria implements Crypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public byte[] encryptBlock(byte[] plan) throws Exception {
-		return ariaEngine.encrypt(plan, 0);
-	}
-
-	/**
-	 * @param plan
-	 * @return
-	 * @throws Exception
-	 */
-	public byte[] decryptBlock(byte[] enc) throws Exception {
-		return ariaEngine.decrypt(enc, 0);
-	}
-
-	/**
-	 * @param plan
-	 * @return
-	 * @throws Exception
-	 */
-	public byte[] encrypt_CBC_PKCS7(byte[] plan) throws Exception {
+	public byte[] encrypt(byte[] plan) throws Exception {
 
 		if (plan == null) {
 			return null;
@@ -68,8 +43,6 @@ public class Aria implements Crypt {
 		if (plan.length == 0) {
 			return plan;
 		}
-
-		byte[] cbcBlock = new byte[BLOCK_LENGTH];
 
 		int encLength = plan.length;
 
@@ -80,8 +53,6 @@ public class Aria implements Crypt {
 		byte[] enc = new byte[encLength];
 
 		int nPad = enc.length - plan.length;
-
-		System.arraycopy(this.iv, 0, cbcBlock, 0, BLOCK_LENGTH);
 
 		int forCnt = enc.length / BLOCK_LENGTH;
 
@@ -99,16 +70,12 @@ public class Aria implements Crypt {
 			System.arraycopy(plan, srcPos, encBlock, 0, length);
 
 			for (int ii = length; ii < BLOCK_LENGTH; ii++) {
-				encBlock[ii] = (byte) nPad;
+				encBlock[ii] = (byte) 0;
 			}
-
-			xor16ToX(encBlock, cbcBlock);
 
 			encBlock = ariaEngine.encrypt(encBlock, 0);
 
 			System.arraycopy(encBlock, 0, enc, srcPos, BLOCK_LENGTH);
-
-			cbcBlock = encBlock;
 
 			srcPos = srcPos + encBlock.length;
 
@@ -121,21 +88,14 @@ public class Aria implements Crypt {
 	 * @param endBlock
 	 * @return
 	 */
-	private static int getPaddingCntPKCS7(byte[] endBlock) {
+	private static int getPaddingCntZERO(byte[] endBlock) {
 
-		byte paddingCnt = endBlock[endBlock.length - 1];
-		if (paddingCnt > 16) {
-			return 0;
-		}
-
-		if (paddingCnt < 0) {
-			return 0;
-		}
-
-		for (int i = (16 - paddingCnt); i < endBlock.length; i++) {
-			if (endBlock[i] != paddingCnt) {
-				return 0;
+		int paddingCnt = 0;
+		for (int i = endBlock.length - 1; i >= 0; i--) {
+			if (endBlock[i] != 0) {
+				break;
 			}
+			paddingCnt++;
 		}
 
 		return paddingCnt;
@@ -147,7 +107,7 @@ public class Aria implements Crypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public byte[] decrypt_CBC_PKCS7(byte[] enc) throws Exception {
+	public byte[] decrypt(byte[] enc) throws Exception {
 
 		if (enc == null) {
 			return null;
@@ -157,11 +117,7 @@ public class Aria implements Crypt {
 			return enc;
 		}
 
-		byte[] cbcBlock = new byte[BLOCK_LENGTH];
-
 		byte[] plan = new byte[enc.length];
-
-		System.arraycopy(this.iv, 0, cbcBlock, 0, BLOCK_LENGTH);
 
 		int forCnt = enc.length / BLOCK_LENGTH;
 
@@ -176,17 +132,13 @@ public class Aria implements Crypt {
 
 			planBlock = ariaEngine.decrypt(encBlock, 0);
 
-			xor16ToX(planBlock, cbcBlock);
-
 			System.arraycopy(planBlock, 0, plan, srcPos, BLOCK_LENGTH);
-
-			cbcBlock = encBlock;
 
 			srcPos = srcPos + encBlock.length;
 
 		}
 
-		int cntPKCS7 = getPaddingCntPKCS7(planBlock);
+		int cntPKCS7 = getPaddingCntZERO(planBlock);
 		if (cntPKCS7 == 0) {
 			return plan;
 		}
@@ -195,30 +147,6 @@ public class Aria implements Crypt {
 		System.arraycopy(plan, 0, newPlan, 0, newPlan.length);
 		return newPlan;
 
-	}
-
-	/**
-	 * @param x
-	 * @param y
-	 */
-	private void xor16ToX(byte[] x, byte[] y) {
-
-		x[0] = (byte) (x[0] ^ y[0]);
-		x[1] = (byte) (x[1] ^ y[1]);
-		x[2] = (byte) (x[2] ^ y[2]);
-		x[3] = (byte) (x[3] ^ y[3]);
-		x[4] = (byte) (x[4] ^ y[4]);
-		x[5] = (byte) (x[5] ^ y[5]);
-		x[6] = (byte) (x[6] ^ y[6]);
-		x[7] = (byte) (x[7] ^ y[7]);
-		x[8] = (byte) (x[8] ^ y[8]);
-		x[9] = (byte) (x[9] ^ y[9]);
-		x[10] = (byte) (x[10] ^ y[10]);
-		x[11] = (byte) (x[11] ^ y[11]);
-		x[12] = (byte) (x[12] ^ y[12]);
-		x[13] = (byte) (x[13] ^ y[13]);
-		x[14] = (byte) (x[14] ^ y[14]);
-		x[15] = (byte) (x[15] ^ y[15]);
 	}
 
 }
