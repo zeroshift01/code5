@@ -61,17 +61,22 @@ class DataCrypt_test$ extends Thread {
 
 		try {
 
-			
-
 			for (int i = 0; i < 100000; i++) {
 
 				DataCrypt dataCrypt = DataCrypt.getDataCrypt("S02");
-				
+
 				String plan = i + "abcd 1234 가나다라 !@#$" + i;
 
 				String enc = dataCrypt.encrypt(plan);
 
 				String plan2 = dataCrypt.decrypt(enc);
+
+				if (i % 1000 == 0) {
+					System.out.println(i+" "+this.hashCode());
+					System.out.println(plan);
+					System.out.println(enc);
+					System.out.println(plan2);
+				}
 
 				if (!plan.equals(plan2)) {
 					isOK = false;

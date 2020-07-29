@@ -3,13 +3,16 @@ package com.code5.fw.security;
 import kr.re.nsri.aria.ARIAEngine;
 
 /**
+ * 
+ * TODO [1]
+ * 
  * @author seuk
  *
  */
 public class Aria_CBC_PKCS7 implements Crypt {
 
 	/**
-	 * TODO [1]
+	 * TODO [2]
 	 */
 	private static final int BLOCK_LENGTH = 16;
 
@@ -19,7 +22,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	private byte[] iv = null;
 
 	/**
-	 * 
+	 * TODO [3]
 	 */
 	private ARIAEngine ariaEngine = null;
 
@@ -30,6 +33,8 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	 */
 	public Aria_CBC_PKCS7(byte[] key, byte[] iv) throws Exception {
 
+		// TODO [4]
+
 		ariaEngine = new ARIAEngine(key.length * 8);
 		ariaEngine.setKey(key);
 
@@ -37,6 +42,9 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	}
 
 	/**
+	 * 
+	 * TODO [5]
+	 * 
 	 * @param plan
 	 * @return
 	 * @throws Exception
@@ -63,6 +71,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 
 		int nPad = enc.length - plan.length;
 
+		// TODO [6]
 		System.arraycopy(this.iv, 0, cbcBlock, 0, BLOCK_LENGTH);
 
 		int forCnt = enc.length / BLOCK_LENGTH;
@@ -80,6 +89,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 
 			System.arraycopy(plan, srcPos, encBlock, 0, length);
 
+			// TODO [7]
 			for (int ii = length; ii < BLOCK_LENGTH; ii++) {
 				encBlock[ii] = (byte) nPad;
 			}
@@ -125,6 +135,9 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	}
 
 	/**
+	 * 
+	 * TODO [8]
+	 * 
 	 * @param enc
 	 * @return
 	 * @throws Exception

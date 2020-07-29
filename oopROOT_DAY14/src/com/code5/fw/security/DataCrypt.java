@@ -9,6 +9,9 @@ import com.code5.fw.web.Box;
 import com.code5.fw.web.BoxLocal;
 
 /**
+ * 
+ * TODO [1]
+ * 
  * @author seuk
  *
  */
@@ -17,15 +20,10 @@ public class DataCrypt {
 	/**
 	 * 
 	 */
-	private static String KEY_CRYPT_REUSE = "com.code5.fw.security.DataCrypt";
-
-	/**
-	 * 
-	 */
 	private static ConcurrentHashMap<String, DataCrypt> dataCryptMap = new ConcurrentHashMap<String, DataCrypt>();
 
 	/**
-	 * 
+	 * TODO [2]
 	 */
 	private Crypt crypt = null;
 
@@ -37,6 +35,9 @@ public class DataCrypt {
 	}
 
 	/**
+	 * 
+	 * TODO [3]
+	 * 
 	 * @return
 	 */
 	public static DataCrypt getDataCrypt(String OPT) throws Exception {
@@ -46,6 +47,7 @@ public class DataCrypt {
 			return dataCrypt;
 		}
 
+		// TODO [4]
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
 		Box cryptInfo = Sql.getSql().getTableByCache(thisBox, "DATACRYPT_01").getBox();
@@ -59,6 +61,7 @@ public class DataCrypt {
 
 		Crypt crypt = null;
 
+		// TODO [5]
 		if ("Aes_CBC_PKCS7".equals(MODE)) {
 
 			crypt = new Aria_CBC_PKCS7(keys, ivs);
@@ -77,6 +80,7 @@ public class DataCrypt {
 			throw new Exception();
 		}
 
+		// TODO [6]
 		dataCrypt = new DataCrypt(crypt);
 		dataCryptMap.put(OPT, dataCrypt);
 
@@ -102,24 +106,18 @@ public class DataCrypt {
 				return "";
 			}
 
-			Box box = Box.getThread();
-			String s = box.s(KEY_CRYPT_REUSE + "_" + encStr);
-			if (!"".equals(s)) {
-				return s;
-			}
-
+			// TODO [10]
 			byte[] enc = StringUtil.hexToByte(encStr);
 
 			byte[] plan = crypt.decrypt(enc);
 
 			String ret = new String(plan);
 
-			box.put(KEY_CRYPT_REUSE + "_" + encStr, ret);
 			return ret;
 
 		} catch (Exception ex) {
 			Trace trace = new Trace(this);
-			trace.write(encStr);
+			trace.writeErr(encStr);
 			trace.writeErr(ex);
 			return "";
 		}
@@ -144,24 +142,19 @@ public class DataCrypt {
 				return "";
 			}
 
-			Box box = Box.getThread();
-			String s = box.s(KEY_CRYPT_REUSE + "_" + planStr);
-			if (!"".equals(s)) {
-				return s;
-			}
-
+			// TODO [8]
 			byte[] plan = planStr.getBytes();
 
 			byte[] enc = crypt.encrypt(plan);
 
+			// TODO [9]
 			String ret = StringUtil.byteToHex(enc);
 
-			box.put(KEY_CRYPT_REUSE + "_" + planStr, ret);
 			return ret;
 
 		} catch (Exception ex) {
 			Trace trace = new Trace(this);
-			trace.write(planStr);
+			trace.writeErr(planStr);
 			trace.writeErr(ex);
 			return "";
 		}
@@ -169,13 +162,15 @@ public class DataCrypt {
 	}
 
 	/**
+	 * TODO [11]
+	 * 
 	 * @param enc
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {
 
 		byte[] thisKey = new byte[16];
 		thisKey[15] = 5;
-		
+
 		Aria_ECB_ZERO x = new Aria_ECB_ZERO(thisKey);
 
 		byte[] enc = StringUtil.hexToByte(key);
