@@ -24,7 +24,7 @@ ALNC_DTM
 , RG_DTM
 ) VALUES (
 [ALNC_DTM]
-, [CRD_N]
+, [ENC_CRD_N]
 , [AMT]
 , [RET]
 , [USER_ID]
@@ -39,7 +39,7 @@ SET RET = [RET]
 , MDF_IP = [USER_IP]
 , MDF_DTM = [MDF_DTM]
 WHERE ALNC_DTM = [DTM]
-AND CRD_N = [CRD_N]
+AND CRD_N = [ENC_CRD_N]
 ');
 
 insert into fw_sql values ('EXE001D_03','SELECT 
@@ -71,7 +71,7 @@ ALNC_DTM
 , MDF_DTM
 FROM BZ_ALNC
 WHERE RG_ID = [USER_ID]
-AND CRD_N = [CRD_N] 
+AND CRD_N = [ENC_CRD_N] 
 ORDER BY ALNC_DTM DESC 
 ');
 
