@@ -86,6 +86,8 @@ public class Exe001 {
 
 		}
 
+		box.put("RET", RET);
+
 		box.put("DTM", DateTime.getThisDTM());
 		int cnt = dao.exe00111_2();
 		if (cnt != 1) {
@@ -124,11 +126,11 @@ public class Exe001 {
 		DataCrypt dbDataCrypt = DataCrypt.getDataCrypt("SDB");
 
 		if ("".equals(CRD_N)) {
-			
+
 			list = dao.exe00120_1();
-			
+
 		} else {
-			
+
 			String ENC_CRD_N = dbDataCrypt.encrypt(CRD_N);
 			box.put("ENC_CRD_N", ENC_CRD_N);
 
@@ -142,7 +144,7 @@ public class Exe001 {
 			list.setData("CRD_N", i, THIS_CRD_N);
 
 		}
-		
+
 		box.put("list", list);
 
 		return "exe00120";

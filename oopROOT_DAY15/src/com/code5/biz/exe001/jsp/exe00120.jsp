@@ -53,6 +53,7 @@ function exe00120(){
 			<td>승인일시</td>
 			<td>카드번호</td>
 			<td>승인금액</td>
+			<td>결과코드</td>
 		</tr>
 
 		<%
@@ -63,6 +64,7 @@ function exe00120(){
 			<td><%=thisBox.s("ALNC_DTM")%></td>
 			<td><%=thisBox.s("CRD_N")%></td>
 			<td><%=thisBox.s("AMT")%></td>
+			<td><%=thisBox.s("RET")%></td>
 		</tr>
 		<%
 			}
