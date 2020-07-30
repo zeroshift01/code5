@@ -64,7 +64,7 @@ public class DataCrypt {
 		// TODO [5]
 		if ("Aes_CBC_PKCS7".equals(MODE)) {
 
-			crypt = new Aria_CBC_PKCS7(keys, ivs);
+			crypt = new Aes_CBC_PKCS7(keys, ivs);
 
 		} else if ("Aria_CBC_PKCS7".equals(MODE)) {
 
