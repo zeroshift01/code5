@@ -6,14 +6,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * 
- * TODO [5]
- * 
  * @author seuk
  *
  */
 public class Aes_CBC_PKCS7 implements Crypt {
 
-	// TODO [1]
 	private SecretKeySpec keySpec = null;
 	private IvParameterSpec ivSpec = null;
 
@@ -33,7 +30,6 @@ public class Aes_CBC_PKCS7 implements Crypt {
 	 */
 	public byte[] encrypt(byte[] plan) throws Exception {
 
-		// TODO [3]
 		Cipher encrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		encrypter.init(1, keySpec, ivSpec);
 
@@ -50,7 +46,6 @@ public class Aes_CBC_PKCS7 implements Crypt {
 	 */
 	public byte[] decrypt(byte[] enc) throws Exception {
 
-		// TODO [4]
 		Cipher decrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		decrypter.init(2, keySpec, ivSpec);
 		byte[] plan = decrypter.doFinal(enc);

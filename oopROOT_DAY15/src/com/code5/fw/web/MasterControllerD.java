@@ -31,7 +31,6 @@ public class MasterControllerD {
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 
-		// TODO
 		return Sql.getSql().getTableByCache(box, FORM_NO_01).getBox();
 	}
 
@@ -44,7 +43,6 @@ public class MasterControllerD {
 
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		// TODO
 		return Sql.getSql().getTableByCache(box, FORM_NO_02).getBox();
 	}
 

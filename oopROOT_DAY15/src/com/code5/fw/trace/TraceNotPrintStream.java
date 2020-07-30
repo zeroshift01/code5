@@ -13,7 +13,7 @@ class TraceNotPrintStream extends PrintStream {
 	 */
 	public TraceNotPrintStream() {
 
-		// TODO
+
 		super(new TraceNotOutputStream());
 	}
 }

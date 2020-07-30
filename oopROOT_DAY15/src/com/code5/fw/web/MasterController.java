@@ -44,7 +44,6 @@ public class MasterController extends HttpServlet {
 
 		try {
 
-			// TODO
 			TraceRunner.getTraceRunner().init(request);
 
 			String DBMS_NAME_WAS = InitProperty.DBMS_NAME_WAS();
@@ -56,7 +55,6 @@ public class MasterController extends HttpServlet {
 
 			String KEY = request.getPathInfo().substring(1);
 
-			// TODO
 			box.setUrl(KEY);
 
 			String JSP_KEY = execute(KEY);

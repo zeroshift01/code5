@@ -86,8 +86,6 @@ public class InitProperty {
 	 */
 	public static boolean IS_LOG() {
 
-		// TODO
-
 		if ("true".equals(IS_LOG)) {
 			return true;
 		}

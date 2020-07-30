@@ -128,14 +128,12 @@ public final class TraceRunner {
 			}
 			this.isInit = true;
 
-			// TODO
 			if (this.isLog) {
 				if (this.isMulti) {
 					System.setOut(new TraceNotPrintStream());
 				}
 			}
 
-			// TODO
 			this.logFileDir = this.logFileDirRoot + File.separatorChar + this.serviceName;
 
 			File file = new File(this.logFileDir);
@@ -151,7 +149,7 @@ public final class TraceRunner {
 
 	/**
 	 * 
-	 * TODO
+	 *
 	 * 
 	 * @param log
 	 * @return
@@ -312,7 +310,6 @@ public final class TraceRunner {
 
 		String url = box.getUrl();
 
-		// TODO
 		if (isNotLogWriteMap.containsKey("isNotLogWrite")) {
 			return true;
 		}
@@ -372,7 +369,7 @@ public final class TraceRunner {
 
 			}
 		} catch (Exception ex) {
-			// TODO 재귀 오류 제거
+
 			ex.printStackTrace();
 		}
 

@@ -10,8 +10,6 @@ import com.code5.fw.web.BoxLocal;
 
 /**
  * 
- * TODO [1]
- * 
  * @author seuk
  *
  */
@@ -23,7 +21,7 @@ public class DataCrypt {
 	private static ConcurrentHashMap<String, DataCrypt> dataCryptMap = new ConcurrentHashMap<String, DataCrypt>();
 
 	/**
-	 * TODO [2]
+	 * 
 	 */
 	private Crypt crypt = null;
 
@@ -36,8 +34,6 @@ public class DataCrypt {
 
 	/**
 	 * 
-	 * TODO [3]
-	 * 
 	 * @return
 	 */
 	public static DataCrypt getDataCrypt(String OPT) throws Exception {
@@ -47,7 +43,6 @@ public class DataCrypt {
 			return dataCrypt;
 		}
 
-		// TODO [4]
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
 		Box cryptInfo = Sql.getSql().getTableByCache(thisBox, "DATACRYPT_01").getBox();
@@ -61,7 +56,6 @@ public class DataCrypt {
 
 		Crypt crypt = null;
 
-		// TODO [5]
 		if ("Aes_CBC_PKCS7".equals(MODE)) {
 
 			crypt = new Aes_CBC_PKCS7(keys, ivs);
@@ -80,7 +74,6 @@ public class DataCrypt {
 			throw new Exception();
 		}
 
-		// TODO [6]
 		dataCrypt = new DataCrypt(crypt);
 		dataCryptMap.put(OPT, dataCrypt);
 
@@ -106,7 +99,6 @@ public class DataCrypt {
 				return "";
 			}
 
-			// TODO [7]
 			byte[] enc = StringUtil.hexToByte(encStr);
 
 			byte[] plan = crypt.decrypt(enc);
@@ -142,12 +134,10 @@ public class DataCrypt {
 				return "";
 			}
 
-			// TODO [8]
 			byte[] plan = planStr.getBytes();
 
 			byte[] enc = crypt.encrypt(plan);
 
-			// TODO [9]
 			String ret = StringUtil.byteToHex(enc);
 
 			return ret;
@@ -162,8 +152,6 @@ public class DataCrypt {
 	}
 
 	/**
-	 * TODO [11]
-	 * 
 	 * @param enc
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {

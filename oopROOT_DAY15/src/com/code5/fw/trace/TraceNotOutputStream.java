@@ -14,12 +14,7 @@ class TraceNotOutputStream extends OutputStream {
 	 * @throws IOException
 	 */
 	public void write(int b) throws IOException {
-		// TODO
-		try {
-			throw new Exception();
-		} catch (Exception exx) {
-			exx.printStackTrace();
-		}
+
 	}
 
 }

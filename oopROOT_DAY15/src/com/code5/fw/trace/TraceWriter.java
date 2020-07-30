@@ -17,7 +17,6 @@ class TraceWriter {
 	int initCnt = 0;
 	int errCnt = 0;
 
-	// TODO
 	private BufferedWriter out = null;
 
 	/**
@@ -33,12 +32,10 @@ class TraceWriter {
 
 		try {
 
-			// TODO
 			this.out = new BufferedWriter(new FileWriter(this.logFileUrl, true));
 
 		} catch (Exception ex) {
 
-			// TODO
 			System.err.println(this.logKey);
 			System.err.println(this.logFileUrl);
 			System.err.println(this.isMulti);

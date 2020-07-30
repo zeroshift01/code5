@@ -105,7 +105,7 @@ public class Sql {
 	}
 
 	/**
-	 * TODO
+	 * 
 	 */
 	private Trace trace = new Trace(this);
 
@@ -218,7 +218,6 @@ public class Sql {
 		StringBuffer cashKeyB = new StringBuffer();
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
 
-		// TODO
 		cashKeyB.append(FORM_NO + "|");
 
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
@@ -226,7 +225,6 @@ public class Sql {
 			String key = sqlRunnerB.param.get(i);
 			String data = box.s(key);
 
-			// TODO
 			cashKeyB.append(data + "|");
 		}
 

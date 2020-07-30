@@ -137,8 +137,6 @@ public class Mng001 {
 
 	/**
 	 * 
-	 * TODO reload
-	 * 
 	 * @return
 	 * @throws Exception
 	 */
