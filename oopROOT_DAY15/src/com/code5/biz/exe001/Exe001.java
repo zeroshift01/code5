@@ -45,7 +45,6 @@ public class Exe001 {
 		SessionB user = box.getSessionB();
 		String ID = user.getId();
 		box.put("USER_ID", ID);
-		box.put("USER_IP", "?");
 
 		String ALNC_DTM = DateTime.getThisDTM();
 		box.put("ALNC_DTM", ALNC_DTM);
@@ -65,7 +64,7 @@ public class Exe001 {
 		box.put("DTM", DateTime.getThisDTM());
 
 		dao.INSERT_BZ_ALNC();
-		
+
 		TransactionContext.getThread().commit();
 
 		DataCrypt s03DataCrypt = DataCrypt.getDataCrypt("S03");

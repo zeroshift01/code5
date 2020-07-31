@@ -33,14 +33,14 @@ function exe00111(){
 <form name="form1" method="post">
 
 <br>CRD_N
-<br><input type="text" name="CRD_N">
+<br><input type="text" name="CRD_N" value="<%=box.s("CRD_N")%>">
 
 <br>YYMM
-<br><input type="text" name="YYMM">
+<br><input type="text" name="YYMM" value="<%=box.s("YYMM")%>">
 
 
 <br>AMT
-<br><input type="text" name="AMT">
+<br><input type="text" name="AMT" value="<%=box.s("AMT")%>">
 
 
 </form>
