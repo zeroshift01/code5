@@ -52,6 +52,7 @@ public class Exe001_step01 {
 
 		try {
 			// TODO [2-1]
+			// time out 10초
 			RET = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
 
 		} catch (Exception ex) {
