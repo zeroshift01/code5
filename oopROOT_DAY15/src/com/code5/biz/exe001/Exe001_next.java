@@ -1,12 +1,8 @@
 package com.code5.biz.exe001;
 
-import java.sql.SQLException;
-
-import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.security.DataCrypt;
 import com.code5.fw.trace.Trace;
-import com.code5.fw.util.DateTime;
 import com.code5.fw.web.Box;
 import com.code5.fw.web.MasterController;
 import com.code5.fw.web.TransactionContext;
@@ -19,7 +15,7 @@ import com.other.system.Alnc;
  * @author seuk
  * 
  */
-public class Exe001 {
+public class Exe001_next {
 
 	/**
 	 * 
@@ -30,16 +26,9 @@ public class Exe001 {
 	 */
 	public String exe00110() throws Exception {
 
-		Box box = Box.getThread();
+		// XSS 방어 프레임웍 기능으로 구현
 
-		// XSS 방어
-		String CRD_N = box.s("CRD_N");
-		CRD_N = CRD_N.replace("'", "");
-		box.put("CRD_N", CRD_N);
-
-		box.put("YYMM", box.s("YYMM").replace("'", ""));
-		box.put("AMT", box.s("AMT").replace("'", ""));
-
+		// 템플릿 사용
 		return "exe00110";
 	}
 
@@ -53,13 +42,6 @@ public class Exe001 {
 
 		Box box = Box.getThread();
 
-		SessionB user = box.getSessionB();
-		String ID = user.getId();
-		box.put("USER_ID", ID);
-
-		String ALNC_DTM = DateTime.getThisDTM();
-		box.put("ALNC_DTM", ALNC_DTM);
-
 		String CRD_N = box.s("CRD_N");
 
 		if ("".equals(CRD_N)) {
@@ -69,18 +51,14 @@ public class Exe001 {
 
 		Exe001D dao = new Exe001D();
 
-		DataCrypt dbDataCrypt = DataCrypt.getDataCrypt("SDB");
-		String ENC_CRD_N = dbDataCrypt.encrypt(CRD_N);
-		box.put("ENC_CRD_N", ENC_CRD_N);
-		box.put("DTM", DateTime.getThisDTM());
-
+		// DB 암호화 프레임웍 기능으로 구현
 		dao.INSERT_BZ_ALNC();
 
 		TransactionContext.getThread().commit();
 
-		DataCrypt s03DataCrypt = DataCrypt.getDataCrypt("S03");
+		// 암호화 기능 사용 개선
+		String ALNC_CRD_N = DataCrypt.encrypt("S03", CRD_N);
 
-		String ALNC_CRD_N = s03DataCrypt.encrypt(CRD_N);
 		String YYMM = box.s("YYMM");
 		String AMT = box.s("AMT");
 
@@ -93,7 +71,10 @@ public class Exe001 {
 		} catch (Exception ex) {
 
 			Trace trace = new Trace(this);
-			trace.writeErr(ex);
+
+			// 오류 횟수가 일정 수치까지 증가되면 보고
+			trace.writeErrCount(ex);
+
 			box.put("MSG", "결제요청중 오류가 발생했습니다.");
 			return MasterController.execute("exe00110");
 
@@ -101,11 +82,8 @@ public class Exe001 {
 
 		box.put("RET", RET);
 
-		box.put("DTM", DateTime.getThisDTM());
-		int cnt = dao.UPDATE_BZ_ALNC();
-		if (cnt != 1) {
-			throw new SQLException();
-		}
+		// update 결과 검증 프레임웍 기능으로 구현
+		dao.UPDATE_BZ_ALNC();
 
 		if ("0000".equals(RET)) {
 			box.put("MSG", "성공적으로 결제가 처리되었습니다.");
@@ -128,38 +106,14 @@ public class Exe001 {
 
 		Box box = Box.getThread();
 
-		SessionB user = box.getSessionB();
-		String ID = user.getId();
-		box.put("USER_ID", ID);
-
 		Exe001D dao = new Exe001D();
 
-		Table list = null;
-		String CRD_N = box.s("CRD_N");
-		DataCrypt dbDataCrypt = DataCrypt.getDataCrypt("SDB");
-
-		if ("".equals(CRD_N)) {
-
-			list = dao.SELECT_BZ_ALNC();
-
-		} else {
-
-			String ENC_CRD_N = dbDataCrypt.encrypt(CRD_N);
-			box.put("ENC_CRD_N", ENC_CRD_N);
-
-			list = dao.SELECT_BZ_ALNC_WHERE_CRD_N();
-		}
-
-		for (int i = 0; i < list.size(); i++) {
-
-			String THIS_CRD_N = list.s("CRD_N", i);
-			THIS_CRD_N = dbDataCrypt.decrypt(THIS_CRD_N);
-			list.setData("CRD_N", i, THIS_CRD_N);
-
-		}
-
+		// 자동 복호화, SQL 분기 처리
+		Table list = dao.SELECT_BZ_ALNC();
+		
 		box.put("list", list);
 
+		// 템플릿 사용
 		return "exe00120";
 	}
 }

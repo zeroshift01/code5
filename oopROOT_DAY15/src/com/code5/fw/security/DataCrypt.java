@@ -13,8 +13,8 @@ import com.code5.fw.web.BoxLocal;
  * @author seuk
  *
  */
-public class DataCrypt {
 
+public class DataCrypt {
 	/**
 	 * 
 	 */
@@ -30,6 +30,26 @@ public class DataCrypt {
 	 */
 	private DataCrypt(Crypt crypt) {
 		this.crypt = crypt;
+	}
+
+	/**
+	 * @param encStr
+	 * @return
+	 * @throws Exception
+	 */
+	public static String encrypt(String opt, String planStr) throws Exception {
+		return getDataCrypt(opt).encrypt(planStr);
+	}
+
+	
+	/**
+	 * @param opt
+	 * @param encStr
+	 * @return
+	 * @throws Exception
+	 */
+	public static String decrypt(String opt, String encStr) throws Exception {
+		return getDataCrypt(opt).decrypt(encStr);
 	}
 
 	/**

@@ -50,6 +50,13 @@ public class Trace {
 	}
 
 	/**
+	 * @param ex
+	 */
+	public void writeErrCount(Exception ex) {
+		writeErr(ex);
+	}
+
+	/**
 	 * @param log
 	 */
 	public void writeErr(Exception ex) {
