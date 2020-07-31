@@ -30,7 +30,7 @@ public class Exe001D {
 	 * 
 	 * @throws SQLException
 	 */
-	void exe00111_1() throws SQLException {
+	void INSERT_BZ_ALNC() throws SQLException {
 		sql.executeSql(FROM_NO_01);
 	}
 
@@ -40,7 +40,7 @@ public class Exe001D {
 	 * 
 	 * @throws SQLException
 	 */
-	int exe00111_2() throws SQLException {
+	int UPDATE_BZ_ALNC() throws SQLException {
 		return sql.executeSql(FROM_NO_02);
 	}
 
@@ -51,7 +51,7 @@ public class Exe001D {
 	 * @return
 	 * @throws SQLException
 	 */
-	Table exe00120_1() throws SQLException {
+	Table SELECT_BZ_ALNC() throws SQLException {
 		return sql.getTable(FROM_NO_03);
 	}
 
@@ -63,7 +63,7 @@ public class Exe001D {
 	 * @return
 	 * @throws SQLException
 	 */
-	Table exe00120_2() throws SQLException {
+	Table SELECT_BZ_ALNC_WHERE_CRD_N() throws SQLException {
 		return sql.getTable(FROM_NO_04);
 	}
 
