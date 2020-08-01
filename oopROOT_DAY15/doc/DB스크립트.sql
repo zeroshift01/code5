@@ -50,36 +50,36 @@ WHERE KEY = [KEY]
 ');
 
 insert into fw_sql values ('EXE001D_03','SELECT 
-KEY -- KEY
-, ALNC_DTM  -- 승인일시
-, ALNC_N -- 승인번호
-, CRD_N -- 카드번호
-, AMT -- 승인금액
-, RET -- 승인결과
-, RG_ID -- 입력아이디
-, RG_IP -- 입력아이피
-, RG_DTM -- 입력시간
-, MDF_ID -- 수정아이디
-, MDF_IP -- 수정아이피
-, MDF_DTM -- 수정시간
+KEY
+, ALNC_DTM
+, ALNC_N
+, CRD_N
+, AMT
+, RET
+, RG_ID
+, RG_IP
+, RG_DTM
+, MDF_ID
+, MDF_IP
+, MDF_DTM
 FROM BZ_ALNC
 WHERE RG_ID = [USER_ID]
 ORDER BY RG_DTM DESC 
 ');
 
 insert into fw_sql values ('EXE001D_04','SELECT 
-KEY -- KEY
-, ALNC_DTM  -- 승인일시
-, ALNC_N -- 승인번호
-, CRD_N -- 카드번호
-, AMT -- 승인금액
-, RET -- 승인결과
-, RG_ID -- 입력아이디
-, RG_IP -- 입력아이피
-, RG_DTM -- 입력시간
-, MDF_ID -- 수정아이디
-, MDF_IP -- 수정아이피
-, MDF_DTM -- 수정시간
+KEY
+, ALNC_DTM
+, ALNC_N
+, CRD_N
+, AMT
+, RET
+, RG_ID
+, RG_IP
+, RG_DTM
+, MDF_ID
+, MDF_IP
+, MDF_DTM
 FROM BZ_ALNC
 WHERE RG_ID = [USER_ID]
 AND CRD_N = [ENC_CRD_N] 

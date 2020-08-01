@@ -3,7 +3,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Box box = Box.getThread();
-	
 %>
 <html><head>
 <script type="text/javascript">
@@ -30,15 +29,22 @@ function exe00111(){
 
 <form name="formMsg"><input type="hidden" name = "MSG" value = "<%=box.s("MSG")%>"></form>
 
-<a href="/waf/exe00110">카드승인요청 exe00110</a> <a href="/waf/exe00120">카드승인내역 조회 exe00120</a>
+
+<a href="/waf/exe00110">카드승인요청 화면 이동exe00110</a>
+<br>
+<a href="/waf/exe00120">카드승인내역 조회 화면 이동exe00120</a>
+
+<br>
+<br>
+<br>
 
 <form name="form1" method="post">
 
-<br>ALNC_DTM
-<br><input type="text" name="CRD_N" value="<%=StringUtil.cleanXSS(box.s("CRD_N"))%>">
+<input type="hidden" name="KEY" value="<%=StringUtil.cleanXSS(box.s("KEY"))%>">
 
 
 <br>CRD_N
+<!-- TODO [보안-3] XSS 방어 -->
 <br><input type="text" name="CRD_N" value="<%=StringUtil.cleanXSS(box.s("CRD_N"))%>">
 
 <br>YYMM
