@@ -23,6 +23,11 @@ public class Exe001 {
 
 	/**
 	 * 
+	 */
+	private Trace trace = new Trace(this);
+
+	/**
+	 * 
 	 * 결제 화면 호출
 	 * 
 	 * @param box
@@ -32,13 +37,9 @@ public class Exe001 {
 
 		Box box = Box.getThread();
 
-		// XSS 방어
-		String CRD_N = box.s("CRD_N");
-		CRD_N = CRD_N.replace("'", "");
-		box.put("CRD_N", CRD_N);
-
-		box.put("YYMM", box.s("YYMM").replace("'", ""));
-		box.put("AMT", box.s("AMT").replace("'", ""));
+		// 이중 카드승인을 방지하기 위한 키
+		String KEY = DateTime.getThisDTM() + "_exe00111";
+		box.put(KEY, KEY);
 
 		return "exe00110";
 	}
@@ -57,9 +58,6 @@ public class Exe001 {
 		String ID = user.getId();
 		box.put("USER_ID", ID);
 
-		String ALNC_DTM = DateTime.getThisDTM();
-		box.put("ALNC_DTM", ALNC_DTM);
-
 		String CRD_N = box.s("CRD_N");
 
 		if ("".equals(CRD_N)) {
@@ -74,7 +72,13 @@ public class Exe001 {
 		box.put("ENC_CRD_N", ENC_CRD_N);
 		box.put("DTM", DateTime.getThisDTM());
 
-		dao.INSERT_BZ_ALNC();
+		try {
+			dao.INSERT_BZ_ALNC();
+		} catch (Exception ex) {
+			trace.writeErr(ex);
+			box.put("MSG", "화면을 새로 고침 하였거나 이미 승인이 된 화면입니다.");
+			return MasterController.execute("exe00110");
+		}
 
 		TransactionContext.getThread().commit();
 
@@ -84,11 +88,17 @@ public class Exe001 {
 		String YYMM = box.s("YYMM");
 		String AMT = box.s("AMT");
 
-		String RET = null;
-
 		try {
 
-			RET = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
+			Box alncBox = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
+
+			String ALNC_DTM = alncBox.s("ALNC_DTM");
+			String ALNC_N = alncBox.s("ALNC_N");
+			String RET = alncBox.s("RET");
+
+			box.put("ALNC_DTM", ALNC_DTM);
+			box.put("ALNC_N", ALNC_N);
+			box.put("RET", RET);
 
 		} catch (Exception ex) {
 
@@ -99,7 +109,7 @@ public class Exe001 {
 
 		}
 
-		box.put("RET", RET);
+		String RET = box.s("RET");
 
 		box.put("DTM", DateTime.getThisDTM());
 		int cnt = dao.UPDATE_BZ_ALNC();

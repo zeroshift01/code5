@@ -6,6 +6,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.code5.fw.trace.Trace;
+import com.code5.fw.util.DateTime;
+import com.code5.fw.web.Box;
+import com.code5.fw.web.BoxLocal;
+
 /**
  * 
  * 결제 요청에 대한 처리를 수행하는 테스트 stub
@@ -15,13 +20,18 @@ import javax.crypto.spec.SecretKeySpec;
 public class Alnc {
 
 	/**
+	 * 
+	 * 암호화된 카드번호가 맞게 복호화 되는지 확인하고
+	 * 
+	 * 임의의 결과를 반환하는 테스트 stub
+	 * 
 	 * @param CRD_N
 	 * @param YYMM
 	 * @param AMT
 	 * @return
 	 * @throws Exception
 	 */
-	public static String execute(String CRD_N, String YYMM, String AMT) throws Exception {
+	public static Box execute(String CRD_N, String YYMM, String AMT) throws Exception {
 
 		byte[] enc = hexToByte(CRD_N);
 
@@ -37,21 +47,33 @@ public class Alnc {
 
 		CRD_N = new String(plan);
 
-		System.out.println("복호화된 카드번호 [" + CRD_N + "]");
+		Trace trace = new Trace(Alnc.class);
+		trace.write("복호화된 카드번호 [" + CRD_N + "]");
 
 		long x = System.currentTimeMillis() % 9;
 
 		if (x >= 0) {
 			if (x < 6) {
+
 				// 성공
-				return "0000";
+
+				Box thisBox = new BoxLocal();
+				String ALNC_N = "" + (System.currentTimeMillis() % 10000000);
+				thisBox.put("ALNC_DTM", DateTime.getThisDTM());
+				thisBox.put("ALNC_N", ALNC_N);
+				thisBox.put("RET", "0000");
+				return thisBox;
 			}
 		}
 
 		if (x >= 7) {
 			if (x < 9) {
+
 				// 실패
-				return "999" + x;
+
+				Box thisBox = new BoxLocal();
+				thisBox.put("RET", "999" + x);
+				return thisBox;
 			}
 		}
 

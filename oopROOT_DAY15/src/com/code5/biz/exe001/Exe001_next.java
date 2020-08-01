@@ -26,15 +26,17 @@ public class Exe001_next {
 	 */
 	public String exe00110() throws Exception {
 
-		// XSS 방어 프레임웍 기능으로 구현
+		// 이중 승인 방지 토큰 자동 발행
 
-		// 템플릿 사용
 		return "exe00110";
 	}
 
 	/**
 	 * 
 	 * 카드 승인
+	 * 
+	 * 이중 승인 방지 토큰 자동 처리
+	 * 
 	 * 
 	 * @return
 	 */
@@ -51,22 +53,22 @@ public class Exe001_next {
 
 		Exe001D dao = new Exe001D();
 
-		// DB 암호화 프레임웍 기능으로 구현
 		dao.INSERT_BZ_ALNC();
 
 		TransactionContext.getThread().commit();
 
-		// 암호화 기능 사용 개선
-		String ALNC_CRD_N = DataCrypt.encrypt("S03", CRD_N);
-
-		String YYMM = box.s("YYMM");
-		String AMT = box.s("AMT");
-
-		String RET = null;
-
 		try {
 
-			RET = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
+			// 암호화 기능 사용 개선
+			String ALNC_CRD_N = DataCrypt.encrypt("S03", CRD_N);
+
+			String YYMM = box.s("YYMM");
+			String AMT = box.s("AMT");
+
+			Box alncBox = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
+
+			// 불필요한 데이터 이동 제거
+			box.put("ALNC_BOX", alncBox);
 
 		} catch (Exception ex) {
 
@@ -80,9 +82,10 @@ public class Exe001_next {
 
 		}
 
-		box.put("RET", RET);
+		// 불필요한 데이터 이동 제거
+		String RET = box.s("ALNC_BOX.RET");
 
-		// update 결과 검증 프레임웍 기능으로 구현
+		// update 시 건수가 1이 아닐경우 SqlException 발생하도록 DAO 에서 처리
 		dao.UPDATE_BZ_ALNC();
 
 		if ("0000".equals(RET)) {
@@ -110,7 +113,7 @@ public class Exe001_next {
 
 		// 자동 복호화, SQL 분기 처리
 		Table list = dao.SELECT_BZ_ALNC();
-		
+
 		box.put("list", list);
 
 		// 템플릿 사용

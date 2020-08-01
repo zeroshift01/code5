@@ -64,4 +64,19 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @param s
+	 * @return
+	 */
+	public static String cleanXSS(String s) {
+
+		s = s.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
+		s = s.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
+		s = s.replaceAll("'", "& #39;");
+		s = s.replaceAll("eval\\((.*)\\)", "");
+		s = s.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+		s = s.replaceAll("script", "");
+		return s;
+
+	}
 }

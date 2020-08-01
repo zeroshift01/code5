@@ -41,7 +41,7 @@ public class Exe001D {
 	 * @throws SQLException
 	 */
 	int UPDATE_BZ_ALNC() throws SQLException {
-		return sql.executeSql(FROM_NO_02);
+		return sql.executeSqlCheck(FROM_NO_02, 1);
 	}
 
 	/**

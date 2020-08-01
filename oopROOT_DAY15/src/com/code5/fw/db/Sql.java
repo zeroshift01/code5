@@ -335,4 +335,24 @@ public class Sql {
 		cacheSqlMap.clear();
 		cacheTableMap.clear();
 	}
+
+	/**
+	 * @param FORM_NO
+	 * @param cnt
+	 * @return
+	 * @throws SQLException
+	 */
+	public int executeSqlCheck(String FORM_NO, int cnt) throws SQLException {
+		Transaction transaction = TransactionContext.getThread();
+		Box box = Box.getThread();
+
+		int updateCnt = executeSql(transaction, box, FORM_NO);
+
+		if (updateCnt != cnt) {
+			throw new SQLException();
+		}
+
+		return updateCnt;
+
+	}
 }

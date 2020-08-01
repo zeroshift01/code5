@@ -1,3 +1,4 @@
+<%@page import="com.code5.fw.util.StringUtil"%>
 <%@page import="com.code5.fw.data.Table"%>
 <%@page import="com.code5.fw.web.Box"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -30,15 +31,15 @@ function exe00120(){
 </head>
 <body onload="init();">
 
-<a href="/waf/exe00110">결제요청</a> <a href="/waf/exe00120">결제내역 조회</a>
+<a href="/waf/exe00110">카드승인요청 exe00110</a> <a href="/waf/exe00120">카드승인내역 조회 exe00120</a>
 
 
 <form name="form1" method="post">
 
 <br>CRD_N
-<br><input type="text" name="CRD_N">
+<br><input type="text" name="CRD_N" value="<%=StringUtil.cleanXSS(box.s("CRD_N"))%>">
 
-<button onclick="exe00120()">검색</button>
+<button onclick="exe00120()">검색 exe00120</button>
 
 
 </form>
