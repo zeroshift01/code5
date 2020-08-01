@@ -94,3 +94,5 @@ insert into fw_controller values ('exe00120','com.code5.biz.exe001.Exe001','exe0
 insert into fw_view values ('exe00110','/WEB-INF/classes/com/code5/biz/exe001/jsp/exe00110.jsp');
 insert into fw_view values ('exe00120','/WEB-INF/classes/com/code5/biz/exe001/jsp/exe00120.jsp');
 
+
+0
