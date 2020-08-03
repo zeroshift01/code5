@@ -25,7 +25,7 @@ public class Exe001 {
 	 * 
 	 */
 	private Trace trace = new Trace(this);
-	
+
 	/**
 	 * 
 	 * [1]
@@ -96,11 +96,11 @@ public class Exe001 {
 
 		try {
 
-			// TODO [보안] 카드번호 암호화, 외부시스템
+			// TODO [보안] 카드번호 , 유효기간 암호화
 			DataCrypt s03DataCrypt = DataCrypt.getDataCrypt("S03");
 
 			String ALNC_CRD_N = s03DataCrypt.encrypt(CRD_N);
-			String YYMM = box.s("YYMM");
+			String YYMM = s03DataCrypt.encrypt(box.s("YYMM"));
 			String AMT = box.s("AMT");
 
 			Box alncBox = Alnc.execute(ALNC_CRD_N, YYMM, AMT);
@@ -169,7 +169,7 @@ public class Exe001 {
 		String CRD_N = box.s("CRD_N");
 		DataCrypt dbDataCrypt = DataCrypt.getDataCrypt("SDB");
 
-		// TODO [유지보수] 검색조건이 있을때와 없을때를 고려 SQL 을 만들어야 함 
+		// TODO [유지보수] 검색조건이 있을때와 없을때를 고려 SQL 을 만들어야 함
 
 		if ("".equals(CRD_N)) {
 
