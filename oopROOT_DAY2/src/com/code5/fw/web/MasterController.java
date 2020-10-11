@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.code5.biz.board.web.BoardC;
-
 /**
  * @author seuk
  *
@@ -27,13 +25,14 @@ public class MasterController extends HttpServlet {
 
 		// [1]
 		Box box = new BoxHttp(request);
-		request.setAttribute("com.code5.fw.web.Box", box);
+		request.setAttribute("box", box);
 
-		BoardC boardC = new BoardC();
+		Welcome welcome = new Welcome();
 
-		String jsp = boardC.welcome(box);
+		String jsp = welcome.service(box);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
+
 		dispatcher.forward(request, response);
 
 	}
