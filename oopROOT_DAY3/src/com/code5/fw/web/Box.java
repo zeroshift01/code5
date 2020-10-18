@@ -1,6 +1,7 @@
 package com.code5.fw.web;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author seuk
@@ -14,25 +15,8 @@ public abstract class Box implements Serializable {
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
-	 * @param box
+	 * [2]
 	 * 
-	 *            [2]
-	 */
-	public static Box getThread() {
-
-		Box box = TL.get();
-
-		// [3]
-
-		if (box != null) {
-			return box;
-		}
-		box = new BoxLocal();
-		setThread(box);
-		return box;
-	}
-
-	/**
 	 * @param box
 	 */
 	static void setThread(Box box) {
@@ -40,10 +24,27 @@ public abstract class Box implements Serializable {
 	}
 
 	/**
-	 * 
+	 * [2]
 	 */
 	static void removeThread() {
 		TL.remove();
+	}
+
+	/**
+	 * [3]
+	 * 
+	 * @param box
+	 */
+	public static Box getThread() {
+
+		Box box = TL.get();
+
+		if (box != null) {
+			return box;
+		}
+		box = new BoxLocal();
+		setThread(box);
+		return box;
 	}
 
 	/**
@@ -55,21 +56,23 @@ public abstract class Box implements Serializable {
 	 * @param key
 	 * @param object
 	 */
-	abstract void setAttribute(String key, Object object);
+	public abstract void put(String key, Object object);
 
 	/**
 	 * @param key
 	 * @return
 	 */
-	abstract Object getAttribute(String key);
+	public abstract Object get(String key);
 
 	/**
 	 * @param key
 	 * @return
+	 * 
+	 *         [1]
 	 */
 	public String getString(String key) {
 
-		Object s = getAttribute(key);
+		Object s = get(key);
 
 		if (s == null) {
 			return "";
@@ -79,31 +82,64 @@ public abstract class Box implements Serializable {
 			return "";
 
 		}
-
 		return (String) s;
 	}
 
 	/**
 	 * @param key
-	 * @param obj
-	 */
-	public void put(String key, Object obj) {
-		setAttribute(key, obj);
-	}
-
-	/**
-	 * @param key
 	 * @return
-	 */
-	public Object get(String key) {
-		return getAttribute(key);
-	}
-
-	/**
-	 * @param key
-	 * @return
+	 * 
+	 *         [2]
 	 */
 	public String s(String key) {
 		return getString(key);
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 *         [3]
+	 */
+	public int getInt(String key) {
+
+		String s = s(key);
+		if ("".equals(s)) {
+			return 0;
+		}
+
+		try {
+
+			return Integer.parseInt(s);
+
+		} catch (Exception ex) {
+
+			return 0;
+		}
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 *         [4]
+	 */
+	public BigDecimal getBigDecimal(String key) {
+
+		String s = s(key);
+		if ("".equals(s)) {
+			return BigDecimal.ZERO;
+		}
+
+		try {
+
+			return new BigDecimal(s);
+
+		} catch (Exception ex) {
+
+			return BigDecimal.ZERO;
+		}
+
 	}
 }

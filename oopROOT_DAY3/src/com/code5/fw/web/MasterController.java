@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.code5.biz.board.web.BoardC;
+import code.biz.welcome.Welcome;
 
 /**
  * @author seuk
@@ -25,23 +25,21 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// [3]
+		// [1]
+		Box box = new BoxHttp(request);
+		Box.setThread(box);
+
 		try {
 
-			Box box = new BoxHttp(request);
-			// [1]
-			Box.setThread(box);
+			Welcome welcome = new Welcome();
 
-			BoardC boardC = new BoardC();
-			String jsp = boardC.welcome();
+			String jsp = welcome.service();
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
+
 			dispatcher.forward(request, response);
-
 		} catch (Exception ex) {
-
-			throw new ServletException(ex);
-
+			ex.printStackTrace();
 		} finally {
 
 			// [2]

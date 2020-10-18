@@ -5,12 +5,16 @@ package com.code5.fw.web;
  *
  */
 public class Welcome {
+	
+	いさけさ
 
 	/**
 	 * @param box
 	 * @return
 	 */
-	public String service(Box box) {
+	public String service() throws Exception {
+	
+		Box box = Box.getThread();
 
 		String name = (String) box.get("name");
 		String welcome = "welcome " + name;
@@ -32,8 +36,7 @@ public class Welcome {
 		box.put("name", "code5");
 
 		// [2]
-		Welcome welcome = new Welcome();
-		welcome.service(box);
+		//Welcome welcome = new Welcome();
 
 	}
 

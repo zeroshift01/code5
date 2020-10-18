@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author seuk
- *
+ * 
  */
 public class BoxHttp extends Box {
 
@@ -12,8 +12,9 @@ public class BoxHttp extends Box {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
-	 * 
+	 * [1]
 	 */
 	private HttpServletRequest request = null;
 
@@ -25,28 +26,22 @@ public class BoxHttp extends Box {
 	}
 
 	/**
-	 *
+	 * [2]
 	 */
-	Object getAttribute(String key) {
+	public Object get(String key) {
 
 		Object obj = request.getAttribute(key);
 		if (obj != null) {
 			return obj;
 		}
 
-		String s = request.getParameter(key);
-		if (s != null) {
-			return s;
-		}
-
-		String[] ss = request.getParameterValues(key);
-		return ss;
+		return request.getParameter(key);
 	}
 
 	/**
 	 *
 	 */
-	void setAttribute(String key, Object obj) {
+	public void put(String key, Object obj) {
 		request.setAttribute(key, obj);
 	}
 

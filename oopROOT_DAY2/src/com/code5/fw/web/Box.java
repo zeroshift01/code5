@@ -12,6 +12,44 @@ public abstract class Box implements Serializable {
 	/**
 	 * 
 	 */
+	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
+
+	/**
+	 * @param box
+	 * 
+	 * 
+	 */
+	public static Box getThread() {
+
+		Box box = TL.get();
+
+		// [3]
+
+		if (box != null) {
+			return box;
+		}
+		box = new BoxLocal();
+		setThread(box);
+		return box;
+	}
+
+	/**
+	 * @param box
+	 */
+	static void setThread(Box box) {
+		TL.set(box);
+	}
+
+	/**
+	 * 
+	 */
+	static void removeThread() {
+		TL.remove();
+	}
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
