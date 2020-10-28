@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.code5.fw.web.Box;
-import com.code5.fw.web.BoxLocal;
-
 /**
  * @author seuk
  * 
@@ -209,7 +206,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [9] 
+	 * [9]
 	 * 
 	 * @param colName
 	 * @param row

@@ -1,12 +1,6 @@
 package com.code5.fw.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import com.code5.fw.data.InitProperty;
 
 /**
  * @author seuk
@@ -15,29 +9,39 @@ import com.code5.fw.data.InitProperty;
 public abstract class Transaction {
 
 	/**
-	 * 
-	 */
-	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
-
-	/**
-	 * 
-	 */
-	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
-
-	/**
 	 * @return
+	 * 
+	 *         [1]
+	 */
+	protected abstract Connection _getConnection() throws Exception;
+
+	/**
+	 * 
+	 */
+	private Connection conn = null;
+
+	/**
 	 * @throws Exception
 	 */
-	protected abstract Connection getConnection() throws SQLException;
+	public Connection getConnection() throws Exception {
+		this.conn = _getConnection();
+		return conn;
+	}
 
 	/**
-	 * 
+	 * [2]
 	 */
 	public void commit() {
 		try {
-			getConnection().commit();
-		} catch (Exception ex) {
 
+			if (this.conn == null) {
+				return;
+			}
+
+			this.conn.commit();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -46,63 +50,16 @@ public abstract class Transaction {
 	 */
 	public void rollback() {
 		try {
-			getConnection().rollback();
+
+			if (this.conn == null) {
+				return;
+			}
+
+			this.conn.rollback();
+
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
-
-	}
-
-	/**
-	 * 
-	 * [2]
-	 * 
-	 * @return
-	 */
-	public static Transaction getTransaction() {
-		String DBMS_NAME_DEFAULT = InitProperty.DBMS_NAME_DEFAULT();
-		return getTransaction(DBMS_NAME_DEFAULT);
-	}
-
-	/**
-	 * @return
-	 */
-	public static Transaction getTransaction(String DB_CLASS_NAME) {
-
-		if ("com.code5.fw.db.Transaction_SQLITE_JDBC".equals(DB_CLASS_NAME)) {
-			return new Transaction_SQLITE_JDBC();
-		}
-
-		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(DB_CLASS_NAME)) {
-			return new Transaction_SQLITE_POOL();
-		}
-
-		throw new RuntimeException();
-	}
-
-	/**
-	 * @param SQL
-	 * @return
-	 * @throws Exception
-	 */
-	PreparedStatement prepareStatement(String SQL) throws SQLException {
-		Connection connection = getConnection();
-		PreparedStatement ps = connection.prepareStatement(SQL);
-		psList.add(ps);
-		return ps;
-
-	}
-
-	/**
-	 * @param ps
-	 * @return
-	 * @throws SQLException
-	 */
-	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
-		ResultSet rs = ps.executeQuery();
-		rsList.add(rs);
-		return rs;
-
 	}
 
 	/**
@@ -111,18 +68,14 @@ public abstract class Transaction {
 	public void close() {
 		try {
 
-			for (int i = 0; i < rsList.size(); i++) {
-				rsList.get(i).close();
+			if (this.conn == null) {
+				return;
 			}
 
-			for (int i = 0; i < psList.size(); i++) {
-				psList.get(i).close();
-			}
-
-			getConnection().close();
+			this.conn.close();
 
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
 	}
 
