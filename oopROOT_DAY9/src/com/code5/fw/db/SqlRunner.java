@@ -6,18 +6,40 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
-import com.code5.fw.web.Box;
+import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author seuk
  *
  */
-class SqlRunner {
+public class SqlRunner {
+
+	/**
+	 * [1]
+	 */
+	private static SqlRunner sql = new SqlRunner();
+
+	/**
+	 * [2]
+	 */
+	private SqlRunner() {
+	}
 
 	/**
 	 * 
-	 * [3]
+	 * 
+	 * @return
+	 * 
+	 *         [3]
+	 */
+	public static SqlRunner getSqlRunner() {
+		return sql;
+	}
+
+	/**
 	 * 
 	 * @param transaction
 	 * @param SQL
@@ -85,10 +107,14 @@ class SqlRunner {
 	 * @return
 	 * 
 	 *         SQL 을 분석해서 파라메터 부분을 인식하고 바인트처리를 위한 SQL 변환을 한다.
+	 * 
+	 *         [13]
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
 
 		String sql = getSQL(transaction, KEY);
+
+		// [14]
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
 		sqlRunnerB.key = KEY;
 
@@ -100,7 +126,41 @@ class SqlRunner {
 	}
 
 	/**
-	 * [1]
+	 * 
+	 * [4]
+	 * 
+	 * 
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Table getTable(String FORM_NO) throws SQLException {
+
+		// [7]
+		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.getThread();
+
+		return getTable(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * 
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 * 
+	 *                      [5]
+	 */
+	public Table getTable(Box box, String FORM_NO) throws SQLException {
+
+		Transaction transaction = TransactionContext.getThread();
+
+		return getTable(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * [6]
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -115,6 +175,7 @@ class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
+			// [8]
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
@@ -140,7 +201,7 @@ class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			// [3]
+			// [9]
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
@@ -151,7 +212,21 @@ class SqlRunner {
 	}
 
 	/**
-	 * [2]
+	 * 
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 * 
+	 *                      [10]
+	 */
+	public int executeSql(String FORM_NO) throws SQLException {
+		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.getThread();
+		return executeSql(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * [11]
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -165,7 +240,6 @@ class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
-			// [4]
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 

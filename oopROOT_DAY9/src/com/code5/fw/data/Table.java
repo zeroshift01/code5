@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.code5.fw.web.Box;
-import com.code5.fw.web.BoxLocal;
-
 /**
  * @author seuk
  * 
@@ -16,6 +13,7 @@ import com.code5.fw.web.BoxLocal;
 public class Table {
 
 	/**
+	 * [1]
 	 */
 	private static int MAX_RECODE_COUNT = 10000;
 
@@ -25,6 +23,7 @@ public class Table {
 	private boolean isNextRecode = false;
 
 	/**
+	 * [2]
 	 * 
 	 * @return
 	 */
@@ -41,6 +40,7 @@ public class Table {
 
 	/**
 	 * 
+	 * [3]
 	 * 
 	 */
 	private ArrayList<String[]> recodes = new ArrayList<String[]>();
@@ -52,10 +52,15 @@ public class Table {
 
 	/**
 	 * 
+	 * [4]
+	 * 
+	 * 추가데이터를 관리하는 컬랙션 객체
 	 */
 	private HashMap<String, String> addDatas = null;
 
 	/**
+	 * 
+	 * [5]
 	 * 
 	 * @param colNames
 	 */
@@ -71,11 +76,16 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * [6]
+	 * 
 	 */
 	public Table() {
 	}
 
 	/**
+	 * 
+	 * [8]
 	 * 
 	 * @param data
 	 * @return
@@ -133,11 +143,13 @@ public class Table {
 	/**
 	 * @return
 	 */
-	public int size() {
+	public int length() {
 		return recodes.size();
 	}
 
 	/**
+	 * 
+	 * [7]
 	 * 
 	 * @param colName
 	 * @param row
@@ -194,6 +206,7 @@ public class Table {
 
 	/**
 	 * 
+	 * [9]
 	 * 
 	 * @param colName
 	 * @param row
@@ -234,6 +247,7 @@ public class Table {
 
 	/**
 	 * 
+	 * [10]
 	 * 
 	 * @param row
 	 * @return
@@ -254,6 +268,7 @@ public class Table {
 
 	/**
 	 * 
+	 * [11]
 	 * 
 	 * @return
 	 */
@@ -265,6 +280,26 @@ public class Table {
 
 		return getBox(0);
 
+	}
+
+	/**
+	 * @return
+	 * 
+	 *         아직 정렬 기능이 없음
+	 * 
+	 */
+	public String[] getCols() {
+
+		String[] cols = new String[colNameMap.size()];
+		int i = 0;
+		Iterator<String> iterator = colNameMap.keySet().iterator();
+		while (iterator.hasNext()) {
+			String colName = iterator.next();
+			cols[i] = colName;
+			i++;
+		}
+
+		return cols;
 	}
 
 }

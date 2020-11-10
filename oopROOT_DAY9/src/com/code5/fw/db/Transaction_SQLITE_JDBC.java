@@ -9,29 +9,20 @@ import org.sqlite.SQLiteConfig;
  * @author seuk
  *
  */
-class Transaction_SQLITE_JDBC extends Transaction {
-
-	/**
-	 * 
-	 */
-	private Connection conn = null;
+public class Transaction_SQLITE_JDBC extends Transaction {
 
 	/**
 	 *
 	 */
-	protected Connection getConnection() throws SQLException {
-
-		if (this.conn != null) {
-			return this.conn;
-		}
+	protected Connection createConnection() throws SQLException {
 
 		SQLiteConfig config = new SQLiteConfig();
-		this.conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\onedrive\\public\\sqlitecode5.db",
+		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
 				config.toProperties());
-		
-		this.conn.setAutoCommit(false);
 
-		return this.conn;
+		conn.setAutoCommit(false);
+
+		return conn;
 
 	}
 

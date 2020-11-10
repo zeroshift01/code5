@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.code5.fw.data.InitProperty;
-
 /**
  * @author seuk
  *
@@ -15,75 +13,78 @@ import com.code5.fw.data.InitProperty;
 public abstract class Transaction {
 
 	/**
-	 * 
-	 */
-	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
-
-	/**
-	 * 
-	 */
-	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
-
-	/**
 	 * @return
-	 * @throws Exception
+	 * 
+	 *         [1]
 	 */
-	protected abstract Connection getConnection() throws SQLException;
+	protected abstract Connection createConnection() throws SQLException;
 
 	/**
 	 * 
 	 */
-	public void commit() {
-		try {
-			getConnection().commit();
-		} catch (Exception ex) {
-
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void rollback() {
-		try {
-			getConnection().rollback();
-		} catch (Exception ex) {
-
-		}
-
-	}
+	private Connection conn = null;
 
 	/**
 	 * 
 	 * [2]
 	 * 
-	 * @return
+	 * @throws Exception
 	 */
-	public static Transaction getTransaction() {
-		String DBMS_NAME_DEFAULT = InitProperty.DBMS_NAME_DEFAULT();
-		return getTransaction(DBMS_NAME_DEFAULT);
+	private Connection getConnection() throws SQLException {
+		this.conn = createConnection();
+		return conn;
 	}
 
 	/**
-	 * @return
+	 * [1]
 	 */
-	public static Transaction getTransaction(String DB_CLASS_NAME) {
+	public void commit() {
+		try {
 
-		if ("com.code5.fw.db.Transaction_SQLITE_JDBC".equals(DB_CLASS_NAME)) {
-			return new Transaction_SQLITE_JDBC();
+			if (this.conn == null) {
+				return;
+			}
+
+			this.conn.commit();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
-		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(DB_CLASS_NAME)) {
-			return new Transaction_SQLITE_POOL();
-		}
-
-		throw new RuntimeException();
 	}
+
+	/**
+	 * [2]
+	 */
+	public void rollback() {
+		try {
+
+			if (this.conn == null) {
+				return;
+			}
+
+			this.conn.rollback();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * [3]
+	 */
+	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
+
+	/**
+	 * [4]
+	 */
+	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
 	/**
 	 * @param SQL
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   [5]
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
@@ -97,6 +98,8 @@ public abstract class Transaction {
 	 * @param ps
 	 * @return
 	 * @throws SQLException
+	 * 
+	 *                      [6]
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -106,7 +109,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 * [7]
 	 */
 	public void close() {
 		try {
@@ -119,11 +122,10 @@ public abstract class Transaction {
 				psList.get(i).close();
 			}
 
-			getConnection().close();
+			this.conn.close();
 
 		} catch (Exception ex) {
 
 		}
 	}
-
 }
