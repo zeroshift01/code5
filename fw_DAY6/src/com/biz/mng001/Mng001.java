@@ -1,4 +1,4 @@
-package com.code5.biz.mng001;
+package com.biz.mng001;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.web.BizController;

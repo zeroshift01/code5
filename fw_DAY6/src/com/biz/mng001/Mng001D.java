@@ -1,4 +1,4 @@
-package com.code5.biz.mng001;
+package com.biz.mng001;
 
 import java.sql.SQLException;
 
