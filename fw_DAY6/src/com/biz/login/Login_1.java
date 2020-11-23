@@ -1,7 +1,7 @@
 package com.biz.login;
 
+import com.biz.mng001.Mng001;
 import com.code5.fw.web.BizController;
-import com.code5.fw.web.MasterController;
 
 /**
  * 
@@ -30,12 +30,10 @@ public class Login_1 implements BizController {
 		boolean failLogin = true;
 
 		if (failLogin) {
-			// return loginView();
-			return MasterController.execute("loginView");
+			return loginView();
 		}
 
-		// (new Mng001()).mng00110()
-		return MasterController.execute("loginmng00110");
+		return (new Mng001()).mng00110();
 	}
 
 	/**
@@ -43,6 +41,6 @@ public class Login_1 implements BizController {
 	 * @throws Exception
 	 */
 	public String logout() throws Exception {
-		return MasterController.execute("loginView");
+		return loginView();
 	}
 }

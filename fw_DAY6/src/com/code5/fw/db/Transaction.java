@@ -31,7 +31,9 @@ public abstract class Transaction {
 	 * @throws Exception
 	 */
 	private Connection getConnection() throws SQLException {
-		this.conn = createConnection();
+		if(this.conn ==null) {
+			this.conn = createConnection();
+		}
 		return conn;
 	}
 
