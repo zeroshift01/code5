@@ -14,7 +14,7 @@ public class BoxHttp extends Box {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * [1]
+	 * 
 	 */
 	private HttpServletRequest request = null;
 
@@ -26,7 +26,7 @@ public class BoxHttp extends Box {
 	}
 
 	/**
-	 * [2]
+	 * 
 	 */
 	public Object get(String key) {
 
@@ -61,5 +61,6 @@ public class BoxHttp extends Box {
 	 */
 	public void setSessionB(SessionB sessionB) {
 		request.getSession().setAttribute(KEY_SESSIONB, sessionB);
+		
 	}
 }

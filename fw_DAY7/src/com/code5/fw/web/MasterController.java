@@ -131,11 +131,10 @@ public class MasterController extends HttpServlet {
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();
 		if (user == null) {
-			// [3]
-			throw new Exception();
+			return false;
 		}
 
-		// [4]
+		// [3]
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
@@ -146,14 +145,14 @@ public class MasterController extends HttpServlet {
 			return true;
 		}
 
-		// [5]
+		// [4]
 		return false;
 
 	}
 
 	/**
 	 * 
-	 * [6]
+	 * [5]
 	 * 
 	 * @param KEY
 	 * @return
