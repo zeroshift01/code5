@@ -90,7 +90,6 @@ public class MasterController extends HttpServlet {
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
-		// [1]
 		boolean checkUrlAuth = checkUrlAuth(controller);
 		if (!checkUrlAuth) {
 			throw new Exception();
@@ -123,7 +122,6 @@ public class MasterController extends HttpServlet {
 
 		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
 
-		// [2]
 		if (!"Y".equals(SESSION_CHECK_YN)) {
 			return true;
 		}
@@ -134,7 +132,6 @@ public class MasterController extends HttpServlet {
 			return false;
 		}
 
-		// [3]
 		String AUTH = controller.s("AUTH");
 
 		if ("".equals(AUTH)) {
@@ -145,14 +142,11 @@ public class MasterController extends HttpServlet {
 			return true;
 		}
 
-		// [4]
 		return false;
 
 	}
 
 	/**
-	 * 
-	 * [5]
 	 * 
 	 * @param KEY
 	 * @return

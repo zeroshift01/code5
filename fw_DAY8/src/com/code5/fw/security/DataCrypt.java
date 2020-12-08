@@ -159,11 +159,11 @@ public class DataCrypt {
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {
 
-		// TODO 
+		// TODO [7] 
 		byte[] thisKey = new byte[16];
 		thisKey[15] = 5;
 
-		// TODO 
+		// TODO [8]
 		Aria_ECB_ZERO x = new Aria_ECB_ZERO(thisKey);
 
 		byte[] enc = Hex.hexToByte(key);

@@ -30,7 +30,6 @@ public class MasterControllerD {
 	 */
 	Box getController(String KEY) throws SQLException {
 
-		// [1]
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 		return SqlRunner.getSqlRunner().getTable(box, FORM_NO_01).getBox();
@@ -43,7 +42,6 @@ public class MasterControllerD {
 	 */
 	Box getView(String KEY) throws SQLException {
 
-		// [2]
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 		return SqlRunner.getSqlRunner().getTable(box, FORM_NO_02).getBox();

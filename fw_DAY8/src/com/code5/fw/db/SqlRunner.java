@@ -30,20 +30,14 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * 
 	 * @return
 	 * 
-	 * 
-	 *         [9]
 	 */
 	public static SqlRunner getSqlRunner() {
 		return sql;
 	}
 
 	/**
-	 * 
-	 * [3]
 	 * 
 	 * @param transaction
 	 * @param SQL
@@ -126,7 +120,7 @@ public class SqlRunner {
 	}
 
 	/**
-	 * [1]
+	 *
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -166,7 +160,6 @@ public class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			// [3]
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
@@ -177,7 +170,7 @@ public class SqlRunner {
 	}
 
 	/**
-	 * [2]
+	 * 
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -191,7 +184,6 @@ public class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
-			// [4]
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 

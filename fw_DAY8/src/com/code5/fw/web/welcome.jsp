@@ -3,7 +3,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 
-	// [2]
 	Box box = BoxContext.getThread();
 
 	String welcome = box.s("welcome");

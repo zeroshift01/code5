@@ -15,7 +15,7 @@ public abstract class Transaction {
 	/**
 	 * @return
 	 * 
-	 *         [1]
+	 *
 	 */
 	protected abstract Connection createConnection() throws SQLException;
 
@@ -26,7 +26,7 @@ public abstract class Transaction {
 
 	/**
 	 * 
-	 * [2]
+	 * 
 	 * 
 	 * @throws Exception
 	 */
@@ -38,7 +38,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * [1]
+	 * 
 	 */
 	public void commit() {
 		try {
@@ -55,7 +55,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * [2]
+	 * 
 	 */
 	public void rollback() {
 		try {
@@ -72,12 +72,12 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * [3]
+	 * 
 	 */
 	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
 
 	/**
-	 * [4]
+	 * 
 	 */
 	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
@@ -86,7 +86,7 @@ public abstract class Transaction {
 	 * @return
 	 * @throws Exception
 	 * 
-	 *                   [5]
+	 *                   
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
@@ -101,7 +101,7 @@ public abstract class Transaction {
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      [6]
+	 *                      
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -111,7 +111,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * [7]
+	 * 
 	 */
 	public void close() {
 		try {

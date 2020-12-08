@@ -15,11 +15,11 @@ import com.code5.fw.db.SqlRunner;
 public class Mng001D {
 
 	/**
-	 * [1]
+	 * 
 	 */
 	private SqlRunner sql = SqlRunner.getSqlRunner();
 
-	// [2]
+	// 
 	private static String FORM_NO_01 = "MNG001D_01";
 	private static String FORM_NO_02 = "MNG001D_02";
 	private static String FORM_NO_03 = "MNG001D_03";

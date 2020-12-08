@@ -15,25 +15,25 @@ public class CryptPin {
 	 * @param salt
 	 * @return
 	 * 
-	 *         [1]
+	 *         TODO [1]
 	 */
 	public static String cryptPin(String data, String salt) {
 
 		try {
 
-			// [2]
+			// TODO [2]
 			data = data + "-" + salt;
 
-			// [3]
+			// TODO [3]
 			byte[] b = data.getBytes();
 
-			// [4]
+			// TODO [4]
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.reset();
 			md.update(b);
 			byte[] enc = md.digest();
 
-			// [5]
+			// TODO [5]
 			return Hex.byteToHex(enc);
 
 		} catch (Exception ex) {

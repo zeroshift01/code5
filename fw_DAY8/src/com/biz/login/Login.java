@@ -36,7 +36,7 @@ public class Login implements BizController {
 		String PIN = box.s("PIN");
 		String ID = box.s("ID");
 
-		// [1]
+		// TODO [1]
 		PIN = CryptPin.cryptPin(PIN, ID);
 		box.put("PIN", PIN);
 

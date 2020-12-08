@@ -23,7 +23,6 @@ public class InitProperty {
 			DBMS_NAME = resourceBundle.getString("DBMS_NAME");
 
 		} catch (Exception ex) {
-			// [1]
 			ex.printStackTrace();
 		}
 

@@ -47,8 +47,6 @@ public class BoxHttp extends Box {
 
 	/**
 	 *
-	 * [1]
-	 *
 	 */
 	public SessionB getSessionB() {
 		return (SessionB) request.getSession().getAttribute(KEY_SESSIONB);
@@ -56,8 +54,6 @@ public class BoxHttp extends Box {
 
 	/**
 	 * 
-	 * [2]
-	 *
 	 */
 	public void setSessionB(SessionB sessionB) {
 		request.getSession().setAttribute(KEY_SESSIONB, sessionB);

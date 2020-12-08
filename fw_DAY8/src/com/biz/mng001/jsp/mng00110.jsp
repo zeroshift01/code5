@@ -8,7 +8,6 @@
 
 	String ret = box.s("ret");
 	
-	// [1]
 	Box thisBox = box.getBox("thisBox");
 	
 	SessionB user = box.getSessionB();

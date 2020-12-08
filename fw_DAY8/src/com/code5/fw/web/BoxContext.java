@@ -10,12 +10,11 @@ import com.code5.fw.data.BoxLocal;
 public class BoxContext {
 
 	/**
-	 * [1]
+	 *
 	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
-	 * [2]
 	 * 
 	 * @param box
 	 */
@@ -24,14 +23,14 @@ public class BoxContext {
 	}
 
 	/**
-	 * [2]
+	 *
 	 */
 	static void removeThread() {
 		TL.remove();
 	}
 
 	/**
-	 * [3]
+	 *
 	 * 
 	 * @param box
 	 */

@@ -21,7 +21,6 @@ public class JDBC_sample {
 
 		try {
 
-			// [1] TX1 시작
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM DEPT WHERE DNAME = 'ABCD'");
 			rs.next();
@@ -34,7 +33,7 @@ public class JDBC_sample {
 			st.close();
 
 			conn.commit();
-			// [2] TX1 종료
+
 
 		} catch (Exception e) {
 			conn.rollback();
@@ -42,7 +41,7 @@ public class JDBC_sample {
 
 		try {
 
-			// [3] TX2 시작
+
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM DEPT WHERE DNAME = 'ABCDABCD'");
 			rs.next();
@@ -55,7 +54,7 @@ public class JDBC_sample {
 			st.close();
 
 			conn.commit();
-			// [4] TX2 종료
+
 
 		} catch (Exception e) {
 			conn.rollback();

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public abstract class Box implements Serializable {
 
 	/**
-	 * TDOO [3]
+	 * 
 	 */
 	public static final String KEY_SESSIONB = "com.code5.fw.data.KEY_SESSIONB";
 
@@ -158,15 +158,11 @@ public abstract class Box implements Serializable {
 
 	/**
 	 * 
-	 * [1]
-	 * 
 	 * @return
 	 */
 	public abstract SessionB getSessionB();
 
 	/**
-	 * 
-	 * [2]
 	 * 
 	 * @param sessionB
 	 */

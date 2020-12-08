@@ -14,7 +14,6 @@ public class Welcome {
 	 */
 	public String service() throws Exception {
 
-		// [1]
 		Box box = BoxContext.getThread();
 
 		String name = box.s("name");

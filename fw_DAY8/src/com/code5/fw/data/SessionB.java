@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 /**
  * 
- * [1]
  * 
  * @author seuk
  */
 public class SessionB implements Serializable {
 
 	/**
-	 * [2]
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 

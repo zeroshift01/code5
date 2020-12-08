@@ -5,7 +5,6 @@ import java.util.HashMap;
 /**
  * @author seuk
  * 
- *         [1]
  */
 public class BoxLocal extends Box {
 
@@ -15,7 +14,7 @@ public class BoxLocal extends Box {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * [2]
+	 *
 	 */
 	private HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -49,7 +48,7 @@ public class BoxLocal extends Box {
 	}
 
 	/**
-	 * [1]
+	 *
 	 */
 	public SessionB getSessionB() {
 		return (SessionB) hm.get(KEY_SESSIONB);
@@ -57,7 +56,7 @@ public class BoxLocal extends Box {
 
 	/**
 	 *
-	 * [2]
+	 *
 	 *
 	 */
 	public void setSessionB(SessionB sessionB) {
