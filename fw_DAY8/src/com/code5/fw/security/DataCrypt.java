@@ -10,6 +10,7 @@ import com.code5.fw.db.SqlRunner;
 /**
  * 
  * @author seuk
+ * 
  *
  */
 public class DataCrypt {
@@ -44,6 +45,7 @@ public class DataCrypt {
 			return dataCrypt;
 		}
 
+		// TODO [3]
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
 		Box cryptInfo = SqlRunner.getSqlRunner().getTable(thisBox, "DATACRYPT_01").getBox();
@@ -133,10 +135,12 @@ public class DataCrypt {
 				return "";
 			}
 
+			// TODO [4]
 			byte[] plan = planStr.getBytes();
 
 			byte[] enc = crypt.encrypt(plan);
 
+			// TODO [5]
 			String ret = Hex.byteToHex(enc);
 
 			return ret;
@@ -155,9 +159,11 @@ public class DataCrypt {
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {
 
+		// TODO 
 		byte[] thisKey = new byte[16];
 		thisKey[15] = 5;
 
+		// TODO 
 		Aria_ECB_ZERO x = new Aria_ECB_ZERO(thisKey);
 
 		byte[] enc = Hex.hexToByte(key);
