@@ -1,4 +1,4 @@
-package com.code5.biz.board.web;
+package com.code5.fw.web;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,4 +24,3 @@ public class Welcome {
 	}
 
 }
-
