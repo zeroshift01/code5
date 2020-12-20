@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  *
  */
 public abstract class Box implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -17,12 +17,16 @@ public abstract class Box implements Serializable {
 	/**
 	 * @param key
 	 * @param object
+	 * 
+	 *               TODO [1]
 	 */
 	public abstract void put(String key, Object object);
 
 	/**
 	 * @param key
 	 * @return
+	 * 
+	 *         TODO [2]
 	 */
 	public abstract Object get(String key);
 
@@ -30,7 +34,7 @@ public abstract class Box implements Serializable {
 	 * @param key
 	 * @return
 	 * 
-	 *         [1]
+	 *         TODO [3-1]
 	 */
 	public String getString(String key) {
 
@@ -49,9 +53,28 @@ public abstract class Box implements Serializable {
 
 	/**
 	 * @param key
+	 * @param defaultx
 	 * @return
 	 * 
-	 *         [2]
+	 *         TODO [4-1]
+	 */
+	public String getString(String key, String defaultx) {
+
+		String s = getString(key);
+
+		if ("".equals(s)) {
+			return defaultx;
+		}
+
+		return s;
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 *         TODO [3-2]
 	 */
 	public String s(String key) {
 		return getString(key);
@@ -59,9 +82,20 @@ public abstract class Box implements Serializable {
 
 	/**
 	 * @param key
+	 * @param defualtx
 	 * @return
 	 * 
-	 *         [3]
+	 *         TODO [4-2]
+	 */
+	public String s(String key, String defualtx) {
+		return getString(key, defualtx);
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 *         TODO [3-3]
 	 */
 	public int getInt(String key) {
 
@@ -85,7 +119,7 @@ public abstract class Box implements Serializable {
 	 * @param key
 	 * @return
 	 * 
-	 *         [4]
+	 *         TODO [3-4]
 	 */
 	public BigDecimal getBigDecimal(String key) {
 
