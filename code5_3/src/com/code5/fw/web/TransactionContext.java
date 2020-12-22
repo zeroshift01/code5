@@ -45,6 +45,11 @@ public class TransactionContext {
 	 *
 	 */
 	static void removeThread() {
+		Transaction transaction = TL.get();
+		if (transaction != null) {
+			TL.get().closeConnection();
+		}
+		
 		TL.remove();
 	}
 

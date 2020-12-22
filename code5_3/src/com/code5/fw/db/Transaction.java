@@ -42,7 +42,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * TODO [3]
+	 * TODO [3-1]
 	 */
 	public void commit() {
 		try {
@@ -59,7 +59,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * [4]
+	 * TODO [3-1]
 	 */
 	public void rollback() {
 		try {
@@ -76,31 +76,12 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
-	 */
-	public void connectionClose() {
-
-		try {
-
-			if (conn == null) {
-				return;
-			}
-
-			this.close();
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * [3]
+	 * TODO [4-1]
 	 */
 	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
 
 	/**
-	 * [4]
+	 * TODO [4-2]
 	 */
 	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
@@ -109,7 +90,7 @@ public abstract class Transaction {
 	 * @return
 	 * @throws Exception
 	 * 
-	 *                   [5]
+	 *                   TODO [5-1]
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
@@ -124,7 +105,7 @@ public abstract class Transaction {
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      [6]
+	 *                      TODO [5-2]
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -134,7 +115,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 * TODO [6]
 	 */
 	void close() {
 
@@ -158,6 +139,25 @@ public abstract class Transaction {
 		}
 
 		psList.clear();
+
+	}
+
+	/**
+	 * TODO [7]
+	 */
+	public void closeConnection() {
+
+		try {
+
+			if (conn == null) {
+				return;
+			}
+
+			this.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 	}
 

@@ -12,7 +12,7 @@ import com.code5.biz.welcome.Welcome;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
+import com.code5.fw.db.Transaction_SQLITE_POOL;
 
 /**
  * @author seuk
@@ -33,7 +33,7 @@ public class MasterController extends HttpServlet {
 		BoxContext.setThread(box);
 
 		// TODO [1]
-		Transaction transaction = new Transaction_SQLITE_JDBC();
+		Transaction transaction = new Transaction_SQLITE_POOL();
 		TransactionContext.setThread(transaction);
 
 		try {

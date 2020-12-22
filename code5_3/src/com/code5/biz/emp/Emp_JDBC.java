@@ -1,13 +1,13 @@
 package com.code5.biz.emp;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.sqlite.SQLiteConfig;
-
-import com.code5.fw.db.DEPT_NO;
-import com.code5.fw.db.EMP;
 
 /**
  * @author seuk
@@ -22,35 +22,104 @@ public class Emp_JDBC {
 	public static void main(String[] x) throws Exception {
 
 		// TODO [1]
-				SQLiteConfig config = new SQLiteConfig();
+		SQLiteConfig config = new SQLiteConfig();
 
-				Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\sqlitecode5.db",
-						config.toProperties());
+		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
+				config.toProperties());
 
-				Statement st = conn.createStatement();
+		Emp_JDBC e = new Emp_JDBC();
 
-				ResultSet rs = st.executeQuery("SELECT * FROM DEPT WHERE DNAME = 'ABCD'");
+		// TODO [13] TX1 시작
+		e.select(conn);
 
-				rs.next();
+		e.update(conn);
+		// TODO [13] TX1 끝
 
-				String DEPTNO = rs.getString("DEPTNO ");
+		// TODO [14] TX2 시작
+		e.select(conn);
+		// TODO [14] TX2 끝
 
-				int cnt = st.executeUpdate("UPDATE EMP SET DEPTNO  = '" + DEPTNO + "'WHERE EMPNO = 'E1122'");
-				System.out.println(cnt);
+		conn.close();
 
-				rs.close();
-				st.close();
-				
-				EMP
-				EMP_NO
-				EMP_NAME
-				DEPT_NO
-				
-				conn.commit();
+	}
 
-				conn.close();
+	/**
+	 * @throws Exception
+	 */
+	private void select(Connection conn) throws Exception {
+
+		// TODO [2]
+		PreparedStatement ps = conn.prepareStatement("SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP WHERE EMP_NM = ? ");
+
+		// TODO [3]
+		ps.setString(1, "ABC");
+
+		ResultSet rs = ps.executeQuery();
+
+		// TODO [4]
+		List<List<String>> table = new ArrayList<List<String>>();
+
+		// TODO [5]
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		String[] cols = new String[columnCount];
+
+		for (int i = 0; i < cols.length; i++) {
+			List<String> colsName = new ArrayList<String>();
+			colsName.add(metaData.getColumnName(i + 1));
+		}
+
+		// TODO [6]
+		while (rs.next()) {
+
+			// TODO [7]
+			List<String> recode = new ArrayList<String>();
+			for (int i = 1; i <= cols.length; i++) {
+				recode.add(rs.getString(i));
 			}
+			table.add(recode);
+		}
 
-}
+		// TODO [8]
+		rs.close();
+		ps.close();
+
+		// TODO [9]
+		for (int i = 0; i < table.size(); i++) {
+
+			List<String> recode = table.get(i);
+
+			for (int j = 0; j < cols.length; j++) {
+				System.out.print(recode.get(j) + " ");
+			}
+			System.out.println();
+
+		}
+
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private void update(Connection conn) throws Exception {
+
+		// TODO [10]
+		conn.setAutoCommit(false);
+
+		PreparedStatement ps = conn.prepareStatement("UPDATE EMP SET HP_N = ? WHERE EMP_N = ? ");
+		ps.setString(1, "010-1111-2222");
+		ps.setString(2, "N003");
+
+		// TODO [11]
+		int i = ps.executeUpdate();
+
+		System.out.println("executeUpdate [" + i + "]");
+
+		ps.close();
+
+		// TODO [12]
+		conn.commit();
+
+	}
 
 }

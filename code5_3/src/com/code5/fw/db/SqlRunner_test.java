@@ -13,6 +13,11 @@ import junit.framework.TestCase;
  */
 public class SqlRunner_test extends TestCase {
 
+	@Override
+	protected void tearDown() throws Exception {
+		TransactionContext.getThread().commit();
+	}
+
 	/**
 	 * @throws Exception
 	 * 
@@ -56,10 +61,6 @@ public class SqlRunner_test extends TestCase {
 		if (sql.executeSql("SQLRUNNER_TEST_02_2") == 0) {
 			sql.executeSql("SQLRUNNER_TEST_02_1");
 		}
-
-		TransactionContext.getThread().commit();
-
-		TransactionContext.getThread().connectionClose();
 
 	}
 

@@ -20,6 +20,9 @@ public class SqlRunner_test extends TestCase {
 	 */
 	public void test_01() throws Exception {
 
+		Box box = BoxContext.getThread();
+		box.put("EMP_NM", "XXX");
+		
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
 		Table table = sql.getTable("SQLRUNNER_TEST_01");
@@ -45,8 +48,8 @@ public class SqlRunner_test extends TestCase {
 	public void test_02() throws Exception {
 
 		Box box = BoxContext.getThread();
-		box.put("KEY", "SQLRUNNER_TEST_02_1");
-		box.put("SQL", "SELECT * FROM FW_VIEW");
+		box.put("EMP_N", "N001");
+		box.put("EMP_NM", "XXX");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
