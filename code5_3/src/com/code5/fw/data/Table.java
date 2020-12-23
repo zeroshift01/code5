@@ -118,18 +118,10 @@ public class Table {
 		colNameMap.put(colName, colPoint);
 	}
 
-	/**
-	 * TODO [5]
-	 * 
-	 * @return
-	 */
-	public int size() {
-		return recodes.size();
-	}
 
 	/**
 	 * 
-	 * TODO [7]
+	 * TODO [5-1]
 	 * 
 	 * @param colName
 	 * @param row
@@ -186,7 +178,7 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [8-1]
+	 * TODO [5-2]
 	 * 
 	 * @param colName
 	 * @param row
@@ -210,7 +202,6 @@ public class Table {
 			throw new RuntimeException();
 		}
 
-		// TODO [8-2]
 		if (recode.length - 1 < colPosion) {
 
 			if (addDatas == null) {
@@ -228,7 +219,7 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [9-1]
+	 * TODO [6-1]
 	 * 
 	 * @param row
 	 * @return
@@ -249,7 +240,7 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [9-2]
+	 * TODO [6-2]
 	 * 
 	 * @return
 	 */
@@ -264,8 +255,18 @@ public class Table {
 	}
 
 	/**
+	 * TODO [7-1]
 	 * 
-	 * TODO [10]
+	 * @return
+	 */
+	public int size() {
+		return recodes.size();
+	}
+
+	
+	/**
+	 * 
+	 * TODO [7-2]
 	 * 
 	 * @return
 	 * 
@@ -285,7 +286,7 @@ public class Table {
 	}
 
 	/**
-	 * TODO [11]
+	 * TODO [7-3]
 	 */
 	private boolean isNextRecode = false;
 
@@ -297,7 +298,7 @@ public class Table {
 	}
 
 	/**
-	 * TODO [12]
+	 * TODO [7-4]
 	 */
 	private static int MAX_RECODE_COUNT = 10000;
 
