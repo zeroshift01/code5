@@ -17,7 +17,6 @@ public class TransactionContext {
 	/**
 	 * @return
 	 * 
-	 *         TODO [1]
 	 */
 	public static Transaction getThread() {
 		Transaction transaction = TL.get();
@@ -56,7 +55,6 @@ public class TransactionContext {
 	/**
 	 * @return
 	 * 
-	 *         TODO [2]
 	 */
 	private static Transaction createDefaultTransaction() {
 		return new Transaction_SQLITE_JDBC();

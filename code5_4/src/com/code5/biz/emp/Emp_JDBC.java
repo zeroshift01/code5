@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,30 @@ public class Emp_JDBC {
 		ps.close();
 
 		conn.commit();
+
+	}
+
+	/**
+	 * @param conn
+	 * @throws Exception
+	 */
+	void selectStatement(Connection conn, String EMP_NM) throws Exception {
+
+		String SQL = "";
+
+		SQL = SQL + "SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP ";
+
+		if (!"".equals(EMP_NM)) {
+			SQL = SQL + " WHERE EMP_NM = '" + EMP_NM + "'";
+		}
+
+		System.out.println(SQL);
+
+		Statement ps = conn.createStatement();
+
+		ResultSet rs = ps.getResultSet();
+
+		rs.next();
 
 	}
 

@@ -48,7 +48,7 @@ public class DataCrypt {
 		// TODO [3]
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
-		Box cryptInfo = SqlRunner.getSqlRunner().getTable(thisBox, "DATACRYPT_01").getBox();
+		Box cryptInfo = SqlRunner.getSqlRunner().getTable("DATACRYPT_01", thisBox).getBox();
 
 		String MODE = cryptInfo.s("MODE");
 		String KEY = cryptInfo.s("KEY");
@@ -159,7 +159,7 @@ public class DataCrypt {
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {
 
-		// TODO [7] 
+		// TODO [7]
 		byte[] thisKey = new byte[16];
 		thisKey[15] = 5;
 

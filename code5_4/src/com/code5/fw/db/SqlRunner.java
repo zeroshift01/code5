@@ -18,12 +18,12 @@ import com.code5.fw.web.TransactionContext;
 public class SqlRunner {
 
 	/**
-	 * TODO [1-1]
+	 *
 	 */
 	private static SqlRunner sql = new SqlRunner();
 
 	/**
-	 * TODO [1-2]
+	 *
 	 */
 	private SqlRunner() {
 	}
@@ -33,7 +33,6 @@ public class SqlRunner {
 	 * 
 	 * @return
 	 * 
-	 *         TODO [1-3]
 	 */
 	public static SqlRunner getSqlRunner() {
 		return sql;
@@ -45,7 +44,6 @@ public class SqlRunner {
 	 * @param SQL
 	 * @return
 	 * 
-	 *         TODO [2]
 	 */
 	String getSQL(Transaction transaction, String KEY) throws SQLException {
 
@@ -71,6 +69,7 @@ public class SqlRunner {
 	 * @param sql
 	 * @return
 	 * @throws SQLException
+	 * 
 	 */
 	SqlRunnerB getSqlRunnerB(String sql) throws SQLException {
 
@@ -111,15 +110,11 @@ public class SqlRunner {
 	 * @param sql
 	 * @return
 	 * 
-	 *         SQL 을 분석해서 파라메터 부분을 인식하고 바인트처리를 위한 SQL 변환을 한다.
-	 * 
-	 *         [13]
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
 
 		String sql = getSQL(transaction, KEY);
 
-		// [14]
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
 		sqlRunnerB.key = KEY;
 
@@ -131,41 +126,12 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * [4]
-	 * 
-	 * 
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTable(String FORM_NO) throws SQLException {
-
-		// [7]
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-
-		return getTable(transaction, box, FORM_NO);
-	}
-
-	/**
-	 * 
+	 * @param transaction
 	 * @param box
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      [5]
-	 */
-	public Table getTable(Box box, String FORM_NO) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-
-		return getTable(transaction, box, FORM_NO);
-	}
-
-	/**
-	 * [6]
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -224,16 +190,37 @@ public class SqlRunner {
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      [10]
 	 */
-	public int executeSql(String FORM_NO) throws SQLException {
+	public Table getTable(String FORM_NO) throws SQLException {
+
 		Transaction transaction = TransactionContext.getThread();
 		Box box = BoxContext.getThread();
-		return executeSql(transaction, box, FORM_NO);
+
+		return getTable(transaction, box, FORM_NO);
 	}
 
 	/**
-	 * [11]
+	 * 
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 * 
+	 */
+	public Table getTable(String FORM_NO, Box box) throws SQLException {
+
+		Transaction transaction = TransactionContext.getThread();
+
+		return getTable(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * @param transaction
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 * 
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -259,6 +246,31 @@ public class SqlRunner {
 		transaction.close();
 
 		return i;
+	}
+
+	/**
+	 * 
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 * 
+	 */
+	public int executeSql(String FORM_NO) throws SQLException {
+		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.getThread();
+		return executeSql(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * @param FORM_NO
+	 * @param box
+	 * @return
+	 * @throws SQLException
+	 * 
+	 */
+	public int executeSql(String FORM_NO, Box box) throws SQLException {
+		Transaction transaction = TransactionContext.getThread();
+		return executeSql(transaction, box, FORM_NO);
 	}
 
 }
