@@ -26,22 +26,23 @@ public class SqlRunner_test extends TestCase {
 	public void test_01() throws Exception {
 
 		Box box = BoxContext.getThread();
-		box.put("KEY", "THIS_KEY");
+		box.put("EMP_NM", "ABC");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
+		// SELECT EMP_N, EMP_NM, DEPT_N FROM EMP WHERE EMP_NM = [EMP_NM] ORDER BY EMP_N
 		Table table = sql.getTable("SQLRUNNER_TEST_01");
 
+		assertEquals(2, table.size());
+
 		String[] cols = table.getCols();
-		for (int i = 0; i < table.length(); i++) {
 
-			for (int j = 0; j < cols.length; j++) {
+		assertEquals("EMP_N", cols[0]);
+		assertEquals("EMP_NM", cols[1]);
+		assertEquals("DEPT_N", cols[2]);
 
-				System.out.println(table.s(cols[j], i));
-
-			}
-
-		}
+		assertEquals("N0001", table.s("EMP_N", 0));
+		assertEquals("N0003", table.s("EMP_N", 1));
 
 	}
 
@@ -53,14 +54,15 @@ public class SqlRunner_test extends TestCase {
 	public void test_02() throws Exception {
 
 		Box box = BoxContext.getThread();
-		box.put("KEY", "THIS_KEY");
-		box.put("SQL", "THIS_SQL");
+		box.put("EMP_N", "N0003");
+		box.put("HP_N", "010-2222-3333");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		if (sql.executeSql("SQLRUNNER_TEST_02_2") == 0) {
-			sql.executeSql("SQLRUNNER_TEST_02_1");
-		}
+		// UPDATE EMP SET HP_N = [HP_N] WHERE EMP_N =[EMP_N]
+		int i = sql.executeSql("SQLRUNNER_TEST_02");
+
+		assertEquals(1, i);
 
 	}
 

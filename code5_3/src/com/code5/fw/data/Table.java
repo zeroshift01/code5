@@ -13,46 +13,20 @@ import java.util.Iterator;
 public class Table {
 
 	/**
-	 * [1]
+	 * TODO [1-1]
 	 */
-	private static int MAX_RECODE_COUNT = 10000;
+	private HashMap<String, BigDecimal> colNameMap = new HashMap<String, BigDecimal>();;
 
 	/**
 	 * 
-	 */
-	private boolean isNextRecode = false;
-
-	/**
-	 * [2]
-	 * 
-	 * @return
-	 */
-	public boolean isNextRecode() {
-		return isNextRecode;
-	}
-
-	/**
-	 * @return
-	 */
-	public static int MAX_RECODE_COUNT() {
-		return MAX_RECODE_COUNT;
-	}
-
-	/**
-	 * 
-	 * [3]
+	 * TODO [1-2]
 	 * 
 	 */
 	private ArrayList<String[]> recodes = new ArrayList<String[]>();
 
 	/**
 	 * 
-	 */
-	private HashMap<String, BigDecimal> colNameMap = new HashMap<String, BigDecimal>();;
-
-	/**
-	 * 
-	 * [4]
+	 * TODO [1-3]
 	 * 
 	 * 추가데이터를 관리하는 컬랙션 객체
 	 */
@@ -60,7 +34,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [5]
+	 * TODO [2-1]
 	 * 
 	 * @param colNames
 	 */
@@ -77,7 +51,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [6]
+	 * TODO [2-2]
 	 * 
 	 */
 	public Table() {
@@ -85,7 +59,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [8]
+	 * TODO [3-1]
 	 * 
 	 * @param data
 	 * @return
@@ -93,6 +67,7 @@ public class Table {
 	public boolean addRecode(String[] recode) {
 
 		if (recodes.size() + 1 > MAX_RECODE_COUNT) {
+			// TODO [3-2]
 			this.isNextRecode = true;
 			return false;
 		}
@@ -111,7 +86,7 @@ public class Table {
 	}
 
 	/**
-	 * 
+	 * TODO [3-3]
 	 */
 	public boolean addRecode() {
 
@@ -128,6 +103,9 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * TODO [4]
+	 * 
 	 * @param colName
 	 */
 	public void addCol(String colName) {
@@ -141,15 +119,17 @@ public class Table {
 	}
 
 	/**
+	 * TODO [5]
+	 * 
 	 * @return
 	 */
-	public int length() {
+	public int size() {
 		return recodes.size();
 	}
 
 	/**
 	 * 
-	 * [7]
+	 * TODO [7]
 	 * 
 	 * @param colName
 	 * @param row
@@ -206,7 +186,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [9]
+	 * TODO [8-1]
 	 * 
 	 * @param colName
 	 * @param row
@@ -230,6 +210,7 @@ public class Table {
 			throw new RuntimeException();
 		}
 
+		// TODO [8-2]
 		if (recode.length - 1 < colPosion) {
 
 			if (addDatas == null) {
@@ -247,7 +228,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [10]
+	 * TODO [9-1]
 	 * 
 	 * @param row
 	 * @return
@@ -268,7 +249,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [11]
+	 * TODO [9-2]
 	 * 
 	 * @return
 	 */
@@ -283,9 +264,10 @@ public class Table {
 	}
 
 	/**
-	 * @return
 	 * 
-	 *         아직 정렬 기능이 없음
+	 * TODO [10]
+	 * 
+	 * @return
 	 * 
 	 */
 	public String[] getCols() {
@@ -300,6 +282,30 @@ public class Table {
 		}
 
 		return cols;
+	}
+
+	/**
+	 * TODO [11]
+	 */
+	private boolean isNextRecode = false;
+
+	/**
+	 * @return
+	 */
+	public boolean isNextRecode() {
+		return isNextRecode;
+	}
+
+	/**
+	 * TODO [12]
+	 */
+	private static int MAX_RECODE_COUNT = 10000;
+
+	/**
+	 * @return
+	 */
+	public static int MAX_RECODE_COUNT() {
+		return MAX_RECODE_COUNT;
 	}
 
 }
