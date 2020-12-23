@@ -127,7 +127,7 @@ public class Emp_JDBC {
 	 * @param conn
 	 * @throws Exception
 	 */
-	private void selectStatement(Connection conn, String EMP_NM) throws Exception {
+	void selectStatement(Connection conn, String EMP_NM) throws Exception {
 
 		String SQL = "";
 
@@ -142,6 +142,8 @@ public class Emp_JDBC {
 		Statement ps = conn.createStatement();
 
 		ResultSet rs = ps.getResultSet();
+
+		rs.next();
 
 	}
 
