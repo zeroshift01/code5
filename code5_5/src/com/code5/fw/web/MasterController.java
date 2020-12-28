@@ -38,10 +38,13 @@ public class MasterController extends HttpServlet {
 
 		try {
 
+			// TODO [1]
 			String KEY = request.getPathInfo().substring(1);
 
+			// TODO [2]
 			String JSP_KEY = execute(KEY);
 
+			// TODO [3]
 			MasterControllerD dao = new MasterControllerD();
 			Box view = dao.getView(JSP_KEY);
 			String JSP = view.s("JSP");
@@ -79,10 +82,10 @@ public class MasterController extends HttpServlet {
 		MasterControllerD dao = new MasterControllerD();
 
 		Box controller = dao.getController(KEY);
-
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
+		// TODO [4]
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
 
@@ -96,6 +99,8 @@ public class MasterController extends HttpServlet {
 		}
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
+
+		// TODO [5]
 		String JSP_KEY = (String) method.invoke(instance);
 		return JSP_KEY;
 

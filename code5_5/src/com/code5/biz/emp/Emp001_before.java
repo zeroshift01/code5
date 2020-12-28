@@ -2,15 +2,13 @@ package com.code5.biz.emp;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
-import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.MasterController;
 
 /**
  * @author seuk
  *
  */
-public class Emp001 implements BizController {
+public class Emp001_before {
 
 	/**
 	 * @return
@@ -42,7 +40,8 @@ public class Emp001 implements BizController {
 			throw new Exception();
 		}
 
-		return MasterController.execute("emp00101");
+		// TODO [1]
+		return emp00101();
 	}
 
 }

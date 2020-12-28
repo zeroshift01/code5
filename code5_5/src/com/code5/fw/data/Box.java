@@ -138,4 +138,39 @@ public abstract class Box implements Serializable {
 		}
 
 	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public Table getTable(String key) {
+
+		Object o = get(key);
+		if (o == null) {
+			return new Table();
+		}
+
+		if (o instanceof Table) {
+			return (Table) o;
+		}
+
+		return new Table();
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public boolean getBoolean(String key) {
+
+		String s = s(key);
+		if ("true".equals(s)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
 }
