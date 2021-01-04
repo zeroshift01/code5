@@ -63,9 +63,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 
 		int encLength = plan.length;
 
-		if (plan.length % BLOCK_LENGTH != 0) {
-			encLength = (plan.length / BLOCK_LENGTH) * BLOCK_LENGTH + BLOCK_LENGTH;
-		}
+		encLength = (plan.length / BLOCK_LENGTH) * BLOCK_LENGTH + BLOCK_LENGTH;
 
 		byte[] enc = new byte[encLength];
 

@@ -31,7 +31,7 @@ public class Aes_CBC_PKCS7 implements Crypt {
 	public byte[] encrypt(byte[] plan) throws Exception {
 
 		Cipher encrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		encrypter.init(1, keySpec, ivSpec);
+		encrypter.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 
 		byte[] enc = encrypter.doFinal(plan);
 
@@ -47,7 +47,7 @@ public class Aes_CBC_PKCS7 implements Crypt {
 	public byte[] decrypt(byte[] enc) throws Exception {
 
 		Cipher decrypter = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		decrypter.init(2, keySpec, ivSpec);
+		decrypter.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
 		byte[] plan = decrypter.doFinal(enc);
 
 		return plan;
