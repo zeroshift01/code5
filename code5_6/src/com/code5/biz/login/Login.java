@@ -27,7 +27,7 @@ public class Login implements BizController {
 
 		PIN = CryptPin.cryptPin(PIN, ID);
 
-		LoginD dao = new LoginD();
+		LoginD dao = LoginD.getLoginD();
 
 		Table user = dao.login_01();
 
@@ -61,7 +61,7 @@ public class Login implements BizController {
 		SessionB sessionB = new SessionB(ID, AUTH, IP);
 		box.setSessionB(sessionB);
 
-		if (dao.login_02() != 1) {
+		if (dao.login_03() != 1) {
 			throw new Exception();
 		}
 
@@ -73,7 +73,7 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	public String logout() throws Exception {
-		
+
 		BoxContext.getThread().setSessionB(null);
 		return loginView();
 	}

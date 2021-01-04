@@ -6,6 +6,7 @@ import com.code5.fw.security.DataCrypt;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author seuk
@@ -25,7 +26,7 @@ public class Emp001 implements BizController {
 
 		Box box = BoxContext.getThread();
 
-		Emp001D dao = new Emp001D();
+		Emp001D dao = Emp001D.getDao();
 		Table table = dao.emp00101();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -54,17 +55,19 @@ public class Emp001 implements BizController {
 		String[] EMP_N_S = box.ss("EMP_N");
 		String[] HP_N_S = box.ss("HP_N");
 
+		Emp001D dao = Emp001D.getDao();
+
 		for (int i = 0; i < HP_N_S.length; i++) {
 
 			box.put("EMP_N", EMP_N_S[i]);
 			box.put("HP_N", crypt.encrypt(HP_N_S[i]));
 
+			if (dao.emp00102() != 1) {
+				throw new Exception();
+			}
 		}
 
-		Emp001D dao = new Emp001D();
-		if (dao.emp00102() != 1) {
-			throw new Exception();
-		}
+		TransactionContext.getThread().commit();
 
 		return MasterController.execute("emp00101");
 	}

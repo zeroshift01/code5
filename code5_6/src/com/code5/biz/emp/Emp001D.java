@@ -11,6 +11,20 @@ import com.code5.fw.db.SqlRunner;
  */
 public class Emp001D {
 
+	/**
+	 * 
+	 */
+	private Emp001D() {
+
+	}
+
+	/**
+	 * @return
+	 */
+	public static Emp001D getDao() {
+		return new Emp001D();
+	}
+
 	private static String FORM_NO_01 = "EMP001D_01";
 	private static String FORM_NO_02 = "EMP001D_02";
 

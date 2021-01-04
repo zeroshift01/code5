@@ -35,7 +35,13 @@ public class BoxHttp extends Box {
 			return obj;
 		}
 
-		return request.getParameter(key);
+		obj = request.getParameterValues(key);
+
+		if (obj != null) {
+			return obj;
+		}
+
+		return null;
 	}
 
 	/**

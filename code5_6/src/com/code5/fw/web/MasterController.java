@@ -31,11 +31,11 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Box box = new BoxHttp(request);
+		Box box = createBox(request);
 
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
 
-		Object sessionB = request.getSession().getAttribute("KEY_SESSIONB");
+		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
 		if (sessionB instanceof SessionB) {
 			box.put(Box.KEY_SESSIONB, sessionB);
 		}
@@ -159,4 +159,22 @@ public class MasterController extends HttpServlet {
 
 	}
 
+	/**
+	 * @param request
+	 * @return
+	 */
+	private Box createBox(HttpServletRequest request) {
+
+		Box box = new BoxHttp(request);
+
+		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
+
+		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
+		if (sessionB instanceof SessionB) {
+			box.put(Box.KEY_SESSIONB, sessionB);
+		}
+
+		return box;
+
+	}
 }

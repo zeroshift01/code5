@@ -44,11 +44,17 @@ public abstract class Box implements Serializable {
 			return "";
 		}
 
-		if (!(s instanceof String)) {
-			return "";
-
+		if (s instanceof String[]) {
+			String[] ss = (String[]) s;
+			return ss[0];
 		}
-		return (String) s;
+
+		if (s instanceof String) {
+			return (String) s;
+		}
+
+		return "";
+
 	}
 
 	/**
