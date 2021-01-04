@@ -4,13 +4,15 @@ import kr.re.nsri.aria.ARIAEngine;
 
 /**
  * 
+ * TODO [1]
+ * 
  * @author seuk
  *
  */
 public class Aria_CBC_PKCS7 implements Crypt {
 
 	/**
-	 *
+	 * TODO [2]
 	 */
 	private static final int BLOCK_LENGTH = 16;
 
@@ -20,7 +22,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	private byte[] iv = null;
 
 	/**
-	 *
+	 * TODO [3]
 	 */
 	private ARIAEngine ariaEngine = null;
 
@@ -31,6 +33,8 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	 */
 	public Aria_CBC_PKCS7(byte[] key, byte[] iv) throws Exception {
 
+		// TODO [4]
+
 		ariaEngine = new ARIAEngine(key.length * 8);
 		ariaEngine.setKey(key);
 
@@ -38,6 +42,8 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	}
 
 	/**
+	 * 
+	 * TODO [5]
 	 * 
 	 * @param plan
 	 * @return
@@ -55,22 +61,20 @@ public class Aria_CBC_PKCS7 implements Crypt {
 
 		byte[] cbcBlock = new byte[BLOCK_LENGTH];
 
-		int encLength = plan.length;
-
-		if (plan.length % BLOCK_LENGTH != 0) {
-			encLength = (plan.length / BLOCK_LENGTH) * BLOCK_LENGTH + BLOCK_LENGTH;
-		}
+		int encLength = (plan.length / BLOCK_LENGTH) * BLOCK_LENGTH + BLOCK_LENGTH;
 
 		byte[] enc = new byte[encLength];
 
 		int nPad = enc.length - plan.length;
 
+		// TODO [6]
 		System.arraycopy(this.iv, 0, cbcBlock, 0, BLOCK_LENGTH);
 
 		int forCnt = enc.length / BLOCK_LENGTH;
 
 		int srcPos = 0;
 
+		// TODO[7]
 		for (int i = 0; i < forCnt; i++) {
 
 			byte[] encBlock = new byte[BLOCK_LENGTH];
@@ -82,6 +86,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 
 			System.arraycopy(plan, srcPos, encBlock, 0, length);
 
+			// TODO [8]
 			for (int ii = length; ii < BLOCK_LENGTH; ii++) {
 				encBlock[ii] = (byte) nPad;
 			}
@@ -127,6 +132,8 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	}
 
 	/**
+	 * 
+	 * TODO [9]
 	 * 
 	 * @param enc
 	 * @return
