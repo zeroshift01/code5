@@ -183,20 +183,25 @@ public abstract class Box implements Serializable {
 	 *
 	 */
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
+	
 
 	/**
+	 * 
+	 * @param sessionB
+	 * 
+	 *                 TODO [1-1]
+	 */
+	public abstract void setSessionB(SessionB sessionB);
+	
+	/**
 	 * @return
+	 * 
+	 *         TODO [2]
 	 */
 	public SessionB getSessionB() {
 		return (SessionB) get(KEY_SESSIONB);
 	}
-
-	/**
-	 * 
-	 * 
-	 * @param sessionB
-	 */
-	public abstract void setSessionB(SessionB sessionB);
+	
 
 	/**
 	 * 

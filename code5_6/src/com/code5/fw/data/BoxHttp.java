@@ -52,7 +52,7 @@ public class BoxHttp extends Box {
 	}
 
 	/**
-	 *
+	 * TODO [1-2]
 	 */
 	public void setSessionB(SessionB sessionB) {
 		request.setAttribute(KEY_SESSIONB, sessionB);

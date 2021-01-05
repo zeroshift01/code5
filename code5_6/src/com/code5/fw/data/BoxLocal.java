@@ -41,6 +41,7 @@ public class BoxLocal extends Box {
 
 	/**
 	 *
+	 * TODO [1-3]
 	 */
 	public void setSessionB(SessionB sessionB) {
 		hm.put(KEY_SESSIONB, sessionB);
