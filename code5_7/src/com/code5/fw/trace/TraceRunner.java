@@ -209,7 +209,7 @@ public final class TraceRunner {
 		sb.append("[" + hashCode + "]");
 		sb.append("[" + classNameShort + "]");
 
-		String serviceKey = box.s(Box.SERVICE_KEY);
+		String serviceKey = box.s(Box.KEY_SERVICE);
 		if (!"".equals(serviceKey)) {
 			sb.append("[" + serviceKey + "]");
 		}
@@ -344,7 +344,7 @@ public final class TraceRunner {
 	 */
 	boolean isNotLogWrite(String className, Box box) {
 
-		String serviceKey = box.s(Box.SERVICE_KEY);
+		String serviceKey = box.s(Box.KEY_SERVICE);
 
 		if (noLogMap.containsKey("noLog.serviceKey." + serviceKey)) {
 			return true;

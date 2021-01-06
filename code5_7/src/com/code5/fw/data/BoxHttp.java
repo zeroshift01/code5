@@ -35,7 +35,13 @@ public class BoxHttp extends Box {
 			return obj;
 		}
 
-		return request.getParameter(key);
+		obj = request.getParameterValues(key);
+
+		if (obj != null) {
+			return obj;
+		}
+
+		return null;
 	}
 
 	/**
@@ -43,6 +49,14 @@ public class BoxHttp extends Box {
 	 */
 	public void put(String key, Object obj) {
 		request.setAttribute(key, obj);
+	}
+
+	/**
+	 * 
+	 */
+	public void setSessionB(SessionB sessionB) {
+		request.setAttribute(KEY_SESSIONB, sessionB);
+		request.getSession().setAttribute(KEY_SESSIONB, sessionB);
 	}
 
 }

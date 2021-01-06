@@ -45,7 +45,7 @@ public class DataCrypt {
 
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
-		Box cryptInfo = SqlRunner.getSqlRunner().getTable(thisBox, "DATACRYPT_01").getBox();
+		Box cryptInfo = SqlRunner.getSqlRunner().getTable("DATACRYPT_01", thisBox).getBox();
 
 		String MODE = cryptInfo.s("MODE");
 		String KEY = cryptInfo.s("KEY");
@@ -105,7 +105,7 @@ public class DataCrypt {
 
 			String ret = new String(plan);
 
-			return ret;
+			return ret.trim();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

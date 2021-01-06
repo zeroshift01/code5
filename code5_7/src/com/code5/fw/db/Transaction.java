@@ -9,9 +9,6 @@ import java.util.ArrayList;
 /**
  * @author seuk
  * 
- *         try-with-resources
- * 
- *         try-with-resources
  * 
  */
 public abstract class Transaction {
@@ -23,12 +20,13 @@ public abstract class Transaction {
 	protected abstract Connection createConnection() throws SQLException;
 
 	/**
-	 * 
+	 *
 	 */
 	private Connection conn = null;
 
 	/**
 	 * 
+	 *
 	 * 
 	 * @throws Exception
 	 */
@@ -40,7 +38,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void commit() {
 		try {
@@ -57,7 +55,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void rollback() {
 		try {
@@ -74,12 +72,12 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
 
 	/**
-	 * 
+	 *
 	 */
 	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
@@ -88,7 +86,6 @@ public abstract class Transaction {
 	 * @return
 	 * @throws Exception
 	 * 
-	 *                   
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
@@ -103,7 +100,6 @@ public abstract class Transaction {
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -113,7 +109,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	void close() {
 
@@ -141,7 +137,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void closeConnection() {
 

@@ -108,7 +108,7 @@ public class DataCrypt {
 
 			String ret = new String(plan);
 
-			return ret;
+			return ret.trim();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

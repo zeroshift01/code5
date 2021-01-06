@@ -39,4 +39,10 @@ public class BoxLocal extends Box {
 		hm.put(key, obj);
 	}
 
+	/**
+	 *
+	 */
+	public void setSessionB(SessionB sessionB) {
+		hm.put(KEY_SESSIONB, sessionB);
+	}
 }

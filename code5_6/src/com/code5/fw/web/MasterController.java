@@ -34,13 +34,6 @@ public class MasterController extends HttpServlet {
 		// TODO [1]
 		Box box = createBox(request);
 
-		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
-
-		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
-		if (sessionB instanceof SessionB) {
-			box.put(Box.KEY_SESSIONB, sessionB);
-		}
-
 		BoxContext.setThread(box);
 
 		Transaction transaction = new Transaction_SQLITE_JDBC();
@@ -48,8 +41,7 @@ public class MasterController extends HttpServlet {
 
 		try {
 
-			String KEY = request.getPathInfo().substring(1);
-
+			String KEY = box.s(Box.KEY_SERVICE);
 			String JSP_KEY = execute(KEY);
 
 			MasterControllerD dao = new MasterControllerD();
@@ -174,6 +166,9 @@ public class MasterController extends HttpServlet {
 	private Box createBox(HttpServletRequest request) {
 
 		Box box = new BoxHttp(request);
+
+		String KEY = request.getPathInfo().substring(1);
+		box.put(Box.KEY_SERVICE, KEY);
 
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
 

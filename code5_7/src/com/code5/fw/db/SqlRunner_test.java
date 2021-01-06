@@ -33,7 +33,7 @@ public class SqlRunner_test extends TestCase {
 		Table table = sql.getTable("SQLRUNNER_TEST_01");
 
 		String[] cols = table.getCols();
-		for (int i = 0; i < table.length(); i++) {
+		for (int i = 0; i < table.size(); i++) {
 
 			for (int j = 0; j < cols.length; j++) {
 

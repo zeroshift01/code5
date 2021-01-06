@@ -4,15 +4,13 @@ import kr.re.nsri.aria.ARIAEngine;
 
 /**
  * 
- * TODO [1]
- * 
  * @author seuk
  *
  */
 public class Aria_CBC_PKCS7 implements Crypt {
 
 	/**
-	 * TODO [2]
+	 * 
 	 */
 	private static final int BLOCK_LENGTH = 16;
 
@@ -22,7 +20,7 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	private byte[] iv = null;
 
 	/**
-	 * TODO [3]
+	 * 
 	 */
 	private ARIAEngine ariaEngine = null;
 
@@ -32,8 +30,6 @@ public class Aria_CBC_PKCS7 implements Crypt {
 	 * @throws Exception
 	 */
 	public Aria_CBC_PKCS7(byte[] key, byte[] iv) throws Exception {
-
-		// TODO [4]
 
 		ariaEngine = new ARIAEngine(key.length * 8);
 		ariaEngine.setKey(key);

@@ -9,10 +9,9 @@ import java.math.BigDecimal;
  */
 public abstract class Box implements Serializable {
 
-	/**
-	 * 
-	 */
-	public static String SERVICE_KEY = "com.code5.fw.web.Box.SERVICE_KEY";
+	public static String KEY_REMOTE_ADDR = "com.code5.fw.web.KEY_REMOTE_ADDR";
+	public static String KEY_SERVICE = "com.code5.fw.web.KEY_SERVICE";
+	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 
 	/**
 	 * 
@@ -49,11 +48,17 @@ public abstract class Box implements Serializable {
 			return "";
 		}
 
-		if (!(s instanceof String)) {
-			return "";
-
+		if (s instanceof String[]) {
+			String[] ss = (String[]) s;
+			return ss[0];
 		}
-		return (String) s;
+
+		if (s instanceof String) {
+			return (String) s;
+		}
+
+		return "";
+
 	}
 
 	/**
@@ -143,4 +148,68 @@ public abstract class Box implements Serializable {
 		}
 
 	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public Table getTable(String key) {
+
+		Object o = get(key);
+		if (o == null) {
+			return new Table();
+		}
+
+		if (o instanceof Table) {
+			return (Table) o;
+		}
+
+		return new Table();
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public boolean getBoolean(String key) {
+
+		String s = s(key);
+		if ("true".equals(s)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * 
+	 * @param sessionB
+	 */
+	public abstract void setSessionB(SessionB sessionB);
+
+	/**
+	 * @return
+	 * 
+	 */
+	public SessionB getSessionB() {
+		return (SessionB) get(KEY_SESSIONB);
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String[] ss(String key) throws Exception {
+		Object obj = get(key);
+
+		if (obj instanceof String[]) {
+			return (String[]) obj;
+		}
+
+		return new String[0];
+
+	}
+
 }

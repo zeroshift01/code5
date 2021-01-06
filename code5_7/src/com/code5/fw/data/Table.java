@@ -13,46 +13,20 @@ import java.util.Iterator;
 public class Table {
 
 	/**
-	 * [1]
-	 */
-	private static int MAX_RECODE_COUNT = 10000;
-
-	/**
-	 * 
-	 */
-	private boolean isNextRecode = false;
-
-	/**
-	 * [2]
-	 * 
-	 * @return
-	 */
-	public boolean isNextRecode() {
-		return isNextRecode;
-	}
-
-	/**
-	 * @return
-	 */
-	public static int MAX_RECODE_COUNT() {
-		return MAX_RECODE_COUNT;
-	}
-
-	/**
-	 * 
-	 * [3]
-	 * 
-	 */
-	private ArrayList<String[]> recodes = new ArrayList<String[]>();
-
-	/**
 	 * 
 	 */
 	private HashMap<String, BigDecimal> colNameMap = new HashMap<String, BigDecimal>();;
 
 	/**
 	 * 
-	 * [4]
+	 * 
+	 * 
+	 */
+	private ArrayList<String[]> recodes = new ArrayList<String[]>();
+
+	/**
+	 * 
+	 * 
 	 * 
 	 * 추가데이터를 관리하는 컬랙션 객체
 	 */
@@ -60,7 +34,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [5]
+	 * 
 	 * 
 	 * @param colNames
 	 */
@@ -77,7 +51,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [6]
+	 * 
 	 * 
 	 */
 	public Table() {
@@ -85,7 +59,7 @@ public class Table {
 
 	/**
 	 * 
-	 * [8]
+	 * 
 	 * 
 	 * @param data
 	 * @return
@@ -111,7 +85,7 @@ public class Table {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public boolean addRecode() {
 
@@ -128,6 +102,8 @@ public class Table {
 	}
 
 	/**
+	 * 
+	 * 
 	 * @param colName
 	 */
 	public void addCol(String colName) {
@@ -140,16 +116,9 @@ public class Table {
 		colNameMap.put(colName, colPoint);
 	}
 
-	/**
-	 * @return
-	 */
-	public int length() {
-		return recodes.size();
-	}
 
 	/**
 	 * 
-	 * [7]
 	 * 
 	 * @param colName
 	 * @param row
@@ -206,8 +175,6 @@ public class Table {
 
 	/**
 	 * 
-	 * [9]
-	 * 
 	 * @param colName
 	 * @param row
 	 * @param data
@@ -247,8 +214,6 @@ public class Table {
 
 	/**
 	 * 
-	 * [10]
-	 * 
 	 * @param row
 	 * @return
 	 */
@@ -268,8 +233,6 @@ public class Table {
 
 	/**
 	 * 
-	 * [11]
-	 * 
 	 * @return
 	 */
 	public Box getBox() {
@@ -283,9 +246,17 @@ public class Table {
 	}
 
 	/**
-	 * @return
 	 * 
-	 *         아직 정렬 기능이 없음
+	 * @return
+	 */
+	public int size() {
+		return recodes.size();
+	}
+
+	
+	/**
+	 * 
+	 * @return
 	 * 
 	 */
 	public String[] getCols() {
@@ -300,6 +271,30 @@ public class Table {
 		}
 
 		return cols;
+	}
+
+	/**
+	 *
+	 */
+	private boolean isNextRecode = false;
+
+	/**
+	 * @return
+	 */
+	public boolean isNextRecode() {
+		return isNextRecode;
+	}
+
+	/**
+	 *
+	 */
+	private static int MAX_RECODE_COUNT = 10000;
+
+	/**
+	 * @return
+	 */
+	public static int MAX_RECODE_COUNT() {
+		return MAX_RECODE_COUNT;
 	}
 
 }
