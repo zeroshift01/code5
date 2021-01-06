@@ -15,6 +15,7 @@ import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.db.Transaction_SQLITE_JDBC;
+import com.code5.fw.trace.Trace;
 
 /**
  * @author seuk
@@ -26,6 +27,11 @@ public class MasterController extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
+	private static Trace trace = new Trace(MasterController.class);
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -41,11 +47,18 @@ public class MasterController extends HttpServlet {
 		try {
 
 			String KEY = box.s(Box.KEY_SERVICE);
+
+			trace.write("KEY [" + KEY + "]");
+
 			String JSP_KEY = execute(KEY);
+
+			trace.write("JSP_KEY [" + JSP_KEY + "]");
 
 			MasterControllerD dao = new MasterControllerD();
 			Box view = dao.getView(JSP_KEY);
 			String JSP = view.s("JSP");
+
+			trace.write("VIEW [" + JSP + "]");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 
@@ -86,6 +99,8 @@ public class MasterController extends HttpServlet {
 
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
+
+		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
@@ -132,6 +147,8 @@ public class MasterController extends HttpServlet {
 		if (AUTH.indexOf(user.getAuth()) >= 0) {
 			return true;
 		}
+
+		trace.write("checkUrlAuth false [" + AUTH + "][" + user.getAuth() + "]");
 
 		return false;
 

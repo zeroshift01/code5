@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
+import com.code5.fw.trace.Trace;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
@@ -16,6 +17,11 @@ import com.code5.fw.web.TransactionContext;
  *
  */
 public class SqlRunner {
+
+	/**
+	 * 
+	 */
+	private Trace trace = new Trace(this);
 
 	/**
 	 *
@@ -118,10 +124,6 @@ public class SqlRunner {
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
 		sqlRunnerB.key = KEY;
 
-		System.out.println(sqlRunnerB.sqlOrg);
-		System.out.println(sqlRunnerB.sql);
-		System.out.println(sqlRunnerB.key);
-
 		return sqlRunnerB;
 	}
 
@@ -150,7 +152,8 @@ public class SqlRunner {
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
-		System.out.println(exeSql);
+		trace.write(sqlRunnerB.key);
+		trace.write(exeSql);
 
 		ResultSet rs = transaction.getResultSet(ps);
 
@@ -237,11 +240,12 @@ public class SqlRunner {
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
-		System.out.println(exeSql);
+		trace.write(sqlRunnerB.key);
+		trace.write(exeSql);
 
 		int i = ps.executeUpdate();
 
-		System.out.println("execute cnt [" + i + "]");
+		trace.write("execute cnt [" + i + "]");
 
 		transaction.close();
 

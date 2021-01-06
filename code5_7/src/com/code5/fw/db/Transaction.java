@@ -6,12 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.code5.fw.trace.Trace;
+
 /**
  * @author seuk
  * 
  * 
  */
 public abstract class Transaction {
+
+	/**
+	 * 
+	 */
+	private Trace trace = new Trace(this);
 
 	/**
 	 * @return
@@ -31,6 +38,9 @@ public abstract class Transaction {
 	 * @throws Exception
 	 */
 	private Connection getConnection() throws SQLException {
+
+		trace.write("getConnection [" + this.hashCode() + "]");
+
 		if (this.conn == null) {
 			this.conn = createConnection();
 		}
@@ -41,6 +51,7 @@ public abstract class Transaction {
 	 *
 	 */
 	public void commit() {
+
 		try {
 
 			if (this.conn == null) {
@@ -48,6 +59,8 @@ public abstract class Transaction {
 			}
 
 			this.conn.commit();
+
+			trace.write("commit [" + this.hashCode() + "]");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -65,6 +78,8 @@ public abstract class Transaction {
 			}
 
 			this.conn.rollback();
+
+			trace.write("rollback [" + this.hashCode() + "]");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -134,6 +149,8 @@ public abstract class Transaction {
 
 		psList.clear();
 
+		trace.write("close [" + this.hashCode() + "]");
+
 	}
 
 	/**
@@ -149,6 +166,8 @@ public abstract class Transaction {
 
 			this.close();
 			conn.close();
+
+			trace.write("closeConnection [" + this.hashCode() + "]");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
