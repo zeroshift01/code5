@@ -69,7 +69,7 @@ public class MasterController extends HttpServlet {
 		} catch (Exception ex) {
 
 			transaction.rollback();
-			ex.printStackTrace();
+			trace.writeErr(ex);
 
 		} finally {
 

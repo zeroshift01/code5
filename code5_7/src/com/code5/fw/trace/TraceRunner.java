@@ -346,6 +346,12 @@ public final class TraceRunner {
 
 		String serviceKey = box.s(Box.KEY_SERVICE);
 
+		if ("Transaction_SQLITE_JDBC".equals(className)) {
+			
+			className.toString();
+
+		}
+
 		if (noLogMap.containsKey("noLog.serviceKey." + serviceKey)) {
 			return true;
 		}
