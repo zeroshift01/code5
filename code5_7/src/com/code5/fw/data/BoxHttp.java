@@ -35,7 +35,7 @@ public class BoxHttp extends Box {
 			return obj;
 		}
 
-		obj = request.getParameterValues(key);
+		obj = request.getParameter(key);
 
 		if (obj != null) {
 			return obj;
@@ -59,4 +59,24 @@ public class BoxHttp extends Box {
 		request.getSession().setAttribute(KEY_SESSIONB, sessionB);
 	}
 
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String[] ss(String key) throws Exception {
+		Object obj = get(key);
+
+		if (obj instanceof String[]) {
+			return (String[]) obj;
+		}
+
+		obj = request.getParameterValues(key);
+
+		if (obj instanceof String[]) {
+			return (String[]) obj;
+		}
+
+		return new String[0];
+
+	}
 }
