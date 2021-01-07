@@ -157,14 +157,14 @@ public abstract class Box implements Serializable {
 
 		Object o = get(key);
 		if (o == null) {
-			return new Table();
+			return new TableRecodeBase();
 		}
 
 		if (o instanceof Table) {
 			return (Table) o;
 		}
 
-		return new Table();
+		return new TableRecodeBase();
 
 	}
 
@@ -209,6 +209,35 @@ public abstract class Box implements Serializable {
 		}
 
 		return new String[0];
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public Table createTable(String[] key) throws Exception {
+
+		Table table = new TableColumnBase();
+		for (int i = 0; i < key.length; i++) {
+			table.addCol(key[i], ss(key[i]));
+		}
+
+		return table;
+
+	}
+
+	/**
+	 * @param table
+	 * @param row
+	 * @throws Exception
+	 */
+	public void putFromTable(Table table, int row) throws Exception {
+		String[] cols = table.getCols();
+		for (int i = 0; i < cols.length; i++) {
+			put(cols[i], table.s(cols[i], i));
+		}
 
 	}
 

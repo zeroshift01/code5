@@ -52,15 +52,16 @@ public class Emp001 implements BizController {
 
 		Box box = BoxContext.getThread();
 
-		String[] EMP_N_S = box.ss("EMP_N");
-		String[] HP_N_S = box.ss("HP_N");
+		Table table = box.createTable(new String[] { "EMP_N", "HP_N" });
 
 		Emp001D dao = Emp001D.getDao();
 
-		for (int i = 0; i < HP_N_S.length; i++) {
+		for (int i = 0; i < table.size(); i++) {
 
-			box.put("EMP_N", EMP_N_S[i]);
-			box.put("HP_N", crypt.encrypt(HP_N_S[i]));
+			String HP_N = table.s("HP_N", i);
+			table.setData("HP_N", i, crypt.encrypt(HP_N));
+			
+			box.putFromTable(table, i);
 
 			if (dao.emp00102() != 1) {
 				throw new Exception();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
+import com.code5.fw.data.TableRecodeBase;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
@@ -165,7 +166,7 @@ public class SqlRunner {
 			cols[i] = metaData.getColumnName(i + 1);
 		}
 
-		Table table = new Table(cols);
+		Table table = new TableRecodeBase(cols);
 
 		while (rs.next()) {
 
