@@ -5,17 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.web.BoxContext;
 
@@ -77,7 +75,7 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String rnd = makeRnd(8);
+	private String rnd = MakeRnd.createRnd(8);
 
 	/**
 	 * 
@@ -216,7 +214,7 @@ public final class TraceRunner {
 
 		String classNameShort = makeClassNameShort(className);
 
-		String dtm = getThisDTMByForm();
+		String dtm = DateTime.getThisDTMByForm();
 
 		int hashCode = box.hashCode();
 
@@ -247,7 +245,7 @@ public final class TraceRunner {
 	private void rollingLogFile(String logFileUrl) {
 
 		File file = new File(logFileUrl);
-		String renameLogFileUrl = logFileUrl + "." + getThisDTM();
+		String renameLogFileUrl = logFileUrl + "." + DateTime.getThisDTM();
 		File renameFile = new File(renameLogFileUrl);
 		file.renameTo(renameFile);
 
@@ -441,50 +439,6 @@ public final class TraceRunner {
 		}
 
 		return className;
-	}
-
-	/**
-	 * @return
-	 */
-	private static String getThisDTM() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
-		return simpleDateFormat.format(new Date());
-	}
-
-	/**
-	 * @return
-	 */
-	private static String getThisDTMByForm() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.KOREA);
-		return simpleDateFormat.format(new Date());
-	}
-
-	/**
-	 * @param len
-	 * @return
-	 */
-	private static String makeRnd(int len) {
-
-		StringBuffer temp = new StringBuffer();
-		SecureRandom rnd = new SecureRandom();
-		for (int i = 0; i < len; i++) {
-			int rIndex = rnd.nextInt(3);
-			switch (rIndex) {
-			case 0:
-				// a-z
-				temp.append((char) ((int) (rnd.nextInt(26)) + 97));
-				break;
-			case 1:
-				// A-Z
-				temp.append((char) ((int) (rnd.nextInt(26)) + 65));
-				break;
-			case 2:
-				// 0-9
-				temp.append((rnd.nextInt(10)));
-				break;
-			}
-		}
-		return temp.toString();
 	}
 
 }

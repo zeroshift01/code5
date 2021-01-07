@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.db.Transaction_SQLITE_JDBC;
@@ -23,6 +24,18 @@ import com.code5.fw.trace.TraceRunner;
  *
  */
 public class MasterController extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	public static String getRND() {
+		return RND;
+	}
+
+	/**
+	 * 
+	 */
+	private static String RND = MakeRnd.createRnd(8);
 
 	/**
 	 * 
@@ -180,7 +193,7 @@ public class MasterController extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
-	private Box createBox(HttpServletRequest request) {
+	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
 

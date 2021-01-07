@@ -12,6 +12,18 @@
 		<servlet-name>waf</servlet-name>
 		<url-pattern>/waf/*</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>multipart</servlet-name>
+		<servlet-class>com.code5.fw.web.MasterControllerMultipart
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>multipart</servlet-name>
+		<url-pattern>/multipart/*</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>

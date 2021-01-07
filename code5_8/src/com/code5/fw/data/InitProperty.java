@@ -25,6 +25,16 @@ public class InitProperty {
 	 */
 	private static String TRACE_CONFIG_URL = null;
 
+	/**
+	 * 
+	 */
+	private static String UPLOAD_FILE_DIR_TEMP_URL = null;
+
+	/**
+	 * 
+	 */
+	private static String UPLOAD_FILE_DIR_URL = null;
+
 	static {
 
 		try {
@@ -41,6 +51,9 @@ public class InitProperty {
 			if ("true".equals(IS_WRITE_LOG_S)) {
 				IS_WRITE_LOG = true;
 			}
+
+			UPLOAD_FILE_DIR_TEMP_URL = resourceBundle.getString("UPLOAD_FILE_DIR_TEMP_URL");
+			UPLOAD_FILE_DIR_URL = resourceBundle.getString("UPLOAD_FILE_DIR_URL");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -60,7 +73,7 @@ public class InitProperty {
 	public static String LOG_FILE_PATTERN() {
 		return LOG_FILE_PATTERN;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -75,4 +88,17 @@ public class InitProperty {
 		return IS_WRITE_LOG;
 	}
 
+	/**
+	 * @return
+	 */
+	public static String UPLOAD_FILE_DIR_TEMP_URL() {
+		return UPLOAD_FILE_DIR_TEMP_URL;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String UPLOAD_FILE_DIR_URL() {
+		return UPLOAD_FILE_DIR_URL;
+	}
 }
