@@ -1,5 +1,7 @@
 package com.code5.fw.data;
 
+import com.code5.fw.web.BoxContext;
+
 /**
  * @author seuk
  * 
@@ -59,7 +61,8 @@ abstract public class Table {
 	 */
 	public Box getBox(int row) {
 
-		Box box = new BoxLocal();
+		Box box = new BoxLocal(BoxContext.getThread().isXssConvert());
+		
 		String[] cols = getCols();
 		for (int i = 0; i < cols.length; i++) {
 			String colName = cols[i];

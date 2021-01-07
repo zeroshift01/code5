@@ -13,6 +13,22 @@ public abstract class Box implements Serializable {
 	public static String KEY_SERVICE = "com.code5.fw.web.KEY_SERVICE";
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 
+	private boolean isXssConvert = false;
+
+	/**
+	 * @param isXssConvert
+	 */
+	public void setXssConvert(boolean isXssConvert) {
+		this.isXssConvert = isXssConvert;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isXssConvert() {
+		return this.isXssConvert;
+	}
+
 	/**
 	 * 
 	 */
@@ -33,73 +49,6 @@ public abstract class Box implements Serializable {
 	 * 
 	 */
 	public abstract Object get(String key);
-
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
-	public String getString(String key) {
-
-		Object s = get(key);
-
-		if (s == null) {
-			return "";
-		}
-
-		if (s instanceof String[]) {
-			String[] ss = (String[]) s;
-			return ss[0];
-		}
-
-		if (s instanceof String) {
-			return (String) s;
-		}
-
-		return "";
-
-	}
-
-	/**
-	 * @param key
-	 * @param defaultx
-	 * @return
-	 * 
-	 * 
-	 */
-	public String getString(String key, String defaultx) {
-
-		String s = getString(key);
-
-		if ("".equals(s)) {
-			return defaultx;
-		}
-
-		return s;
-
-	}
-
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
-	public String s(String key) {
-		return getString(key);
-	}
-
-	/**
-	 * @param key
-	 * @param defualtx
-	 * @return
-	 * 
-	 * 
-	 */
-	public String s(String key, String defualtx) {
-		return getString(key, defualtx);
-	}
 
 	/**
 	 * @param key
@@ -239,6 +188,92 @@ public abstract class Box implements Serializable {
 			put(cols[i], table.s(cols[i], i));
 		}
 
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 * 
+	 */
+	private String _getString(String key) {
+
+		Object s = get(key);
+
+		if (s == null) {
+			return "";
+		}
+
+		if (s instanceof String[]) {
+			String[] ss = (String[]) s;
+			return ss[0];
+		}
+
+		if (s instanceof String) {
+			return (String) s;
+		}
+
+		return "";
+
+	}
+
+	/**
+	 * @param key
+	 * @param defaultx
+	 * @return
+	 */
+	private String _getString(String key, String defaultx) {
+
+		String s = _getString(key);
+
+		if ("".equals(s)) {
+			return defaultx;
+		}
+
+		return s;
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public String getString(String key, String d) {
+
+		String data = _getString(key, d);
+
+		if (!isXssConvert) {
+			return data;
+		}
+
+		return XssConvert.xssConvert(data);
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public String getString(String key) {
+		return getString(key, "");
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 * 
+	 * 
+	 */
+	public String s(String key) {
+		return getString(key, "");
+	}
+
+	/**
+	 * @param key
+	 * @param d
+	 * @return
+	 */
+	public String s(String key, String d) {
+		return getString(key, d);
 	}
 
 }

@@ -65,6 +65,8 @@ public class MasterController extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 
+			box.setXssConvert(true);
+
 			dispatcher.forward(request, response);
 
 			transaction.commit();

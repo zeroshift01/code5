@@ -25,11 +25,12 @@ function emp00102(){
 <form name="form1" method="post">
 <%
 	for (int i = 0; i < table.size(); i++) {
+		Box thisBox = table.getBox(i);
 %>
 
-<input type="text" name ="EMP_N" value = "<%=table.s("EMP_N", i)%>" readonly="readonly">
-<%=table.s("EMP_NM", i)%>
-<input type="text" name ="HP_N" value = "<%=table.s("HP_N", i)%>">
+<input type="text" name ="EMP_N" value = "<%=thisBox.s("EMP_N")%>" readonly="readonly">
+<%=thisBox.s("EMP_NM")%>
+<input type="text" name ="HP_N" value = "<%=thisBox.s("HP_N")%>">
 
 <br>
 <%
