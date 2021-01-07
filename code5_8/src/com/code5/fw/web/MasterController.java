@@ -38,6 +38,8 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		TraceRunner.getTraceRunner().init(request);
+
 		Box box = createBox(request);
 
 		BoxContext.setThread(box);
@@ -193,7 +195,6 @@ public class MasterController extends HttpServlet {
 		return box;
 
 	}
-	
 
 	@Override
 	public void destroy() {
