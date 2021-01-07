@@ -185,7 +185,7 @@ public abstract class Box implements Serializable {
 	public void putFromTable(Table table, int row) throws Exception {
 		String[] cols = table.getCols();
 		for (int i = 0; i < cols.length; i++) {
-			put(cols[i], table.s(cols[i], i));
+			put(cols[i], table.s(cols[i], row));
 		}
 
 	}
@@ -201,7 +201,7 @@ public abstract class Box implements Serializable {
 		Object s = get(key);
 
 		if (s == null) {
-			return "";
+			return null;
 		}
 
 		if (s instanceof String[]) {
@@ -226,7 +226,7 @@ public abstract class Box implements Serializable {
 
 		String s = _getString(key);
 
-		if ("".equals(s)) {
+		if (s == null) {
 			return defaultx;
 		}
 
@@ -241,11 +241,26 @@ public abstract class Box implements Serializable {
 
 		String data = _getString(key, d);
 
+		if (data == null) {
+			data = "";
+		}
+
 		if (!isXssConvert) {
 			return data;
 		}
 
-		return XssConvert.xssConvert(data);
+		String keyx = "$$XSS_CONVERT_" + data.hashCode();
+
+		String datax = _getString(keyx);
+		if (datax != null) {
+			return datax;
+		}
+
+		data = XssConvert.xssConvert(data);
+
+		put(keyx, data);
+
+		return data;
 
 	}
 
