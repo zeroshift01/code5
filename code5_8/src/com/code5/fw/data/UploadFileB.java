@@ -1,10 +1,18 @@
 package com.code5.fw.data;
 
+import com.code5.fw.db.SqlRunner;
+import com.code5.fw.web.BoxContext;
+
 /**
  * @author seuk
  *
  */
 public class UploadFileB {
+
+	/**
+	 * 
+	 */
+	private static String FORM_NO_01 = "UPLOADFILEB_01";
 
 	private long size = 0;
 	private String name = null;
@@ -12,6 +20,8 @@ public class UploadFileB {
 	private String submittedFileName = null;
 	private String realFileName = null;
 	private String realFileUrl = null;
+
+	private boolean isSave = false;
 
 	/**
 	 * @param size
@@ -60,8 +70,32 @@ public class UploadFileB {
 	/**
 	 * 
 	 */
-	public void fileOk() {
-		// this.realFileUrl;
+	public void save() throws Exception {
+
+		Box box = BoxContext.getThread();
+
+		box.put("UPLOADFILEB.REAL_FILE_NAME", this.realFileName);
+		box.put("UPLOADFILEB.SIZE", "" + this.size);
+		box.put("UPLOADFILEB.NAME", this.name);
+		box.put("UPLOADFILEB.CONTENT_TYPE", this.contentType);
+		box.put("UPLOADFILEB.SUBMITTED_FILE_NAME", this.submittedFileName);
+		box.put("UPLOADFILEB.REAL_FILE_URL", this.realFileUrl);
+
+		SqlRunner.getSqlRunner().executeSql(FORM_NO_01);
+
+		this.isSave = true;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isSave() {
+		return this.isSave;
+	}
+	
+	private void fileEncrypt() {
+		
+		
 	}
 
 }

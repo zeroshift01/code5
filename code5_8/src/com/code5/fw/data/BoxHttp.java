@@ -1,5 +1,8 @@
 package com.code5.fw.data;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -79,4 +82,38 @@ public class BoxHttp extends Box {
 		return new String[0];
 
 	}
+
+	/**
+	 *
+	 */
+	public String[] getKeys() {
+
+		Enumeration<String> em1 = request.getAttributeNames();
+		Enumeration<String> em2 = request.getParameterNames();
+
+		ArrayList<String> list = new ArrayList<String>();
+
+		while (em1.hasMoreElements()) {
+			String ss = em1.nextElement();
+			if (list.contains(ss)) {
+				list.add(ss);
+			}
+		}
+
+		while (em2.hasMoreElements()) {
+			String ss = em2.nextElement();
+			if (list.contains(ss)) {
+				list.add(ss);
+			}
+		}
+
+		String[] keys = new String[list.size()];
+		for (int i = 0; i < keys.length; i++) {
+			keys[i] = list.get(i);
+		}
+
+		return keys;
+
+	}
+
 }

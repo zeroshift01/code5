@@ -33,11 +33,14 @@ public class MasterControllerMultipart extends MasterController {
 	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
+		BoxContext.setThread(box);
 
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);
 
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
+
+		box.put(Box.KEY_CONTENT_TYPE, request.getContentType());
 
 		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
 		if (sessionB instanceof SessionB) {
@@ -48,21 +51,22 @@ public class MasterControllerMultipart extends MasterController {
 
 		for (Part part : parts) {
 
-			if (!part.getHeader("Content-Disposition").contains("filename=")) {
+			long size = part.getSize();
+			if (size == 0) {
+				part.delete();
 				continue;
 			}
 
-			if (part.getSize() == 0) {
+			String submittedFileName = part.getSubmittedFileName();
+			if (submittedFileName == null) {
 				part.delete();
 				continue;
 			}
 
 			String name = part.getName();
 			String contentType = part.getContentType();
-			long size = part.getSize();
-			String submittedFileName = part.getSubmittedFileName();
-
 			String realFileName = createRealFileName();
+
 			String realFileUrl = InitProperty.UPLOAD_FILE_DIR_TEMP_URL() + File.separatorChar + realFileName;
 
 			part.write(realFileUrl);

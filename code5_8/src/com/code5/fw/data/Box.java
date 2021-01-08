@@ -12,6 +12,7 @@ public abstract class Box implements Serializable {
 	public static String KEY_REMOTE_ADDR = "com.code5.fw.web.KEY_REMOTE_ADDR";
 	public static String KEY_SERVICE = "com.code5.fw.web.KEY_SERVICE";
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
+	public static String KEY_CONTENT_TYPE = "com.code5.fw.web.KEY_CONTENT_TYPE";
 
 	private boolean isXssConvert = false;
 
@@ -291,4 +292,8 @@ public abstract class Box implements Serializable {
 		return getString(key, d);
 	}
 
+	/**
+	 * @return
+	 */
+	public abstract String[] getKeys();
 }

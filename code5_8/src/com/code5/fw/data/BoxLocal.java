@@ -1,6 +1,7 @@
 package com.code5.fw.data;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * @author seuk
@@ -50,5 +51,21 @@ public class BoxLocal extends Box {
 	 */
 	public void setSessionB(SessionB sessionB) {
 		hm.put(KEY_SESSIONB, sessionB);
+	}
+
+	/**
+	 *
+	 */
+	public String[] getKeys() {
+		String[] keys = new String[hm.size()];
+		Iterator<String> iterator = hm.keySet().iterator();
+		int i = 0;
+		while (iterator.hasNext()) {
+			keys[i] = iterator.next();
+			i++;
+		}
+
+		return keys;
+
 	}
 }

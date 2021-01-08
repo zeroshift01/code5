@@ -55,8 +55,6 @@ public class MasterController extends HttpServlet {
 
 		Box box = createBox(request);
 
-		BoxContext.setThread(box);
-
 		Transaction transaction = new Transaction_SQLITE_JDBC();
 		TransactionContext.setThread(transaction);
 
@@ -196,6 +194,7 @@ public class MasterController extends HttpServlet {
 	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
+		BoxContext.setThread(box);
 
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);

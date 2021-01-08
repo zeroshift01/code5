@@ -105,7 +105,7 @@ public class DataCrypt {
 
 			String ret = new String(plan);
 
-			return ret.trim();
+			return ret;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -163,4 +163,21 @@ public class DataCrypt {
 		return x.decrypt(enc);
 	}
 
+	/**
+	 * 
+	 */
+	public byte[] encrypt(byte[] b) throws Exception {
+		byte[] enc = crypt.encrypt(b);
+		return enc;
+	}
+
+	/**
+	 * @param b
+	 * @return
+	 * @throws Exception
+	 */
+	public byte[] decrypt(byte[] b) throws Exception {
+		byte[] enc = crypt.decrypt(b);
+		return enc;
+	}
 }
