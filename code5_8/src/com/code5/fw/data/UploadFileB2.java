@@ -15,30 +15,36 @@ import com.code5.fw.security.DataCrypt;
 public class UploadFileB2 {
 
 	static int blockSize = 64;
-	static int headSize = 14;
+	static int metaSize = 16;
 
 	public static void main(String[] xxx) throws Exception {
 
 		e();
 
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S02");
+		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
 
 		InputStream in = new FileInputStream(new File("C:/public/imsi.dat.enc"));
 		FileOutputStream out = new FileOutputStream(new File("C:/public/imsi.dat"));
 
-		byte[] encHead = new byte[blockSize + 16];
+		byte[] encHead = new byte[blockSize + metaSize];
 		in.read(encHead);
 
 		byte[] head = dataCrypt.decrypt(encHead);
 
-		String head1 = new String(head, blockSize, headSize);
-		String head2 = head1.substring(0, 5);
-		String head3 = head1.substring(5);
+		byte[] nonce = new byte[blockSize];
+		byte[] meta = new byte[metaSize];
 
-		if (!"CODE5".equals(head2)) {
+		System.arraycopy(head, 0, nonce, 0, blockSize);
+		System.arraycopy(head, blockSize, meta, 0, metaSize);
+
+		String meta1 = new String(meta);
+		String meta2 = meta1.substring(0, 7);
+		String meta3 = meta1.substring(7);
+
+		if (!"CODE5__".equals(meta2)) {
 			throw new Exception();
 		}
-		int size = Integer.parseInt(head3);
+		int size = Integer.parseInt(meta3);
 
 		byte[] iv = new byte[blockSize];
 		System.arraycopy(head, 0, iv, 0, iv.length);
@@ -51,14 +57,14 @@ public class UploadFileB2 {
 
 			in.read(block, 0, blockSize);
 
-			xor32(iv, block);
+			xor32(block, iv);
 
 			int len = blockSize;
 			if (cnt == i) {
 				len = size % blockSize;
 			}
 
-			out.write(iv, 0, len);
+			out.write(block, 0, len);
 
 		}
 
@@ -118,20 +124,21 @@ public class UploadFileB2 {
 		InputStream in = new FileInputStream(file);
 		OutputStream out = new FileOutputStream(new File("C:/public/imsi.dat.enc"));
 
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S02");
+		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
+
+		byte[] head = new byte[blockSize + metaSize];
 
 		byte[] nonce = MakeRnd.createRnd(blockSize).getBytes();
-		byte[] head1 = ("CODE5" + ("" + (1000000000 + size)).substring(1)).getBytes();
-
-		byte[] head = new byte[nonce.length + head1.length];
+		byte[] meta = ("CODE5__" + ("" + (1000000000 + size)).substring(1)).getBytes();
 
 		System.arraycopy(nonce, 0, head, 0, nonce.length);
-		System.arraycopy(head1, 0, head, nonce.length, head1.length);
+		System.arraycopy(meta, 0, head, nonce.length, meta.length);
 
-		out.write(dataCrypt.encrypt(head));
+		byte[] encHaed = dataCrypt.encrypt(head);
+		print("encHaed", encHaed);
+		out.write(encHaed);
 
 		byte[] iv = nonce;
-
 		System.out.println("iv");
 		print("iv", iv);
 
@@ -139,6 +146,8 @@ public class UploadFileB2 {
 
 		int sp = 0;
 		int cnt = size / blockSize;
+
+		System.out.println();
 
 		for (int i = 0; i <= cnt; i++) {
 
@@ -149,10 +158,9 @@ public class UploadFileB2 {
 
 			in.read(block, 0, ep - sp);
 
-			xor32(iv, block);
+			xor32(block, iv);
 
-			print("iv", iv);
-			out.write(iv);
+			out.write(block);
 
 			sp = ep;
 
