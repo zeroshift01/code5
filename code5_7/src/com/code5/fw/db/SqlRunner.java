@@ -56,6 +56,8 @@ public class SqlRunner {
 		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE KEY = ?");
 		ps.setString(1, KEY);
 
+		trace.write(KEY);
+
 		ResultSet rs = transaction.getResultSet(ps);
 
 		if (!rs.next()) {
