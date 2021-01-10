@@ -113,6 +113,10 @@ public class MasterController extends HttpServlet {
 
 		Object instance = constructor.newInstance();
 
+		if (!(instance instanceof BizController)) {
+			throw new Exception();
+		}
+
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 
 		String JSP_KEY = (String) method.invoke(instance);
