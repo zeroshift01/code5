@@ -14,9 +14,15 @@
 <html><head>
 <script type="text/javascript">
 
+function emp00101(){
+	var form = document.form1;
+	form.action = '/waf/emp00101';
+	form.submit();
+}
+
 function emp00102(){
 	var form = document.form1;
-	form.action = '/waf/emp00102';
+	form.action = '/multipart/emp00102';
 	form.submit();
 } 
 
@@ -32,12 +38,17 @@ function emp00102(){
 <%=thisBox.s("EMP_NM")%>
 <input type="text" name ="HP_N" value = "<%=thisBox.s("HP_N")%>">
 
+<input type="file" name ="FILE_<%=i%>">
+
 <br>
 <%
 	}
 %>
 
 </form>
+
+<input type="text" name ="EMP_NM" value = "<%=box.s("EMP_NM")%>">
+<button onclick="emp00101()">emp00101</button>
 
 <%if(is_emp00102) { %>
 <button onclick="emp00102()">emp00102</button>

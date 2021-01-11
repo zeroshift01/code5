@@ -1,7 +1,9 @@
 package com.code5.biz.emp;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
+import com.code5.fw.data.UploadFileB;
 import com.code5.fw.security.DataCrypt;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
@@ -26,6 +28,8 @@ public class Emp001 implements BizController {
 
 		Box box = BoxContext.getThread();
 
+		SessionB user = box.getSessionB();
+
 		Emp001D dao = Emp001D.getDao();
 		Table table = dao.emp00101();
 
@@ -33,6 +37,11 @@ public class Emp001 implements BizController {
 			String HP_N = table.s("HP_N", i);
 			HP_N = crypt.decrypt(HP_N);
 			table.setData("HP_N", i, HP_N);
+
+			String FILE_ID = table.s("FILE_ID", i);
+			FILE_ID = user.createToken("filedownload", FILE_ID);
+			table.setData("FILE_ID", i, FILE_ID);
+
 		}
 
 		box.put("table", table);
@@ -52,7 +61,7 @@ public class Emp001 implements BizController {
 
 		Box box = BoxContext.getThread();
 
-		Table table = box.createTable(new String[] { "EMP_N", "HP_N" });
+		Table table = box.createTableByKey("EMP_N");
 
 		Emp001D dao = Emp001D.getDao();
 
@@ -60,7 +69,10 @@ public class Emp001 implements BizController {
 
 			String HP_N = table.s("HP_N", i);
 			table.setData("HP_N", i, crypt.encrypt(HP_N));
-			
+
+			UploadFileB file = box.getUploadFileB("FILE_" + i);
+			box.put("FILE_ID", file.getFileId());
+
 			box.putFromTable(table, i);
 
 			if (dao.emp00102() != 1) {

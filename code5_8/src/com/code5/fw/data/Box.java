@@ -179,6 +179,33 @@ public abstract class Box implements Serializable {
 	}
 
 	/**
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public Table createTableByKey(String key) throws Exception {
+
+		Table table = new TableColumnBase();
+
+		String[] data = ss(key);
+		table.addCol(key, data);
+
+		int x = data.length;
+
+		String[] keys = getKeys();
+		for (int i = 0; i < keys.length; i++) {
+			data = ss(keys[i]);
+			if (x == data.length) {
+				table.addCol(keys[i], data);
+			}
+
+		}
+
+		return table;
+
+	}
+
+	/**
 	 * @param table
 	 * @param row
 	 * @throws Exception
@@ -314,4 +341,23 @@ public abstract class Box implements Serializable {
 
 		return new BoxLocal();
 	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public UploadFileB getUploadFileB(String key) {
+		Object obj = get(key);
+		if (obj == null) {
+			return new UploadFileB();
+		}
+
+		if (obj instanceof UploadFileB) {
+			return (UploadFileB) obj;
+
+		}
+
+		return new UploadFileB();
+	}
+
 }

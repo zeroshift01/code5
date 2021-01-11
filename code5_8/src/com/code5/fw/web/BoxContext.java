@@ -51,7 +51,7 @@ public class BoxContext {
 					continue;
 				}
 
-				(new File(uploadFileB.getRealFileUrl())).delete();
+				(new File(uploadFileB.getFileUrl())).delete();
 			}
 
 		}

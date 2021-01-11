@@ -16,56 +16,59 @@ public class UploadFileB {
 	private static String FORM_NO_01 = "UPLOADFILEB_01";
 
 	private long size = 0;
-	private String name = null;
+	private String fileId = null;
 	private String contentType = null;
-	private String submittedFileName = null;
-	private String realFileName = null;
-	private String realFileUrl = null;
+	private String fileName = null;
+	private String fileUrl = null;
 
 	private boolean isSave = false;
 
 	/**
-	 * @param size
-	 * @param name
-	 * @param contentType
-	 * @param submittedFileName
-	 * @param realFileName
-	 * @param realFileUrl
+	 * 
 	 */
-	public UploadFileB(long size, String name, String contentType, String submittedFileName, String realFileName,
-			String realFileUrl) {
+	public UploadFileB() {
+		this.fileId = "";
+		this.contentType = "";
+		this.fileName = "";
+		this.fileName = "";
+		this.fileUrl = "";
+	}
+
+	/**
+	 * @param size
+	 * @param fileId
+	 * @param contentType
+	 * @param fileName
+	 * @param fileUrl
+	 */
+	public UploadFileB(long size, String fileId, String contentType, String fileName, String fileUrl) {
 
 		this.size = size;
-		this.name = name;
+		this.fileId = fileId;
 		this.contentType = contentType;
-		this.submittedFileName = submittedFileName;
-		this.realFileName = realFileName;
-		this.realFileUrl = realFileUrl;
+		this.fileName = fileName;
+		this.fileUrl = fileUrl;
 
 	}
 
-	public long getSize() {
-		return size;
-	}
-
-	public String getName() {
-		return name;
+	public String getFileId() {
+		return fileId;
 	}
 
 	public String getContentType() {
 		return contentType;
 	}
 
-	public String getSubmittedFileName() {
-		return submittedFileName;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public String getRealFileName() {
-		return realFileName;
+	public String getFileUrl() {
+		return fileUrl;
 	}
 
-	public String getRealFileUrl() {
-		return realFileUrl;
+	public long getSize() {
+		return size;
 	}
 
 	/**
@@ -75,18 +78,17 @@ public class UploadFileB {
 
 		Box box = BoxContext.getThread();
 
-		String from = this.realFileUrl;
-		String to = this.realFileUrl + ".enc";
-		this.realFileUrl = to;
+		String from = this.fileUrl;
+		String to = this.fileUrl + ".enc";
+		this.fileUrl = to;
 
 		CryptFile.getCryptFile().encrypt(from, to);
 
-		box.put("UPLOADFILEB.REAL_FILE_NAME", this.realFileName);
+		box.put("UPLOADFILEB.FILE_ID", this.fileId);
 		box.put("UPLOADFILEB.SIZE", "" + this.size);
-		box.put("UPLOADFILEB.NAME", this.name);
+		box.put("UPLOADFILEB.FILE_NAME", this.fileName);
 		box.put("UPLOADFILEB.CONTENT_TYPE", this.contentType);
-		box.put("UPLOADFILEB.SUBMITTED_FILE_NAME", this.submittedFileName);
-		box.put("UPLOADFILEB.REAL_FILE_URL", this.realFileUrl);
+		box.put("UPLOADFILEB.FILE_URL", this.fileUrl);
 
 		SqlRunner.getSqlRunner().executeSql(FORM_NO_01);
 

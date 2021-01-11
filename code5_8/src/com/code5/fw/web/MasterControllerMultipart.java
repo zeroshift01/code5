@@ -58,24 +58,24 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 				continue;
 			}
 
-			String submittedFileName = part.getSubmittedFileName();
-			if (submittedFileName == null) {
+			String fileName = part.getSubmittedFileName();
+			if (fileName == null) {
 				part.delete();
 				continue;
 			}
 
-			String name = part.getName();
+			String fileId = createFileId();
+
 			String contentType = part.getContentType();
-			String realFileName = createRealFileName();
 
-			String realFileUrl = InitProperty.UPLOAD_FILE_DIR_TEMP_URL() + File.separatorChar + realFileName;
+			String fileUrl = InitProperty.UPLOAD_FILE_DIR_TEMP_URL() + File.separatorChar + fileId;
 
-			part.write(realFileUrl);
+			part.write(fileUrl);
 			part.delete();
 
-			UploadFileB uploadFileB = new UploadFileB(size, name, contentType, submittedFileName, realFileName,
-					realFileUrl);
+			UploadFileB uploadFileB = new UploadFileB(size, fileId, contentType, fileName, fileUrl);
 
+			String name = part.getName();
 			box.put(name, uploadFileB);
 
 		}
@@ -84,7 +84,10 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 	}
 
-	private String createRealFileName() {
+	/**
+	 * @return
+	 */
+	private String createFileId() {
 
 		String RND = getRND();
 		return DateTime.getThisDTM() + "_" + getFileCnt() + "_" + RND;
