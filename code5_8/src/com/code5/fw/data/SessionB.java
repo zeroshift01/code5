@@ -87,6 +87,14 @@ public class SessionB implements Serializable {
 	 * @throws Exception
 	 */
 	public String createToken(String nextUrl, String data) throws Exception {
+		if (data == null) {
+			return "";
+		}
+
+		if ("".equals(data)) {
+			return "";
+		}
+
 		String key = nextUrl + "_" + data;
 		return Hex.byteToHex(aria.encrypt(key.getBytes()));
 

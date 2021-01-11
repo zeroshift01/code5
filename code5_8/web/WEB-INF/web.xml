@@ -12,8 +12,8 @@
 		<servlet-name>waf</servlet-name>
 		<url-pattern>/waf/*</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>multipart</servlet-name>
 		<servlet-class>com.code5.fw.web.MasterControllerMultipart
@@ -24,6 +24,10 @@
 		<servlet-name>multipart</servlet-name>
 		<url-pattern>/multipart/*</url-pattern>
 	</servlet-mapping>
+
+	<multipart-config>
+		<file-size-threshold>1024</file-size-threshold>
+	</multipart-config>
 
 
 </web-app>
