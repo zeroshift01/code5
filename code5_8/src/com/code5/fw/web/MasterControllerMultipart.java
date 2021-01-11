@@ -14,12 +14,13 @@ import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.UploadFileB;
+import com.code5.fw.db.SqlRunner;
 
 /**
  * @author seuk
  *
  */
-public class MasterControllerMultipart extends MasterController {
+public class MasterControllerMultipart extends MasterController implements BizController {
 
 	/**
 	 * 
@@ -102,4 +103,25 @@ public class MasterControllerMultipart extends MasterController {
 		return fileCnt++;
 	}
 
+	/**
+	 * @return
+	 */
+	public String fileDownload() throws Exception {
+
+		Box box = BoxContext.getThread();
+		String FILE_ID = box.s("FILE_ID");
+		FILE_ID = box.getSessionB().getDataByToken("filedownload", FILE_ID);
+
+		box.put("FILE_ID", FILE_ID);
+		Box fileBox = SqlRunner.getSqlRunner().getTable("MASTERCONTROLLERMULTIPART_01").getBox();
+
+		File file = new File(fileBox.s("FILE_REAL_URL"));
+		if (!file.exists()) {
+			throw new Exception();
+		}
+
+		box.put("fileBox", fileBox);
+
+		return "fileDownload";
+	}
 }

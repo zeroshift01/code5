@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.TimeoutException;
 
 import com.code5.fw.data.MakeRnd;
 
@@ -33,63 +34,33 @@ public class CryptFile {
 
 	}
 
+	/**
+	 * 
+	 */
 	private static final int BLOCK_SIZE = 64;
-	private static final int META_SIZE = 16;
 
-	public static void main(String[] xxx) throws Exception {
+	/**
+	 * @param from
+	 * @param to
+	 * @throws Exception
+	 */
+	public void decrypt(String from, String to) throws Exception {
 
-		e();
+		OutputStream out = null;
 
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
+		try {
 
-		InputStream in = new FileInputStream(new File("C:/public/imsi.dat.enc"));
-		FileOutputStream out = new FileOutputStream(new File("C:/public/imsi.dat"));
+			out = new FileOutputStream(to);
 
-		byte[] encHead = new byte[BLOCK_SIZE + META_SIZE];
-		in.read(encHead);
+			decrypt(from, out, -1);
 
-		byte[] head = dataCrypt.decrypt(encHead);
-
-		byte[] nonce = new byte[BLOCK_SIZE];
-		byte[] meta = new byte[META_SIZE];
-
-		System.arraycopy(head, 0, nonce, 0, BLOCK_SIZE);
-		System.arraycopy(head, BLOCK_SIZE, meta, 0, META_SIZE);
-
-		String meta1 = new String(meta);
-		String meta2 = meta1.substring(0, 7);
-		String meta3 = meta1.substring(7);
-
-		if (!"CODE5__".equals(meta2)) {
-			throw new Exception();
-		}
-		int size = Integer.parseInt(meta3);
-
-		byte[] iv = new byte[BLOCK_SIZE];
-		System.arraycopy(head, 0, iv, 0, iv.length);
-		print("iv", iv);
-
-		byte[] block = new byte[BLOCK_SIZE];
-
-		int cnt = size / BLOCK_SIZE;
-		for (int i = 0; i <= cnt; i++) {
-
-			in.read(block, 0, BLOCK_SIZE);
-
-			xor32(block, iv);
-
-			int len = BLOCK_SIZE;
-			if (cnt == i) {
-				len = size % BLOCK_SIZE;
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if (out != null) {
+				out.close();
 			}
-
-			out.write(block, 0, len);
-
 		}
-
-		in.close();
-		out.flush();
-		out.close();
 
 	}
 
@@ -97,7 +68,7 @@ public class CryptFile {
 	 * @param x1
 	 * @param x2
 	 */
-	private static void xor32(byte[] x1, byte[] x2) {
+	private static void xor64(byte[] x1, byte[] x2) {
 
 		x1[0] = (byte) (x1[0] ^ x2[0]);
 		x1[1] = (byte) (x1[1] ^ x2[1]);
@@ -131,6 +102,39 @@ public class CryptFile {
 		x1[29] = (byte) (x1[29] ^ x2[29]);
 		x1[30] = (byte) (x1[30] ^ x2[30]);
 		x1[31] = (byte) (x1[31] ^ x2[31]);
+		x1[32] = (byte) (x1[32] ^ x2[32]);
+		x1[33] = (byte) (x1[33] ^ x2[33]);
+		x1[34] = (byte) (x1[34] ^ x2[34]);
+		x1[35] = (byte) (x1[35] ^ x2[35]);
+		x1[36] = (byte) (x1[36] ^ x2[36]);
+		x1[37] = (byte) (x1[37] ^ x2[37]);
+		x1[38] = (byte) (x1[38] ^ x2[38]);
+		x1[39] = (byte) (x1[39] ^ x2[39]);
+		x1[40] = (byte) (x1[40] ^ x2[40]);
+		x1[41] = (byte) (x1[41] ^ x2[41]);
+		x1[42] = (byte) (x1[42] ^ x2[42]);
+		x1[43] = (byte) (x1[43] ^ x2[43]);
+		x1[44] = (byte) (x1[44] ^ x2[44]);
+		x1[45] = (byte) (x1[45] ^ x2[45]);
+		x1[46] = (byte) (x1[46] ^ x2[46]);
+		x1[47] = (byte) (x1[47] ^ x2[47]);
+		x1[48] = (byte) (x1[48] ^ x2[48]);
+		x1[49] = (byte) (x1[49] ^ x2[49]);
+		x1[50] = (byte) (x1[50] ^ x2[50]);
+		x1[51] = (byte) (x1[51] ^ x2[51]);
+		x1[52] = (byte) (x1[52] ^ x2[52]);
+		x1[53] = (byte) (x1[53] ^ x2[53]);
+		x1[54] = (byte) (x1[54] ^ x2[54]);
+		x1[55] = (byte) (x1[55] ^ x2[55]);
+		x1[56] = (byte) (x1[56] ^ x2[56]);
+		x1[57] = (byte) (x1[57] ^ x2[57]);
+		x1[58] = (byte) (x1[58] ^ x2[58]);
+		x1[59] = (byte) (x1[59] ^ x2[59]);
+		x1[60] = (byte) (x1[60] ^ x2[60]);
+		x1[61] = (byte) (x1[61] ^ x2[61]);
+		x1[62] = (byte) (x1[62] ^ x2[62]);
+		x1[63] = (byte) (x1[63] ^ x2[63]);
+
 	}
 
 	/**
@@ -138,83 +142,159 @@ public class CryptFile {
 	 * @param to
 	 * @throws Exception
 	 */
-	public void e(String from, String to) throws Exception {
+	public void encrypt(String from, String to) throws Exception {
 
-		File fromFile = new File(from);
+		InputStream in = null;
+		OutputStream out = null;
 
-		if (!fromFile.isFile()) {
-			throw new Exception("file not exists [" + from + "]");
-		}
+		try {
 
-		File toFile = new File(to);
+			File fromFile = new File(from);
 
-		if (toFile.isFile()) {
-			throw new Exception("file exists [" + to + "]");
-		}
+			in = new FileInputStream(fromFile);
+			out = new FileOutputStream(to);
 
-		InputStream in = new FileInputStream(fromFile);
-		OutputStream out = new FileOutputStream(toFile);
-
-		// 첨부파일로 사용할 수 있는 int 범위
-		int size = (int) fromFile.length();
-
-		if (size == 0) {
-
-		}
-
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
-
-		byte[] head = new byte[BLOCK_SIZE + META_SIZE];
-
-		byte[] nonce = MakeRnd.createRnd(BLOCK_SIZE).getBytes();
-		byte[] meta = ("CODE5__" + ("" + (1000000000 + size)).substring(1)).getBytes();
-
-		System.arraycopy(nonce, 0, head, 0, nonce.length);
-		System.arraycopy(meta, 0, head, nonce.length, meta.length);
-
-		byte[] encHaed = dataCrypt.encrypt(head);
-		print("encHaed", encHaed);
-		out.write(encHaed);
-
-		byte[] iv = nonce;
-		System.out.println("iv");
-		print("iv", iv);
-
-		byte[] block = new byte[BLOCK_SIZE];
-
-		int sp = 0;
-		int cnt = size / BLOCK_SIZE;
-
-		System.out.println();
-
-		for (int i = 0; i <= cnt; i++) {
-
-			int ep = sp + BLOCK_SIZE;
-			if (ep > size) {
-				ep = size;
+			long fileSize = fromFile.length();
+			if (fileSize == 0) {
+				throw new Exception("file size 0 [" + from + "]");
 			}
 
-			in.read(block, 0, ep - sp);
+			DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
 
-			xor32(block, iv);
+			byte[] nonce = MakeRnd.createRnd(BLOCK_SIZE).getBytes();
+			out.write(dataCrypt.encrypt(nonce));
 
-			out.write(block);
+			byte[] block = new byte[BLOCK_SIZE];
 
-			sp = ep;
+			long cnt = fileSize / BLOCK_SIZE;
 
+			for (int i = 0; i <= cnt; i++) {
+
+				long sp = BLOCK_SIZE * i;
+
+				int len = BLOCK_SIZE;
+				if (sp > fileSize) {
+					len = (int) fileSize % BLOCK_SIZE;
+				}
+
+				in.read(block, 0, len);
+
+				xor64(nonce, block);
+
+				out.write(nonce);
+
+			}
+
+			byte[] meta = ("CODE5__" + ("" + (100000000000000l + fileSize)).substring(1)).getBytes();
+			block = new byte[BLOCK_SIZE];
+
+			System.arraycopy(meta, 0, block, 0, meta.length);
+
+			xor64(nonce, block);
+
+			out.write(nonce);
+
+			out.flush();
+
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.close();
+			}
 		}
-
-		in.close();
-		out.flush();
-		out.close();
 
 	}
 
-	static void print(String s, byte[] xx) {
-		System.out.print(s + "[" + xx.length + "]");
-		for (int i = 0; i < xx.length; i++) {
-			System.out.print(xx[i] + " ");
+	/**
+	 * @param from
+	 * @param out
+	 * @param timeOut
+	 * @throws Exception
+	 */
+	public void decrypt(String from, OutputStream out, long timeOut) throws Exception {
+
+		InputStream in = null;
+
+		try {
+
+			long st = System.currentTimeMillis();
+
+			File fromFile = new File(from);
+
+			long fileSize = fromFile.length();
+
+			if (fileSize == 0) {
+				throw new Exception("file size 0 [" + from + "]");
+			}
+
+			in = new FileInputStream(fromFile);
+
+			byte[] nonce = new byte[BLOCK_SIZE];
+			in.read(nonce);
+
+			DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
+			nonce = dataCrypt.decrypt(nonce);
+
+			byte[] block = new byte[BLOCK_SIZE];
+
+			// nonce, endBlock, meta 를 빼고 출력
+			long cnt = (fileSize / BLOCK_SIZE) - 3;
+
+			for (int i = 0; i < cnt; i++) {
+
+				in.read(block);
+
+				xor64(nonce, block);
+
+				out.write(nonce);
+
+				System.arraycopy(block, 0, nonce, 0, block.length);
+
+				long downloadTime = System.currentTimeMillis() - st;
+				if (downloadTime > timeOut) {
+					throw new TimeoutException("time out [" + downloadTime + "]");
+				}
+
+			}
+
+			byte[] endBlock = new byte[BLOCK_SIZE];
+
+			in.read(block);
+			xor64(nonce, block);
+
+			System.arraycopy(nonce, 0, endBlock, 0, nonce.length);
+
+			System.arraycopy(block, 0, nonce, 0, block.length);
+
+			in.read(block);
+
+			xor64(nonce, block);
+
+			String meta = new String(nonce).trim();
+
+			if (!meta.startsWith("CODE5_")) {
+				throw new Exception();
+			}
+
+			long outFileSize = Long.parseLong(meta.substring(7));
+
+			int end = (int) (outFileSize - cnt * BLOCK_SIZE);
+
+			out.write(endBlock, 0, end);
+			out.flush();
+
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if (in != null) {
+				in.close();
+			}
 		}
-		System.out.println();
+
 	}
+
 }

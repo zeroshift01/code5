@@ -1,6 +1,7 @@
 package com.code5.fw.data;
 
 import com.code5.fw.db.SqlRunner;
+import com.code5.fw.security.CryptFile;
 import com.code5.fw.web.BoxContext;
 
 /**
@@ -74,6 +75,12 @@ public class UploadFileB {
 
 		Box box = BoxContext.getThread();
 
+		String from = this.realFileUrl;
+		String to = this.realFileUrl + ".enc";
+		this.realFileUrl = to;
+
+		CryptFile.getCryptFile().encrypt(from, to);
+
 		box.put("UPLOADFILEB.REAL_FILE_NAME", this.realFileName);
 		box.put("UPLOADFILEB.SIZE", "" + this.size);
 		box.put("UPLOADFILEB.NAME", this.name);
@@ -91,11 +98,6 @@ public class UploadFileB {
 	 */
 	public boolean isSave() {
 		return this.isSave;
-	}
-	
-	private void fileEncrypt() {
-		
-		
 	}
 
 }
