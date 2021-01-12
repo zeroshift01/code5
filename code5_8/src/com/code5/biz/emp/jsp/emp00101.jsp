@@ -33,13 +33,15 @@ function emp00102(){
 	for (int i = 0; i < table.size(); i++) {
 		Box thisBox = table.getBox(i);
 %>
-
+<br>
 <input type="text" name ="EMP_N" value = "<%=thisBox.s("EMP_N")%>" readonly="readonly">
 <%=thisBox.s("EMP_NM")%>
 <input type="text" name ="HP_N" value = "<%=thisBox.s("HP_N")%>">
-
 <input type="file" name ="FILE_<%=i%>">
 
+<input type="text" name ="FILE_ID_ORG" value = "<%=thisBox.s("FILE_ID")%>" readonly="readonly">
+
+<a href="/waf/downloadfile?FILE_ID=<%=thisBox.s("FILE_ID")%>"><%=thisBox.s("FILE_NAME") %></a>
 <br>
 <%
 	}
@@ -50,10 +52,10 @@ function emp00102(){
 <input type="text" name ="EMP_NM" value = "<%=box.s("EMP_NM")%>">
 </form>
 
-<button onclick="emp00101()">emp00101</button>
+<button onclick="emp00101()">검색 emp00101</button>
 
 <%if(is_emp00102) { %>
-<button onclick="emp00102()">emp00102</button>
+<button onclick="emp00102()">수정 emp00102</button>
 <%} %>
 
 </body>

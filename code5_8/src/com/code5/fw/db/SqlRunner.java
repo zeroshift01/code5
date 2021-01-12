@@ -229,6 +229,8 @@ public class SqlRunner {
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		trace.write(sqlRunnerB.key);
+		trace.write(sqlRunnerB.sql);
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
 		String exeSql = sqlRunnerB.sql;
@@ -241,7 +243,6 @@ public class SqlRunner {
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
-		trace.write(sqlRunnerB.key);
 		trace.write(exeSql);
 
 		int i = ps.executeUpdate();

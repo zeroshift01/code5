@@ -70,16 +70,15 @@ public class SessionB implements Serializable {
 		this.auth = auth;
 		this.ip = ip;
 
-		if (this.aria != null) {
-			return;
-		}
-
 		SecureRandom random = new SecureRandom();
 
 		byte[] iv = new byte[16];
 		byte[] key = new byte[16];
-		random.nextBytes(iv);
-		random.nextBytes(key);
+
+		if (InitProperty.IS_PRODUCT()) {
+			random.nextBytes(iv);
+			random.nextBytes(key);
+		}
 
 		aria = new Aria_CBC_PKCS7(iv, key);
 	}
@@ -111,6 +110,13 @@ public class SessionB implements Serializable {
 	 * @throws Exception
 	 */
 	public String getDataByToken(String nextUrl, String token) throws Exception {
+		if (token == null) {
+			return "";
+		}
+
+		if ("".equals(token)) {
+			return "";
+		}
 
 		byte[] enc = Hex.hexToByte(token);
 

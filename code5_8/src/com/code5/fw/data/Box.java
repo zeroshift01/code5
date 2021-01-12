@@ -146,8 +146,8 @@ public abstract class Box implements Serializable {
 	public SessionB getSessionB() {
 
 		try {
-			// return new SessionB("A0", "A0", "1");
-			return (SessionB) get(KEY_SESSIONB);
+			return new SessionB("A0", "A0", "1");
+			//return (SessionB) get(KEY_SESSIONB);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -367,6 +367,20 @@ public abstract class Box implements Serializable {
 		}
 
 		return new UploadFileB();
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public long getLong(String key) {
+		try {
+			String s = s(key);
+			return Long.parseLong(s);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		}
 	}
 
 }

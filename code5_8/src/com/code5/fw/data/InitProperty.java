@@ -10,6 +10,11 @@ import java.util.ResourceBundle;
 public class InitProperty {
 
 	/**
+	 * 운영환경여부
+	 */
+	private static boolean IS_PRODUCT = false;
+
+	/**
 	 * 
 	 */
 	private static String LOG_DIR_PATTERN = null;
@@ -54,6 +59,12 @@ public class InitProperty {
 
 			UPLOAD_FILE_DIR_TEMP_URL = resourceBundle.getString("UPLOAD_FILE_DIR_TEMP_URL");
 			UPLOAD_FILE_DIR_URL = resourceBundle.getString("UPLOAD_FILE_DIR_URL");
+
+			String IS_PRODUCT_S = resourceBundle.getString("IS_PRODUCT");
+			IS_PRODUCT = false;
+			if ("true".equals(IS_PRODUCT_S)) {
+				IS_PRODUCT = true;
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -101,4 +112,12 @@ public class InitProperty {
 	public static String UPLOAD_FILE_DIR_URL() {
 		return UPLOAD_FILE_DIR_URL;
 	}
+
+	/**
+	 * @return
+	 */
+	public static boolean IS_PRODUCT() {
+		return IS_PRODUCT;
+	}
+
 }

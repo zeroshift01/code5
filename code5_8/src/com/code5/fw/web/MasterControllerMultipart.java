@@ -119,23 +119,27 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	/**
 	 * @return
 	 */
-	public String fileDownload() throws Exception {
+	public String downloadFile() throws Exception {
 
 		Box box = BoxContext.getThread();
 		String FILE_ID = box.s("FILE_ID");
-		FILE_ID = box.getSessionB().getDataByToken("filedownload", FILE_ID);
+		FILE_ID = box.getSessionB().getDataByToken(box.s(Box.KEY_SERVICE), FILE_ID);
 
 		box.put("FILE_ID", FILE_ID);
-		Box fileBox = SqlRunner.getSqlRunner().getTable("MASTERCONTROLLERMULTIPART_01").getBox();
+		System.out.println(box.s("FILE_ID"));
 
-		File file = new File(fileBox.s("FILE_REAL_URL"));
+		UploadFileB uploadFileB = new UploadFileB(FILE_ID);
+
+		File file = new File(uploadFileB.getFileUrl());
 		if (!file.exists()) {
 			throw new Exception();
 		}
 
-		box.put("fileBox", fileBox);
+		box.put("file", uploadFileB);
 
-		return "fileDownload";
+		SqlRunner.getSqlRunner().executeSql("DOWNLOADFILE_01");
+
+		return "downloadFile";
 	}
 
 	/**
@@ -169,4 +173,5 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		}
 
 	}
+
 }

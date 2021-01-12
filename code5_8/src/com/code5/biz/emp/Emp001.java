@@ -39,7 +39,7 @@ public class Emp001 implements BizController {
 			table.setData("HP_N", i, HP_N);
 
 			String FILE_ID = table.s("FILE_ID", i);
-			FILE_ID = user.createToken("filedownload", FILE_ID);
+			FILE_ID = user.createToken("downloadfile", FILE_ID);
 			table.setData("FILE_ID", i, FILE_ID);
 
 		}
@@ -60,6 +60,7 @@ public class Emp001 implements BizController {
 		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
 
 		Box box = BoxContext.getThread();
+		SessionB user = box.getSessionB();
 
 		Table table = box.createTableByKey("EMP_N");
 
@@ -70,9 +71,20 @@ public class Emp001 implements BizController {
 			String HP_N = table.s("HP_N", i);
 			table.setData("HP_N", i, crypt.encrypt(HP_N));
 
+			String FILE_ID_ORG = table.s("FILE_ID_ORG", i);
+			FILE_ID_ORG = user.getDataByToken("downloadfile", FILE_ID_ORG);
+			box.put("FILE_ID", FILE_ID_ORG);
+
 			UploadFileB file = box.getUploadFileB("FILE_" + i);
-			box.put("FILE_ID", file.getFileId());
-			file.save();
+			if (file.getSize() != 0) {
+
+				UploadFileB orgFile = new UploadFileB(FILE_ID_ORG);
+				orgFile.delete();
+
+				String FILE_ID = file.getFileId();
+				box.put("FILE_ID", FILE_ID);
+				file.save();
+			}
 
 			box.putFromTable(table, i);
 			if (dao.emp00102() != 1) {
