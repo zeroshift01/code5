@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
@@ -54,6 +55,11 @@ public class SqlRunner {
 	 */
 	String getSQL(Transaction transaction, String KEY) throws SQLException {
 
+		String sql = cacheSqlMap.get(KEY);
+		if (sql != null) {
+			return sql;
+		}
+
 		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE KEY = ?");
 		ps.setString(1, KEY);
 
@@ -63,9 +69,9 @@ public class SqlRunner {
 			throw new RuntimeException();
 		}
 
-		String sql = rs.getString("SQL");
+		sql = rs.getString("SQL");
 
-		transaction.close();
+		cacheSqlMap.put(KEY, sql);
 
 		return sql;
 
@@ -277,6 +283,81 @@ public class SqlRunner {
 	public int executeSql(String FORM_NO, Box box) throws SQLException {
 		Transaction transaction = TransactionContext.getThread();
 		return executeSql(transaction, box, FORM_NO);
+	}
+
+	/**
+	 * 
+	 */
+	private ConcurrentHashMap<String, Table> cacheTableMap = new ConcurrentHashMap<String, Table>();
+
+	/**
+	 * 
+	 */
+	private ConcurrentHashMap<String, String> cacheSqlMap = new ConcurrentHashMap<String, String>();
+
+	/**
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Table getTableByCache(String FORM_NO, Box box) throws SQLException {
+		Transaction transaction = TransactionContext.getThread();
+		return getTableByCache(transaction, FORM_NO, box);
+	}
+
+	/**
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Table getTableByCache(String FORM_NO) throws SQLException {
+
+		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.getThread();
+		return getTableByCache(transaction, FORM_NO, box);
+	}
+
+	/**
+	 * @param transaction
+	 * @param box
+	 * @param FORM_NO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Table getTableByCache(Transaction transaction, String FORM_NO, Box box) throws SQLException {
+
+		StringBuffer cashKeyB = new StringBuffer();
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+
+		cashKeyB.append(FORM_NO + "|");
+
+		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
+
+			String key = sqlRunnerB.param.get(i);
+			String data = box.s(key);
+
+			cashKeyB.append(data + "|");
+		}
+
+		String cashKey = cashKeyB.toString();
+		Table table = cacheTableMap.get(cashKey);
+		if (table != null) {
+			return table;
+		}
+
+		table = getTable(transaction, box, FORM_NO);
+		cacheTableMap.put(cashKey, table);
+		return table;
+
+	}
+
+	/**
+	 * 
+	 */
+	public void reload() {
+		cacheSqlMap.clear();
+		cacheTableMap.clear();
 	}
 
 }

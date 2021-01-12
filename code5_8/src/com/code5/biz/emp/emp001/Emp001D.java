@@ -1,4 +1,4 @@
-package com.code5.biz.emp;
+package com.code5.biz.emp.emp001;
 
 import java.sql.SQLException;
 

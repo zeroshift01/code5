@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
+import com.code5.fw.data.Table;
 import com.code5.fw.db.SqlRunner;
 
 /**
@@ -11,6 +12,11 @@ import com.code5.fw.db.SqlRunner;
  *
  */
 public class MasterControllerD {
+
+	/**
+	 * 
+	 */
+	private SqlRunner sql = SqlRunner.getSqlRunner();
 
 	/**
 	 * 
@@ -32,7 +38,8 @@ public class MasterControllerD {
 
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return SqlRunner.getSqlRunner().getTable(FORM_NO_01, box).getBox();
+		Table table = sql.getTableByCache(FORM_NO_01, box);
+		return table.getBox();
 	}
 
 	/**
@@ -44,7 +51,8 @@ public class MasterControllerD {
 
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return SqlRunner.getSqlRunner().getTable(FORM_NO_02, box).getBox();
+		Table table = sql.getTableByCache(FORM_NO_02, box);
+		return table.getBox();
 	}
 
 }

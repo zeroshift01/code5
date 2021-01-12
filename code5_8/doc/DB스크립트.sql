@@ -81,11 +81,20 @@ WHERE EMP_N =[EMP_N]' WHERE KEY = 'EMP001D_02';
 
 
 DELETE FROM FW_CONTROLLER WHERE KEY = 'downloadfile';
-INSERT INTO FW_CONTROLLER VALUES ('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile','Y','');
+INSERT INTO FW_CONTROLLER (KEY, CLASS_NAME, METHOD_NAME, SESSION_CHECK_YN, AUTH) VALUES ('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile','Y','');
 
 DELETE FROM FW_VIEW WHERE KEY = 'downloadFile'; 
-INSERT INTO FW_VIEW VALUES ('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp');
+INSERT INTO FW_VIEW (KEY, JSP) VALUES ('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp');
+
+ALTER TABLE FW_VIEW ADD TMPL_JSP;
+ALTER TABLE FW_VIEW ADD TITLE;
+ALTER TABLE FW_CONTROLLER ADD ERR_JSP;
 
 
+
+
+
+UPDATE FW_SQL SET SQL = 'FROM FW_CONTROLLER WHERE KEY = [KEY]' WHERE KEY = 'MASTERCONTROLLERD_01';
+UPDATE FW_SQL SET SQL = 'FROM FW_VIEW WHERE KEY = [KEY]' WHERE KEY = 'MASTERCONTROLLERD_02';
 
 
