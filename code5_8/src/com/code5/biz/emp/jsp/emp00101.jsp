@@ -21,14 +21,14 @@ function emp00101(){
 }
 
 function emp00102(){
-	var form = document.form1;
+	var form = document.form2;
 	form.action = '/multipart/emp00102';
 	form.submit();
 } 
 
 </script>
 <body>
-<form name="form1" method="post">
+<form name="form2" method="post" enctype="multipart/form-data">
 <%
 	for (int i = 0; i < table.size(); i++) {
 		Box thisBox = table.getBox(i);
@@ -46,8 +46,10 @@ function emp00102(){
 %>
 
 </form>
-
+<form name="form1" method="post">
 <input type="text" name ="EMP_NM" value = "<%=box.s("EMP_NM")%>">
+</form>
+
 <button onclick="emp00101()">emp00101</button>
 
 <%if(is_emp00102) { %>

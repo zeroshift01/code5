@@ -95,14 +95,12 @@ public class BoxHttp extends Box {
 
 		while (em1.hasMoreElements()) {
 			String ss = em1.nextElement();
-			if (list.contains(ss)) {
-				list.add(ss);
-			}
+			list.add(ss);
 		}
 
 		while (em2.hasMoreElements()) {
 			String ss = em2.nextElement();
-			if (list.contains(ss)) {
+			if (!list.contains(ss)) {
 				list.add(ss);
 			}
 		}

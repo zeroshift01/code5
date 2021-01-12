@@ -36,12 +36,21 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
+		String boxContentType = request.getContentType();
+		if (boxContentType == null) {
+			throw new ServletException();
+		}
+
+		boxContentType = boxContentType.toLowerCase();
+		if (!boxContentType.startsWith("multipart/form-data")) {
+			throw new ServletException();
+		}
+		box.put(Box.KEY_CONTENT_TYPE, "multipart/form-data");
+
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);
 
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
-
-		box.put(Box.KEY_CONTENT_TYPE, request.getContentType());
 
 		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
 		if (sessionB instanceof SessionB) {
@@ -53,6 +62,8 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		for (Part part : parts) {
 
 			long size = part.getSize();
+			String name = part.getName();
+
 			if (size == 0) {
 				part.delete();
 				continue;
@@ -68,14 +79,13 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 			String contentType = part.getContentType();
 
-			String fileUrl = InitProperty.UPLOAD_FILE_DIR_TEMP_URL() + File.separatorChar + fileId;
+			String fileUrl = InitProperty.UPLOAD_FILE_DIR_URL() + File.separatorChar + fileId;
 
 			part.write(fileUrl);
 			part.delete();
 
 			UploadFileB uploadFileB = new UploadFileB(size, fileId, contentType, fileName, fileUrl);
 
-			String name = part.getName();
 			box.put(name, uploadFileB);
 
 		}
@@ -126,5 +136,37 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		box.put("fileBox", fileBox);
 
 		return "fileDownload";
+	}
+
+	/**
+	 *
+	 */
+	protected void endService() {
+
+		try {
+
+			Box box = BoxContext.getThread();
+
+			String[] keys = box.getKeys();
+			for (int i = 0; i < keys.length; i++) {
+
+				Object obj = box.get(keys[i]);
+
+				if (!(obj instanceof UploadFileB)) {
+					continue;
+				}
+
+				UploadFileB uploadFileB = (UploadFileB) obj;
+				if (uploadFileB.isSave()) {
+					continue;
+				}
+
+				(new File(uploadFileB.getFileUrl())).delete();
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 	}
 }

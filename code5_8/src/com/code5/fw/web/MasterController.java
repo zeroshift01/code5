@@ -89,6 +89,8 @@ public class MasterController extends HttpServlet {
 
 		} finally {
 
+			endService();
+
 			transaction.closeConnection();
 			TransactionContext.removeThread();
 			BoxContext.removeThread();
@@ -214,5 +216,11 @@ public class MasterController extends HttpServlet {
 	public void destroy() {
 		TraceRunner.getTraceRunner().flush();
 		super.destroy();
+	}
+
+	/**
+	 * 
+	 */
+	protected void endService() {
 	}
 }

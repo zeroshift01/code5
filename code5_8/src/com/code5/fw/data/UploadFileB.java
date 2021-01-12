@@ -76,6 +76,10 @@ public class UploadFileB {
 	 */
 	public void save() throws Exception {
 
+		if (this.size == 0) {
+			return;
+		}
+
 		Box box = BoxContext.getThread();
 
 		String from = this.fileUrl;

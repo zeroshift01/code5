@@ -72,9 +72,9 @@ public class Emp001 implements BizController {
 
 			UploadFileB file = box.getUploadFileB("FILE_" + i);
 			box.put("FILE_ID", file.getFileId());
+			file.save();
 
 			box.putFromTable(table, i);
-
 			if (dao.emp00102() != 1) {
 				throw new Exception();
 			}

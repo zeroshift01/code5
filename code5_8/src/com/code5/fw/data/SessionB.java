@@ -70,6 +70,10 @@ public class SessionB implements Serializable {
 		this.auth = auth;
 		this.ip = ip;
 
+		if (this.aria != null) {
+			return;
+		}
+
 		SecureRandom random = new SecureRandom();
 
 		byte[] iv = new byte[16];
