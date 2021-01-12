@@ -55,10 +55,15 @@ public class MasterController extends HttpServlet {
 
 			InitProperty.init(request);
 
-		} catch (Exception ex) {
-			new ServletException(ex);
-		}
+			if (!InitProperty.IS_INIT_OK()) {
+				throw new ServletException();
+			}
 
+		} catch (Exception ex) {
+			throw new ServletException(ex);
+		}
+		
+		
 		Box box = createBox(request);
 
 		String tx = InitProperty.TRANSACTION_WAS();

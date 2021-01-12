@@ -105,6 +105,8 @@ public class InitProperty {
 
 	private static boolean IS_INIT = false;
 
+	private static boolean IS_INIT_OK = false;
+
 	private static boolean IS_MULTI = false;
 
 	private static String CNTR = "";
@@ -139,6 +141,8 @@ public class InitProperty {
 		IS_MULTI = true;
 		CNTR = "p" + request.getServerPort();
 		init();
+
+		IS_INIT_OK = true;
 
 	}
 
@@ -209,9 +213,23 @@ public class InitProperty {
 		}
 
 		TRANSACTION_WAS = getString("TRANSACTION_WAS", resourceBundle);
-		TRANSACTION_JOB = getString("TRANSACTION_JOB", resourceBundle);
+		TRANSACTION_DEFAULT = getString("TRANSACTION_DEFAULT", resourceBundle);
 
 		TraceRunner.getTraceRunner().init();
+	}
+
+	/**
+	 * @param key
+	 * @param resourceBundle
+	 * @return
+	 * @throws Exception
+	 */
+	private static String _getString(String key, ResourceBundle resourceBundle) throws Exception {
+		if (!resourceBundle.containsKey(key)) {
+			return null;
+		}
+
+		return resourceBundle.getString(key);
 	}
 
 	/**
@@ -220,21 +238,21 @@ public class InitProperty {
 	 */
 	private static String getString(String key, ResourceBundle resourceBundle) throws Exception {
 
-		String s = resourceBundle.getString(HOST + "." + CNTR + "." + key);
+		String s = _getString(HOST + "." + CNTR + "." + key, resourceBundle);
 		if (s != null) {
 			return s;
 		}
 
-		s = resourceBundle.getString(HOST + "." + key);
+		s = _getString(HOST + "." + key, resourceBundle);
 		if (s != null) {
 			return s;
 		}
 
-		return resourceBundle.getString(key);
+		return _getString(key, resourceBundle);
 	}
 
 	private static String TRANSACTION_WAS = null;
-	private static String TRANSACTION_JOB = null;
+	private static String TRANSACTION_DEFAULT = null;
 
 	/**
 	 * @return
@@ -246,8 +264,15 @@ public class InitProperty {
 	/**
 	 * @return
 	 */
-	public static String TRANSACTION_JOB() {
-		return TRANSACTION_JOB;
+	public static String TRANSACTION_DEFAULT() {
+		return TRANSACTION_DEFAULT;
+	}
+
+	/**
+	 * @return
+	 */
+	public static boolean IS_INIT_OK() {
+		return IS_INIT_OK;
 	}
 
 }
