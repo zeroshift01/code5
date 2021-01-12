@@ -33,6 +33,8 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	 */
 	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
+
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 

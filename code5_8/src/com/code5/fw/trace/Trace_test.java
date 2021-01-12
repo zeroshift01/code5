@@ -1,5 +1,7 @@
 package com.code5.fw.trace;
 
+import com.code5.fw.data.InitProperty;
+
 import junit.framework.TestCase;
 
 /**
@@ -13,8 +15,7 @@ public class Trace_test extends TestCase {
 	 */
 	public void test_단일쓰레드_로그기록() throws Exception {
 
-		TraceRunner traceRunner = TraceRunner.getTraceRunner();
-		traceRunner.init(Trace_test.class.getName());
+		InitProperty.init(Trace_test.class.getName());
 
 		Trace trace = new Trace(Trace_test.class);
 
@@ -25,8 +26,7 @@ public class Trace_test extends TestCase {
 
 	public void test_멀티쓰레드_로그기록() throws Exception {
 
-		TraceRunner traceRunner = TraceRunner.getTraceRunner();
-		traceRunner.init(Trace_test.class.getName(), true);
+		InitProperty.init(Trace_test.class.getName(), true);
 
 		Trace_test$[] t = new Trace_test$[10];
 		for (int i = 0; i < t.length; i++) {

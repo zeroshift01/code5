@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.trace.TraceRunner;
 
@@ -51,11 +51,18 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		TraceRunner.getTraceRunner().init(request);
+		try {
+
+			InitProperty.init(request);
+
+		} catch (Exception ex) {
+			new ServletException(ex);
+		}
 
 		Box box = createBox(request);
 
-		Transaction transaction = new Transaction_SQLITE_JDBC();
+		String tx = InitProperty.TRANSACTION_WAS();
+		Transaction transaction = Transaction.createTransaction(tx);
 		TransactionContext.setThread(transaction);
 
 		try {
@@ -194,6 +201,8 @@ public class MasterController extends HttpServlet {
 	 * @return
 	 */
 	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
 
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);

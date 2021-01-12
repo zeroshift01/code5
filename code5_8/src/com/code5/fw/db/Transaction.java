@@ -174,4 +174,25 @@ public abstract class Transaction {
 
 	}
 
+	/**
+	 * @param tx
+	 * @return
+	 */
+	public static Transaction createTransaction(String tx) {
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(tx)) {
+			return new Transaction_SQLITE_POOL();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL_TEST".equals(tx)) {
+			return new Transaction_SQLITE_POOL_TEST();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL_PRODUCT".equals(tx)) {
+			return new Transaction_SQLITE_POOL_PRODUCT();
+		}
+
+		return new Transaction_SQLITE_JDBC();
+	}
+
 }

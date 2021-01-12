@@ -8,8 +8,6 @@ import java.net.InetAddress;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
@@ -65,17 +63,12 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String cntr = "notCntr";
-
-	/**
-	 * 
-	 */
-	private String host = "notHost";
-
-	/**
-	 * 
-	 */
 	private String rnd = MakeRnd.createRnd(8);
+
+	/**
+	 * 
+	 */
+	private String cntr = "notCntr";
 
 	/**
 	 * 
@@ -88,54 +81,25 @@ public final class TraceRunner {
 	private boolean isMulti = false;
 
 	/**
-	 * @param request
+	 * 
 	 */
-	public void init(HttpServletRequest request) {
-
-		if (this.isInit) {
-			return;
-		}
-
-		this.isMulti = true;
-		this.cntr = "p" + request.getServerPort();
-
-		init();
-	}
+	private String host = "notHost";
 
 	/**
-	 * @param cntr
+	 * 
 	 */
-	public void init(String cntr) {
+	public void init() {
 
 		if (this.isInit) {
 			return;
 		}
-
-		this.isMulti = false;
-		this.cntr = cntr;
-
-		init();
-	}
-
-	/**
-	 * @param cntr
-	 */
-	public void init(String cntr, boolean isMulti) {
-
-		if (this.isInit) {
-			return;
-		}
-
-		this.isMulti = isMulti;
-		this.cntr = cntr;
-
-		init();
+		_init();
 	}
 
 	/**
 	 * 
 	 */
-	private synchronized void init() {
+	private synchronized void _init() {
 
 		try {
 
@@ -143,6 +107,10 @@ public final class TraceRunner {
 				return;
 			}
 			this.isInit = true;
+
+			this.cntr = InitProperty.CNTR();
+			this.isMulti = InitProperty.IS_MULTI();
+			this.host = InitProperty.HOST();
 
 			if (this.isWriteLog) {
 				if (this.isMulti) {
