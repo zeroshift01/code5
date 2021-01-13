@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.DateTime;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.TableRecodeBase;
+import com.code5.fw.security.CryptPin;
+import com.code5.fw.security.DataCrypt;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
@@ -53,15 +57,10 @@ public class SqlRunner {
 	 * @return
 	 * 
 	 */
-	String getSqlRunnerB_1(Transaction transaction, String KEY) throws SQLException {
+	SqlRunnerB getSqlRunnerBStep1(Transaction transaction, String key) throws SQLException {
 
-		String sql = cacheSqlMap.get(KEY);
-		if (sql != null) {
-			return sql;
-		}
-
-		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE KEY = ?");
-		ps.setString(1, KEY);
+		PreparedStatement ps = transaction.prepareStatement("SELECT * FROM FW_SQL WHERE KEY = ?");
+		ps.setString(1, key);
 
 		ResultSet rs = transaction.getResultSet(ps);
 
@@ -69,11 +68,18 @@ public class SqlRunner {
 			throw new RuntimeException();
 		}
 
-		sql = rs.getString("SQL");
+		String sql = rs.getString("SQL");
+		int timeOut = rs.getInt("TIME_OUT");
+		if (timeOut <= 0) {
+			timeOut = -1;
+		}
 
-		cacheSqlMap.put(KEY, sql);
+		SqlRunnerB sqlRunnerB = new SqlRunnerB();
+		sqlRunnerB.sqlOrg = sql;
+		sqlRunnerB.key = key;
+		sqlRunnerB.timeOut = timeOut;
 
-		return sql;
+		return sqlRunnerB;
 
 	}
 
@@ -81,7 +87,9 @@ public class SqlRunner {
 	 * @param transaction
 	 * @return
 	 */
-	SqlRunnerB getSqlRunnerB_2(Transaction transaction, Box box, String sql) throws SQLException {
+	SqlRunnerB getSqlRunnerBStep2(Transaction transaction, Box box, SqlRunnerB sqlRunnerB) throws SQLException {
+
+		String sql = sqlRunnerB.sqlOrg;
 
 		StringBuffer sqlB = new StringBuffer();
 
@@ -102,10 +110,11 @@ public class SqlRunner {
 			}
 
 			String key = sql.substring(sp + 2, ep).trim();
-			String x1 = getSqlRunnerB_1(transaction, key);
+			SqlRunnerB thisSqlRunnerB = getSqlRunnerBStep1(transaction, key);
+			String addSql = thisSqlRunnerB.sqlOrg;
 
 			sqlB.append(sql.substring(fromIndex + 2, sp));
-			sqlB.append(x1);
+			sqlB.append(addSql);
 
 			fromIndex = ep;
 		}
@@ -171,10 +180,8 @@ public class SqlRunner {
 			fromIndex = ep;
 		}
 
-		SqlRunnerB sqlRunnerB = new SqlRunnerB();
 		sqlRunnerB.param = param;
 		sqlRunnerB.sql = sqlB.toString();
-		sqlRunnerB.sqlOrg = sql;
 
 		return sqlRunnerB;
 	}
@@ -186,12 +193,18 @@ public class SqlRunner {
 	 * @return
 	 * 
 	 */
-	SqlRunnerB getSqlRunnerB(Transaction transaction, Box box, String KEY) throws SQLException {
+	SqlRunnerB getSqlRunnerB(Transaction transaction, Box box, String key) throws SQLException {
 
-		String sql = getSqlRunnerB_1(transaction, KEY);
+		SqlRunnerB sqlRunnerB = cacheSqlMap.get(key);
+		if (sqlRunnerB != null) {
+			return sqlRunnerB;
+		}
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB_2(transaction, box, sql);
-		sqlRunnerB.key = KEY;
+		sqlRunnerB = getSqlRunnerBStep1(transaction, key);
+
+		sqlRunnerB = getSqlRunnerBStep2(transaction, box, sqlRunnerB);
+
+		cacheSqlMap.put(key, sqlRunnerB);
 
 		return sqlRunnerB;
 	}
@@ -213,24 +226,35 @@ public class SqlRunner {
 
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
+		if (sqlRunnerB.timeOut != -1) {
+			ps.setQueryTimeout(sqlRunnerB.timeOut);
+		}
+
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i).key;
-			String data = box.s(key);
+			SqlRunnerParamB p = sqlRunnerB.param.get(i);
+			String data = getDataByParam(p, box);
+
 			ps.setString(i + 1, data);
 
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
+		trace.write(exeSql);
 
 		ResultSet rs = transaction.getResultSet(ps);
 
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCount = metaData.getColumnCount();
 		String[] cols = new String[columnCount];
+		String[] colsForResultSet = new String[columnCount];
+		SqlRunnerParamB[] paramBs = new SqlRunnerParamB[columnCount];
 
 		for (int i = 0; i < cols.length; i++) {
-			cols[i] = metaData.getColumnName(i + 1);
+			String x = metaData.getColumnName(i + 1);
+			paramBs[i] = paramParsing(x);
+			cols[i] = paramBs[i].key;
+			colsForResultSet[i] = paramBs[i].keyOrg;
 		}
 
 		Table table = new TableRecodeBase(cols);
@@ -240,7 +264,10 @@ public class SqlRunner {
 			String[] recode = new String[columnCount];
 
 			for (int i = 0; i < cols.length; i++) {
-				recode[i] = rs.getString(cols[i]);
+
+				String data = rs.getString(colsForResultSet[i]);
+				data = getDataByParam(paramBs[i], box, data);
+				recode[i] = data;
 			}
 
 			boolean isAddRecode = table.addRecode(recode);
@@ -297,13 +324,19 @@ public class SqlRunner {
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 		trace.write(sqlRunnerB.key);
 		trace.write(sqlRunnerB.sql);
+
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
+
+		if (sqlRunnerB.timeOut != -1) {
+			ps.setQueryTimeout(sqlRunnerB.timeOut);
+		}
 
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i).key;
-			String data = box.s(key);
+			SqlRunnerParamB p = sqlRunnerB.param.get(i);
+			String data = getDataByParam(p, box);
+
 			ps.setString(i + 1, data);
 
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
@@ -353,7 +386,7 @@ public class SqlRunner {
 	/**
 	 * 
 	 */
-	private ConcurrentHashMap<String, String> cacheSqlMap = new ConcurrentHashMap<String, String>();
+	private ConcurrentHashMap<String, SqlRunnerB> cacheSqlMap = new ConcurrentHashMap<String, SqlRunnerB>();
 
 	/**
 	 * @param box
@@ -394,9 +427,8 @@ public class SqlRunner {
 
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i).key;
-			String data = box.s(key);
-
+			SqlRunnerParamB p = sqlRunnerB.param.get(i);
+			String data = getDataByParam(p, box);
 			cashKeyB.append(data + "|");
 		}
 
@@ -550,5 +582,205 @@ public class SqlRunner {
 		}
 
 		return p;
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @return
+	 */
+	String getDataByParam(SqlRunnerParamB p, Box box) {
+
+		String data = getDataByParamStep1(p, box);
+
+		if ("".equals(data)) {
+			return data;
+		}
+
+		data = getDataByParamStep2(p, box, data);
+
+		if ("".equals(data)) {
+			return data;
+		}
+
+		data = getDataByParamStep3(p, box, data);
+
+		return data;
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @param data
+	 * @return
+	 */
+	String getDataByParam(SqlRunnerParamB p, Box box, String data) {
+
+		data = getDataByParamStep2(p, box, data);
+
+		if ("".equals(data)) {
+			return data;
+		}
+
+		data = getDataByParamStep3(p, box, data);
+
+		return data;
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @param data
+	 * @return
+	 */
+	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
+
+		if (p.isPrnHpN) {
+			return data + "휴대폰형식화";
+		}
+
+		if (p.isPrnD) {
+			return data + "날짜형식화";
+		}
+
+		if (p.isPrnDTM) {
+			return data + "DTM형식화";
+		}
+
+		return data;
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @param data
+	 * @return
+	 */
+	String getDataByParamStep2(SqlRunnerParamB p, Box box, String data) {
+
+		try {
+
+			if (p.isEnc) {
+
+				String cacheKey = "getDataByParamStep2_enc" + data.hashCode();
+				String ret = box.s(cacheKey);
+				if (!"".equals(ret)) {
+					return ret;
+				}
+
+				DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
+				ret = dataCrypt.encrypt(data);
+				box.put(cacheKey, ret);
+				return ret;
+
+			}
+
+			if (p.isDec) {
+
+				String cacheKey = "getDataByParamStep2_dec" + data.hashCode();
+				String ret = box.s(cacheKey);
+				if (!"".equals(ret)) {
+					return ret;
+				}
+
+				DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
+				ret = dataCrypt.decrypt(data);
+				box.put(cacheKey, ret);
+				return ret;
+
+			}
+
+			if (p.isPin) {
+				String salt = box.s(p.add1);
+				return CryptPin.cryptPin(data, salt);
+			}
+
+			return data;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "";
+		}
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @return
+	 */
+	String getDataByParamStep1(SqlRunnerParamB p, Box box) {
+
+		String key = p.key;
+		String data = null;
+
+		if (p.isGetBox) {
+
+			Box thisBox = BoxContext.getThread();
+			if (thisBox == null) {
+				return "";
+			}
+
+			return thisBox.s(key);
+
+		}
+
+		if (p.isGetSessionB) {
+
+			Box thisBox = BoxContext.getThread();
+			if (thisBox == null) {
+				return "";
+			}
+
+			SessionB user = thisBox.getSessionB();
+			if (user == null) {
+				return "";
+			}
+
+			if ("ID".equals(key)) {
+				return user.getId();
+			}
+
+			if ("IP".equals(key)) {
+				return thisBox.s(Box.KEY_REMOTE_ADDR);
+			}
+
+			if ("AUTH".equals(key)) {
+				return user.getAuth();
+			}
+		}
+
+		if (p.isGetSysdtm) {
+
+			data = DateTime.getThisDTM();
+
+			String x1 = p.add1;
+			String x2 = p.add2;
+
+			if (x1 == null) {
+				return data;
+
+			}
+
+			if ("D".equals(x1)) {
+
+				if (x2 == null) {
+					return "";
+				}
+
+				return data + " 계산된 결과 " + x1 + " " + x2;
+			}
+
+			if ("S".equals(x1)) {
+
+				if (x2 == null) {
+					return "";
+				}
+
+				return data + " 계산된 결과 " + x1 + " " + x2;
+			}
+
+		}
+
+		return box.s(key);
 	}
 }

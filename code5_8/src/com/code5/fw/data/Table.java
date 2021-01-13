@@ -71,4 +71,28 @@ abstract public class Table {
 		}
 		return box;
 	}
+
+	/**
+	 *
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		String[] cols = getCols();
+
+		for (int i = 0; i < cols.length; i++) {
+			sb.append(cols[i] + "\t");
+		}
+		sb.append("\n");
+
+		for (int i = 0; i < size(); i++) {
+			for (int j = 0; j < cols.length; j++) {
+
+				sb.append(s(cols[j], i) + "\t");
+			}
+			sb.append("\n");
+		}
+
+		return sb.toString();
+
+	}
 }

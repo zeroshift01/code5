@@ -1,12 +1,10 @@
 package com.code5.fw.db;
 
 import com.code5.fw.data.Box;
-import com.code5.fw.data.DateTime;
+import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
-import com.code5.fw.security.CryptPin;
-import com.code5.fw.security.DataCrypt;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
@@ -29,53 +27,8 @@ public class SqlRunner_test extends TestCase {
 
 	/**
 	 * @throws Exception
-	 * 
-	 * 
 	 */
-	public void x__test_01() throws Exception {
-
-		Box box = BoxContext.getThread();
-		box.put("KEY", "THIS_KEY");
-
-		SqlRunner sql = SqlRunner.getSqlRunner();
-
-		Table table = sql.getTable("SQLRUNNER__test_01");
-
-		String[] cols = table.getCols();
-		for (int i = 0; i < table.size(); i++) {
-
-			for (int j = 0; j < cols.length; j++) {
-
-				System.out.println(table.s(cols[j], i));
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * @throws Exception
-	 * 
-	 */
-	public void x__test_02() throws Exception {
-
-		Box box = BoxContext.getThread();
-		box.put("KEY", "THIS_KEY");
-		box.put("SQL", "THIS_SQL");
-
-		SqlRunner sql = SqlRunner.getSqlRunner();
-
-		if (sql.executeSql("SQLRUNNER__test_02_2") == 0) {
-			sql.executeSql("SQLRUNNER__test_02_1");
-		}
-
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	public void __test_03() throws Exception {
+	public void test_03() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
@@ -114,18 +67,6 @@ public class SqlRunner_test extends TestCase {
 
 	}
 
-	public void _test_04() throws Exception {
-		Box box = BoxContext.getThread();
-		box.put("P1", "HI");
-		box.put("P2", "");
-		box.put("P3", "Y");
-
-		SqlRunner sql = SqlRunner.getSqlRunner();
-		Table table = sql.getTable("SQLRUNNER__test_03");
-		table.toString();
-
-	}
-
 	public void test_05() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
@@ -156,195 +97,125 @@ public class SqlRunner_test extends TestCase {
 
 		p = sql.paramParsing("ENC__D1");
 		box.put("D1", "data");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
+		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fca");
+
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fca");
 
 		p = sql.paramParsing("DEC__D1");
 		box.put("D1", "80c253dcf3a330c5dbb29239f52c8fca");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
+		assertEquals(data, "data");
+
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "data");
 
 		p = sql.paramParsing("DEC__D1__PRN_HP_N");
 		box.put("D1", "80c253dcf3a330c5dbb29239f52c8fca");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "data휴대폰형식화");
 
 		p = sql.paramParsing("D1__PRN_HP_N");
 		box.put("D1", "data");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "data휴대폰형식화");
 
 		p = sql.paramParsing("PIN__PIN, ID");
 		box.put("PIN", "abcd1234");
 		box.put("ID", "id_A0");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "424ab5a6448f7b6aca9cd65c361b672c3d853622bd29001ee15bc5c50bcfa169");
 
 		p = sql.paramParsing("SESSIONB.ID");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "IDx");
 
 		p = sql.paramParsing("SESSIONB.IP");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "1.1.1.1");
 
 		p = sql.paramParsing("SESSIONB.AUTH");
-		data = getDataByParam(p, box);
+		data = sql.getDataByParam(p, box);
 		assertEquals(data, "AUTHx");
 
 		p = sql.paramParsing("SYSDTM.DTM");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.DTM, D, 60");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.DTM__PRN_DTM");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.DTM__PRN_D");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.D");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.D, D, 60");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.D__PRN_D");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.TM");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
 		p = sql.paramParsing("SYSDTM.TM, S, 60");
+		data = sql.getDataByParam(p, box);
+		System.out.println(data);
+
+		box.put("P1", "80c253dcf3a330c5dbb29239f52c8fca");
+		Box thisBox = new BoxLocal();
+
 		p = sql.paramParsing("BOX.P1");
+		data = sql.getDataByParam(p, thisBox);
+		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fca");
+
 		p = sql.paramParsing("BOX.ENC__P1");
+		data = sql.getDataByParam(p, thisBox);
+		assertEquals(data,
+				"6c4c4558324c97e8e6b8655b68e27666b000a31d04835cfb0e86d91e302a0fb150e5cc4b6178363ff73ff8457ec4ca7d");
+
 		p = sql.paramParsing("BOX.P1__PRN_HP_N");
+		data = sql.getDataByParam(p, thisBox);
+		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fca휴대폰형식화");
+
 		p = sql.paramParsing("BOX.DEC__P1__PRN_HP_N");
+		data = sql.getDataByParam(p, thisBox);
+		assertEquals(data, "data휴대폰형식화");
+
+		data = sql.getDataByParam(p, thisBox);
+		assertEquals(data, "data휴대폰형식화");
 
 	}
 
-	String getDataByParam(SqlRunnerParamB p, Box box) {
+	public void test_07() throws Exception {
+		SqlRunner sql = SqlRunner.getSqlRunner();
+		Box box = BoxContext.getThread();
+		box.setSessionB(new SessionB("IDx", "AUTHx", "IPx"));
+		box.put(Box.KEY_REMOTE_ADDR, "1.1.1.1");
 
-		String data = getDataByParamStep1(p, box);
+		box.put("P1", "HI");
+		box.put("P2", "");
+		box.put("P3", "Y");
 
-		if ("".equals(data)) {
-			return data;
+		Table table = sql.getTable("SQLRUNNER_TEST_03");
+		System.out.println(table.toString());
+		for (int i = 0; i < 1000; i++) {
+			table = sql.getTable("SQLRUNNER_TEST_03");
+			System.out.println(table.toString());
 		}
 
-		data = getDataByParamStep2(p, box, data);
-
-		if ("".equals(data)) {
-			return data;
-		}
-
-		data = getDataByParamStep3(p, box, data);
-
-		return data;
-	}
-
-	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
-
-		if (p.isPrnHpN) {
-			return data + "휴대폰형식화";
-		}
-
-		if (p.isPrnD) {
-			return data + "날짜형식화";
-		}
-
-		if (p.isPrnDTM) {
-			return data + "DTM형식화";
-		}
-
-		return data;
-	}
-
-	String getDataByParamStep2(SqlRunnerParamB p, Box box, String data) {
-
-		try {
-
-			DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
-
-			if (p.isEnc) {
-				return dataCrypt.encrypt(data);
-			}
-
-			if (p.isDec) {
-				return dataCrypt.decrypt(data);
-			}
-
-			if (p.isPin) {
-				String salt = box.s(p.add1);
-				return CryptPin.cryptPin(data, salt);
-			}
-
-			return data;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return "";
-		}
-	}
-
-	String getDataByParamStep1(SqlRunnerParamB p, Box box) {
-
-		String key = p.key;
-		String data = null;
-
-		if (p.isGetBox) {
-
-			Box thisBox = BoxContext.getThread();
-			if (thisBox == null) {
-				return "";
-			}
-
-			return thisBox.s(key);
-
-		}
-
-		if (p.isGetSessionB) {
-
-			Box thisBox = BoxContext.getThread();
-			if (thisBox == null) {
-				return "";
-			}
-
-			SessionB user = thisBox.getSessionB();
-			if (user == null) {
-				return "";
-			}
-
-			if ("ID".equals(key)) {
-				return user.getId();
-			}
-
-			if ("IP".equals(key)) {
-				return thisBox.s(Box.KEY_REMOTE_ADDR);
-			}
-
-			if ("AUTH".equals(key)) {
-				return user.getAuth();
-			}
-		}
-
-		if (p.isGetSysdtm) {
-
-			data = DateTime.getThisDTM();
-
-			String x1 = p.add1;
-			String x2 = p.add2;
-
-			if (x1 == null) {
-				return data;
-
-			}
-
-			if ("D".equals(x1)) {
-
-				if (x2 == null) {
-					return "";
-				}
-
-				// 시간계산
-				return data;
-			}
-
-			if ("S".equals(x1)) {
-
-				if (x2 == null) {
-					return "";
-				}
-
-				return data;
-			}
-
-		}
-
-		return box.s(key);
 	}
 }
