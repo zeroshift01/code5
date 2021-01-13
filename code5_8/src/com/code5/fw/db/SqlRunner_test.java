@@ -218,4 +218,9 @@ public class SqlRunner_test extends TestCase {
 		}
 
 	}
+
+	public void 동작안함_test_10() throws Exception {
+		SqlRunner sql = SqlRunner.getSqlRunner();
+		sql.getTable("SQLRUNNER_TEST_10");
+	}
 }

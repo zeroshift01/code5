@@ -128,4 +128,5 @@ INSERT INTO FW_SQL(KEY, SQL) VALUES ('SQLRUNNER_TEST_04','[~ P1 ^ IS_NOT_NULL ^ 
 
 ALTER TABLE FW_SQL ADD TIME_OUT;
 
-
+INSERT INTO FW_SQL(KEY, SQL, TIME_OUT) values ('SQLRUNNER_TEST_10','select count(*) from emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp'
+, 2);
