@@ -10,5 +10,5 @@ class SqlRunnerB {
 	String key = null;
 	String sqlOrg = null;
 	String sql = null;
-	List<String> param = null;
+	List<SqlRunnerParamB> param = null;
 }

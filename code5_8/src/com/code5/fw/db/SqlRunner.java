@@ -83,11 +83,9 @@ public class SqlRunner {
 	 */
 	SqlRunnerB getSqlRunnerB_2(Transaction transaction, Box box, String sql) throws SQLException {
 
-		ArrayList<String> param = new ArrayList<String>();
-
 		StringBuffer sqlB = new StringBuffer();
 
-		int fromIndex = -1;
+		int fromIndex = -2;
 
 		for (int i = 0; i < 1000; i++) {
 
@@ -114,7 +112,7 @@ public class SqlRunner {
 
 		sql = sqlB.toString();
 		sqlB = new StringBuffer();
-		fromIndex = -1;
+		fromIndex = -2;
 
 		for (int i = 0; i < 1000; i++) {
 
@@ -144,6 +142,8 @@ public class SqlRunner {
 		sqlB = new StringBuffer();
 		fromIndex = -1;
 
+		ArrayList<SqlRunnerParamB> param = new ArrayList<SqlRunnerParamB>();
+
 		for (int i = 0; i < 1000; i++) {
 
 			int sp = sql.indexOf("[", fromIndex);
@@ -155,12 +155,17 @@ public class SqlRunner {
 			}
 
 			int ep = sql.indexOf("]", sp + 1);
-			
+
 			if (ep == -1) {
 				throw new SQLException();
 			}
 
-			param.add(sql.substring(sp + 1, ep));
+			String key = sql.substring(sp + 1, ep);
+
+			SqlRunnerParamB p = paramParsing(key);
+
+			param.add(p);
+
 			sqlB.append(sql.substring(fromIndex + 1, sp) + "?");
 
 			fromIndex = ep;
@@ -203,20 +208,20 @@ public class SqlRunner {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 
+		trace.write(sqlRunnerB.key);
+		trace.write(sqlRunnerB.sql);
+
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i);
+			String key = sqlRunnerB.param.get(i).key;
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
-
-		trace.write(sqlRunnerB.key);
-		trace.write(exeSql);
 
 		ResultSet rs = transaction.getResultSet(ps);
 
@@ -297,7 +302,7 @@ public class SqlRunner {
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i);
+			String key = sqlRunnerB.param.get(i).key;
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
@@ -389,7 +394,7 @@ public class SqlRunner {
 
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i);
+			String key = sqlRunnerB.param.get(i).key;
 			String data = box.s(key);
 
 			cashKeyB.append(data + "|");
@@ -457,4 +462,93 @@ public class SqlRunner {
 
 	}
 
+	/**
+	 * @param key
+	 * @return
+	 */
+	SqlRunnerParamB paramParsing(String key) {
+
+		SqlRunnerParamB p = new SqlRunnerParamB();
+		p.keyOrg = key;
+		p.key = key;
+
+		if (key.startsWith("SYSDTM.")) {
+
+			p.isGetSysdtm = true;
+
+			String x = key.substring("SYSDTM.".length());
+
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = null;
+			String x2 = null;
+
+			if (xx.length == 3) {
+
+				x1 = xx[1].trim();
+				x2 = xx[2].trim();
+
+			} else if (xx.length == 2) {
+
+				x1 = xx[1].trim();
+			}
+
+			p.key = x0;
+			p.add1 = x1;
+			p.add2 = x2;
+
+		} else if (key.startsWith("SESSIONB.")) {
+
+			p.isGetSessionB = true;
+
+			key = key.substring("SESSIONB.".length());
+			p.key = key;
+
+		} else if (key.startsWith("BOX.")) {
+
+			p.isGetBox = true;
+
+			key = key.substring("BOX.".length());
+			p.key = key;
+
+		}
+
+		key = p.key;
+
+		if (key.startsWith("ENC__")) {
+			p.isEnc = true;
+			p.key = key.substring("ENC__".length());
+		} else if (key.startsWith("DEC__")) {
+			p.isDec = true;
+			p.key = key.substring("DEC__".length());
+		} else if (key.startsWith("PIN__")) {
+
+			p.isPin = true;
+
+			String x = key.substring("PIN__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.key = x0;
+			p.add1 = x1;
+		}
+
+		key = p.key;
+
+		if (key.endsWith("__PRN_HP_N")) {
+			p.isPrnHpN = true;
+			p.key = key.substring(0, key.length() - "__PRN_HP_N".length());
+		} else if (key.endsWith("__PRN_DTM")) {
+			p.isPrnDTM = true;
+			p.key = key.substring(0, key.length() - "__PRN_DTM".length());
+		} else if (key.endsWith("__PRN_D")) {
+			p.isPrnD = true;
+			p.key = key.substring(0, key.length() - "__PRN_D".length());
+		}
+
+		return p;
+	}
 }

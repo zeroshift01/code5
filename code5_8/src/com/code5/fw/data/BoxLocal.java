@@ -36,7 +36,7 @@ public class BoxLocal extends Box {
 	 * 
 	 */
 	public Object get(String key) {
-		return (String) hm.get(key);
+		return hm.get(key);
 	}
 
 	/**
