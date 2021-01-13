@@ -53,7 +53,7 @@ public class SqlRunner {
 	 * @return
 	 * 
 	 */
-	String getSQL(Transaction transaction, String KEY) throws SQLException {
+	String getSqlRunnerB_1(Transaction transaction, String KEY) throws SQLException {
 
 		String sql = cacheSqlMap.get(KEY);
 		if (sql != null) {
@@ -78,19 +78,72 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param sql
+	 * @param transaction
 	 * @return
-	 * @throws SQLException
-	 * 
 	 */
-	SqlRunnerB getSqlRunnerB(String sql) throws SQLException {
+	SqlRunnerB getSqlRunnerB_2(Transaction transaction, Box box, String sql) throws SQLException {
 
 		ArrayList<String> param = new ArrayList<String>();
 
 		StringBuffer sqlB = new StringBuffer();
 
 		int fromIndex = -1;
+
+		for (int i = 0; i < 1000; i++) {
+
+			int sp = sql.indexOf("[[", fromIndex);
+			if (sp == -1) {
+				sqlB.append(sql.substring(fromIndex + 2));
+				break;
+			}
+
+			int ep = sql.indexOf("]]", sp + 1);
+
+			if (ep == -1) {
+				throw new SQLException();
+			}
+
+			String key = sql.substring(sp + 2, ep).trim();
+			String x1 = getSqlRunnerB_1(transaction, key);
+
+			sqlB.append(sql.substring(fromIndex + 2, sp));
+			sqlB.append(x1);
+
+			fromIndex = ep;
+		}
+
+		sql = sqlB.toString();
+		sqlB = new StringBuffer();
+		fromIndex = -1;
+
+		for (int i = 0; i < 1000; i++) {
+
+			int sp = sql.indexOf("[~", fromIndex);
+			if (sp == -1) {
+				sqlB.append(sql.substring(fromIndex + 2));
+				break;
+			}
+
+			int ep = sql.indexOf("~]", sp + 1);
+
+			if (ep == -1) {
+				throw new SQLException();
+			}
+
+			String x1 = sql.substring(sp + 2, ep);
+
+			String x2 = ifParsing(x1, box);
+
+			sqlB.append(sql.substring(fromIndex + 2, sp));
+			sqlB.append(x2);
+
+			fromIndex = ep;
+		}
+
+		sql = sqlB.toString();
+		sqlB = new StringBuffer();
+		fromIndex = -1;
+
 		for (int i = 0; i < 1000; i++) {
 
 			int sp = sql.indexOf("[", fromIndex);
@@ -102,6 +155,10 @@ public class SqlRunner {
 			}
 
 			int ep = sql.indexOf("]", sp + 1);
+			
+			if (ep == -1) {
+				throw new SQLException();
+			}
 
 			param.add(sql.substring(sp + 1, ep));
 			sqlB.append(sql.substring(fromIndex + 1, sp) + "?");
@@ -124,11 +181,11 @@ public class SqlRunner {
 	 * @return
 	 * 
 	 */
-	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
+	SqlRunnerB getSqlRunnerB(Transaction transaction, Box box, String KEY) throws SQLException {
 
-		String sql = getSQL(transaction, KEY);
+		String sql = getSqlRunnerB_1(transaction, KEY);
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB_2(transaction, box, sql);
 		sqlRunnerB.key = KEY;
 
 		return sqlRunnerB;
@@ -144,7 +201,7 @@ public class SqlRunner {
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
@@ -155,7 +212,6 @@ public class SqlRunner {
 			String data = box.s(key);
 			ps.setString(i + 1, data);
 
-			// [8]
 			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
 		}
 
@@ -182,7 +238,6 @@ public class SqlRunner {
 				recode[i] = rs.getString(cols[i]);
 			}
 
-			// [9]
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
@@ -234,7 +289,7 @@ public class SqlRunner {
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 		trace.write(sqlRunnerB.key);
 		trace.write(sqlRunnerB.sql);
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
@@ -328,7 +383,7 @@ public class SqlRunner {
 	public Table getTableByCache(Transaction transaction, String FORM_NO, Box box) throws SQLException {
 
 		StringBuffer cashKeyB = new StringBuffer();
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 
 		cashKeyB.append(FORM_NO + "|");
 
@@ -358,6 +413,48 @@ public class SqlRunner {
 	public void reload() {
 		cacheSqlMap.clear();
 		cacheTableMap.clear();
+	}
+
+	/**
+	 * @param sql
+	 * @param box
+	 * @return
+	 * @throws Exception
+	 */
+	String ifParsing(String sql, Box box) {
+
+		String[] xxx = sql.split("\\^");
+
+		String x1 = xxx[0].trim();
+		String x2 = xxx[1].trim();
+		String x3 = xxx[2].trim();
+
+		String data = box.s(x1);
+
+		if ("IS_NULL".equals(x2)) {
+
+			if ("".equals(data)) {
+				return x3;
+			}
+
+			return "";
+		}
+
+		if ("IS_NOT_NULL".equals(x2)) {
+
+			if (!"".equals(data)) {
+				return x3;
+			}
+
+			return "";
+		}
+
+		if (x2.equals(data)) {
+			return x3;
+		}
+
+		return "";
+
 	}
 
 }

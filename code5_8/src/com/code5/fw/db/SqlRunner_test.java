@@ -1,6 +1,7 @@
 package com.code5.fw.db;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
@@ -13,6 +14,10 @@ import junit.framework.TestCase;
  */
 public class SqlRunner_test extends TestCase {
 
+	protected void setUp() throws Exception {
+		InitProperty.init(this);
+	}
+
 	@Override
 	protected void tearDown() throws Exception {
 		TransactionContext.getThread().commit();
@@ -21,9 +26,9 @@ public class SqlRunner_test extends TestCase {
 	/**
 	 * @throws Exception
 	 * 
-	 *                   
+	 * 
 	 */
-	public void test_01() throws Exception {
+	public void x_test_01() throws Exception {
 
 		Box box = BoxContext.getThread();
 		box.put("KEY", "THIS_KEY");
@@ -49,7 +54,7 @@ public class SqlRunner_test extends TestCase {
 	 * @throws Exception
 	 * 
 	 */
-	public void test_02() throws Exception {
+	public void x_test_02() throws Exception {
 
 		Box box = BoxContext.getThread();
 		box.put("KEY", "THIS_KEY");
@@ -60,6 +65,60 @@ public class SqlRunner_test extends TestCase {
 		if (sql.executeSql("SQLRUNNER_TEST_02_2") == 0) {
 			sql.executeSql("SQLRUNNER_TEST_02_1");
 		}
+
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public void _test_03() throws Exception {
+
+		SqlRunner sql = SqlRunner.getSqlRunner();
+
+		Box box = BoxContext.getThread();
+		String xx = "";
+
+		box.put("P2", "");
+
+		xx = " P2 ^ IS_NULL ^ AND 2 = 2 ";
+
+		assertEquals(sql.ifParsing(xx, box), "AND 2 = 2");
+
+		box.put("P2", "HI");
+
+		assertEquals(sql.ifParsing(xx, box), "");
+
+		box.put("P2", "");
+
+		xx = " P2 ^ IS_NOT_NULL ^ AND 2 = 2 ";
+
+		assertEquals(sql.ifParsing(xx, box), "");
+
+		box.put("P2", "HI");
+
+		assertEquals(sql.ifParsing(xx, box), "AND 2 = 2");
+
+		box.put("P2", "");
+
+		xx = " P2 ^ HI ^ AND 2 = 2 ";
+
+		assertEquals(sql.ifParsing(xx, box), "");
+
+		box.put("P2", "HI");
+
+		assertEquals(sql.ifParsing(xx, box), "AND 2 = 2");
+
+	}
+
+	public void test_04() throws Exception {
+		Box box = BoxContext.getThread();
+		box.put("P1", "HI");
+		box.put("P2", "");
+		box.put("P3", "Y");
+
+		SqlRunner sql = SqlRunner.getSqlRunner();
+		Table table = sql.getTable("SQLRUNNER_TEST_03");
+		table.toString();
 
 	}
 

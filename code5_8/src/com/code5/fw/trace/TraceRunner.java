@@ -359,6 +359,9 @@ public final class TraceRunner {
 		try {
 
 			String url = InitProperty.TRACE_CONFIG_URL();
+			if (url == null) {
+				return;
+			}
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(url)));
 
 			for (int i = 0; i < 10000; i++) {

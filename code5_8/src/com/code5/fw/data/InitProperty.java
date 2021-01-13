@@ -147,6 +147,15 @@ public class InitProperty {
 	}
 
 	/**
+	 * @param obj
+	 * @throws Exception
+	 */
+	public static void init(Object obj) throws Exception {
+		String cntr = obj.getClass().getName();
+		init(cntr);
+	}
+
+	/**
 	 * @param cntr
 	 */
 	public static void init(String cntr) throws Exception {

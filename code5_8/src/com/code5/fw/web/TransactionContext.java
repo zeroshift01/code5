@@ -1,7 +1,7 @@
 package com.code5.fw.web;
 
+import com.code5.fw.data.InitProperty;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
 /**
  * @author seuk
@@ -48,7 +48,7 @@ public class TransactionContext {
 		if (transaction != null) {
 			TL.get().closeConnection();
 		}
-		
+
 		TL.remove();
 	}
 
@@ -57,7 +57,8 @@ public class TransactionContext {
 	 * 
 	 */
 	private static Transaction createDefaultTransaction() {
-		return new Transaction_SQLITE_JDBC();
+		String tx = InitProperty.TRANSACTION_DEFAULT();
+		return Transaction.createTransaction(tx);
 	}
 
 }
