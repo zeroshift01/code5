@@ -130,3 +130,27 @@ ALTER TABLE FW_SQL ADD TIME_OUT;
 
 INSERT INTO FW_SQL(KEY, SQL, TIME_OUT) values ('SQLRUNNER_TEST_10','select count(*) from emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp'
 , 2);
+
+
+DELETE FROM FW_VIEW WHERE KEY LIKE 'emp%';
+INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('emp00101','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00101.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 조회');
+INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('emp00201','/WEB-INF/classes/com/code5/biz/emp/emp002/jsp/emp00201.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 관리');
+
+DELETE FROM FW_VIEW WHERE KEY LIKE 'null%';
+INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
+
+DELETE FROM fw_controller WHERE KEY like 'emp%'; 
+
+INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','');
+INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00102','com.code5.biz.emp.emp001.Emp001','emp00102','');
+INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00201','com.code5.biz.emp.emp002.Emp002','emp00201','nullView');
+
+DELETE FROM fw_controller WHERE KEY like 'admin%'; 
+
+INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('admin001','com.code5.fw.web.Admin','admin001','');
+
+
+
+admin001','com.code5.fw.web.Admin','admin001'
+
+CREATE TABLE FW_CONTROLLER( "KEY", CLASS_NAME, METHOD_NAME, ERR_JSP_KEY

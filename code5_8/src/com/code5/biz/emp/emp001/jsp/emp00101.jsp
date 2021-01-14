@@ -11,7 +11,6 @@
 	
 	boolean is_emp00102 = MasterController.checkUrlAuth("emp00102");
 %>
-<html><head>
 <script type="text/javascript">
 
 function emp00101(){
@@ -27,7 +26,7 @@ function emp00102(){
 } 
 
 </script>
-<body>
+
 <form name="form2" method="post" enctype="multipart/form-data">
 <%
 	for (int i = 0; i < table.size(); i++) {
@@ -37,7 +36,7 @@ function emp00102(){
 <input type="text" name ="EMP_N" value = "<%=thisBox.s("EMP_N")%>" readonly="readonly">
 <%=thisBox.s("EMP_NM")%>
 <input type="text" name ="HP_N" value = "<%=thisBox.s("HP_N")%>">
-<input type="file" name ="FILE_<%=i%>">
+<input type="file" name ="FILE">
 
 <input type="text" name ="FILE_ID_ORG" value = "<%=thisBox.s("FILE_ID")%>" readonly="readonly">
 
@@ -47,9 +46,16 @@ function emp00102(){
 	}
 %>
 
+<br><br>
+사용후 바로 삭제하는 파일
+<br><input type="file" name ="TEMP_FILE_1">
+<br><input type="file" name ="TEMP_FILE_2">
+
+
 </form>
 <form name="form1" method="post">
 <input type="text" name ="EMP_NM" value = "<%=box.s("EMP_NM")%>">
+<input type="text" name ="FILE"/>
 </form>
 
 <button onclick="emp00101()">검색 emp00101</button>
@@ -57,7 +63,3 @@ function emp00102(){
 <%if(is_emp00102) { %>
 <button onclick="emp00102()">수정 emp00102</button>
 <%} %>
-
-</body>
-</head></html>
-

@@ -14,6 +14,11 @@ public abstract class Box implements Serializable {
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 	public static String KEY_CONTENT_TYPE = "com.code5.fw.web.KEY_CONTENT_TYPE";
 
+	public static String KEY_FW_VIEW = "com.code5.fw.web.KEY_FW_VIEW";
+	public static String KEY_FW_CONTROLLER = "com.code5.fw.web.KEY_FW_CONTROLLER";
+
+	public static String KEY_ALERT_MSG = "com.code5.fw.web.KEY_ALERT_MSG";
+
 	private boolean isXssConvert = false;
 
 	/**
@@ -146,7 +151,7 @@ public abstract class Box implements Serializable {
 	public SessionB getSessionB() {
 
 		try {
-			//return new SessionB("A0", "A0", "1");
+			// return new SessionB("A0", "A0", "1");
 			return (SessionB) get(KEY_SESSIONB);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -381,6 +386,21 @@ public abstract class Box implements Serializable {
 			ex.printStackTrace();
 			return 0;
 		}
+	}
+
+	/**
+	 * @param msg
+	 */
+	public void setAlertMsg(String msg) {
+		put(KEY_ALERT_MSG, msg);
+	}
+
+	/**
+	 * @param msg
+	 * @return
+	 */
+	public String getAlertMsg() {
+		return s(KEY_ALERT_MSG);
 	}
 
 }

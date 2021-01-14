@@ -3,6 +3,7 @@ package com.code5.fw.web;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,8 +63,7 @@ public class MasterController extends HttpServlet {
 		} catch (Exception ex) {
 			throw new ServletException(ex);
 		}
-		
-		
+
 		Box box = createBox(request);
 
 		String tx = InitProperty.TRANSACTION_WAS();
@@ -82,11 +82,20 @@ public class MasterController extends HttpServlet {
 
 			MasterControllerD dao = new MasterControllerD();
 			Box view = dao.getView(JSP_KEY);
+			box.put(Box.KEY_FW_VIEW, view);
+
+			String TMPL_JSP = view.s("TMPL_JSP");
 			String JSP = view.s("JSP");
 
+			trace.write("TMPL_JSP [" + TMPL_JSP + "]");
 			trace.write("VIEW [" + JSP + "]");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
+			String THIS_JSP = TMPL_JSP;
+			if ("".equals(THIS_JSP)) {
+				THIS_JSP = JSP;
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(THIS_JSP);
 
 			box.setXssConvert(true);
 
@@ -121,6 +130,7 @@ public class MasterController extends HttpServlet {
 		MasterControllerD dao = new MasterControllerD();
 
 		Box controller = dao.getController(KEY);
+		BoxContext.getThread().put(Box.KEY_FW_CONTROLLER, controller);
 
 		boolean checkUrlAuth = checkUrlAuth(controller);
 		if (!checkUrlAuth) {
@@ -132,6 +142,14 @@ public class MasterController extends HttpServlet {
 
 		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
+		BizController bizController = cacheBizControllerMap.get(KEY);
+
+		if (bizController != null) {
+			Method method = bizController.getClass().getDeclaredMethod(METHOD_NAME);
+			String JSP_KEY = (String) method.invoke(bizController);
+			return JSP_KEY;
+		}
+
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
 
@@ -139,6 +157,10 @@ public class MasterController extends HttpServlet {
 		Constructor constructor = newClass.getConstructor();
 
 		Object instance = constructor.newInstance();
+
+		if (!(instance instanceof BizController)) {
+			throw new Exception();
+		}
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 
@@ -239,4 +261,15 @@ public class MasterController extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 */
+	public static void reload() {
+		MasterController.cacheBizControllerMap.clear();
+	}
+
+	/**
+	 * 
+	 */
+	private static ConcurrentHashMap<String, BizController> cacheBizControllerMap = new ConcurrentHashMap<String, BizController>();
 }
