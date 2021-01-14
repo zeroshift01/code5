@@ -2,6 +2,9 @@
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
+	response.setHeader("cache-control", "no-cache");
+	response.setHeader("expires", "0");
+	response.setHeader("pragma", "no-cache");
 
 	Box box = BoxContext.getThread();
 

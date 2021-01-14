@@ -128,6 +128,8 @@ INSERT INTO FW_SQL(KEY, SQL) VALUES ('SQLRUNNER_TEST_04','[~ P1 ^ IS_NOT_NULL ^ 
 
 ALTER TABLE FW_SQL ADD TIME_OUT;
 
+ALTER TABLE FW_CONTROLLER ADD SESSION_CHECK_YN;
+ALTER TABLE FW_CONTROLLER ADD AUTH;
 INSERT INTO FW_SQL(KEY, SQL, TIME_OUT) values ('SQLRUNNER_TEST_10','select count(*) from emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp'
 , 2);
 
@@ -143,12 +145,12 @@ DELETE FROM FW_VIEW WHERE KEY LIKE 'err%';
 INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
 
 
-DELETE FROM fw_controller WHERE KEY like 'emp%'; 
+DELETE FROM FW_CONTROLLER WHERE KEY like 'emp%'; 
 
-INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','');
-INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00102','com.code5.biz.emp.emp001.Emp001','emp00102','');
-INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00201','com.code5.biz.emp.emp002.Emp002','emp00201','nullView');
+INSERT INTO FW_CONTROLLER(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY,SESSION_CHECK_YN, AUTH) VALUES ('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','', 'Y', '');
+INSERT INTO FW_CONTROLLER(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY,SESSION_CHECK_YN, AUTH) VALUES ('emp00102','com.code5.biz.emp.emp001.Emp001','emp00102','', 'Y', 'A0');
+INSERT INTO FW_CONTROLLER(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY,SESSION_CHECK_YN, AUTH) VALUES ('emp00201','com.code5.biz.emp.emp002.Emp002','emp00201','nullView', 'Y', '');
 
-DELETE FROM fw_controller WHERE KEY like 'admin%'; 
+DELETE FROM FW_CONTROLLER WHERE KEY like 'admin%'; 
 
-INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('admin001','com.code5.fw.web.Admin','admin001','');
+INSERT INTO FW_CONTROLLER(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('admin001','com.code5.fw.web.Admin','admin001','','Y','A0');

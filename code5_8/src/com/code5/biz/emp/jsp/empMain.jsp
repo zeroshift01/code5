@@ -12,7 +12,7 @@ String TITLE = view.s("TITLE");
 <head>
 <title><%=TITLE%></title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="/css/main.css" />
 <script>
 	function init() {
 		var msg = document.main1.ALERT_MSG.value;
@@ -26,7 +26,7 @@ String TITLE = view.s("TITLE");
 	<a href="/waf/emp00101">EMP 조회 emp00101</a>
 	<a href="/waf/emp00201">EMP 관리 emp00201</a>
 	<br>
-	<jsp:include page="<%=JSP%>" flush="true">
+	<jsp:include page="<%=JSP%>" flush="true"/>
 		<br>
 		<form name='main1'>
 			<input name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />

@@ -19,7 +19,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 		String IP = box.s(Box.KEY_REMOTE_ADDR);
 
 		SessionB user = box.getSessionB();
-		if (IP.equals(user.getIp())) {
+		if (!IP.equals(user.getIp())) {
 			throw new Exception();
 		}
 

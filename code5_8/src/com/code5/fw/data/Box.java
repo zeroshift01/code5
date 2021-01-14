@@ -345,7 +345,7 @@ public abstract class Box implements Serializable {
 	 * @return
 	 */
 	public Box getBox(String key) {
-		Object obj = get(KEY_SESSIONB);
+		Object obj = get(key);
 		if (obj == null) {
 			return new BoxLocal();
 		}
