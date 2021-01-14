@@ -1,38 +1,22 @@
-<%@page import="java.net.URLEncoder"%><%@page import="java.net.URL"%><%@page
-	import="java.io.OutputStream"%><%@page
-	import="com.code5.fw.data.UploadFileB"%><%@page
-	import="com.code5.fw.data.DateTime"%><%@page
-	import="com.code5.fw.db.SqlRunner"%><%@ page
-	contentType="application/x-msdownload;"%><%@page
-	import="com.code5.fw.security.CryptFile"%><%@page
-	import="com.code5.fw.data.Box"%><%@page
-	import="com.code5.fw.web.BoxContext"%><%
-	OutputStream outputStream = response.getOutputStream();
-
-try {
-
+<%@page import="com.code5.fw.web.LoginException"%>
+<%@page import="com.code5.fw.data.Box"%>
+<%@page import="com.code5.fw.web.BoxContext"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
 	Box box = BoxContext.getThread();
-	UploadFileB file = box.getUploadFileB("file");
-	String fileUrl = file.getFileUrl();
-	String fileName = file.getFileName();
-	String contentType = file.getContentType();
-	
 
-	long timeOut = 1000 * 60 * 10;
+Exception ex = (Exception) box.get(Box.KEY_EXCEPTION);
 
-	box.put("ST_DTM", DateTime.getThisDTM());
+String msg = "알수 없는 오류가 발생했습니다.";
 
-	fileName = new String(fileName.getBytes(),"ISO-8859-1");
-	response.setContentType(contentType);
-	response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\";");
-	
-	CryptFile.getCryptFile().decrypt(fileUrl, outputStream, timeOut);
-
-} catch (Exception ex) {
-	ex.printStackTrace();
-} finally {
-	if (outputStream != null) {
-		outputStream.close();
-	}
+if (ex instanceof LoginException) {
+	msg = "로그인이 필요합니다.";
 }
 %>
+
+사용자에게 보여주는 정보
+<%=msg%>
+
+
+개발자를 위한 디버그 정보
+<%=ex.getMessage()%>

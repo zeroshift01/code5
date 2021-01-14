@@ -19,6 +19,8 @@ public abstract class Box implements Serializable {
 
 	public static String KEY_ALERT_MSG = "com.code5.fw.web.KEY_ALERT_MSG";
 
+	public static String KEY_EXCEPTION = "com.code5.fw.web.KEY_EXCEPTION";
+
 	private boolean isXssConvert = false;
 
 	/**

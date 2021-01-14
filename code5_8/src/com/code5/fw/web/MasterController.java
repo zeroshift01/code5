@@ -48,6 +48,42 @@ public class MasterController extends HttpServlet {
 	 */
 	private static Trace trace = new Trace(MasterController.class);
 
+	/**
+	 * @param request
+	 * @param response
+	 * @param box
+	 * @param THIS_JSP
+	 */
+	private void forward(HttpServletRequest request, HttpServletResponse response, Box box, String JSP_KEY)
+			throws ServletException {
+
+		try {
+
+			MasterControllerD dao = new MasterControllerD();
+			Box view = dao.getView(JSP_KEY);
+			box.put(Box.KEY_FW_VIEW, view);
+
+			String TMPL_JSP = view.s("TMPL_JSP");
+			String JSP = view.s("JSP");
+
+			trace.write("TMPL_JSP [" + TMPL_JSP + "]");
+			trace.write("VIEW [" + JSP + "]");
+
+			String THIS_JSP = TMPL_JSP;
+			if ("".equals(THIS_JSP)) {
+				THIS_JSP = JSP;
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(THIS_JSP);
+			box.setXssConvert(true);
+			dispatcher.forward(request, response);
+
+		} catch (Exception ex) {
+			trace.write(ex);
+			throw new ServletException(ex);
+		}
+	}
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -80,26 +116,7 @@ public class MasterController extends HttpServlet {
 
 			trace.write("JSP_KEY [" + JSP_KEY + "]");
 
-			MasterControllerD dao = new MasterControllerD();
-			Box view = dao.getView(JSP_KEY);
-			box.put(Box.KEY_FW_VIEW, view);
-
-			String TMPL_JSP = view.s("TMPL_JSP");
-			String JSP = view.s("JSP");
-
-			trace.write("TMPL_JSP [" + TMPL_JSP + "]");
-			trace.write("VIEW [" + JSP + "]");
-
-			String THIS_JSP = TMPL_JSP;
-			if ("".equals(THIS_JSP)) {
-				THIS_JSP = JSP;
-			}
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher(THIS_JSP);
-
-			box.setXssConvert(true);
-
-			dispatcher.forward(request, response);
+			forward(request, response, box, JSP_KEY);
 
 			transaction.commit();
 
@@ -107,6 +124,9 @@ public class MasterController extends HttpServlet {
 
 			transaction.rollback();
 			trace.writeErr(ex);
+
+			box.put(Box.KEY_EXCEPTION, ex);
+			forward(request, response, box, "errView");
 
 		} finally {
 
@@ -134,7 +154,7 @@ public class MasterController extends HttpServlet {
 
 		boolean checkUrlAuth = checkUrlAuth(controller);
 		if (!checkUrlAuth) {
-			throw new Exception("사용할 수 없는 서비스 입니다.");
+			throw new AuthException();
 		}
 
 		String CLASS_NAME = controller.s("CLASS_NAME");
@@ -159,7 +179,14 @@ public class MasterController extends HttpServlet {
 		Object instance = constructor.newInstance();
 
 		if (!(instance instanceof BizController)) {
-			throw new Exception();
+			throw new AuthException();
+		}
+
+		if (instance instanceof BizControllerStartExecute) {
+			String JSP_KEY = ((BizControllerStartExecute) instance).start();
+			if (JSP_KEY != null) {
+				return JSP_KEY;
+			}
 		}
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
@@ -187,7 +214,7 @@ public class MasterController extends HttpServlet {
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();
 		if (user == null) {
-			throw new Exception();
+			throw new LoginException();
 		}
 
 		String AUTH = controller.s("AUTH");

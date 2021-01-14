@@ -139,6 +139,10 @@ INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('emp00201','/WEB-INF/class
 DELETE FROM FW_VIEW WHERE KEY LIKE 'null%';
 INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
 
+DELETE FROM FW_VIEW WHERE KEY LIKE 'err%';
+INSERT INTO FW_VIEW(KEY, JSP, TMPL_JSP,TITLE) VALUES ('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
+
+
 DELETE FROM fw_controller WHERE KEY like 'emp%'; 
 
 INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','');
@@ -148,9 +152,3 @@ INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('emp0
 DELETE FROM fw_controller WHERE KEY like 'admin%'; 
 
 INSERT INTO fw_controller(KEY,CLASS_NAME,METHOD_NAME, ERR_JSP_KEY) VALUES ('admin001','com.code5.fw.web.Admin','admin001','');
-
-
-
-admin001','com.code5.fw.web.Admin','admin001'
-
-CREATE TABLE FW_CONTROLLER( "KEY", CLASS_NAME, METHOD_NAME, ERR_JSP_KEY
