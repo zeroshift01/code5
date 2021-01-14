@@ -140,10 +140,8 @@ public class InitProperty {
 
 		IS_MULTI = true;
 		CNTR = "p" + request.getServerPort();
-		init();
 
-		IS_INIT_OK = true;
-
+		TraceRunner.getTraceRunner().init();
 	}
 
 	/**
@@ -153,6 +151,8 @@ public class InitProperty {
 	public static void init(Object obj) throws Exception {
 		String cntr = obj.getClass().getName();
 		init(cntr);
+
+		TraceRunner.getTraceRunner().init();
 	}
 
 	/**
@@ -168,7 +168,8 @@ public class InitProperty {
 
 		IS_MULTI = false;
 		CNTR = cntr;
-		init();
+
+		TraceRunner.getTraceRunner().init();
 	}
 
 	/**
@@ -184,47 +185,52 @@ public class InitProperty {
 
 		IS_MULTI = isMulti;
 		CNTR = cntr;
-		init();
 	}
 
-	/**
-	 * 
-	 */
-	private static void init() throws Exception {
+	static {
+		try {
 
-		String hostName = InetAddress.getLocalHost().getHostName();
-		if (hostName.contains(".")) {
-			throw new Exception("error hostName [" + hostName + "]");
+			IS_INIT_OK = false;
+
+			String hostName = InetAddress.getLocalHost().getHostName();
+			if (hostName.contains(".")) {
+				throw new Exception("error hostName [" + hostName + "]");
+			}
+
+			HOST = hostName;
+
+			ResourceBundle resourceBundle = ResourceBundle.getBundle("init");
+
+			TRACE_CONFIG_URL = getString("TRACE_CONFIG_URL", resourceBundle);
+
+			LOG_DIR_PATTERN = getString("LOG_DIR_PATTERN", resourceBundle);
+			LOG_FILE_PATTERN = getString("LOG_FILE_PATTERN", resourceBundle);
+
+			String IS_WRITE_LOG_S = getString("IS_WRITE_LOG", resourceBundle);
+			IS_WRITE_LOG = false;
+			if ("true".equals(IS_WRITE_LOG_S)) {
+				IS_WRITE_LOG = true;
+			}
+
+			UPLOAD_FILE_DIR_TEMP_URL = getString("UPLOAD_FILE_DIR_TEMP_URL", resourceBundle);
+			UPLOAD_FILE_DIR_URL = getString("UPLOAD_FILE_DIR_URL", resourceBundle);
+
+			String IS_PRODUCT_S = getString("IS_PRODUCT", resourceBundle);
+			IS_PRODUCT = false;
+			if ("true".equals(IS_PRODUCT_S)) {
+				IS_PRODUCT = true;
+			}
+
+			TRANSACTION_WAS = getString("TRANSACTION_WAS", resourceBundle);
+			TRANSACTION_DEFAULT = getString("TRANSACTION_DEFAULT", resourceBundle);
+
+			IS_INIT_OK = true;
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
 		}
 
-		HOST = hostName;
-
-		ResourceBundle resourceBundle = ResourceBundle.getBundle("init");
-
-		TRACE_CONFIG_URL = getString("TRACE_CONFIG_URL", resourceBundle);
-
-		LOG_DIR_PATTERN = getString("LOG_DIR_PATTERN", resourceBundle);
-		LOG_FILE_PATTERN = getString("LOG_FILE_PATTERN", resourceBundle);
-
-		String IS_WRITE_LOG_S = getString("IS_WRITE_LOG", resourceBundle);
-		IS_WRITE_LOG = false;
-		if ("true".equals(IS_WRITE_LOG_S)) {
-			IS_WRITE_LOG = true;
-		}
-
-		UPLOAD_FILE_DIR_TEMP_URL = getString("UPLOAD_FILE_DIR_TEMP_URL", resourceBundle);
-		UPLOAD_FILE_DIR_URL = getString("UPLOAD_FILE_DIR_URL", resourceBundle);
-
-		String IS_PRODUCT_S = getString("IS_PRODUCT", resourceBundle);
-		IS_PRODUCT = false;
-		if ("true".equals(IS_PRODUCT_S)) {
-			IS_PRODUCT = true;
-		}
-
-		TRANSACTION_WAS = getString("TRANSACTION_WAS", resourceBundle);
-		TRANSACTION_DEFAULT = getString("TRANSACTION_DEFAULT", resourceBundle);
-
-		TraceRunner.getTraceRunner().init();
 	}
 
 	/**

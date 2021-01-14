@@ -65,7 +65,7 @@ public class SqlRunner {
 		ResultSet rs = transaction.getResultSet(ps);
 
 		if (!rs.next()) {
-			throw new RuntimeException();
+			throw new RuntimeException("not SQL for KEY [" + key + "]");
 		}
 
 		String sql = rs.getString("SQL");
