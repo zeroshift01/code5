@@ -1,7 +1,6 @@
 package com.code5.fw.web;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import com.code5.fw.data.Box;
-import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
@@ -28,15 +26,11 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param request
-	 * @return
+	 *
 	 */
-	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
+	protected void setBox(HttpServletRequest request, Box box) throws Exception {
 
 		request.setCharacterEncoding("UTF-8");
-
-		Box box = new BoxHttp(request);
-		BoxContext.setThread(box);
 
 		String boxContentType = request.getContentType();
 		if (boxContentType == null) {
@@ -55,6 +49,11 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
 
 		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
+
+		if (sessionB == null) {
+			throw new LoginException();
+		}
+
 		if (sessionB instanceof SessionB) {
 			box.put(Box.KEY_SESSIONB, sessionB);
 		}
@@ -91,8 +90,6 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 			box.put(name, uploadFileB);
 
 		}
-
-		return box;
 
 	}
 

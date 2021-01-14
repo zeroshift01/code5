@@ -18,6 +18,7 @@ class SqlRunnerParamB {
 	boolean isEnc = false;
 	boolean isDec = false;
 	boolean isPin = false;
+	boolean isToken = false;
 
 	boolean isPrnHpN = false;
 	boolean isPrnDTM = false;

@@ -549,16 +549,32 @@ public class SqlRunner {
 		key = p.key;
 
 		if (key.startsWith("ENC__")) {
+
 			p.isEnc = true;
 			p.key = key.substring("ENC__".length());
+
 		} else if (key.startsWith("DEC__")) {
+
 			p.isDec = true;
 			p.key = key.substring("DEC__".length());
+
 		} else if (key.startsWith("PIN__")) {
 
 			p.isPin = true;
 
 			String x = key.substring("PIN__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.key = x0;
+			p.add1 = x1;
+		} else if (key.startsWith("TOKEN__")) {
+
+			p.isToken = true;
+
+			String x = key.substring("TOKEN__".length());
 			String[] xx = x.split(",");
 
 			String x0 = xx[0].trim();
@@ -693,6 +709,11 @@ public class SqlRunner {
 			if (p.isPin) {
 				String salt = box.s(p.add1);
 				return CryptPin.cryptPin(data, salt);
+			}
+
+			if (p.isToken) {
+				SessionB user = BoxContext.getThread().getSessionB();
+				return user.createToken(p.add1, data);
 			}
 
 			return data;

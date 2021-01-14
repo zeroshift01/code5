@@ -100,13 +100,16 @@ public class MasterController extends HttpServlet {
 			throw new ServletException(ex);
 		}
 
-		Box box = createBox(request);
+		Box box = new BoxHttp(request);
+		BoxContext.setThread(box);
 
 		String tx = InitProperty.TRANSACTION_WAS();
 		Transaction transaction = Transaction.createTransaction(tx);
 		TransactionContext.setThread(transaction);
 
 		try {
+
+			setBox(request, box);
 
 			String KEY = box.s(Box.KEY_SERVICE);
 
@@ -254,12 +257,9 @@ public class MasterController extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
-	protected Box createBox(HttpServletRequest request) throws ServletException, IOException {
+	protected void setBox(HttpServletRequest request, Box box) throws Exception {
 
 		request.setCharacterEncoding("UTF-8");
-
-		Box box = new BoxHttp(request);
-		BoxContext.setThread(box);
 
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);
@@ -270,8 +270,6 @@ public class MasterController extends HttpServlet {
 		if (sessionB instanceof SessionB) {
 			box.put(Box.KEY_SESSIONB, sessionB);
 		}
-
-		return box;
 
 	}
 

@@ -41,7 +41,7 @@ function emp00102(){
 <input type="text" name ="EMP_N" value = "<%=thisBox.s("EMP_N")%>" readonly="readonly">
 <%=thisBox.s("EMP_NM")%>
 <input type="text" name ="HP_N" value = "<%=thisBox.s("HP_N")%>">
-<input type="file" name ="FILE">
+<input type="file" name ="FILE_<%=i%>">
 
 <input type="text" name ="FILE_ID_ORG" value = "<%=thisBox.s("FILE_ID")%>" readonly="readonly">
 
@@ -60,7 +60,6 @@ function emp00102(){
 </form>
 <form name="form1" method="post">
 <input type="text" name ="EMP_NM" value = "<%=box.s("EMP_NM")%>">
-<input type="text" name ="FILE"/>
 </form>
 
 <button onclick="emp00101()">검색 emp00101</button>
