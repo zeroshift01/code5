@@ -1,3 +1,4 @@
+# move C:\public\sqlite\code5.db C:\public\sqlite\code5.db.day8
 cd C:\public\sqlite
 sqlite3 C:\public\sqlite\code5.db
 
