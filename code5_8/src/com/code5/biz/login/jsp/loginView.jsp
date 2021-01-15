@@ -8,7 +8,9 @@
 
 	Box box = BoxContext.getThread();
 
-	String ret = box.s("ret");
+	String msg = box.getAlertMsg();
+	
+	
 %>
 <html><head>
 <script type="text/javascript">
@@ -22,7 +24,7 @@ function login(){
 </script>
 <body>
 
-<%=ret %>
+<%=msg %>
 
 <form name="form1" method="post">
 

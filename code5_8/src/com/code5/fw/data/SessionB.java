@@ -98,7 +98,8 @@ public class SessionB implements Serializable {
 			return "";
 		}
 
-		String key = nextUrl + "_" + data;
+		long nonce = System.currentTimeMillis();
+		String key = nonce + "_" + nextUrl + "_" + data;
 		return Hex.byteToHex(aria.encrypt(key.getBytes()));
 
 	}
@@ -110,6 +111,7 @@ public class SessionB implements Serializable {
 	 * @throws Exception
 	 */
 	public String getDataByToken(String nextUrl, String token) throws Exception {
+
 		if (token == null) {
 			return "";
 		}
@@ -120,12 +122,20 @@ public class SessionB implements Serializable {
 
 		byte[] enc = Hex.hexToByte(token);
 
-		String data = new String(aria.decrypt(enc));
+		String xx = new String(aria.decrypt(enc));
+		long nonce = Long.parseLong(xx.substring(0, 13));
+		String checkUrl = xx.substring(13 + 1, 13 + 1 + nextUrl.length());
+		String data = xx.substring(13 + 1 + nextUrl.length() + 1);
 
-		if (!data.startsWith(nextUrl)) {
+		long t = System.currentTimeMillis();
+		if (t - nonce > 1000 * 60 * 10) {
 			throw new Exception();
 		}
 
-		return data.substring(nextUrl.length() + 1);
+		if (!checkUrl.equals(nextUrl)) {
+			throw new Exception();
+		}
+
+		return data;
 	}
 }

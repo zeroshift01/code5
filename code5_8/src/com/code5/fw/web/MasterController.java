@@ -2,6 +2,7 @@ package com.code5.fw.web;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -126,9 +127,27 @@ public class MasterController extends HttpServlet {
 		} catch (Exception ex) {
 
 			transaction.rollback();
-			trace.writeErr(ex);
 
+			if (ex instanceof InvocationTargetException) {
+				ex = (Exception) ex.getCause();
+			}
+
+			if (ex instanceof LoginException) {
+				box.setAlertMsg("로그인이 필요합니다.");
+				forward(request, response, box, "loginView");
+				return;
+			}
+
+			trace.writeErr(ex);
 			box.put(Box.KEY_EXCEPTION, ex);
+
+			Box controller = box.getBox(Box.KEY_FW_CONTROLLER);
+			String ERR_JSP_KEY = controller.s("ERR_JSP_KEY");
+			if (!"".equals(ERR_JSP_KEY)) {
+				forward(request, response, box, ERR_JSP_KEY);
+				return;
+			}
+
 			forward(request, response, box, "errView");
 
 		} finally {

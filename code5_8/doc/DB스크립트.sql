@@ -110,4 +110,5 @@ INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControll
 INSERT INTO FW_CONTROLLER VALUES('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','','Y','');
 INSERT INTO FW_CONTROLLER VALUES('emp00102','com.code5.biz.emp.emp001.Emp001','emp00102','','Y','A0');
 INSERT INTO FW_CONTROLLER VALUES('emp00201','com.code5.biz.emp.emp002.Emp002','emp00201','nullView','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00202','com.code5.biz.emp.emp002.Emp002','emp00202','','Y','');
 INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001','','Y','A0');
