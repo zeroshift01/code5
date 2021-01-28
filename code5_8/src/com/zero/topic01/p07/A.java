@@ -18,12 +18,19 @@ class A {
 
 		B b = new B_Impl();
 		b.method();
+
+		b.method("p");
+		b.method2();
 	}
 
 }
 
 interface B {
 	public void method();
+
+	public void method(String p);
+
+	public void method2();
 }
 
 class B_Impl implements B {
@@ -32,11 +39,11 @@ class B_Impl implements B {
 		// 1. 변경 : 오류 수정, 기능 개선
 	}
 
-	void method(String p) {
+	public void method(String p) {
 		// 2. 추가 : 오버라이딩
 	}
 
-	void method2() {
+	public void method2() {
 		// 2. 추가 : 새로운 메소드
 	}
 

@@ -1,6 +1,7 @@
 package com.zero.topic01.p03;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 class A {
@@ -11,8 +12,12 @@ class A {
 		// 3. 교체 : 기존 기능과 새로운 기능을 동시에 사용
 
 		// 교체할 필요가 있을때 A 코드 수정
-		B b = new B_DV();
-		// B b = new B_PR();
+		boolean 개발환경 = true;
+
+		B b = new B_PR();
+		if (개발환경) {
+			b = new B_DV();
+		}
 
 		b.method3();
 
@@ -51,8 +56,8 @@ class C {
 		((ArrayList<String>) list).addAll(null);
 
 		// 일부러 인터페이스로 추상화 해 사용할 필요는 없다.
-
-		ArrayList<String> list2 = new ArrayList<String>();
+		// ArrayList LinkedList
+		LinkedList<String> list2 = new LinkedList<String>();
 		sort(list2);
 
 		list2.addAll(null);

@@ -27,8 +27,8 @@ abstract class B {
 	public static B createB() {
 
 		// 3. 교체 : 기존 기능과 새로운 기능을 동시에 사용
-		// return new B_PR();
-		return new B_DV();
+		return new B_PR();
+		//return new B_DV();
 	}
 
 	public void method() {

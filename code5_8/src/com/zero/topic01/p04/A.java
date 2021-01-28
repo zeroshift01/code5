@@ -16,12 +16,14 @@ class A {
 interface B {
 
 	public static B createB() {
+		// 높은 응집도
+		// 객체를 결정하는 기능을 B 로 이동
+		boolean 개발환경 = true;
 
-		// 팩토리패턴 으로 객체 생성 방법을 B 로 이동
-		// A 는 코드 수정이 필요 없음
-
-		// return new B_PR();
-		return new B_DV();
+		if (개발환경) {
+			return new B_DV();
+		}
+		return new B_PR();
 	}
 
 	public void method3();
