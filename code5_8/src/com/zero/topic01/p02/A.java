@@ -6,7 +6,7 @@ class A {
 
 		B b = new B();
 
-		// 파급효과 종류
+		// 파급효과가 발생했을때 제거하는 방법
 
 		// 1. 변경 : 오류, 성능문제, 복잡함
 		b.method();
@@ -39,12 +39,10 @@ class B {
 	// 3. 교체 : 기존 기능도 사용하고 새로운 기능도 같이 사용
 	void method3() {
 
-		// JDBC , 오라클드라이버/MySql드라이버
-		// List, ArrayList, LinkedList
+		// 오라클 드라이버/MySql 드라이버 -> JDBC 추상화
+		// ArrayList / LinkedList -> List 추상화
 
-		// 하지만 우리는 교체를 사용할 기회가 거의 없음
-		// 비즈니스 로직을 잘 구현해야 하기 때문
-
+		// 하지만 교체를 구현할 기회가 없다.
 		boolean isDv = true;
 		if (isDv) {
 			// test stub

@@ -57,8 +57,6 @@ public class Emp001 implements BizController {
 	 */
 	public String emp00102() throws Exception {
 
-		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
-
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();
 
@@ -68,8 +66,7 @@ public class Emp001 implements BizController {
 
 		for (int i = 0; i < table.size(); i++) {
 
-			String HP_N = table.s("HP_N", i);
-			table.setData("HP_N", i, crypt.encrypt(HP_N));
+			box.putFromTable(table, i);
 
 			String FILE_ID_ORG = table.s("FILE_ID_ORG", i);
 			FILE_ID_ORG = user.getDataByToken("downloadfile", FILE_ID_ORG);
@@ -86,7 +83,6 @@ public class Emp001 implements BizController {
 				file.save();
 			}
 
-			box.putFromTable(table, i);
 			if (dao.emp00102() != 1) {
 				throw new Exception();
 			}

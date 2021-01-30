@@ -4,7 +4,7 @@ class A {
 
 	void method() {
 
-		// 파급효과 종류
+		// 파급효과가 발생했을때 제거하는 방법
 		// 3. 교체 : 기존 기능과 새로운 기능을 동시에 사용
 
 		B b = B.createB();
@@ -16,8 +16,9 @@ class A {
 interface B {
 
 	public static B createB() {
-		// 높은 응집도
-		// 객체를 결정하는 기능을 B 로 이동
+		// 교체의 기능을 B 로 이동
+		// 응집도 향상
+
 		boolean 개발환경 = true;
 
 		if (개발환경) {

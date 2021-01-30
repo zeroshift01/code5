@@ -25,13 +25,33 @@ public class UploadFileB {
 	private boolean isSave = false;
 	private boolean isDelete = false;
 
+	public String getFileId() {
+		return fileId;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
 	/**
 	 * 
 	 */
 	public UploadFileB() {
+		this.size = 0;
 		this.fileId = "";
 		this.contentType = "";
-		this.fileName = "";
 		this.fileName = "";
 		this.fileUrl = "";
 	}
@@ -82,26 +102,6 @@ public class UploadFileB {
 		this.contentType = thisBox.s("CONTENT_TYPE");
 		this.fileName = thisBox.s("FILE_NAME");
 		this.fileUrl = thisBox.s("FILE_URL");
-	}
-
-	public String getFileId() {
-		return fileId;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public String getFileUrl() {
-		return fileUrl;
-	}
-
-	public long getSize() {
-		return size;
 	}
 
 	/**

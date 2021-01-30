@@ -8,10 +8,10 @@ class A {
 
 	void method() {
 
-		// 파급효과 종류
+		// 파급효과가 발생했을때 제거하는 방법
 		// 3. 교체 : 기존 기능과 새로운 기능을 동시에 사용
 
-		// 교체할 필요가 있을때 A 코드 수정
+		// 교체를 위해 A 코드 수정
 		boolean 개발환경 = true;
 
 		B b = new B_PR();
@@ -48,26 +48,26 @@ class C {
 
 	void moethod() {
 
-		// 잘못된 객체 생성, 쓸때없는 추상화 사용
+		// new 로 생성한 객체를 일부러 추상화 해 사용할 필요가 없다.
 
 		List<String> list = new ArrayList<String>();
 		sort(list);
-
 		((ArrayList<String>) list).addAll(null);
 
-		// 일부러 인터페이스로 추상화 해 사용할 필요는 없다.
-		// ArrayList LinkedList
-		LinkedList<String> list2 = new LinkedList<String>();
+		ArrayList<String> list2 = new ArrayList<String>();
 		sort(list2);
-
 		list2.addAll(null);
+
+		LinkedList<String> list3 = new LinkedList<String>();
+		sort(list3);
+		list3.getFirst();
 
 	}
 
 	void sort(List<String> list) {
 
-		// 추상화의 영역
-		// OOP 리스코프 법칙
+		// 리스코프 치환 원칙
+		// 추상화 범위
 
 	}
 }
