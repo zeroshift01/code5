@@ -1,9 +1,9 @@
-package com.code5.fw.web;
+package com.code5.biz.welcome;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Welcome {
@@ -12,15 +12,15 @@ public class Welcome {
 	 * @param request
 	 * @return
 	 */
-	public String welcome(HttpServletRequest request) {
+	public String execute(HttpServletRequest request) {
 
 		String name = request.getParameter("name");
 
-		String ret = "welcome:" + name;
+		String ret = "welcome (" + name + ")";
 
 		request.setAttribute("ret", ret);
 
-		return "/biz/board/welcome.jsp";
+		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
 	}
 
 }
