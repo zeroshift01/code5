@@ -25,7 +25,6 @@ public class EmpByJDBC {
 		String EMP_N = "N01";
 		String HP_N = "010-2222-3333";
 
-		// TODO [1]
 		SQLiteConfig config = new SQLiteConfig();
 
 		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
@@ -41,7 +40,6 @@ public class EmpByJDBC {
 		select(conn, EMP_N);
 
 		conn.close();
-		// TODO [14] TX2 ³¡
 
 	}
 
@@ -98,7 +96,7 @@ public class EmpByJDBC {
 			List<String> recode = table.get(i);
 
 			for (int j = 0; j < cols.length; j++) {
-				System.out.print(recode.get(j) + " ");
+				System.out.print(recode.get(j) + "\t");
 			}
 			System.out.println();
 
