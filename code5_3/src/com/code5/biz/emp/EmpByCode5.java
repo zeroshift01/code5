@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.code5.biz.emp;
 
 import com.code5.fw.data.Box;
@@ -60,10 +59,7 @@ public class EmpByCode5 {
 		SqlRunner.getSqlRunner().executeSql("EMP001D_02");
 
 		TransactionContext.getThread().commit();
-		//
 
 	}
 
 }
-=======
->>>>>>> branch 'master' of https://github.com/zeroshift01/zeroshift01

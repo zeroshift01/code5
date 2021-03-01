@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.code5.biz.emp;
 
 import java.sql.Connection;
@@ -130,5 +129,3 @@ public class EmpByJDBC {
 	}
 
 }
-=======
->>>>>>> branch 'master' of https://github.com/zeroshift01/zeroshift01
