@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public abstract class Box implements Serializable {
@@ -136,6 +136,26 @@ public abstract class Box implements Serializable {
 
 			return BigDecimal.ZERO;
 		}
+
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public Table getTable(String key) {
+
+		Object obj = get(key);
+		if (obj == null) {
+			return new Table();
+		}
+
+		if (obj instanceof Table) {
+			return (Table) obj;
+
+		}
+
+		return new Table();
 
 	}
 }

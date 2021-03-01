@@ -3,7 +3,7 @@ package com.code5.fw.db;
 import java.util.List;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class SqlRunnerB {

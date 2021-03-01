@@ -3,8 +3,8 @@ package com.code5.fw.data;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author seuk
- * 
+ * @author zero
+ *
  */
 public class BoxHttp extends Box {
 

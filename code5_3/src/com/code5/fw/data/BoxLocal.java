@@ -3,9 +3,8 @@ package com.code5.fw.data;
 import java.util.HashMap;
 
 /**
- * @author seuk
- * 
- * 
+ * @author zero
+ *
  */
 public class BoxLocal extends Box {
 
@@ -29,7 +28,7 @@ public class BoxLocal extends Box {
 	 * 
 	 */
 	public Object get(String key) {
-		return (String) hm.get(key);
+		return hm.get(key);
 	}
 
 	/**
