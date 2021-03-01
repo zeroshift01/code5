@@ -3,9 +3,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Box box = BoxContext.getThread();
+	String ret = box.s("ret");
 
-	String welcome = box.s("welcome");
-
-	out.println(welcome);
+	out.println(ret);
 %>
+
 

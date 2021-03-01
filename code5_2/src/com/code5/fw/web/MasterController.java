@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.code5.biz.welcome.Welcome;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MasterController extends HttpServlet {
@@ -27,8 +27,6 @@ public class MasterController extends HttpServlet {
 
 		// TODO [1]
 		Box box = new BoxHttp(request);
-		
-		System.out.println(box.s("name"));
 
 		// TODO [2]
 		BoxContext.setThread(box);
@@ -38,7 +36,7 @@ public class MasterController extends HttpServlet {
 			Welcome welcome = new Welcome();
 
 			// TODO [3]
-			String jsp = welcome.service();
+			String jsp = welcome.execute();
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
 

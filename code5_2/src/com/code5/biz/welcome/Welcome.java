@@ -4,23 +4,26 @@ import com.code5.fw.web.Box;
 import com.code5.fw.web.BoxContext;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Welcome {
 
 	/**
-	 * @param box
+	 * @param request
 	 * @return
 	 */
-	public String service() throws Exception {
+	public String execute() {
 
-		// TODO [1]
 		Box box = BoxContext.getThread();
 
-		String name = box.s("name");
-		String welcome = "welcome " + name;
-		box.put("welcome", welcome);
+		String name = (String) box.get("name");
+		// String name = box.getString("name");
+		// String name = box.s("name");
+
+		String ret = "welcome (" + name + ")";
+
+		box.put("ret", ret);
 
 		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
 	}
