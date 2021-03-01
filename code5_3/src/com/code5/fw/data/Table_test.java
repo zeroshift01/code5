@@ -3,7 +3,7 @@ package com.code5.fw.data;
 import junit.framework.TestCase;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Table_test extends TestCase {

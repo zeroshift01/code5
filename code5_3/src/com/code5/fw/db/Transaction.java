@@ -7,12 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * @author seuk
+ * @author zero
+ * 
  * 
  *         try-with-resources
- * 
- *         try-with-resources
- * 
+ *
  */
 public abstract class Transaction {
 

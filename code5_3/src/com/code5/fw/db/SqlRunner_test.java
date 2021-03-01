@@ -8,7 +8,7 @@ import com.code5.fw.web.TransactionContext;
 import junit.framework.TestCase;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class SqlRunner_test extends TestCase {
@@ -30,7 +30,8 @@ public class SqlRunner_test extends TestCase {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		// INSERT INTO FW_SQL VALUES ('SQLRUNNER_TEST_01', 'SELECT EMP_N, EMP_NM, DEPT_N FROM EMP WHERE EMP_NM = [EMP_NM] ORDER BY EMP_N');
+		// INSERT INTO FW_SQL VALUES ('SQLRUNNER_TEST_01', 'SELECT EMP_N, EMP_NM, DEPT_N
+		// FROM EMP WHERE EMP_NM = [EMP_NM] ORDER BY EMP_N');
 		Table table = sql.getTable("SQLRUNNER_TEST_01");
 
 		assertEquals(2, table.size());
@@ -59,7 +60,8 @@ public class SqlRunner_test extends TestCase {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		// INSERT INTO FW_SQL VALUES ('SQLRUNNER_TEST_02', 'UPDATE EMP SET HP_N = [HP_N] WHERE EMP_N =[EMP_N]');
+		// INSERT INTO FW_SQL VALUES ('SQLRUNNER_TEST_02', 'UPDATE EMP SET HP_N = [HP_N]
+		// WHERE EMP_N =[EMP_N]');
 		int i = sql.executeSql("SQLRUNNER_TEST_02");
 
 		assertEquals(1, i);

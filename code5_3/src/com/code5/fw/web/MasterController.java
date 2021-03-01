@@ -15,7 +15,7 @@ import com.code5.fw.db.Transaction;
 import com.code5.fw.db.Transaction_SQLITE_POOL;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MasterController extends HttpServlet {
@@ -40,7 +40,7 @@ public class MasterController extends HttpServlet {
 
 			Welcome welcome = new Welcome();
 
-			String jsp = welcome.service();
+			String jsp = welcome.execute();
 
 			// TODO [2]
 			TransactionContext.getThread().commit();

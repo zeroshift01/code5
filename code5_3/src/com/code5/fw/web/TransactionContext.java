@@ -4,7 +4,7 @@ import com.code5.fw.db.Transaction;
 import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class TransactionContext {
@@ -49,7 +49,7 @@ public class TransactionContext {
 		if (transaction != null) {
 			TL.get().closeConnection();
 		}
-		
+
 		TL.remove();
 	}
 

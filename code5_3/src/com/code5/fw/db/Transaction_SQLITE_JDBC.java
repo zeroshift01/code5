@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.sqlite.SQLiteConfig;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Transaction_SQLITE_JDBC extends Transaction {

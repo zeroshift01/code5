@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * @author seuk
- * 
+ * @author zero
  *
  */
 public class Table {
@@ -117,7 +116,6 @@ public class Table {
 		BigDecimal colPoint = new BigDecimal(colNameMap.size());
 		colNameMap.put(colName, colPoint);
 	}
-
 
 	/**
 	 * 
@@ -263,7 +261,6 @@ public class Table {
 		return recodes.size();
 	}
 
-	
 	/**
 	 * 
 	 * TODO [7-2]

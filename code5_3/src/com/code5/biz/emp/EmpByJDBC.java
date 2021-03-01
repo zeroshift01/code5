@@ -11,10 +11,10 @@ import java.util.List;
 import org.sqlite.SQLiteConfig;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
-public class Emp_JDBC {
+public class EmpByJDBC {
 
 	/**
 	 * @param x
@@ -22,40 +22,47 @@ public class Emp_JDBC {
 	 */
 	public static void main(String[] x) throws Exception {
 
+		String EMP_N = "N001";
+		String HP_N = "010-2222-3333";
+
 		// TODO [1]
 		SQLiteConfig config = new SQLiteConfig();
 
 		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
 				config.toProperties());
 
-		Emp_JDBC e = new Emp_JDBC();
+		// Class.forName("org.sqlite.JDBC");
+		// Connection conn =
+		// DriverManager.getConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db");
 
-		// TODO [13] TX1 시작
-		e.select(conn);
+		select(conn, EMP_N);
+		update(conn, HP_N, EMP_N);
 
-		e.update(conn);
-		// TODO [13] TX1 끝
-
-		// TODO [14] TX2 시작
-		e.select(conn);
-		// TODO [14] TX2 끝
+		select(conn, EMP_N);
 
 		conn.close();
+		// TODO [14] TX2 끝
 
 	}
 
 	/**
+	 * @param conn
+	 * @param EMP_N
 	 * @throws Exception
 	 */
-	private void select(Connection conn) throws Exception {
+	private static void select(Connection conn, String EMP_N) throws Exception {
 
-		// TODO [2]
-		PreparedStatement ps = conn.prepareStatement("SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP WHERE EMP_NM = ? ");
+		String SQL = "SELECT * FROM EMP ";
 
-		// TODO [3]
-		ps.setString(1, "ABC");
+		if (!"".equals(EMP_N)) {
+			SQL = SQL + " WHERE EMP_N = '" + EMP_N + "'";
+		}
 
-		ResultSet rs = ps.executeQuery();
+		System.out.println(SQL);
+
+		Statement ps = conn.createStatement();
+
+		ResultSet rs = ps.getResultSet();
 
 		// TODO [4]
 		List<List<String>> table = new ArrayList<List<String>>();
@@ -102,14 +109,14 @@ public class Emp_JDBC {
 	/**
 	 * @throws Exception
 	 */
-	private void update(Connection conn) throws Exception {
+	private static void update(Connection conn, String HP_N, String EMP_N) throws Exception {
 
 		// TODO [10]
 		conn.setAutoCommit(false);
 
 		PreparedStatement ps = conn.prepareStatement("UPDATE EMP SET HP_N = ? WHERE EMP_N = ? ");
-		ps.setString(1, "010-1111-2222");
-		ps.setString(2, "N003");
+		ps.setString(1, HP_N);
+		ps.setString(2, EMP_N);
 
 		// TODO [11]
 		int i = ps.executeUpdate();
@@ -120,30 +127,6 @@ public class Emp_JDBC {
 
 		// TODO [12]
 		conn.commit();
-
-	}
-
-	/**
-	 * @param conn
-	 * @throws Exception
-	 */
-	void selectStatement(Connection conn, String EMP_NM) throws Exception {
-
-		String SQL = "";
-
-		SQL = SQL + "SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP ";
-
-		if (!"".equals(EMP_NM)) {
-			SQL = SQL + " WHERE EMP_NM = '" + EMP_NM + "'";
-		}
-
-		System.out.println(SQL);
-
-		Statement ps = conn.createStatement();
-
-		ResultSet rs = ps.getResultSet();
-
-		rs.next();
 
 	}
 
