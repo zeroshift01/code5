@@ -59,6 +59,7 @@ public class EmpByCode5 {
 		SqlRunner.getSqlRunner().executeSql("EMP001D_02");
 
 		TransactionContext.getThread().commit();
+		//
 
 	}
 
