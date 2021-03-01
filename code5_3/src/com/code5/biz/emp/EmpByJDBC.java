@@ -22,7 +22,7 @@ public class EmpByJDBC {
 	 */
 	public static void main(String[] x) throws Exception {
 
-		String EMP_N = "N01";
+		String EMP_N = "N0001";
 		String HP_N = "010-2222-3333";
 
 		// TODO [1]
@@ -62,7 +62,7 @@ public class EmpByJDBC {
 
 		Statement ps = conn.createStatement();
 
-		ResultSet rs = ps.executeQuery(SQL);
+		ResultSet rs = ps.getResultSet();
 
 		// TODO [4]
 		List<List<String>> table = new ArrayList<List<String>>();

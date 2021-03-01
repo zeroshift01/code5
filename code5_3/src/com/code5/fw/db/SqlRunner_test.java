@@ -32,6 +32,8 @@ public class SqlRunner_test extends TestCase {
 
 		Table table = sql.getTable("EMP001D_01");
 
+		Table table = sql.getTable("SQLRUNNER_TEST_01");
+
 		assertEquals(1, table.size());
 
 		String[] cols = table.getCols();
@@ -57,7 +59,13 @@ public class SqlRunner_test extends TestCase {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
+<<<<<<< HEAD
 		int i = sql.executeSql("EMP001D_02");
+=======
+		// INSERT INTO FW_SQL VALUES ('SQLRUNNER_TEST_02', 'UPDATE EMP SET HP_N = [HP_N]
+		// WHERE EMP_N =[EMP_N]');
+		int i = sql.executeSql("SQLRUNNER_TEST_02");
+>>>>>>> branch 'master' of https://github.com/zeroshift01/zeroshift01
 
 		assertEquals(1, i);
 

@@ -19,7 +19,7 @@ public class EmpByCode5 {
 	public static void main(String[] x) throws Exception {
 
 		Box box = BoxContext.getThread();
-		box.put("EMP_N", "N01");
+		box.put("EMP_N", "N0001");
 		box.put("HP_N", "010-2222-3333");
 
 		select();
@@ -44,7 +44,7 @@ public class EmpByCode5 {
 
 			for (int j = 0; j < cols.length; j++) {
 
-				System.out.print(table.s(cols[j], i) + "\t");
+				System.out.print(table.s(cols[i], i));
 			}
 			System.out.println();
 		}
