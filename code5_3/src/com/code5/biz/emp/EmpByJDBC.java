@@ -7,14 +7,20 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.sqlite.SQLiteConfig;
+
+import com.code5.fw.data.Box;
+import com.code5.fw.web.BoxContext;
 
 /**
  * @author zero
  *
  */
 public class EmpByJDBC {
+	
+	
 
 	/**
 	 * @param x
@@ -22,22 +28,54 @@ public class EmpByJDBC {
 	 */
 	public static void main(String[] x) throws Exception {
 
-		String EMP_N = "N01";
+		String EMP_NM = "ABC";
 		String HP_N = "010-2222-3333";
 
+		EmpDTO pEmpDTO = new EmpDTO();
+		pEmpDTO.setEmpN(EMP_NM);
+
 		SQLiteConfig config = new SQLiteConfig();
+		Properties properties = config.toProperties();
 
-		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
-				config.toProperties());
+		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db", properties);
 
-		// Class.forName("org.sqlite.JDBC");
-		// Connection conn =
-		// DriverManager.getConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db");
+		/*
+		 * 
+		 * Class.forName("org.sqlite.JDBC"); conn =
+		 * DriverManager.getConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db");
+		 * 
+		 */
 
-		select(conn, EMP_N);
-		update(conn, HP_N, EMP_N);
+		List<EmpDTO> list = selectForDTO(conn, pEmpDTO);
 
-		select(conn, EMP_N);
+		conn.setAutoCommit(false);
+
+		for (int i = 0; i < x.length; i++) {
+
+			EmpDTO thisEmpDTO = list.get(i);
+			thisEmpDTO.setHpN(HP_N);
+
+			update(conn, thisEmpDTO);
+		}
+
+		conn.commit();
+
+		Box box = BoxContext.getThread();
+		box.put("EMP_NM", EMP_NM);
+
+		List<List<String>> table = selectForCollection(conn);
+
+		// TODO [9]
+		for (int i = 0; i < table.size(); i++) {
+
+			List<String> recode = table.get(i);
+
+			for (int j = 0; j < recode.size(); j++) {
+				System.out.print(recode.get(j) + "\t");
+			}
+			System.out.println();
+
+		}
 
 		conn.close();
 
@@ -45,15 +83,62 @@ public class EmpByJDBC {
 
 	/**
 	 * @param conn
-	 * @param EMP_N
+	 * @param empDTO
+	 * @return
 	 * @throws Exception
 	 */
-	private static void select(Connection conn, String EMP_N) throws Exception {
+	private static List<EmpDTO> selectForDTO(Connection conn, EmpDTO empDTO) throws Exception {
 
-		String SQL = "SELECT * FROM EMP ";
+		String EMP_NM = empDTO.getEmpNm();
 
-		if (!"".equals(EMP_N)) {
-			SQL = SQL + " WHERE EMP_N = '" + EMP_N + "'";
+		String SQL = "SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP ";
+
+		if (!"".equals(EMP_NM)) {
+			SQL = SQL + " WHERE EMP_NM = '" + EMP_NM + "'";
+		}
+
+		System.out.println(SQL);
+
+		Statement ps = conn.createStatement();
+
+		ResultSet rs = ps.executeQuery(SQL);
+
+		ArrayList<EmpDTO> list = new ArrayList<EmpDTO>();
+		while (rs.next()) {
+
+			EmpDTO dto = new EmpDTO();
+
+			dto.setEmpN(rs.getString("EMP_N"));
+			dto.setEmpNm(rs.getString("EMP_NM"));
+			dto.setHpN(rs.getString("HP_N"));
+			dto.setDeptN(rs.getString("DEPT_N"));
+
+			list.add(dto);
+		}
+
+		// TODO [8]
+		rs.close();
+		ps.close();
+
+		return list;
+
+	}
+
+	/**
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	private static List<List<String>> selectForCollection(Connection conn) throws Exception {
+
+		Box box = BoxContext.getThread();
+
+		String EMP_NM = box.s("EMP_NM");
+
+		String SQL = "SELECT EMP_N, EMP_NM, HP_N, DEPT_N, XXX, XXX FROM EMP ";
+
+		if (!"".equals(EMP_NM)) {
+			SQL = SQL + " WHERE EMP_NM = '" + EMP_NM + "'";
 		}
 
 		System.out.println(SQL);
@@ -90,31 +175,18 @@ public class EmpByJDBC {
 		rs.close();
 		ps.close();
 
-		// TODO [9]
-		for (int i = 0; i < table.size(); i++) {
-
-			List<String> recode = table.get(i);
-
-			for (int j = 0; j < cols.length; j++) {
-				System.out.print(recode.get(j) + "\t");
-			}
-			System.out.println();
-
-		}
+		return table;
 
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	private static void update(Connection conn, String HP_N, String EMP_N) throws Exception {
-
-		// TODO [10]
-		conn.setAutoCommit(false);
+	private static void update(Connection conn, EmpDTO empDTO) throws Exception {
 
 		PreparedStatement ps = conn.prepareStatement("UPDATE EMP SET HP_N = ? WHERE EMP_N = ? ");
-		ps.setString(1, HP_N);
-		ps.setString(2, EMP_N);
+		ps.setString(1, empDTO.getHpN());
+		ps.setString(2, empDTO.getEmpN());
 
 		// TODO [11]
 		int i = ps.executeUpdate();
@@ -122,9 +194,6 @@ public class EmpByJDBC {
 		System.out.println("executeUpdate [" + i + "]");
 
 		ps.close();
-
-		// TODO [12]
-		conn.commit();
 
 	}
 
