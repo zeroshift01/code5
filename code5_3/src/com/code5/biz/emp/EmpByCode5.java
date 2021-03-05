@@ -22,10 +22,14 @@ public class EmpByCode5 {
 		box.put("EMP_N", "N01");
 		box.put("HP_N", "010-2222-3333");
 
-		select();
-		update();
+		Table table = select();
+		update(table);
 
-		select();
+		TransactionContext.getThread().commit();
+
+		Table table2 = select();
+		System.out.println(table2.getData("EMP_N", 0));
+		System.out.println(table2.getData("HP_N", 0));
 
 		TransactionContext.getThread().closeConnection();
 
@@ -34,31 +38,31 @@ public class EmpByCode5 {
 	/**
 	 * @throws Exception
 	 */
-	private static void select() throws Exception {
+	private static Table select() throws Exception {
 
 		Table table = SqlRunner.getSqlRunner().getTable("EMP001D_01");
-
-		String[] cols = table.getCols();
-
-		for (int i = 0; i < table.size(); i++) {
-
-			for (int j = 0; j < cols.length; j++) {
-
-				System.out.print(table.s(cols[j], i) + "\t");
-			}
-			System.out.println();
-		}
+		return table;
 
 	}
 
 	/**
 	 * @throws Exception
 	 */
-	private static void update() throws Exception {
+	private static void update(Table table) throws Exception {
 
-		SqlRunner.getSqlRunner().executeSql("EMP001D_02");
+		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		TransactionContext.getThread().commit();
+		Box box = BoxContext.getThread();
+
+		for (int i = 0; i < table.size(); i++) {
+
+			box.put("EMP_N", table.getData("EMP_N", i));
+
+			int updateCnt = sql.executeSql("EMP001D_02");
+			if (updateCnt != 1) {
+				throw new Exception();
+			}
+		}
 
 	}
 

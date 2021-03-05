@@ -3,6 +3,7 @@ package com.code5.biz.emp;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
@@ -19,8 +20,8 @@ public class Emp001 {
 		Box box = BoxContext.getThread();
 
 		Emp001D dao = new Emp001D();
-		Table list = dao.emp00101();
-		box.put("list", list);
+		Table table = dao.emp00101();
+		box.put("table", table);
 
 		return "/WEB-INF/classes/com/code5/biz/emp/emp00101.jsp";
 
@@ -32,13 +33,24 @@ public class Emp001 {
 	 */
 	public String emp00102() throws Exception {
 
+		emp00101();
+
+		Box box = BoxContext.getThread();
+		Table table = box.getTable("table");
+
 		Emp001D dao = new Emp001D();
-		int cnt = dao.emp00102();
 
-		if (cnt != 1) {
-			throw new Exception();
+		for (int i = 0; i < table.size(); i++) {
 
+			box.put("EMP_N", table.getData("EMP_N", i));
+
+			int updateCnt = dao.emp00102();
+			if (updateCnt != 1) {
+				throw new Exception();
+			}
 		}
+
+		TransactionContext.commit();
 
 		return emp00101();
 	}

@@ -62,4 +62,28 @@ public class TransactionContext {
 		return new Transaction_SQLITE_JDBC();
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public static void commit() throws Exception {
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			throw new Exception();
+		}
+
+		transaction.commit();
+
+	}
+
+	/**
+	 * 
+	 */
+	public static void rollback() {
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			return;
+		}
+
+		transaction.rollback();
+	}
 }

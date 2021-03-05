@@ -43,7 +43,7 @@ public class MasterController extends HttpServlet {
 			String jsp = welcome.execute();
 
 			// TODO [2]
-			TransactionContext.getThread().commit();
+			TransactionContext.commit();
 
 			// TODO [5]
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
@@ -53,7 +53,7 @@ public class MasterController extends HttpServlet {
 			ex.printStackTrace();
 
 			// TODO [3]
-			TransactionContext.getThread().rollback();
+			TransactionContext.rollback();
 
 		} finally {
 

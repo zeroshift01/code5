@@ -13,11 +13,6 @@ import junit.framework.TestCase;
  */
 public class SqlRunner_test extends TestCase {
 
-	@Override
-	protected void tearDown() throws Exception {
-		TransactionContext.getThread().commit();
-	}
-
 	/**
 	 * @throws Exception
 	 * 
@@ -26,13 +21,13 @@ public class SqlRunner_test extends TestCase {
 	public void test_01() throws Exception {
 
 		Box box = BoxContext.getThread();
-		box.put("EMP_N", "N01");
+		box.put("EMP_NM", "ABC");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
 		Table table = sql.getTable("EMP001D_01");
 
-		assertEquals(1, table.size());
+		assertEquals(2, table.size());
 
 		String[] cols = table.getCols();
 
@@ -41,6 +36,7 @@ public class SqlRunner_test extends TestCase {
 		assertEquals("HP_N", cols[2]);
 
 		assertEquals("N01", table.s("EMP_N", 0));
+		assertEquals("N03", table.s("EMP_N", 1));
 
 	}
 
@@ -60,6 +56,8 @@ public class SqlRunner_test extends TestCase {
 		int i = sql.executeSql("EMP001D_02");
 
 		assertEquals(1, i);
+
+		TransactionContext.commit();
 
 	}
 

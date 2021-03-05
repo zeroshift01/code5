@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -16,16 +17,16 @@ import java.util.ArrayList;
 public abstract class Transaction {
 
 	/**
+	 * 
+	 */
+	private Connection conn = null;
+
+	/**
 	 * @return
 	 * 
 	 *         TODO [1]
 	 */
 	protected abstract Connection createConnection() throws SQLException;
-
-	/**
-	 * TODO [2-1]
-	 */
-	private Connection conn = null;
 
 	/**
 	 * 
@@ -50,6 +51,7 @@ public abstract class Transaction {
 				return;
 			}
 
+			this.close();
 			this.conn.commit();
 
 		} catch (Exception ex) {
@@ -77,7 +79,7 @@ public abstract class Transaction {
 	/**
 	 * TODO [4-1]
 	 */
-	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
+	private ArrayList<Statement> stList = new ArrayList<Statement>();
 
 	/**
 	 * TODO [4-2]
@@ -94,8 +96,20 @@ public abstract class Transaction {
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
 		PreparedStatement ps = connection.prepareStatement(SQL);
-		psList.add(ps);
+		stList.add(ps);
 		return ps;
+
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	Statement createStatement() throws SQLException {
+		Connection connection = getConnection();
+		Statement st = connection.createStatement();
+		stList.add(st);
+		return st;
 
 	}
 
@@ -128,16 +142,16 @@ public abstract class Transaction {
 
 		rsList.clear();
 
-		for (int i = 0; i < psList.size(); i++) {
+		for (int i = 0; i < stList.size(); i++) {
 			try {
-				psList.get(i).close();
+				stList.get(i).close();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 
 		}
 
-		psList.clear();
+		stList.clear();
 
 	}
 
