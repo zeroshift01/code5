@@ -32,7 +32,6 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
-		// TODO [1]
 		Transaction transaction = new Transaction_SQLITE_POOL();
 		TransactionContext.setThread(transaction);
 
@@ -42,24 +41,21 @@ public class MasterController extends HttpServlet {
 
 			String jsp = welcome.execute();
 
-			// TODO [2]
 			TransactionContext.commit();
 
-			// TODO [5]
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
+
 			ex.printStackTrace();
 
-			// TODO [3]
 			TransactionContext.rollback();
 
 		} finally {
 
-			// TODO [4]
 			TransactionContext.removeThread();
-
+			
 			BoxContext.removeThread();
 		}
 

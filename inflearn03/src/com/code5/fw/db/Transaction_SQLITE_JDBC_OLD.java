@@ -24,8 +24,6 @@ public class Transaction_SQLITE_JDBC_OLD extends Transaction {
 
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db");
 
-		conn.setAutoCommit(false);
-
 		return conn;
 
 	}

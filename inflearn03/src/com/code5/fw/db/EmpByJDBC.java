@@ -30,15 +30,15 @@ public class EmpByJDBC {
 		pEmpDTO.setEmpNm(EMP_NM);
 		pEmpDTO.setHpN(HP_N);
 
-		Transaction transaction = new Transaction_SQLITE_JDBC_OLD();
+		Transaction transaction = new Transaction_SQLITE_JDBC();
 
 		List<EmpDTO> list = select(transaction, pEmpDTO);
 
-		transaction.close();
-
 		update(transaction, list, pEmpDTO);
 
-		transaction.commit();
+		transaction.closeConnection();
+
+		transaction = new Transaction_SQLITE_JDBC_OLD();
 
 		Box box = BoxContext.getThread();
 		box.put("EMP_NM", EMP_NM);
@@ -147,24 +147,35 @@ public class EmpByJDBC {
 	 */
 	private static void update(Transaction transaction, List<EmpDTO> list, EmpDTO pEmpDTO) throws Exception {
 
-		for (int i = 0; i < list.size(); i++) {
+		transaction.setAutoCommitTrue();
 
-			EmpDTO thisEmpDTO = list.get(i);
-			String EMP_N = thisEmpDTO.getEmpN();
-			String HP_N = pEmpDTO.getHpN();
+		try {
 
-			String SQL = "UPDATE EMP SET HP_N = ? WHERE EMP_N = ? ";
-			PreparedStatement ps = transaction.prepareStatement(SQL);
-			ps.setString(1, HP_N);
-			ps.setString(2, EMP_N);
+			for (int i = 0; i < list.size(); i++) {
 
-			System.out.println(SQL);
+				EmpDTO thisEmpDTO = list.get(i);
+				String EMP_N = thisEmpDTO.getEmpN();
+				String HP_N = pEmpDTO.getHpN();
 
-			int updateCnt = ps.executeUpdate();
-			if (updateCnt != 1) {
-				throw new Exception();
+				String SQL = "UPDATE EMP SET HP_N = ? WHERE EMP_N = ? ";
+				PreparedStatement ps = transaction.prepareStatement(SQL);
+				ps.setString(1, HP_N);
+				ps.setString(2, EMP_N);
+
+				System.out.println(SQL);
+
+				int updateCnt = ps.executeUpdate();
+				if (updateCnt != 1) {
+					throw new Exception();
+				}
+
 			}
 
+			transaction.commit();
+
+		} catch (Exception ex) {
+
+			transaction.rollback();
 		}
 
 	}

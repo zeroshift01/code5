@@ -15,8 +15,6 @@ public class SqlRunner_test extends TestCase {
 
 	/**
 	 * @throws Exception
-	 * 
-	 *                   TODO [1]
 	 */
 	public void test_01() throws Exception {
 
@@ -42,8 +40,6 @@ public class SqlRunner_test extends TestCase {
 
 	/**
 	 * @throws Exception
-	 * 
-	 *                   TODO [2]
 	 */
 	public void test_02() throws Exception {
 

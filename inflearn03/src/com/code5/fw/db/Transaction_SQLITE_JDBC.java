@@ -22,7 +22,7 @@ public class Transaction_SQLITE_JDBC extends Transaction {
 
 		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db", properties);
 
-		conn.setAutoCommit(false);
+		// conn.setAutoCommit(false);
 
 		return conn;
 

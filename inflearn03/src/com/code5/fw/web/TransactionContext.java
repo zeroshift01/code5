@@ -65,13 +65,18 @@ public class TransactionContext {
 	/**
 	 * @throws Exception
 	 */
-	public static void commit() throws Exception {
-		Transaction transaction = TL.get();
-		if (transaction == null) {
-			throw new Exception();
-		}
+	public static void commit() {
+		try {
 
-		transaction.commit();
+			Transaction transaction = TL.get();
+			if (transaction == null) {
+				return;
+			}
+
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -79,11 +84,17 @@ public class TransactionContext {
 	 * 
 	 */
 	public static void rollback() {
-		Transaction transaction = TL.get();
-		if (transaction == null) {
-			return;
-		}
+		try {
+			
+			Transaction transaction = TL.get();
+			if (transaction == null) {
+				return;
+			}
 
-		transaction.rollback();
+			transaction.rollback();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

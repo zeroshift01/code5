@@ -18,22 +18,18 @@ import com.code5.fw.web.TransactionContext;
 public class SqlRunner {
 
 	/**
-	 * TODO [1-1]
+	 * 
 	 */
 	private static SqlRunner sql = new SqlRunner();
 
 	/**
-	 * TODO [1-2]
+	 * 
 	 */
 	private SqlRunner() {
 	}
 
 	/**
-	 * 
-	 * 
 	 * @return
-	 * 
-	 *         TODO [1-3]
 	 */
 	public static SqlRunner getSqlRunner() {
 		return sql;
@@ -44,8 +40,6 @@ public class SqlRunner {
 	 * @param transaction
 	 * @param SQL
 	 * @return
-	 * 
-	 *         TODO [2-1]
 	 */
 	String getSQL(Transaction transaction, String KEY) throws SQLException {
 
@@ -71,8 +65,6 @@ public class SqlRunner {
 	 * @param sql
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [2-2]
 	 */
 	SqlRunnerB getSqlRunnerB(String sql) throws SQLException {
 
@@ -112,8 +104,6 @@ public class SqlRunner {
 	 * 
 	 * @param sql
 	 * @return
-	 * 
-	 *         TODO [2-3]
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
 
@@ -135,8 +125,6 @@ public class SqlRunner {
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [3-1]
 	 */
 	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
@@ -194,8 +182,6 @@ public class SqlRunner {
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [3-2]
 	 */
 	public Table getTable(String FORM_NO) throws SQLException {
 
@@ -211,8 +197,6 @@ public class SqlRunner {
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [3-3]
 	 */
 	public Table getTable(String FORM_NO, Box box) throws SQLException {
 
@@ -227,13 +211,13 @@ public class SqlRunner {
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [4-1]
-	 * 
 	 */
 	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+
+		transaction.setAutoCommitTrue();
+
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
 		String exeSql = sqlRunnerB.sql;
@@ -262,8 +246,6 @@ public class SqlRunner {
 	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [4-1]
 	 */
 	public int executeSql(String FORM_NO) throws SQLException {
 		Transaction transaction = TransactionContext.getThread();
@@ -276,8 +258,6 @@ public class SqlRunner {
 	 * @param box
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [4-2]
 	 */
 	public int executeSql(String FORM_NO, Box box) throws SQLException {
 		Transaction transaction = TransactionContext.getThread();

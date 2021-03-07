@@ -25,7 +25,7 @@ public class Transaction_SQLITE_POOL extends Transaction {
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/code5");
 
 			Connection conn = ds.getConnection();
-			conn.setAutoCommit(false);
+
 			return conn;
 		} catch (Exception ex) {
 			ex.printStackTrace();
