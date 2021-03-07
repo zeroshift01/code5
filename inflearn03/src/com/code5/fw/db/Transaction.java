@@ -23,15 +23,10 @@ public abstract class Transaction {
 
 	/**
 	 * @return
-	 * 
-	 *         TODO [1]
 	 */
 	protected abstract Connection createConnection() throws SQLException;
 
 	/**
-	 * 
-	 * TODO [2-2]
-	 * 
 	 * @throws Exception
 	 */
 	private Connection getConnection() throws SQLException {
@@ -42,47 +37,39 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * TODO [3-1]
+	 * 
 	 */
-	public void commit() {
-		try {
+	public void commit() throws SQLException {
 
-			if (this.conn == null) {
-				return;
-			}
-
-			this.close();
-			this.conn.commit();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (this.conn == null) {
+			return;
 		}
+
+		this.close();
+		this.conn.commit();
+
 	}
 
 	/**
-	 * TODO [3-1]
+	 * 
 	 */
-	public void rollback() {
-		try {
+	public void rollback() throws SQLException {
 
-			if (this.conn == null) {
-				return;
-			}
-
-			this.conn.rollback();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (this.conn == null) {
+			return;
 		}
+
+		this.conn.rollback();
+
 	}
 
 	/**
-	 * TODO [4-1]
+	 * 
 	 */
 	private ArrayList<Statement> stList = new ArrayList<Statement>();
 
 	/**
-	 * TODO [4-2]
+	 * 
 	 */
 	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
@@ -90,8 +77,6 @@ public abstract class Transaction {
 	 * @param SQL
 	 * @return
 	 * @throws Exception
-	 * 
-	 *                   TODO [5-1]
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
@@ -117,8 +102,6 @@ public abstract class Transaction {
 	 * @param ps
 	 * @return
 	 * @throws SQLException
-	 * 
-	 *                      TODO [5-2]
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -128,7 +111,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * TODO [6]
+	 * 
 	 */
 	void close() {
 
@@ -156,7 +139,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 * TODO [7]
+	 * 
 	 */
 	public void closeConnection() {
 
@@ -172,6 +155,25 @@ public abstract class Transaction {
 			ex.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	private boolean setAutoCommit = false;
+
+	/**
+	 * 
+	 */
+	public void setAutoCommitTrue() throws SQLException {
+
+		if (setAutoCommit) {
+			return;
+		}
+
+		setAutoCommit = true;
+
+		conn.setAutoCommit(false);
 	}
 
 }
