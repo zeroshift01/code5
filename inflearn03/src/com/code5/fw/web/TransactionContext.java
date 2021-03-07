@@ -12,12 +12,19 @@ public class TransactionContext {
 	/**
 	 * 
 	 */
+	private TransactionContext() {
+
+	}
+
+	/**
+	 * 
+	 */
 	private static ThreadLocal<Transaction> TL = new ThreadLocal<Transaction>();
 
 	/**
 	 * @return
 	 * 
-	 *         TODO [1]
+	 * 
 	 */
 	public static Transaction getThread() {
 		Transaction transaction = TL.get();
@@ -85,7 +92,7 @@ public class TransactionContext {
 	 */
 	public static void rollback() {
 		try {
-			
+
 			Transaction transaction = TL.get();
 			if (transaction == null) {
 				return;

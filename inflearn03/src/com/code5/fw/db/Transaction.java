@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author zero
  * 
  * 
- *         try-with-resources
+ * 
  *
  */
 public abstract class Transaction {
@@ -58,7 +58,8 @@ public abstract class Transaction {
 		if (this.conn == null) {
 			return;
 		}
-
+		
+		this.close();
 		this.conn.rollback();
 
 	}

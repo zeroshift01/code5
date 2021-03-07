@@ -12,6 +12,13 @@ public class BoxContext {
 	/**
 	 * 
 	 */
+	private BoxContext() {
+
+	}
+
+	/**
+	 * 
+	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
