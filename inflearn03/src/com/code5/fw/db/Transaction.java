@@ -16,6 +16,14 @@ import java.util.ArrayList;
  */
 public abstract class Transaction {
 
+	// conn 생성 -> createConnection, 늦은 객체 생성
+	// SQL 기능에 필요한 자원 생성 -> prepareStatement, createStatement, getResultSet
+	// conn 반납 -> closeConnection, conn 및 관련 자원 반납
+
+	// conn.setAutoCommit(false); -> setAutoCommitFalse
+	// conn.commit(); -> commit
+	// conn.rollback(); -> rollback
+
 	/**
 	 * 
 	 */
@@ -27,12 +35,32 @@ public abstract class Transaction {
 	protected abstract Connection createConnection() throws SQLException;
 
 	/**
+	 * 
+	 */
+	public void closeConnection() {
+
+		try {
+
+			if (conn == null) {
+				return;
+			}
+
+			this.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+	/**
 	 * @throws Exception
 	 */
 	private Connection getConnection() throws SQLException {
 		if (this.conn == null) {
 			this.conn = createConnection();
 		}
+
 		return conn;
 	}
 
@@ -58,7 +86,7 @@ public abstract class Transaction {
 		if (this.conn == null) {
 			return;
 		}
-		
+
 		this.close();
 		this.conn.rollback();
 
@@ -142,31 +170,12 @@ public abstract class Transaction {
 	/**
 	 * 
 	 */
-	public void closeConnection() {
-
-		try {
-
-			if (conn == null) {
-				return;
-			}
-
-			this.close();
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * 
-	 */
 	private boolean setAutoCommit = false;
 
 	/**
 	 * 
 	 */
-	public void setAutoCommitTrue() throws SQLException {
+	public void setAutoCommitFalse() throws SQLException {
 
 		if (setAutoCommit) {
 			return;

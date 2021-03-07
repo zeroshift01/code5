@@ -10,12 +10,26 @@ import java.util.List;
 import com.code5.biz.emp.EmpDTO;
 import com.code5.fw.data.Box;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
  *
  */
 public class EmpByJDBC {
+
+	// 잘 만든 Transaction 을 사용한 JDBC 프로그래밍
+
+	// select, SELECT SQL, 동적 SQL, VO 를 사용 결과 저장
+
+	// update, UPDATE SQL, 정적 SQL, 1개 이상의 SQL 이 논리적으로 묶인 트랜잭션 단위
+
+	// selectForCollection, VO 단점인 낮은 유연성을 해결하기 위해 컬랙션을 사용했지만 문제가 있음
+
+	// SQL 의존문제를 해결하기 위한 방법
+	// 1. SQL 과 JAVA 코드 분리
+	// 2. 정적 SQL, 동적 SQL 장점을 흡수한 쉬운 사용
+	// 3. 컬랙션의 단점을 해결
 
 	/**
 	 * @param x
@@ -30,7 +44,7 @@ public class EmpByJDBC {
 		pEmpDTO.setEmpNm(EMP_NM);
 		pEmpDTO.setHpN(HP_N);
 
-		Transaction transaction = new Transaction_SQLITE_JDBC();
+		Transaction transaction = TransactionContext.getThread();
 
 		List<EmpDTO> list = select(transaction, pEmpDTO);
 
@@ -147,7 +161,7 @@ public class EmpByJDBC {
 	 */
 	private static void update(Transaction transaction, List<EmpDTO> list, EmpDTO pEmpDTO) throws Exception {
 
-		transaction.setAutoCommitTrue();
+		transaction.setAutoCommitFalse();
 
 		try {
 

@@ -13,6 +13,14 @@ import junit.framework.TestCase;
  */
 public class SqlRunner_test extends TestCase {
 
+	// SQL 의존문제를 해결하기 위한 방법
+
+	// 1. SQL 과 JAVA 코드 분리 : EMP001D_01, EMP001D_02, FW_SQL
+	// 2. 정적 SQL, 동적 SQL 장점을 흡수한 쉬운 사용 : sql.getTable, sql.execute
+	// 3. 컬랙션의 단점을 해결 : Table
+
+	// TDD 테스트코드로 요구사항을 쉽게 정의하고 이 틀에 맞는 코드를 빨리 만드는 기법
+
 	/**
 	 * @throws Exception
 	 */

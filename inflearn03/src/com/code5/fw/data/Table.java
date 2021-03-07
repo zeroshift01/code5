@@ -13,28 +13,22 @@ import java.util.LinkedHashMap;
 public class Table {
 
 	/**
-	 * TODO [1-1]
+	 * 
 	 */
 	private LinkedHashMap<String, BigDecimal> colNameMap = new LinkedHashMap<String, BigDecimal>();;
 
 	/**
-	 * 
-	 * TODO [1-2]
 	 * 
 	 */
 	private ArrayList<String[]> recodes = new ArrayList<String[]>();
 
 	/**
 	 * 
-	 * TODO [1-3]
-	 * 
 	 * 추가데이터를 관리하는 컬랙션 객체
 	 */
 	private HashMap<String, String> addDatas = null;
 
 	/**
-	 * 
-	 * TODO [2-1]
 	 * 
 	 * @param colNames
 	 */
@@ -51,15 +45,11 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [2-2]
-	 * 
 	 */
 	public Table() {
 	}
 
 	/**
-	 * 
-	 * TODO [3-1]
 	 * 
 	 * @param data
 	 * @return
@@ -67,7 +57,7 @@ public class Table {
 	public boolean addRecode(String[] recode) {
 
 		if (recodes.size() + 1 > MAX_RECODE_COUNT) {
-			// TODO [3-2]
+
 			this.isNextRecode = true;
 			return false;
 		}
@@ -86,7 +76,7 @@ public class Table {
 	}
 
 	/**
-	 * TODO [3-3]
+	 *
 	 */
 	public boolean addRecode() {
 
@@ -104,8 +94,6 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [4]
-	 * 
 	 * @param colName
 	 */
 	public void addCol(String colName) {
@@ -119,9 +107,6 @@ public class Table {
 	}
 
 	/**
-	 * 
-	 * TODO [5-1]
-	 * 
 	 * @param colName
 	 * @param row
 	 * @return
@@ -176,9 +161,6 @@ public class Table {
 	}
 
 	/**
-	 * 
-	 * TODO [5-2]
-	 * 
 	 * @param colName
 	 * @param row
 	 * @param data
@@ -217,9 +199,6 @@ public class Table {
 	}
 
 	/**
-	 * 
-	 * TODO [6-1]
-	 * 
 	 * @param row
 	 * @return
 	 */
@@ -238,9 +217,6 @@ public class Table {
 	}
 
 	/**
-	 * 
-	 * TODO [6-2]
-	 * 
 	 * @return
 	 */
 	public Box getBox() {
@@ -254,7 +230,6 @@ public class Table {
 	}
 
 	/**
-	 * TODO [7-1]
 	 * 
 	 * @return
 	 */
@@ -264,10 +239,7 @@ public class Table {
 
 	/**
 	 * 
-	 * TODO [7-2]
-	 * 
 	 * @return
-	 * 
 	 */
 	public String[] getCols() {
 
@@ -284,7 +256,7 @@ public class Table {
 	}
 
 	/**
-	 * TODO [7-3]
+	 *
 	 */
 	private boolean isNextRecode = false;
 
@@ -296,7 +268,7 @@ public class Table {
 	}
 
 	/**
-	 * TODO [7-4]
+	 *
 	 */
 	private static int MAX_RECODE_COUNT = 10000;
 

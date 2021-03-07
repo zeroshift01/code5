@@ -1,6 +1,7 @@
 package com.code5.fw.web;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +20,16 @@ import com.code5.fw.db.Transaction_SQLITE_POOL;
  *
  */
 public class MasterController extends HttpServlet {
+
+	// TransactionContext 를 사용 Transaction 객체를 비즈니스 로직에 전달
+	// commit 과 rollback 기준 정의
+
+	// conn 객체 생명주기 확인
+	// new conn 
+	// conn.commit()
+	// conn.rollback()
+	// conn.close()
+	//
 
 	/**
 	 * 
@@ -49,13 +60,17 @@ public class MasterController extends HttpServlet {
 		} catch (Exception ex) {
 
 			ex.printStackTrace();
-
-			TransactionContext.rollback();
+			try {
+				TransactionContext.rollback();
+			} catch (SQLException exx) {
+				exx.printStackTrace();
+				throw new ServletException(exx);
+			}
 
 		} finally {
 
 			TransactionContext.removeThread();
-			
+
 			BoxContext.removeThread();
 		}
 

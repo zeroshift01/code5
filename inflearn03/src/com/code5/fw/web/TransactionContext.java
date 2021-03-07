@@ -1,5 +1,7 @@
 package com.code5.fw.web;
 
+import java.sql.SQLException;
+
 import com.code5.fw.db.Transaction;
 import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
@@ -8,6 +10,12 @@ import com.code5.fw.db.Transaction_SQLITE_JDBC;
  *
  */
 public class TransactionContext {
+
+	// 유틸 클래스, private 생성자
+	// AOP -> ThreadLocal
+	// createDefaultTransaction -> Transaction_SQLITE_JDBC
+	// WAS 환경에선 Transaction_SQLITE_POOL 사용
+	// 개발자가 사용기 편한 commit 과 rollback
 
 	/**
 	 * 
@@ -72,36 +80,27 @@ public class TransactionContext {
 	/**
 	 * @throws Exception
 	 */
-	public static void commit() {
-		try {
+	public static void commit() throws SQLException {
 
-			Transaction transaction = TL.get();
-			if (transaction == null) {
-				return;
-			}
-
-			transaction.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			return;
 		}
 
+		transaction.commit();
 	}
 
 	/**
 	 * 
 	 */
-	public static void rollback() {
-		try {
+	public static void rollback() throws SQLException {
 
-			Transaction transaction = TL.get();
-			if (transaction == null) {
-				return;
-			}
-
-			transaction.rollback();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			return;
 		}
+
+		transaction.rollback();
+
 	}
 }

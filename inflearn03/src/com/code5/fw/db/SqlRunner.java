@@ -216,7 +216,7 @@ public class SqlRunner {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
 
-		transaction.setAutoCommitTrue();
+		transaction.setAutoCommitFalse();
 
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
