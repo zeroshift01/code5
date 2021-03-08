@@ -12,6 +12,16 @@ import java.util.LinkedHashMap;
  */
 public class Table {
 
+	// Table(String[] colNames)
+
+	// addRecode(String[] recode)
+
+	// getData(String colName, int row)
+	// setData(String colName, int row, String data)
+
+	// MAX_RECODE_COUNT()
+	// isNextRecode()
+
 	/**
 	 * 
 	 */

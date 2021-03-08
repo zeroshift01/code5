@@ -10,6 +10,10 @@ import java.sql.SQLException;
  */
 public class Transaction_SQLITE_JDBC_OLD extends Transaction {
 
+	// Class.forName -> Reflection
+	// org.sqlite.JDBC 의 static 영역 실행
+	// DriverManager 객체에 org.sqlite.JDBC 객체를 등록
+
 	/**
 	 *
 	 */
