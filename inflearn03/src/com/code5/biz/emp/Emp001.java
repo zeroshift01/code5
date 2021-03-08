@@ -11,6 +11,11 @@ import com.code5.fw.web.TransactionContext;
  */
 public class Emp001 {
 
+	// SQL 의존문제를 해결하기 위한 방법
+	// 1. SQL 과 JAVA 코드 분리 -> KEY
+	// 2. 정적 SQL, 동적 SQL 장점을 흡수한 쉬운 사용 -> getTable, executeSql
+	// 3. 컬랙션의 단점을 해결 -> Table
+
 	/**
 	 * @return
 	 * @throws Exception

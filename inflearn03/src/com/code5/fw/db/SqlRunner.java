@@ -17,6 +17,15 @@ import com.code5.fw.web.TransactionContext;
  */
 public class SqlRunner {
 
+	// 싱글톤 패턴
+
+	// Table getTable(String key)
+	// int executeSql(String key)
+
+	// 오버로딩(overloading), AOP 관점 기능 확장
+
+	// SqlRunnerB 어쩔수 없는 내용 결합이 필요할 땐 사용 범위를 한정
+
 	/**
 	 * 
 	 */
@@ -122,25 +131,25 @@ public class SqlRunner {
 	/**
 	 * @param transaction
 	 * @param box
-	 * @param FORM_NO
+	 * @param key
 	 * @return
 	 * @throws SQLException
 	 */
-	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
+	public Table getTable(Transaction transaction, Box box, String key) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, key);
 
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i);
-			String data = box.s(key);
-			ps.setString(i + 1, data);
+			String thisKey = sqlRunnerB.param.get(i);
+			String thisData = box.s(thisKey);
+			ps.setString(i + 1, thisData);
 
 			// [8]
-			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
+			exeSql = exeSql.replaceFirst("\\?", "'" + thisData + "'");
 		}
 
 		System.out.println(exeSql);
@@ -178,43 +187,41 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param FORM_NO
+	 * @param key
 	 * @return
 	 * @throws SQLException
 	 */
-	public Table getTable(String FORM_NO) throws SQLException {
+	public Table getTable(String key) throws SQLException {
 
 		Transaction transaction = TransactionContext.getThread();
 		Box box = BoxContext.getThread();
 
-		return getTable(transaction, box, FORM_NO);
+		return getTable(transaction, box, key);
 	}
 
 	/**
-	 * 
+	 * @param key
 	 * @param box
-	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
 	 */
-	public Table getTable(String FORM_NO, Box box) throws SQLException {
+	public Table getTable(String key, Box box) throws SQLException {
 
 		Transaction transaction = TransactionContext.getThread();
 
-		return getTable(transaction, box, FORM_NO);
+		return getTable(transaction, box, key);
 	}
 
 	/**
 	 * @param transaction
 	 * @param box
-	 * @param FORM_NO
+	 * @param key
 	 * @return
 	 * @throws SQLException
 	 */
-	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
+	public int executeSql(Transaction transaction, Box box, String key) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, key);
 
 		transaction.setAutoCommitFalse();
 
@@ -223,11 +230,11 @@ public class SqlRunner {
 		String exeSql = sqlRunnerB.sql;
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
-			String key = sqlRunnerB.param.get(i);
-			String data = box.s(key);
-			ps.setString(i + 1, data);
+			String thisKey = sqlRunnerB.param.get(i);
+			String thisData = box.s(thisKey);
+			ps.setString(i + 1, thisData);
 
-			exeSql = exeSql.replaceFirst("\\?", "'" + data + "'");
+			exeSql = exeSql.replaceFirst("\\?", "'" + thisData + "'");
 		}
 
 		System.out.println(exeSql);
@@ -242,26 +249,25 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param FORM_NO
+	 * @param key
 	 * @return
 	 * @throws SQLException
 	 */
-	public int executeSql(String FORM_NO) throws SQLException {
+	public int executeSql(String key) throws SQLException {
 		Transaction transaction = TransactionContext.getThread();
 		Box box = BoxContext.getThread();
-		return executeSql(transaction, box, FORM_NO);
+		return executeSql(transaction, box, key);
 	}
 
 	/**
-	 * @param FORM_NO
+	 * @param key
 	 * @param box
 	 * @return
 	 * @throws SQLException
 	 */
-	public int executeSql(String FORM_NO, Box box) throws SQLException {
+	public int executeSql(String key, Box box) throws SQLException {
 		Transaction transaction = TransactionContext.getThread();
-		return executeSql(transaction, box, FORM_NO);
+		return executeSql(transaction, box, key);
 	}
 
 }
