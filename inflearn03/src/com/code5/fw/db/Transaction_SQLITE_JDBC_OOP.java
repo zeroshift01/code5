@@ -8,11 +8,10 @@ import java.sql.SQLException;
  * @author zero
  *
  */
-public class Transaction_SQLITE_JDBC_OLD extends Transaction {
+public class Transaction_SQLITE_JDBC_OOP extends Transaction {
 
-	// Class.forName -> Reflection
-	// org.sqlite.JDBC ÀÇ static ¿µ¿ª ½ÇÇà
 	// DriverManager °´Ã¼¿¡ org.sqlite.JDBC °´Ã¼¸¦ µî·Ï
+	// Reflection, DriverManager °´Ã¼¿¡ org.sqlite.JDBC °´Ã¼ µî·Ï
 
 	/**
 	 *
@@ -20,13 +19,17 @@ public class Transaction_SQLITE_JDBC_OLD extends Transaction {
 	protected Connection createConnection() throws SQLException {
 
 		try {
-			Class.forName("org.sqlite.JDBC");
+
+			String className = "org.sqlite.JDBC";
+			Class.forName(className);
+
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
 			return null;
 		}
 
-		Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db");
+		String url = "jdbc:sqlite:C:\\public\\sqlite\\code5.db";
+		Connection conn = DriverManager.getConnection(url);
 
 		return conn;
 

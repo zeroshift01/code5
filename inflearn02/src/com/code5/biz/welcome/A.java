@@ -21,7 +21,7 @@ public class A {
 	//
 
 	/**
-	 * 2. 干滚按眉 or static
+	 * 2. 干滚按眉 or 傈开按眉(static)
 	 */
 	public void execute_02() {
 		box.s("name");
