@@ -66,7 +66,10 @@ public abstract class Transaction {
 		}
 
 		this.close();
-		this.conn.commit();
+
+		if (!this.conn.getAutoCommit()) {
+			this.conn.commit();
+		}
 
 	}
 
@@ -80,7 +83,10 @@ public abstract class Transaction {
 		}
 
 		this.close();
-		this.conn.rollback();
+
+		if (!this.conn.getAutoCommit()) {
+			this.conn.rollback();
+		}
 
 	}
 

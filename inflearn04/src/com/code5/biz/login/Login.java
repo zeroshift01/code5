@@ -16,22 +16,18 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	public String login() throws Exception {
-
 		Box box = BoxContext.getThread();
 		boolean isLogin = box.getBoolean("isLogin");
 
 		if (isLogin) {
-			return loginView();
+
+			return MasterController.execute("emp00110");
+
+			// Emp001 emp001 = new Emp001();
+			// return emp001.emp00110();
+
 		}
 
-		return MasterController.execute("emp00101");
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	public String logout() throws Exception {
 		return loginView();
 	}
 

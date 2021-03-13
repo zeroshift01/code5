@@ -20,7 +20,7 @@ public class Emp001D {
 	 * @return
 	 * @throws SQLException
 	 */
-	Table emp00101() throws SQLException {
+	Table emp00110() throws SQLException {
 		return sql.getTable("EMP001D_01");
 	}
 
@@ -28,7 +28,7 @@ public class Emp001D {
 	 * @return
 	 * @throws SQLException
 	 */
-	int emp00102() throws SQLException {
+	int emp00120() throws SQLException {
 		return sql.executeSql("EMP001D_02");
 	}
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_POOL;
+import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
 /**
  * @author zero
@@ -34,7 +34,7 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
-		Transaction transaction = new Transaction_SQLITE_POOL();
+		Transaction transaction = new Transaction_SQLITE_JDBC();
 		TransactionContext.setThread(transaction);
 
 		try {

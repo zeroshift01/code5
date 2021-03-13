@@ -18,10 +18,10 @@ KEY PRIMARY KEY
 
 
 
-INSERT INTO FW_CONTROLLER VALUES ('emp00101','com.code5.biz.emp.Emp001','emp00101');
-INSERT INTO FW_CONTROLLER VALUES ('emp00102','com.code5.biz.emp.Emp001','emp00102');
+INSERT INTO FW_CONTROLLER VALUES ('emp00110','com.code5.biz.emp.Emp001','emp00110');
+INSERT INTO FW_CONTROLLER VALUES ('emp00120','com.code5.biz.emp.Emp001','emp00120');
 
-INSERT INTO FW_VIEW VALUES ('emp00101','/WEB-INF/classes/com/code5/biz/emp/jsp/emp00101.jsp');
+INSERT INTO FW_VIEW VALUES ('emp00110','/WEB-INF/classes/com/code5/biz/emp/jsp/emp00110.jsp');
 
 
 INSERT INTO FW_CONTROLLER VALUES ('login','com.code5.biz.login.Login','login');
