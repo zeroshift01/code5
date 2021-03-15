@@ -62,7 +62,7 @@ public class Login implements BizController {
 		SessionB sessionB = new SessionB(ID, AUTH, IP);
 		box.setSessionB(sessionB);
 
-		return MasterController.execute("emp00101");
+		return MasterController.execute("emp00110");
 	}
 
 	/**
