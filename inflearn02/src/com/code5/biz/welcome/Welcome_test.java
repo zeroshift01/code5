@@ -9,25 +9,25 @@ import junit.framework.TestCase;
  * @author zero
  *
  */
-public class Welcome_test2 extends TestCase {
+public class Welcome_test extends TestCase {
 
 	/**
 	 * @throws Exception
 	 */
 	public void test_01() throws Exception {
 
-		String name = "zero";
+		String NAME = "zero";
 
 		Box box = BoxContext.getThread();
 
-		box.put("name", name);
+		box.put("NAME", NAME);
 
-		Welcome w = new Welcome();
-		w.execute();
+		Welcome welcome = new Welcome();
+		welcome.execute();
 
-		String ret = box.s("ret");
+		String MSG = box.s("MSG");
 
-		assertEquals("welcome (" + name + ")", ret);
+		assertEquals("WELCOME = " + NAME, MSG);
 
 	}
 

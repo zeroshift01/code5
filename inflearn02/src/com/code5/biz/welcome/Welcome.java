@@ -17,15 +17,12 @@ public class Welcome {
 
 		Box box = BoxContext.getThread();
 
-		String name = (String) box.get("name");
+		String NAME = box.s("NAME");
+		// String NAME = (String) box.get("NAME");
 
-		name = box.getString("name");
+		String MSG = "WELCOME = " + NAME;
 
-		name = box.s("name");
-
-		String ret = "welcome (" + name + ")";
-
-		box.put("ret", ret);
+		box.put("MSG", MSG);
 
 		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
 	}

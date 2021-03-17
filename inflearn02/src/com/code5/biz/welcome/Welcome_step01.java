@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author zero
  *
  */
-public class Welcome_berofe {
+public class Welcome_step01 {
 
 	/**
 	 * @param request
@@ -14,11 +14,11 @@ public class Welcome_berofe {
 	 */
 	public String execute(HttpServletRequest request) {
 
-		String name = request.getParameter("name");
+		String NAME = request.getParameter("NAME");
 
-		String ret = "welcome (" + name + ")";
+		String MSG = "WELCOME = " + NAME;
 
-		request.setAttribute("ret", ret);
+		request.setAttribute("MSG", MSG);
 
 		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
 	}

@@ -3,12 +3,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Box box = BoxContext.getThread();
-	String ret = box.s("ret");
+	String MSG = box.s("MSG");
 %>
 <html>
 <head>
 <body>
-	<%=ret%>
+	<%=MSG%>
 </body>
 </head>
 </html>
