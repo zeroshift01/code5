@@ -27,27 +27,22 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// TODO [1]
 		Box box = new BoxHttp(request);
 
-		// TODO [2]
 		BoxContext.setThread(box);
 
 		try {
 
 			Welcome welcome = new Welcome();
 
-			// TODO [3]
 			String jsp = welcome.execute();
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
-
 			dispatcher.forward(request, response);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 
-			// TODO [4]
 			BoxContext.removeThread();
 		}
 

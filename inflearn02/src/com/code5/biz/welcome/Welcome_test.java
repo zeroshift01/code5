@@ -16,10 +16,9 @@ public class Welcome_test extends TestCase {
 	 */
 	public void test_01() throws Exception {
 
-		String NAME = "zero";
+		String NAME = "abcd";
 
 		Box box = BoxContext.getThread();
-
 		box.put("NAME", NAME);
 
 		Welcome welcome = new Welcome();

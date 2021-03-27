@@ -39,5 +39,10 @@ public class A {
 		box.s("name");
 	}
 
-	ThreadLocal<Box> th = new ThreadLocal<Box>();
+	public static void execute_03_x() {
+		Box box = th.get();
+		box.s("name");
+	}
+
+	static ThreadLocal<Box> th = new ThreadLocal<Box>();
 }

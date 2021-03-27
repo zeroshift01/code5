@@ -10,18 +10,18 @@ import com.code5.fw.web.BoxContext;
 public class Welcome {
 
 	/**
-	 * @param request
 	 * @return
 	 */
 	public String execute() {
 
 		Box box = BoxContext.getThread();
 
-		String NAME = box.s("NAME");
-		// String NAME = (String) box.get("NAME");
+		// String NAME = request.getParameter("NAME");
+		String NAME = box.getString("NAME");
 
 		String MSG = "WELCOME = " + NAME;
 
+		// request.setAttribute("MSG", MSG);
 		box.put("MSG", MSG);
 
 		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
