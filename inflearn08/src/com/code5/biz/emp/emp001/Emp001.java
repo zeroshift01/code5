@@ -4,7 +4,6 @@ import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
-import com.code5.fw.security.DataCrypt;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
@@ -24,25 +23,10 @@ public class Emp001 implements BizController {
 	 */
 	public String emp00110() throws Exception {
 
-		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
-
 		Box box = BoxContext.getThread();
-
-		SessionB user = box.getSessionB();
 
 		Emp001D dao = Emp001D.getDao();
 		Table table = dao.emp00101();
-
-		for (int i = 0; i < table.size(); i++) {
-			String HP_N = table.s("HP_N", i);
-			HP_N = crypt.decrypt(HP_N);
-			table.setData("HP_N", i, HP_N);
-
-			String FILE_ID = table.s("FILE_ID", i);
-			FILE_ID = user.createToken("downloadfile", FILE_ID);
-			table.setData("FILE_ID", i, FILE_ID);
-
-		}
 
 		box.put("table", table);
 
@@ -58,7 +42,6 @@ public class Emp001 implements BizController {
 	public String emp00120() throws Exception {
 
 		Box box = BoxContext.getThread();
-		SessionB user = box.getSessionB();
 
 		Table table = box.createTableByKey("EMP_N");
 
@@ -68,20 +51,7 @@ public class Emp001 implements BizController {
 
 			box.putFromTable(table, i);
 
-			String FILE_ID_ORG = table.s("FILE_ID_ORG", i);
-			FILE_ID_ORG = user.getDataByToken("downloadfile", FILE_ID_ORG);
-			box.put("FILE_ID", FILE_ID_ORG);
-
-			UploadFileB file = box.getUploadFileB("FILE_" + i);
-			if (file.getSize() != 0) {
-
-				UploadFileB orgFile = new UploadFileB(FILE_ID_ORG);
-				orgFile.delete();
-
-				String FILE_ID = file.getFileId();
-				box.put("FILE_ID", FILE_ID);
-				file.save();
-			}
+			fileUpdate(box, table, i);
 
 			if (dao.emp00102() != 1) {
 				throw new Exception();
@@ -93,4 +63,30 @@ public class Emp001 implements BizController {
 		return MasterController.execute("emp00101");
 	}
 
+	/**
+	 * @param box
+	 * @param table
+	 * @param i
+	 */
+	private void fileUpdate(Box box, Table table, int i) throws Exception {
+
+		SessionB user = BoxContext.getThread().getSessionB();
+
+		String FILE_ID_ORG = table.s("FILE_ID_ORG", i);
+		FILE_ID_ORG = user.getDataByToken("downloadfile", FILE_ID_ORG);
+		box.put("FILE_ID", FILE_ID_ORG);
+
+		UploadFileB file = box.getUploadFileB("FILE_" + i);
+		if (file.getSize() == 0) {
+			return;
+		}
+
+		UploadFileB orgFile = new UploadFileB(FILE_ID_ORG);
+		orgFile.delete();
+
+		String FILE_ID = file.getFileId();
+		box.put("FILE_ID", FILE_ID);
+		file.save();
+
+	}
 }
