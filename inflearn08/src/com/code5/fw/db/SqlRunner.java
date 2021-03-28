@@ -325,6 +325,8 @@ public class SqlRunner {
 		trace.write(sqlRunnerB.key);
 		trace.write(sqlRunnerB.sql);
 
+		transaction.setAutoCommitFalse();
+
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
 		if (sqlRunnerB.timeOut != -1) {
