@@ -51,6 +51,7 @@ public class Trace {
 	 */
 	public void writeErr(String log) {
 		traceRunner.write("err", this.className, log);
+		traceRunner.write("out", this.className, log);
 	}
 
 	/**
@@ -69,7 +70,9 @@ public class Trace {
 			pw = new PrintWriter(sw);
 			ex.printStackTrace(pw);
 
+			
 			traceRunner.write("err", this.className, sw.toString());
+			traceRunner.write("out", this.className, sw.toString());
 
 		} catch (Exception exx) {
 			try {
@@ -94,7 +97,6 @@ public class Trace {
 
 	}
 
-	
 	/**
 	 * @param ex
 	 */

@@ -298,7 +298,7 @@ public final class TraceRunner {
 		if (!this.isMulti) {
 			System.out.println(log);
 		}
-
+		
 		synchronized (logKey.intern()) {
 
 			TraceWriter traceWriter = traceWriterMap.get(logKey);
