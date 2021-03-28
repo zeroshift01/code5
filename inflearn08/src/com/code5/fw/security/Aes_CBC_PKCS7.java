@@ -5,8 +5,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * 
- * @author seuk
+ * @author zero
  *
  */
 public class Aes_CBC_PKCS7 implements Crypt {

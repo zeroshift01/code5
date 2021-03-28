@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import com.code5.fw.data.Hex;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class CryptPin {

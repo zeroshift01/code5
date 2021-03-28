@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * @author seuk
- * 
+ * @author zero
  *
  */
 public class TableRecodeBase extends Table {

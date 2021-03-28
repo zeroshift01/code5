@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class TraceWriter {

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class TraceNotOutputStream extends OutputStream {

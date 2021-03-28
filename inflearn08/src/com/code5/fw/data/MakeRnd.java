@@ -3,7 +3,7 @@ package com.code5.fw.data;
 import java.security.SecureRandom;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MakeRnd {

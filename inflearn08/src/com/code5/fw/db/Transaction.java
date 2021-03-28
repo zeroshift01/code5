@@ -4,82 +4,96 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * @author seuk
- * 
- * 
+ * @author zero
+ *
  */
 public abstract class Transaction {
 
 	/**
-	 * @return
 	 * 
-	 */
-	protected abstract Connection createConnection() throws SQLException;
-
-	/**
-	 *
 	 */
 	private Connection conn = null;
 
 	/**
+	 * @return
+	 */
+	protected abstract Connection createConnection() throws SQLException;
+
+	/**
 	 * 
-	 *
-	 * 
+	 */
+	public void closeConnection() {
+
+		try {
+
+			if (conn == null) {
+				return;
+			}
+
+			this.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+	/**
 	 * @throws Exception
 	 */
 	private Connection getConnection() throws SQLException {
-
 		if (this.conn == null) {
 			this.conn = createConnection();
 		}
+
 		return conn;
 	}
 
 	/**
-	 *
+	 * 
 	 */
-	public void commit() {
+	public void commit() throws SQLException {
 
-		try {
+		if (this.conn == null) {
+			return;
+		}
 
-			if (this.conn == null) {
-				return;
-			}
+		this.close();
 
+		if (!this.conn.getAutoCommit()) {
 			this.conn.commit();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
+
 	}
 
 	/**
-	 *
+	 * 
 	 */
-	public void rollback() {
-		try {
+	public void rollback() throws SQLException {
 
-			if (this.conn == null) {
-				return;
-			}
+		if (this.conn == null) {
+			return;
+		}
 
+		this.close();
+
+		if (!this.conn.getAutoCommit()) {
 			this.conn.rollback();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
+
 	}
 
 	/**
-	 *
+	 * 
 	 */
-	private ArrayList<PreparedStatement> psList = new ArrayList<PreparedStatement>();
+	private ArrayList<Statement> stList = new ArrayList<Statement>();
 
 	/**
-	 *
+	 * 
 	 */
 	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
 
@@ -87,13 +101,24 @@ public abstract class Transaction {
 	 * @param SQL
 	 * @return
 	 * @throws Exception
-	 * 
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection connection = getConnection();
 		PreparedStatement ps = connection.prepareStatement(SQL);
-		psList.add(ps);
+		stList.add(ps);
 		return ps;
+
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	Statement createStatement() throws SQLException {
+		Connection connection = getConnection();
+		Statement st = connection.createStatement();
+		stList.add(st);
+		return st;
 
 	}
 
@@ -101,7 +126,6 @@ public abstract class Transaction {
 	 * @param ps
 	 * @return
 	 * @throws SQLException
-	 * 
 	 */
 	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
 		ResultSet rs = ps.executeQuery();
@@ -111,7 +135,7 @@ public abstract class Transaction {
 	}
 
 	/**
-	 *
+	 * 
 	 */
 	void close() {
 
@@ -125,37 +149,36 @@ public abstract class Transaction {
 
 		rsList.clear();
 
-		for (int i = 0; i < psList.size(); i++) {
+		for (int i = 0; i < stList.size(); i++) {
 			try {
-				psList.get(i).close();
+				stList.get(i).close();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 
 		}
 
-		psList.clear();
+		stList.clear();
 
 	}
 
 	/**
-	 *
+	 * 
 	 */
-	public void closeConnection() {
+	private boolean setAutoCommit = false;
 
-		try {
+	/**
+	 * 
+	 */
+	public void setAutoCommitFalse() throws SQLException {
 
-			if (conn == null) {
-				return;
-			}
-
-			this.close();
-			conn.close();
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (setAutoCommit) {
+			return;
 		}
 
+		setAutoCommit = true;
+
+		conn.setAutoCommit(false);
 	}
 
 	/**
@@ -178,5 +201,4 @@ public abstract class Transaction {
 
 		return new Transaction_SQLITE_JDBC();
 	}
-
 }

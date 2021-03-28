@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -22,7 +23,7 @@ import com.code5.fw.trace.Trace;
 import com.code5.fw.trace.TraceRunner;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MasterController extends HttpServlet {
@@ -126,7 +127,12 @@ public class MasterController extends HttpServlet {
 
 		} catch (Exception ex) {
 
-			transaction.rollback();
+			try {
+				TransactionContext.rollback();
+			} catch (SQLException exx) {
+				trace.writeErr(exx);
+				box.put(Box.KEY_EXCEPTION, exx);
+			}
 
 			if (ex instanceof InvocationTargetException) {
 				ex = (Exception) ex.getCause();
@@ -154,7 +160,6 @@ public class MasterController extends HttpServlet {
 
 			endService();
 
-			transaction.closeConnection();
 			TransactionContext.removeThread();
 			BoxContext.removeThread();
 		}

@@ -16,7 +16,7 @@ import com.code5.fw.data.SessionB;
 import com.code5.fw.web.BoxContext;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public final class TraceRunner {

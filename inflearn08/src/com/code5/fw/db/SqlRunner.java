@@ -19,7 +19,7 @@ import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class SqlRunner {

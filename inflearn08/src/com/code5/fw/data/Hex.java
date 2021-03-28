@@ -1,7 +1,7 @@
 package com.code5.fw.data;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Hex {

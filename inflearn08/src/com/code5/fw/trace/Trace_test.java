@@ -5,7 +5,7 @@ import com.code5.fw.data.InitProperty;
 import junit.framework.TestCase;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Trace_test extends TestCase {

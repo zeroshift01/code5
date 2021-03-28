@@ -1,7 +1,7 @@
 package com.code5.fw.security;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public interface Crypt {

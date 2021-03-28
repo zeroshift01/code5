@@ -6,9 +6,8 @@ import java.security.SecureRandom;
 import com.code5.fw.security.Aria_CBC_PKCS7;
 
 /**
- * 
- * 
- * @author seuk
+ * @author zero
+ *
  */
 public class SessionB implements Serializable {
 

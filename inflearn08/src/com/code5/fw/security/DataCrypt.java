@@ -8,9 +8,7 @@ import com.code5.fw.data.Hex;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * 
- * @author seuk
- * 
+ * @author zero
  *
  */
 public class DataCrypt {

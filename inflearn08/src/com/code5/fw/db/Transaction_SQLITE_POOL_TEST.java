@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Transaction_SQLITE_POOL_TEST extends Transaction {

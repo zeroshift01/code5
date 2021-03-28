@@ -3,7 +3,7 @@ package com.code5.fw.trace;
 import java.io.PrintStream;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class TraceNotPrintStream extends PrintStream {

@@ -11,7 +11,7 @@ import com.code5.fw.web.MasterController;
 import com.code5.fw.web.TransactionContext;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Emp001 implements BizController {
@@ -22,7 +22,7 @@ public class Emp001 implements BizController {
 	 * 
 	 *                   EMP 데이터 조회
 	 */
-	public String emp00101() throws Exception {
+	public String emp00110() throws Exception {
 
 		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
 
@@ -55,7 +55,7 @@ public class Emp001 implements BizController {
 	 * 
 	 *                   휴대폰 번호 업데이트
 	 */
-	public String emp00102() throws Exception {
+	public String emp00120() throws Exception {
 
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();

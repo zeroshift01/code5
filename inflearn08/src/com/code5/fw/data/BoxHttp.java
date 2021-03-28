@@ -6,8 +6,8 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author seuk
- * 
+ * @author zero
+ *
  */
 public class BoxHttp extends Box {
 

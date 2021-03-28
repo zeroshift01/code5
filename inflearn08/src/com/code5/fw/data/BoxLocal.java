@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * @author seuk
- * 
- * 
+ * @author zero
+ *
  */
 public class BoxLocal extends Box {
 

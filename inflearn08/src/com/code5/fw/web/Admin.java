@@ -5,7 +5,7 @@ import com.code5.fw.data.SessionB;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Admin implements BizController, BizControllerStartExecute {

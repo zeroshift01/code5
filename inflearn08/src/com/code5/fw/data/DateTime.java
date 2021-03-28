@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author seuk
- * 
+ * @author zero
  *
  */
 public class DateTime {

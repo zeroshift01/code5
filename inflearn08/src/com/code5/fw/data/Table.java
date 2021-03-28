@@ -3,8 +3,7 @@ package com.code5.fw.data;
 import com.code5.fw.web.BoxContext;
 
 /**
- * @author seuk
- * 
+ * @author zero
  *
  */
 abstract public class Table {

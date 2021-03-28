@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 import com.code5.fw.data.MakeRnd;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class CryptFile {

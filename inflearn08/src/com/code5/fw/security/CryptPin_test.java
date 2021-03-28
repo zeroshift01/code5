@@ -3,7 +3,7 @@ package com.code5.fw.security;
 import junit.framework.TestCase;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class CryptPin_test extends TestCase {

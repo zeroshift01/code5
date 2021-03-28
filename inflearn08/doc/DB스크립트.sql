@@ -99,7 +99,7 @@ FILE_ID
 , DTM
 );
 CREATE TABLE FW_CONTROLLER(
-  "KEY",
+  KEY,
   CLASS_NAME,
   METHOD_NAME
 , ERR_JSP_KEY, SESSION_CHECK_YN, AUTH);
@@ -107,8 +107,8 @@ INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login',NUL
 INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView',NULL,NULL,NULL);
 INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload',NULL,NULL,NULL);
 INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('emp00101','com.code5.biz.emp.emp001.Emp001','emp00101','','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00102','com.code5.biz.emp.emp001.Emp001','emp00102','','Y','A0');
-INSERT INTO FW_CONTROLLER VALUES('emp00201','com.code5.biz.emp.emp002.Emp002','emp00201','nullView','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00202','com.code5.biz.emp.emp002.Emp002','emp00202','','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00101','com.code5.biz.emp.emp001.Emp001','emp00110','','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00102','com.code5.biz.emp.emp001.Emp001','emp00120','','Y','A0');
+INSERT INTO FW_CONTROLLER VALUES('emp00201','com.code5.biz.emp.emp002.Emp002','emp00210','nullView','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00202','com.code5.biz.emp.emp002.Emp002','emp00220','','Y','');
 INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001','','Y','A0');

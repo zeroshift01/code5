@@ -3,8 +3,7 @@ package com.code5.fw.security;
 import junit.framework.TestCase;
 
 /**
- * 
- * @author seuk
+ * @author zero
  *
  */
 public class Aes_test extends TestCase {

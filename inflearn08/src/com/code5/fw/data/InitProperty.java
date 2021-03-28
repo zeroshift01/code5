@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.code5.fw.trace.TraceRunner;
 
 /**
- * @author seuk
- * 
+ * @author zero
  *
  */
 public class InitProperty {

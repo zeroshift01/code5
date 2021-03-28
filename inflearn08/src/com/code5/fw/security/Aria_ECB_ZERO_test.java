@@ -3,7 +3,7 @@ package com.code5.fw.security;
 import java.util.Base64;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Aria_ECB_ZERO_test {
@@ -21,11 +21,11 @@ public class Aria_ECB_ZERO_test {
 		plan[15] = 1;
 
 		System.out.println(Base64.getEncoder().encodeToString(aria_ECB_ZERO.encrypt(plan)));
-		
+
 		plan[15] = 2;
 
 		System.out.println(Base64.getEncoder().encodeToString(aria_ECB_ZERO.encrypt(plan)));
-		
+
 		plan[15] = 3;
 
 		System.out.println(Base64.getEncoder().encodeToString(aria_ECB_ZERO.encrypt(plan)));

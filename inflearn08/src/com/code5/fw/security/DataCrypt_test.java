@@ -3,7 +3,7 @@ package com.code5.fw.security;
 import junit.framework.TestCase;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class DataCrypt_test extends TestCase {
@@ -72,7 +72,7 @@ class DataCrypt_test$ extends Thread {
 				String plan2 = dataCrypt.decrypt(enc);
 
 				if (i % 1000 == 0) {
-					System.out.println(i+" "+this.hashCode());
+					System.out.println(i + " " + this.hashCode());
 					System.out.println(plan);
 					System.out.println(enc);
 					System.out.println(plan2);

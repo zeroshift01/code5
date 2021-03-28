@@ -1,13 +1,28 @@
 package com.code5.fw.web;
 
-import com.code5.fw.data.InitProperty;
+import java.sql.SQLException;
+
 import com.code5.fw.db.Transaction;
+import com.code5.fw.db.Transaction_SQLITE_JDBC;
+import com.code5.fw.trace.Trace;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class TransactionContext {
+
+	/**
+	 * 
+	 */
+	private static Trace trace = new Trace(TransactionContext.class);
+
+	/**
+	 * 
+	 */
+	private TransactionContext() {
+
+	}
 
 	/**
 	 * 
@@ -17,10 +32,13 @@ public class TransactionContext {
 	/**
 	 * @return
 	 * 
+	 * 
 	 */
 	public static Transaction getThread() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
+
+			trace.write("getThread");
 			return transaction;
 
 		}
@@ -28,6 +46,7 @@ public class TransactionContext {
 		transaction = createDefaultTransaction();
 		setThread(transaction);
 
+		trace.write("getThread");
 		return transaction;
 	}
 
@@ -38,6 +57,7 @@ public class TransactionContext {
 	 */
 	static void setThread(Transaction transaction) {
 		TL.set(transaction);
+		trace.write("setThread");
 	}
 
 	/**
@@ -50,6 +70,7 @@ public class TransactionContext {
 		}
 
 		TL.remove();
+		trace.write("removeThread");
 	}
 
 	/**
@@ -57,8 +78,37 @@ public class TransactionContext {
 	 * 
 	 */
 	private static Transaction createDefaultTransaction() {
-		String tx = InitProperty.TRANSACTION_DEFAULT();
-		return Transaction.createTransaction(tx);
+		return new Transaction_SQLITE_JDBC();
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public static void commit() throws SQLException {
+
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			trace.write("commit null");
+			return;
+		}
+
+		transaction.commit();
+		trace.write("commit");
+	}
+
+	/**
+	 * 
+	 */
+	public static void rollback() throws SQLException {
+
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			trace.write("rollback null");
+			return;
+		}
+
+		transaction.rollback();
+		trace.write("rollback");
+
+	}
 }

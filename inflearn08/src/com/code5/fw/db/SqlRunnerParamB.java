@@ -1,7 +1,7 @@
 package com.code5.fw.db;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class SqlRunnerParamB {

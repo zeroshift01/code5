@@ -9,7 +9,7 @@ import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.LoginException;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Emp002 implements BizController {
@@ -19,7 +19,7 @@ public class Emp002 implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String emp00201() throws Exception {
+	public String emp00210() throws Exception {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {
@@ -34,7 +34,7 @@ public class Emp002 implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String emp00202() throws Exception {
+	public String emp00220() throws Exception {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {

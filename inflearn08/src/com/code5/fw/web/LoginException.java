@@ -1,7 +1,7 @@
 package com.code5.fw.web;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class LoginException extends Exception {

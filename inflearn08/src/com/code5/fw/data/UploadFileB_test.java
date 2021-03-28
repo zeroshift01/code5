@@ -9,10 +9,10 @@ import java.io.OutputStream;
 import com.code5.fw.security.DataCrypt;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
-public class UploadFileB2 {
+public class UploadFileB_test {
 
 	static int blockSize = 64;
 	static int metaSize = 16;

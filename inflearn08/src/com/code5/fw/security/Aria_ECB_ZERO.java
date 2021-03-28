@@ -3,7 +3,7 @@ package com.code5.fw.security;
 import kr.re.nsri.aria.ARIAEngine;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Aria_ECB_ZERO implements Crypt {

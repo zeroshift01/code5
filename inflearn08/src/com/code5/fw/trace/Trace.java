@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Trace {
@@ -94,7 +94,6 @@ public class Trace {
 
 	}
 
-	
 	/**
 	 * @param ex
 	 */

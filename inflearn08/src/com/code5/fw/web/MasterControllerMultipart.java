@@ -15,7 +15,7 @@ import com.code5.fw.data.UploadFileB;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MasterControllerMultipart extends MasterController implements BizController {

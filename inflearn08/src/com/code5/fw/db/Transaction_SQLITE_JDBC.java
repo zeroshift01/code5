@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.sqlite.SQLiteConfig;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Transaction_SQLITE_JDBC extends Transaction {
@@ -19,8 +19,6 @@ public class Transaction_SQLITE_JDBC extends Transaction {
 		SQLiteConfig config = new SQLiteConfig();
 		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
 				config.toProperties());
-
-		conn.setAutoCommit(false);
 
 		return conn;
 
