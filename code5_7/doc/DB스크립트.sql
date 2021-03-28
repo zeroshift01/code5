@@ -1,6 +1,0 @@
-cd C:\public\sqlite
-sqlite3 C:\public\sqlite\code5.db
-
-DELETE FROM FW_SQL WHERE KEY = 'EMP001D_01';
-
-UPDATE FW_SQL  SET SQL = 'SELECT EMP_N, EMP_NM, DEPT_N, HP_N FROM EMP ORDER BY EMP_N' WHERE KEY = 'EMP001D_01';
