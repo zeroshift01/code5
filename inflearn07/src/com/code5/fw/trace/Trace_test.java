@@ -60,32 +60,37 @@ public class Trace_test extends TestCase {
 
 		Trace_test$[] t = new Trace_test$[10];
 		for (int i = 0; i < t.length; i++) {
-			t[i] = new Trace_test$();
+			t[i] = new Trace_test$(i);
 			t[i].start();
 		}
 
 		for (int i = 0; i < t.length; i++) {
 			t[i].join();
+			System.err.println("fin " + i);
 		}
 
 		traceRunner.flush();
-
 	}
 
 }
 
 class Trace_test$ extends Thread {
 
+	int thisID = -1;
+
+	public Trace_test$(int i) {
+		thisID = i;
+	}
+
 	@Override
 	public void run() {
 
 		Trace trace = new Trace(this);
 
-		int hash = this.hashCode();
-
+		String msg = null;
 		for (int i = 0; i < 100000; i++) {
-			trace.write("로그기록 가나다라 " + hash + " " + i);
-			// System.err.println("로그기록 가나다라 " + hash + " " + i);
+			msg = thisID + " 로그기록 가나다라 abcd" + i;
+			trace.write(msg);
 		}
 
 	}

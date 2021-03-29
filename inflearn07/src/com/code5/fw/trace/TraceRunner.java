@@ -55,9 +55,9 @@ public final class TraceRunner {
 	private boolean isWriteLog = InitProperty.IS_WRITE_LOG();
 
 	/**
-	 * 10 Mb
+	 * 50 Mb
 	 */
-	private final long logFileSizeLimit = 1024 * 1000 * 10;
+	private final long logFileSizeLimit = 1024 * 1000 * 50;
 
 	/**
 	 * 
@@ -331,6 +331,7 @@ public final class TraceRunner {
 			traceWriter.initCnt = 0;
 
 			if (!isRolling(traceWriter.logFileUrl)) {
+				traceWriter.println(log);
 				return;
 			}
 
