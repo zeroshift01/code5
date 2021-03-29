@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Trace {
@@ -70,7 +70,6 @@ public class Trace {
 			pw = new PrintWriter(sw);
 			ex.printStackTrace(pw);
 
-			
 			traceRunner.write("err", this.className, sw.toString());
 			traceRunner.write("out", this.className, sw.toString());
 

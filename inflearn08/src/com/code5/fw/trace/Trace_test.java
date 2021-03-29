@@ -44,8 +44,7 @@ public class Trace_test extends TestCase {
 
 class Trace_test$ extends Thread {
 
-	@Override
-	public synchronized void start() {
+	public void run() {
 
 		Trace trace = new Trace(this);
 

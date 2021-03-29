@@ -20,7 +20,7 @@ import com.code5.fw.data.SessionB;
 import com.code5.fw.web.BoxContext;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public final class TraceRunner {
@@ -55,7 +55,7 @@ public final class TraceRunner {
 	private boolean isWriteLog = InitProperty.IS_WRITE_LOG();
 
 	/**
-	 * 
+	 * 10 Mb
 	 */
 	private final long logFileSizeLimit = 1024 * 1000 * 10;
 
@@ -265,11 +265,11 @@ public final class TraceRunner {
 			return false;
 		}
 
-		if (file.length() < this.logFileSizeLimit) {
-			return false;
+		if (file.length() > this.logFileSizeLimit) {
+			return true;
 		}
 
-		return true;
+		return false;
 
 	}
 
@@ -298,7 +298,7 @@ public final class TraceRunner {
 		if (!this.isMulti) {
 			System.out.println(log);
 		}
-		
+
 		synchronized (logKey.intern()) {
 
 			TraceWriter traceWriter = traceWriterMap.get(logKey);
@@ -330,10 +330,13 @@ public final class TraceRunner {
 
 			traceWriter.initCnt = 0;
 
-			if (isRolling(traceWriter.logFileUrl)) {
-				traceWriter.close();
-				rollingLogFile(traceWriter.logFileUrl);
+			if (!isRolling(traceWriter.logFileUrl)) {
+				return;
 			}
+
+			traceWriter.close();
+
+			rollingLogFile(traceWriter.logFileUrl);
 
 			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isMulti);
 			traceWriterMap.put(logKey, traceWriter);

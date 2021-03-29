@@ -1,10 +1,10 @@
 package com.code5.fw.trace;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 class TraceWriter {
@@ -17,7 +17,7 @@ class TraceWriter {
 	int initCnt = 0;
 	int errCnt = 0;
 
-	private BufferedWriter out = null;
+	private PrintWriter out = null;
 
 	/**
 	 * @param logKey
@@ -32,7 +32,7 @@ class TraceWriter {
 
 		try {
 
-			this.out = new BufferedWriter(new FileWriter(this.logFileUrl, true));
+			this.out = new PrintWriter(new FileWriter(this.logFileUrl), true);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -50,12 +50,13 @@ class TraceWriter {
 		}
 
 		try {
-			this.out.write(log);
-			this.out.newLine();
+
+			this.out.println(log);
 
 			if (!isMulti) {
 				this.out.flush();
 			}
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
