@@ -184,6 +184,8 @@ public class InitProperty {
 
 		IS_MULTI = isMulti;
 		CNTR = cntr;
+
+		TraceRunner.getTraceRunner().init();
 	}
 
 	static {

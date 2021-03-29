@@ -297,6 +297,7 @@ public final class TraceRunner {
 			traceWriter.initCnt = 0;
 
 			if (!isRolling(traceWriter.logFileUrl)) {
+				traceWriter.println(log);
 				return;
 			}
 
