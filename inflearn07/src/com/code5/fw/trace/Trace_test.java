@@ -68,6 +68,8 @@ public class Trace_test extends TestCase {
 			t[i].join();
 		}
 
+		traceRunner.flush();
+
 	}
 
 }
@@ -81,8 +83,9 @@ class Trace_test$ extends Thread {
 
 		int hash = this.hashCode();
 
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			trace.write("로그기록 가나다라 " + hash + " " + i);
+			// System.err.println("로그기록 가나다라 " + hash + " " + i);
 		}
 
 	}

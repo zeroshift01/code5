@@ -231,11 +231,11 @@ public final class TraceRunner {
 			return false;
 		}
 
-		if (file.length() < this.logFileSizeLimit) {
-			return false;
+		if (file.length() > this.logFileSizeLimit) {
+			return true;
 		}
 
-		return true;
+		return false;
 
 	}
 
@@ -296,10 +296,13 @@ public final class TraceRunner {
 
 			traceWriter.initCnt = 0;
 
-			if (isRolling(traceWriter.logFileUrl)) {
-				traceWriter.close();
-				rollingLogFile(traceWriter.logFileUrl);
+			if (!isRolling(traceWriter.logFileUrl)) {
+				return;
 			}
+
+			traceWriter.close();
+
+			rollingLogFile(traceWriter.logFileUrl);
 
 			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isMulti);
 			traceWriterMap.put(logKey, traceWriter);

@@ -190,4 +190,10 @@ public class MasterController extends HttpServlet {
 		return checkUrlAuth(controller);
 
 	}
+
+	@Override
+	public void destroy() {
+		TraceRunner.getTraceRunner().flush();
+		super.destroy();
+	}
 }
