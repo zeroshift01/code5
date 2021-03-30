@@ -91,7 +91,13 @@ class Trace_test$ extends Thread {
 		for (int i = 0; i < 100000; i++) {
 			msg = thisID + " 로그기록 가나다라 abcd" + i;
 			trace.write(msg);
+			System.out.println(msg);
+			if (i % 1000 == 0) {
+				trace.writeErr("err " + msg);
+			}
 		}
+
+		System.err.println(msg);
 
 	}
 }
