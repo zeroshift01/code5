@@ -94,6 +94,7 @@ class Trace_test$ extends Thread {
 			System.out.println(msg);
 			if (i % 1000 == 0) {
 				trace.writeErr("err " + msg);
+				System.err.println("err " + msg);
 			}
 		}
 
