@@ -321,17 +321,16 @@ public final class TraceRunner {
 
 			}
 
+			traceWriter.println(log);
 			traceWriter.initCnt++;
 
 			if (traceWriter.initCnt < 5000) {
-				traceWriter.println(log);
 				return;
 			}
 
 			traceWriter.initCnt = 0;
 
 			if (!isRolling(traceWriter.logFileUrl)) {
-				traceWriter.println(log);
 				return;
 			}
 
@@ -341,7 +340,6 @@ public final class TraceRunner {
 
 			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isMulti);
 			traceWriterMap.put(logKey, traceWriter);
-			traceWriter.println(log);
 
 		}
 

@@ -281,23 +281,22 @@ public final class TraceRunner {
 					rollingLogFile(logFileUrl);
 				}
 
-				traceWriter = new TraceWriter(logKey, logFileUrl, isMulti);
+				traceWriter = new TraceWriter(logKey, logFileUrl, this.isMulti);
 
 				traceWriterMap.put(logKey, traceWriter);
 
 			}
 
+			traceWriter.println(log);
 			traceWriter.initCnt++;
 
 			if (traceWriter.initCnt < 5000) {
-				traceWriter.println(log);
 				return;
 			}
 
 			traceWriter.initCnt = 0;
 
 			if (!isRolling(traceWriter.logFileUrl)) {
-				traceWriter.println(log);
 				return;
 			}
 
@@ -305,9 +304,8 @@ public final class TraceRunner {
 
 			rollingLogFile(traceWriter.logFileUrl);
 
-			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isMulti);
+			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, traceWriter.isMulti);
 			traceWriterMap.put(logKey, traceWriter);
-			traceWriter.println(log);
 
 		}
 
