@@ -2,7 +2,6 @@ package com.code5.fw.web;
 
 import java.io.File;
 
-import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 
@@ -10,27 +9,27 @@ import org.apache.catalina.startup.Tomcat;
  * @author zero
  *
  */
-public class Code5Run {
+public class RunCode5 {
 
 	public static void main(String[] args) throws Exception {
 
-		String webappDirLocation = "web/";
+		String webappDir = new File("web/").getAbsolutePath();
+		String baseDir = new File("temp/").getAbsolutePath();
+		int webPort = 18080;
+		String uriEncoding = "UTF-8";
 
 		Tomcat tomcat = new Tomcat();
-		tomcat.setBaseDir("C:\\public\\temp");
 
-		String webPort = "8080";
-
+		
+		
+		tomcat.setBaseDir(baseDir);
+		tomcat.addWebapp("", webappDir);
 		tomcat.setPort(Integer.valueOf(webPort));
-		Connector connector = tomcat.getConnector();
-		connector.setURIEncoding("UTF-8");
-		tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
 
-		try {
-			tomcat.start();
-		} catch (LifecycleException ex) {
-			System.exit(-1);
-		}
+		Connector connector = tomcat.getConnector();
+		connector.setURIEncoding(uriEncoding);
+
+		tomcat.start();
 		tomcat.getServer().await();
 
 	}
