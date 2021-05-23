@@ -1,7 +1,7 @@
 # move C:\public\sqlite\code5.db C:\public\sqlite\code5.db.day8
 cd C:\public\sqlite
 sqlite3 C:\public\sqlite\code5.db
-
+DROP TABLE EMP ;
 CREATE TABLE EMP (
 EMP_N PRIMARY KEY
 , EMP_NM
@@ -11,6 +11,7 @@ EMP_N PRIMARY KEY
 INSERT INTO EMP VALUES('N0001','ABC','','D01','');
 INSERT INTO EMP VALUES('N0002','ZZZ','6b0e62cc4ad4508b108540aba547afa8','D01','');
 INSERT INTO EMP VALUES('N0003','ABC','55afea71894c57aa58405a112ab7532d','D02','');
+DROP TABLE FW_SQL;
 CREATE TABLE FW_SQL (
 KEY PRIMARY KEY
 , SQL
@@ -35,6 +36,7 @@ INSERT INTO FW_SQL VALUES('DOWNLOADFILE_01',replace('INSERT INTO FW_DOWNLOAD_FIL
 INSERT INTO FW_SQL VALUES('SQLRUNNER_TEST_04',replace('[~ P1 ^ IS_NOT_NULL ^ AND [P1] = [P1] ~]\n[~ P2 ^ IS_NULL ^ AND 2 = 2 ~]\n[~ P3 ^ Y ^ AND ''Y'' = [P3] ~]\n','\n',char(10)),NULL);
 INSERT INTO FW_SQL VALUES('SQLRUNNER_TEST_03',replace('SELECT\n[HP_N] HP_N\n, [HP_N] DEC__HP_N2__PRN_HP_N\n, [ENC__HP_N] HP_N3\n, [SYSDTM.DTM] DTM1\n, [SYSDTM.DTM] DTM2__PRN_DTM\n, [SESSIONB.ID] SESSION_ID\n, [SESSIONB.IP] SESSION_IP\n, [SESSIONB.AUTH] SESSION_AUTH\n, [PIN__PIN, ID ] PIN\nFROM EMP\nWHERE 1 = 1\n\n[~ P1 ^ IS_NOT_NULL ^ AND [P1] = [P1] ~]\n[~ P2 ^ IS_NULL ^ AND 2 = 2 ~]\n[~ P3 ^ Y ^ AND ''Y'' = [P3] ~]\n\n[[ SQLRUNNER_TEST_04 ]]\n\nAND ''FIN''=''FIN''\n','\n',char(10)),NULL);
 INSERT INTO FW_SQL VALUES('SQLRUNNER_TEST_10','select count(*) from emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp, emp',2);
+DROP TABLE FW_SRT; 
 CREATE TABLE FW_SRT (
 OPT PRIMARY KEY
 , MODE
@@ -52,8 +54,7 @@ KEY PRIMARY KEY
 INSERT INTO FW_VIEW VALUES('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp',NULL,NULL);
 INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp',NULL,NULL);
 INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('emp00101','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00101.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 조회');
-INSERT INTO FW_VIEW VALUES('emp00201','/WEB-INF/classes/com/code5/biz/emp/emp002/jsp/emp00201.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 관리');
+INSERT INTO FW_VIEW VALUES('emp00110','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00110.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 조회');
 INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
 INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
 CREATE TABLE BZ_ID (
@@ -81,6 +82,7 @@ FILE_ID primary KEY
 , RG_ID
 , RG_DTM
 );
+drop table FW_UPLOAD_FILE;
 CREATE TABLE FW_UPLOAD_FILE (
 FILE_ID primary KEY
 , SIZE
@@ -93,11 +95,13 @@ FILE_ID primary KEY
 , DEL_ID
 , DEL_DTM
 );
+drop table FW_DOWNLOAD_FILE;
 CREATE TABLE FW_DOWNLOAD_FILE (
 FILE_ID
 , ID
 , DTM
 );
+drop table FW_CONTROLLER;
 CREATE TABLE FW_CONTROLLER(
   KEY,
   CLASS_NAME,
@@ -107,8 +111,8 @@ INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login',NUL
 INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView',NULL,NULL,NULL);
 INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload',NULL,NULL,NULL);
 INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('emp00101','com.code5.biz.emp.emp001.Emp001','emp00110','','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00102','com.code5.biz.emp.emp001.Emp001','emp00120','','Y','A0');
-INSERT INTO FW_CONTROLLER VALUES('emp00201','com.code5.biz.emp.emp002.Emp002','emp00210','nullView','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00202','com.code5.biz.emp.emp002.Emp002','emp00220','','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00110','com.code5.biz.emp.emp001.Emp001','emp00110','','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00120','com.code5.biz.emp.emp001.Emp001','emp00120','','Y','A0');
+INSERT INTO FW_CONTROLLER VALUES('emp00210','com.code5.biz.emp.emp002.Emp002','emp00210','nullView','Y','');
+INSERT INTO FW_CONTROLLER VALUES('emp00220','com.code5.biz.emp.emp002.Emp002','emp00220','','Y','');
 INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001','','Y','A0');

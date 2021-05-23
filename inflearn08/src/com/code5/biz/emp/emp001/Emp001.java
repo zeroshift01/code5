@@ -30,7 +30,7 @@ public class Emp001 implements BizController {
 
 		box.put("table", table);
 
-		return "emp00101";
+		return "emp00110";
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Emp001 implements BizController {
 
 		TransactionContext.getThread().commit();
 
-		return MasterController.execute("emp00101");
+		return MasterController.execute("emp00110");
 	}
 
 	/**
