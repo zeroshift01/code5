@@ -17,7 +17,7 @@ public class Transaction_SQLITE_POOL extends Transaction {
 	protected Connection createConnection() throws SQLException {
 
 		SQLiteConfig config = new SQLiteConfig();
-		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:\\public\\sqlite\\code5.db",
+		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:/public/code5/doc/code5.db",
 				config.toProperties());
 
 		return conn;
