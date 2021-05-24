@@ -1,4 +1,4 @@
-package com.code5.biz.welcome;
+package com.biz.welcome;
 
 import javax.servlet.http.HttpServletRequest;
 

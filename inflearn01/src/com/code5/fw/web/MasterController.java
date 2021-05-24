@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.code5.biz.welcome.Welcome;
+import com.biz.welcome.Welcome;
 
 /**
  * @author zero
