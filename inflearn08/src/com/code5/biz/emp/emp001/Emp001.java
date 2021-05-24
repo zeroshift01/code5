@@ -19,7 +19,7 @@ public class Emp001 implements BizController {
 	 * @return
 	 * @throws Exception
 	 * 
-	 *                   EMP µ¥ÀÌÅÍ Á¶È¸
+	 *                   EMP ë°ì´í„° ì¡°íšŒ
 	 */
 	public String emp00110() throws Exception {
 
@@ -37,7 +37,7 @@ public class Emp001 implements BizController {
 	 * @return
 	 * @throws Exception
 	 * 
-	 *                   ÈŞ´ëÆù ¹øÈ£ ¾÷µ¥ÀÌÆ®
+	 *                   íœ´ëŒ€í° ë²ˆí˜¸ ì—…ë°ì´íŠ¸
 	 */
 	public String emp00120() throws Exception {
 

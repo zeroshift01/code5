@@ -114,12 +114,12 @@ public class SqlRunner_test extends TestCase {
 		p = sql.paramParsing("DEC__D1__PRN_HP_N");
 		box.put("D1", "80c253dcf3a330c5dbb29239f52c8fca");
 		data = sql.getDataByParam(p, box);
-		assertEquals(data, "dataÈŞ´ëÆùÇü½ÄÈ­");
+		assertEquals(data, "dataíœ´ëŒ€í°í˜•ì‹í™”");
 
 		p = sql.paramParsing("D1__PRN_HP_N");
 		box.put("D1", "data");
 		data = sql.getDataByParam(p, box);
-		assertEquals(data, "dataÈŞ´ëÆùÇü½ÄÈ­");
+		assertEquals(data, "dataíœ´ëŒ€í°í˜•ì‹í™”");
 
 		p = sql.paramParsing("PIN__PIN, ID");
 		box.put("PIN", "abcd1234");
@@ -189,14 +189,14 @@ public class SqlRunner_test extends TestCase {
 
 		p = sql.paramParsing("BOX.P1__PRN_HP_N");
 		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fcaÈŞ´ëÆùÇü½ÄÈ­");
+		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fcaíœ´ëŒ€í°í˜•ì‹í™”");
 
 		p = sql.paramParsing("BOX.DEC__P1__PRN_HP_N");
 		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "dataÈŞ´ëÆùÇü½ÄÈ­");
+		assertEquals(data, "dataíœ´ëŒ€í°í˜•ì‹í™”");
 
 		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "dataÈŞ´ëÆùÇü½ÄÈ­");
+		assertEquals(data, "dataíœ´ëŒ€í°í˜•ì‹í™”");
 
 	}
 
@@ -219,7 +219,7 @@ public class SqlRunner_test extends TestCase {
 
 	}
 
-	public void µ¿ÀÛ¾ÈÇÔ_test_10() throws Exception {
+	public void ë™ì‘ì•ˆí•¨_test_10() throws Exception {
 		SqlRunner sql = SqlRunner.getSqlRunner();
 		sql.getTable("SQLRUNNER_TEST_10");
 	}

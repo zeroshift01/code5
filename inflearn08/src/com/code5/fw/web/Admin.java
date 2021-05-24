@@ -25,7 +25,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 
 		boolean isAdmin = false;
 		if (isAdmin) {
-			box.setAlertMsg("°ü¸®ÀÚ µî·ÏÀ» ÇØÁÖ¼¼¿ä.");
+			box.setAlertMsg("ê´€ë¦¬ì ë“±ë¡ì„ í•´ì£¼ì„¸ìš”.");
 			return "nullView";
 		}
 
@@ -42,7 +42,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 		SqlRunner.getSqlRunner().reload();
 		MasterController.reload();
 
-		box.setAlertMsg("¸®·Îµå°¡ ¼öÇàµÇ¾ú½À´Ï´Ù.");
+		box.setAlertMsg("ë¦¬ë¡œë“œê°€ ìˆ˜í–‰ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		return "nullView";
 	}
 

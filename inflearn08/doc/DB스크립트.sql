@@ -54,7 +54,7 @@ KEY PRIMARY KEY
 INSERT INTO FW_VIEW VALUES('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp',NULL,NULL);
 INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp',NULL,NULL);
 INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('emp00110','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00110.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP Á¶È¸');
+INSERT INTO FW_VIEW VALUES('emp00110','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00110.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP ì¡°íšŒ');
 INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
 INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
 CREATE TABLE BZ_ID (

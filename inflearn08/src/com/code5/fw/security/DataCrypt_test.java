@@ -14,11 +14,11 @@ class DataCrypt_test extends TestCase {
 	 * @throws Exception
 	 */
 	@Test
-	void test_ÇÑ´Ü¾îÅ×½ºÆ®() throws Exception {
+	void test_í•œë‹¨ì–´í…ŒìŠ¤íŠ¸() throws Exception {
 
 		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
 
-		String plan = "abcd 1234 °¡³ª´Ù¶ó !@#$";
+		String plan = "abcd 1234 ê°€ë‚˜ë‹¤ë¼ !@#$";
 
 		String enc = dataCrypt.encrypt(plan);
 
@@ -40,7 +40,7 @@ class DataCrypt_test extends TestCase {
 	 * @throws Exception
 	 */
 	@Test
-	void test_¾²·¹µå¾ÈÀü¼º() throws Exception {
+	void test_ì“°ë ˆë“œì•ˆì „ì„±() throws Exception {
 
 		DataCrypt_test$[] DataCrypt_test$ = new DataCrypt_test$[20];
 		for (int i = 0; i < DataCrypt_test$.length; i++) {
@@ -69,7 +69,7 @@ class DataCrypt_test$ extends Thread {
 
 				DataCrypt dataCrypt = DataCrypt.getDataCrypt("S02");
 
-				String plan = i + "abcd 1234 °¡³ª´Ù¶ó !@#$" + i;
+				String plan = i + "abcd 1234 ê°€ë‚˜ë‹¤ë¼ !@#$" + i;
 
 				String enc = dataCrypt.encrypt(plan);
 

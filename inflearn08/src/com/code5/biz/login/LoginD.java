@@ -6,7 +6,7 @@ import com.code5.fw.data.Table;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class LoginD {
@@ -29,7 +29,7 @@ public class LoginD {
 
 	/**
 	 * 
-	 * ID ¸¦ ±âÁØÀ¸·Î BZ_ID Á¶È¸
+	 * ID ë¥¼ ê¸°ì¤€ìœ¼ë¡œ BZ_ID ì¡°íšŒ
 	 * 
 	 * @return
 	 * @throws SQLException
@@ -40,7 +40,7 @@ public class LoginD {
 
 	/**
 	 * 
-	 * ½ÇÆĞÈ¸¼ö Áõ°¡
+	 * ì‹¤íŒ¨íšŒìˆ˜ ì¦ê°€
 	 * 
 	 * @return
 	 * @throws SQLException
@@ -51,7 +51,7 @@ public class LoginD {
 
 	/**
 	 * 
-	 * ·Î±×ÀÎ ¼º°ø Ã³¸®
+	 * ë¡œê·¸ì¸ ì„±ê³µ ì²˜ë¦¬
 	 * 
 	 * @return
 	 * @throws SQLException

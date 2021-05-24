@@ -118,7 +118,7 @@ public class UploadFileB_test {
 
 		File file = new File("C:/public/imsi.org.dat");
 
-		// Çã¿ËÇÒ ¼ö ÀÖ´Â ÆÄÀÏ »çÀÌÁî´Â int ¹üÀ§
+		// í—ˆì˜¹í•  ìˆ˜ ìˆëŠ” íŒŒì¼ ì‚¬ì´ì¦ˆëŠ” int ë²”ìœ„
 		int size = (int) file.length();
 
 		InputStream in = new FileInputStream(file);

@@ -13,7 +13,7 @@ public class LoginException extends Exception {
 
 	@Override
 	public String getMessage() {
-		return "·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.";
+		return "ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.";
 	}
 
 }

@@ -20,11 +20,11 @@ class Trace_test {
 	 * @throws Exception
 	 */
 	@Test
-	void test_01_Áö¿ª°´Ã¼() throws Exception {
+	void test_01_ì§€ì—­ê°ì²´() throws Exception {
 
 		Trace trace01 = new Trace(this);
 
-		trace01.write("°¡³ª´Ù¶ó");
+		trace01.write("ê°€ë‚˜ë‹¤ë¼");
 		trace01.write("" + 123);
 		trace01.write(trace01.toString());
 	}
@@ -35,9 +35,9 @@ class Trace_test {
 	 * @throws Exception
 	 */
 	@Test
-	void test_02_¸É¹ö°´Ã¼() throws Exception {
+	void test_02_ë§´ë²„ê°ì²´() throws Exception {
 
-		trace02.write("°¡³ª´Ù¶ó");
+		trace02.write("ê°€ë‚˜ë‹¤ë¼");
 		trace02.write("" + 123);
 		trace02.write(trace02.toString());
 	}
@@ -48,9 +48,9 @@ class Trace_test {
 	 * @throws Exception
 	 */
 	@Test
-	void test_03_Àü¿ª°´Ã¼() throws Exception {
+	void test_03_ì „ì—­ê°ì²´() throws Exception {
 
-		TRACE_03.write("°¡³ª´Ù¶ó");
+		TRACE_03.write("ê°€ë‚˜ë‹¤ë¼");
 		TRACE_03.write("" + 123);
 		TRACE_03.write(TRACE_03.toString());
 	}
@@ -59,11 +59,11 @@ class Trace_test {
 	 * @throws Exception
 	 */
 	@Test
-	void test_´ÜÀÏ¾²·¹µå_·Î±×±â·Ï() throws Exception {
+	void test_ë‹¨ì¼ì“°ë ˆë“œ_ë¡œê·¸ê¸°ë¡() throws Exception {
 
 		Trace trace = new Trace(Trace_test.class);
 
-		trace.write("°¡³ª´Ù¶ó");
+		trace.write("ê°€ë‚˜ë‹¤ë¼");
 		trace.write("" + 123);
 		trace.write(trace.toString());
 	}
@@ -72,7 +72,7 @@ class Trace_test {
 	 * @throws Exception
 	 */
 	@Test
-	void test_¸ÖÆ¼¾²·¹µå_·Î±×±â·Ï() throws Exception {
+	void test_ë©€í‹°ì“°ë ˆë“œ_ë¡œê·¸ê¸°ë¡() throws Exception {
 
 		InitProperty.init(Trace_test.class.getName(), true);
 		TraceRunner traceRunner = TraceRunner.getTraceRunner();
@@ -108,7 +108,7 @@ class Trace_test$ extends Thread {
 
 		String msg = null;
 		for (int i = 0; i < 100000; i++) {
-			msg = thisID + " ·Î±×±â·Ï °¡³ª´Ù¶ó abcd" + i;
+			msg = thisID + " ë¡œê·¸ê¸°ë¡ ê°€ë‚˜ë‹¤ë¼ abcd" + i;
 			trace.write(msg);
 		}
 

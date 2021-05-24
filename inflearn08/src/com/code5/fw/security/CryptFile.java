@@ -241,7 +241,7 @@ public class CryptFile {
 
 			byte[] block = new byte[BLOCK_SIZE];
 
-			// nonce, endBlock, meta ¸¦ »©°í Ãâ·Â
+			// nonce, endBlock, meta ë¥¼ ë¹¼ê³  ì¶œë ¥
 			long cnt = (fileSize / BLOCK_SIZE) - 3;
 
 			for (int i = 0; i < cnt; i++) {

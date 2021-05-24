@@ -15,64 +15,64 @@ class TableRecodeBase_test {
 	 * 
 	 */
 	@Test
-	void test_Table_±âº»±â´É() {
+	void test_Table_ê¸°ë³¸ê¸°ëŠ¥() {
 
-		String[] cols = { "¹øÈ£", "ÀÌ¸§" };
+		String[] cols = { "ë²ˆí˜¸", "ì´ë¦„" };
 
 		Table table = new TableRecodeBase(cols);
 
-		table.addRecode(new String[] { "1", "È«±æµ¿" });
-		table.addRecode(new String[] { "2", "È«±æ¼ø" });
-		table.addRecode(new String[] { "3", "·Î¹öÆ®" });
+		table.addRecode(new String[] { "1", "í™ê¸¸ë™" });
+		table.addRecode(new String[] { "2", "í™ê¸¸ìˆœ" });
+		table.addRecode(new String[] { "3", "ë¡œë²„íŠ¸" });
 
 		assertEquals(3, table.size());
 
-		assertEquals("È«±æ¼ø", table.s("ÀÌ¸§", 1));
-		assertEquals("È«±æ¼ø", table.getBox(1).s("ÀÌ¸§"));
+		assertEquals("í™ê¸¸ìˆœ", table.s("ì´ë¦„", 1));
+		assertEquals("í™ê¸¸ìˆœ", table.getBox(1).s("ì´ë¦„"));
 	}
 
 	/**
 	 * 
 	 */
 	@Test
-	void test_Table_µ¥ÀÌÅÍ¼öÁ¤() {
+	void test_Table_ë°ì´í„°ìˆ˜ì •() {
 
-		String[] cols = { "¹øÈ£", "ÀÌ¸§" };
+		String[] cols = { "ë²ˆí˜¸", "ì´ë¦„" };
 
 		Table table = new TableRecodeBase(cols);
 
-		table.addRecode(new String[] { "1", "È«±æµ¿" });
-		table.addRecode(new String[] { "2", "È«±æ¼ø" });
-		table.addRecode(new String[] { "3", "·Î¹öÆ®" });
+		table.addRecode(new String[] { "1", "í™ê¸¸ë™" });
+		table.addRecode(new String[] { "2", "í™ê¸¸ìˆœ" });
+		table.addRecode(new String[] { "3", "ë¡œë²„íŠ¸" });
 
-		table.addCol("º°¸í");
+		table.addCol("ë³„ëª…");
 
-		table.setData("º°¸í", 1, "È«±æµ¿Ä£±¸");
+		table.setData("ë³„ëª…", 1, "í™ê¸¸ë™ì¹œêµ¬");
 
 		assertEquals(3, table.size());
-		assertEquals("È«±æµ¿Ä£±¸", table.s("º°¸í", 1));
-		assertEquals("È«±æµ¿Ä£±¸", table.getBox(1).s("º°¸í"));
+		assertEquals("í™ê¸¸ë™ì¹œêµ¬", table.s("ë³„ëª…", 1));
+		assertEquals("í™ê¸¸ë™ì¹œêµ¬", table.getBox(1).s("ë³„ëª…"));
 	}
 
 	/**
 	 * 
 	 */
 	@Test
-	void test_Table_¼öÁ¤ÇÒ¼ö¾ø´Âµ¥ÀÌÅÍ() {
+	void test_Table_ìˆ˜ì •í• ìˆ˜ì—†ëŠ”ë°ì´í„°() {
 
-		String[] cols = { "¹øÈ£", "ÀÌ¸§" };
+		String[] cols = { "ë²ˆí˜¸", "ì´ë¦„" };
 
 		Table table = new TableRecodeBase(cols);
 
-		table.addRecode(new String[] { "1", "È«±æµ¿" });
-		table.addRecode(new String[] { "2", "È«±æ¼ø" });
-		table.addRecode(new String[] { "3", "·Î¹öÆ®" });
+		table.addRecode(new String[] { "1", "í™ê¸¸ë™" });
+		table.addRecode(new String[] { "2", "í™ê¸¸ìˆœ" });
+		table.addRecode(new String[] { "3", "ë¡œë²„íŠ¸" });
 
-		table.addCol("º°¸í");
+		table.addCol("ë³„ëª…");
 
 		RuntimeException exx = null;
 		try {
-			table.setData("º°¸í", 5, "È«±æµ¿Ä£±¸");
+			table.setData("ë³„ëª…", 5, "í™ê¸¸ë™ì¹œêµ¬");
 		} catch (RuntimeException ex) {
 			exx = ex;
 		}
@@ -85,20 +85,20 @@ class TableRecodeBase_test {
 	 * 
 	 */
 	@Test
-	void test_Table_ÃÖ´ëÃß°¡ÇÒ¼öÀÖ´ÂÅ©±âÈ®ÀÎ() {
+	void test_Table_ìµœëŒ€ì¶”ê°€í• ìˆ˜ìˆëŠ”í¬ê¸°í™•ì¸() {
 
-		String[] cols = { "¹øÈ£", "ÀÌ¸§" };
+		String[] cols = { "ë²ˆí˜¸", "ì´ë¦„" };
 
 		Table table = new TableRecodeBase(cols);
 
 		for (int i = 0; i < 10000; i++) {
-			table.addRecode(new String[] { "1", "È«±æµ¿" });
+			table.addRecode(new String[] { "1", "í™ê¸¸ë™" });
 			assertEquals(table.isNextRecode(), false);
 		}
 
 		assertEquals(table.size(), table.maxRecodeCount());
 
-		assertEquals(table.addRecode(new String[] { "1", "È«±æµ¿" }), false);
+		assertEquals(table.addRecode(new String[] { "1", "í™ê¸¸ë™" }), false);
 
 		assertEquals(table.isNextRecode(), true);
 

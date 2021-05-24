@@ -14,7 +14,7 @@ import com.code5.fw.trace.TraceRunner;
 public class InitProperty {
 
 	/**
-	 * �ȯ�濩��
+	 * 운영환경여부
 	 */
 	private static boolean IS_PRODUCT = false;
 

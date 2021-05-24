@@ -143,7 +143,7 @@ public class MasterController extends HttpServlet {
 			}
 
 			if (ex instanceof LoginException) {
-				box.setAlertMsg("·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+				box.setAlertMsg("ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.");
 				forward(request, response, box, "loginView");
 				return;
 			}

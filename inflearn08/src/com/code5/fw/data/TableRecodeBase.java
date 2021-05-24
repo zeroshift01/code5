@@ -27,7 +27,7 @@ public class TableRecodeBase extends Table {
 	 * 
 	 * 
 	 * 
-	 * Ãß°¡µ¥ÀÌÅÍ¸¦ °ü¸®ÇÏ´Â ÄÃ·¢¼Ç °´Ã¼
+	 * ì¶”ê°€ë°ì´í„°ë¥¼ ê´€ë¦¬í•˜ëŠ” ì»¬ë™ì…˜ ê°ì²´
 	 */
 	private HashMap<String, String> addDatas = null;
 

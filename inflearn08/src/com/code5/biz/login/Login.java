@@ -9,7 +9,7 @@ import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Login implements BizController {
@@ -32,14 +32,14 @@ public class Login implements BizController {
 		Table user = dao.login_01();
 
 		if (user.size() != 1) {
-			box.put("ret", "¾ÆÀÌµğ°¡ ¾ø°Å³ª ÆĞ½º¿öµå°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			box.put("ret", "ì•„ì´ë””ê°€ ì—†ê±°ë‚˜ íŒ¨ìŠ¤ì›Œë“œê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return MasterController.execute("loginView");
 		}
 
 		Box thisUser = user.getBox();
 
 		if (!PIN.equals(thisUser.s("PIN"))) {
-			box.put("ret", "¾ÆÀÌµğ°¡ ¾ø°Å³ª ÆĞ½º¿öµå°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			box.put("ret", "ì•„ì´ë””ê°€ ì—†ê±°ë‚˜ íŒ¨ìŠ¤ì›Œë“œê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 
 			if (dao.login_02() != 1) {
 				throw new Exception();
@@ -50,7 +50,7 @@ public class Login implements BizController {
 
 		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
 		if (FAIL_CNT > 5) {
-			box.put("ret", "ÆĞ½º¿öµå¸¦ 5È¸ ÀÌ»ó ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+			box.put("ret", "íŒ¨ìŠ¤ì›Œë“œë¥¼ 5íšŒ ì´ìƒ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
 			return MasterController.execute("loginView");
 		}
 

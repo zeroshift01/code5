@@ -654,15 +654,15 @@ public class SqlRunner {
 	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
 
 		if (p.isPrnHpN) {
-			return data + "ÈŞ´ëÆùÇü½ÄÈ­";
+			return data + "íœ´ëŒ€í°í˜•ì‹í™”";
 		}
 
 		if (p.isPrnD) {
-			return data + "³¯Â¥Çü½ÄÈ­";
+			return data + "ë‚ ì§œí˜•ì‹í™”";
 		}
 
 		if (p.isPrnDTM) {
-			return data + "DTMÇü½ÄÈ­";
+			return data + "DTMí˜•ì‹í™”";
 		}
 
 		return data;
@@ -790,7 +790,7 @@ public class SqlRunner {
 					return "";
 				}
 
-				return data + " °è»êµÈ °á°ú " + x1 + " " + x2;
+				return data + " ê³„ì‚°ëœ ê²°ê³¼ " + x1 + " " + x2;
 			}
 
 			if ("S".equals(x1)) {
@@ -799,7 +799,7 @@ public class SqlRunner {
 					return "";
 				}
 
-				return data + " °è»êµÈ °á°ú " + x1 + " " + x2;
+				return data + " ê³„ì‚°ëœ ê²°ê³¼ " + x1 + " " + x2;
 			}
 
 		}

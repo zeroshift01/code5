@@ -23,7 +23,7 @@ public class Emp002 implements BizController {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {
-			box.setAlertMsg("¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+			box.setAlertMsg("ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			throw new Exception();
 		}
 
@@ -38,16 +38,16 @@ public class Emp002 implements BizController {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {
-			box.setAlertMsg("¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+			box.setAlertMsg("ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			throw new Exception();
 		}
 
 		if ("2".equals(box.s("err"))) {
-			throw new Exception("ÀÏ¹İÀûÀÎ¿À·ù");
+			throw new Exception("ì¼ë°˜ì ì¸ì˜¤ë¥˜");
 		}
 
 		if ("3".equals(box.s("err"))) {
-			throw new SQLException("SQL ¿À·ù");
+			throw new SQLException("SQL ì˜¤ë¥˜");
 		}
 
 		if ("4".equals(box.s("err"))) {

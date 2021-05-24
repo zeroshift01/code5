@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class TableColumnBase extends Table {
 
 	/**
-	 * ·¹ÄÚµå º£ÀÌ½º¿Í ´Þ¸® ÄÃ·³ º£ÀÌ½º´Â Å×ÀÌºíÀÇ Ãß°¡ ·¹ÄÚµå°¡ ¾ø´Ù. µû¶ó¼­ Ã³À½ ¼ÂÆÃÇÑ ÄÃ·³ÀÇ Å©±â·Î »çÀÌÁî °íÁ¤
+	 * ë ˆì½”ë“œ ë² ì´ìŠ¤ì™€ ë‹¬ë¦¬ ì»¬ëŸ¼ ë² ì´ìŠ¤ëŠ” í…Œì´ë¸”ì˜ ì¶”ê°€ ë ˆì½”ë“œê°€ ì—†ë‹¤. ë”°ë¼ì„œ ì²˜ìŒ ì…‹íŒ…í•œ ì»¬ëŸ¼ì˜ í¬ê¸°ë¡œ ì‚¬ì´ì¦ˆ ê³ ì •
 	 */
 	private int size = -1;
 

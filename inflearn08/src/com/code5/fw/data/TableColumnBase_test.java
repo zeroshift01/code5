@@ -15,55 +15,55 @@ class TableColumnBase_test {
 	 * 
 	 */
 	@Test
-	public void Table_±âº»±â´É() {
+	public void Table_ê¸°ë³¸ê¸°ëŠ¥() {
 
 		Table table = new TableColumnBase();
 
-		table.addCol("¹øÈ£", new String[] { "1", "2", "3" });
-		table.addCol("ÀÌ¸§", new String[] { "È«±æµ¿", "È«±æ¼ø", "·Î¹öÆ®" });
+		table.addCol("ë²ˆí˜¸", new String[] { "1", "2", "3" });
+		table.addCol("ì´ë¦„", new String[] { "í™ê¸¸ë™", "í™ê¸¸ìˆœ", "ë¡œë²„íŠ¸" });
 
 		assertEquals(3, table.size());
 
-		assertEquals("È«±æ¼ø", table.s("ÀÌ¸§", 1));
-		assertEquals("È«±æ¼ø", table.getBox(1).s("ÀÌ¸§"));
+		assertEquals("í™ê¸¸ìˆœ", table.s("ì´ë¦„", 1));
+		assertEquals("í™ê¸¸ìˆœ", table.getBox(1).s("ì´ë¦„"));
 	}
 
 	/**
 	 * 
 	 */
 	@Test
-	void Table_µ¥ÀÌÅÍ¼öÁ¤() {
+	void Table_ë°ì´í„°ìˆ˜ì •() {
 
 		Table table = new TableColumnBase();
 
-		table.addCol("¹øÈ£", new String[] { "1", "2", "3" });
-		table.addCol("ÀÌ¸§", new String[] { "È«±æµ¿", "È«±æ¼ø", "·Î¹öÆ®" });
+		table.addCol("ë²ˆí˜¸", new String[] { "1", "2", "3" });
+		table.addCol("ì´ë¦„", new String[] { "í™ê¸¸ë™", "í™ê¸¸ìˆœ", "ë¡œë²„íŠ¸" });
 
-		table.addCol("º°¸í");
+		table.addCol("ë³„ëª…");
 
-		table.setData("º°¸í", 1, "È«±æµ¿Ä£±¸");
+		table.setData("ë³„ëª…", 1, "í™ê¸¸ë™ì¹œêµ¬");
 
 		assertEquals(3, table.size());
-		assertEquals("È«±æµ¿Ä£±¸", table.s("º°¸í", 1));
-		assertEquals("È«±æµ¿Ä£±¸", table.getBox(1).s("º°¸í"));
+		assertEquals("í™ê¸¸ë™ì¹œêµ¬", table.s("ë³„ëª…", 1));
+		assertEquals("í™ê¸¸ë™ì¹œêµ¬", table.getBox(1).s("ë³„ëª…"));
 	}
 
 	/**
 	 * 
 	 */
 	@Test
-	void Table_¼öÁ¤ÇÒ¼ö¾ø´Âµ¥ÀÌÅÍ() {
+	void Table_ìˆ˜ì •í• ìˆ˜ì—†ëŠ”ë°ì´í„°() {
 
 		Table table = new TableColumnBase();
 
-		table.addCol("¹øÈ£", new String[] { "1", "2", "3" });
-		table.addCol("ÀÌ¸§", new String[] { "È«±æµ¿", "È«±æ¼ø", "·Î¹öÆ®" });
+		table.addCol("ë²ˆí˜¸", new String[] { "1", "2", "3" });
+		table.addCol("ì´ë¦„", new String[] { "í™ê¸¸ë™", "í™ê¸¸ìˆœ", "ë¡œë²„íŠ¸" });
 
-		table.addCol("º°¸í");
+		table.addCol("ë³„ëª…");
 
 		RuntimeException exx = null;
 		try {
-			table.setData("º°¸í", 5, "È«±æµ¿Ä£±¸");
+			table.setData("ë³„ëª…", 5, "í™ê¸¸ë™ì¹œêµ¬");
 		} catch (RuntimeException ex) {
 			exx = ex;
 		}
