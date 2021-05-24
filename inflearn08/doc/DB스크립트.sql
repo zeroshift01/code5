@@ -1,6 +1,6 @@
-# move C:\public\sqlite\code5.db C:\public\sqlite\code5.db.day8
-cd C:\public\sqlite
-sqlite3 C:\public\sqlite\code5.db
+cd C:\public\lib\sqlite
+sqlite3 C:\public\lib\sqlite\code5.db
+
 DROP TABLE EMP ;
 CREATE TABLE EMP (
 EMP_N PRIMARY KEY
