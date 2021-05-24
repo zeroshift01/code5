@@ -1,5 +1,11 @@
 package com.code5.fw.db;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.InitProperty;
@@ -8,26 +14,26 @@ import com.code5.fw.data.Table;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
-import junit.framework.TestCase;
-
 /**
  * @author zero
  *
  */
-public class SqlRunner_test extends TestCase {
+public class SqlRunner_test {
 
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		InitProperty.init(this);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		TransactionContext.getThread().commit();
 	}
 
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_03() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
@@ -67,6 +73,10 @@ public class SqlRunner_test extends TestCase {
 
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	@Test
 	public void test_05() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
@@ -85,6 +95,10 @@ public class SqlRunner_test extends TestCase {
 		}
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	@Test
 	public void test_06() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
@@ -200,6 +214,10 @@ public class SqlRunner_test extends TestCase {
 
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	@Test
 	public void test_07() throws Exception {
 		SqlRunner sql = SqlRunner.getSqlRunner();
 		Box box = BoxContext.getThread();

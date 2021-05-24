@@ -6,7 +6,7 @@ import java.util.Base64;
  * @author zero
  *
  */
-class Aria_ECB_ZERO_test {
+public class Aria_ECB_ZERO_test {
 
 	public static void main(String[] xxx) throws Exception {
 

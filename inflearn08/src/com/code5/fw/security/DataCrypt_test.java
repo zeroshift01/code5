@@ -1,20 +1,20 @@
 package com.code5.fw.security;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author zero
  *
  */
-class DataCrypt_test extends TestCase {
+public class DataCrypt_test {
 
 	/**
 	 * @throws Exception
 	 */
 	@Test
-	void test_한단어테스트() throws Exception {
+	public void test_한단어테스트() throws Exception {
 
 		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
 
@@ -40,7 +40,7 @@ class DataCrypt_test extends TestCase {
 	 * @throws Exception
 	 */
 	@Test
-	void test_쓰레드안전성() throws Exception {
+	public void test_쓰레드안전성() throws Exception {
 
 		DataCrypt_test$[] DataCrypt_test$ = new DataCrypt_test$[20];
 		for (int i = 0; i < DataCrypt_test$.length; i++) {

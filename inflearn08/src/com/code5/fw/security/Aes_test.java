@@ -2,19 +2,19 @@ package com.code5.fw.security;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * @author zero
  *
  */
-class Aes_test {
+public class Aes_test {
 
 	/**
 	 * @throws Exception
 	 */
 	@Test
-	void test_01() throws Exception {
+	public void test_01() throws Exception {
 
 		Aes aes = new Aes();
 
