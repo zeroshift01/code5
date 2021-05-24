@@ -1,14 +1,20 @@
 package com.code5.fw.security;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author zero
  *
  */
-public class Aes_test extends TestCase {
+class Aes_test {
 
-	public void test_01() throws Exception {
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	void test_01() throws Exception {
 
 		Aes aes = new Aes();
 

@@ -155,6 +155,17 @@ public class InitProperty {
 	}
 
 	/**
+	 * @param obj
+	 * @throws Exception
+	 */
+	public static void init(Class<?> cl) throws Exception {
+		String cntr = cl.getName();
+		init(cntr);
+
+		TraceRunner.getTraceRunner().init();
+	}
+
+	/**
 	 * @param cntr
 	 */
 	public static void init(String cntr) throws Exception {

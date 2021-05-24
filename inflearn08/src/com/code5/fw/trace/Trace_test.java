@@ -1,22 +1,26 @@
 package com.code5.fw.trace;
 
-import com.code5.fw.data.InitProperty;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+import com.code5.fw.data.InitProperty;
 
 /**
  * @author zero
  *
  */
-public class Trace_test extends TestCase {
+class Trace_test {
 
-	@Override
-	protected void setUp() throws Exception {
-		// TraceRunner traceRunner = TraceRunner.getTraceRunner();
-		// traceRunner.init(Trace_test.class.getName());
+	@BeforeAll
+	static void setUp() throws Exception {
+		InitProperty.init(Trace_test.class);
 	}
 
-	public void xtest_01_지역객체() throws Exception {
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	void test_01_지역객체() throws Exception {
 
 		Trace trace01 = new Trace(this);
 
@@ -27,7 +31,11 @@ public class Trace_test extends TestCase {
 
 	Trace trace02 = new Trace(this);
 
-	public void xtest_02_맴버객체() throws Exception {
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	void test_02_맴버객체() throws Exception {
 
 		trace02.write("가나다라");
 		trace02.write("" + 123);
@@ -36,7 +44,11 @@ public class Trace_test extends TestCase {
 
 	private static Trace TRACE_03 = new Trace(Trace_test.class);
 
-	public void xtest_03_전역객체() throws Exception {
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	void test_03_전역객체() throws Exception {
 
 		TRACE_03.write("가나다라");
 		TRACE_03.write("" + 123);
@@ -44,9 +56,10 @@ public class Trace_test extends TestCase {
 	}
 
 	/**
-	 * 
+	 * @throws Exception
 	 */
-	public void xtest_단일쓰레드_로그기록() throws Exception {
+	@Test
+	void test_단일쓰레드_로그기록() throws Exception {
 
 		Trace trace = new Trace(Trace_test.class);
 
@@ -55,7 +68,11 @@ public class Trace_test extends TestCase {
 		trace.write(trace.toString());
 	}
 
-	public void test_멀티쓰레드_로그기록() throws Exception {
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	void test_멀티쓰레드_로그기록() throws Exception {
 
 		InitProperty.init(Trace_test.class.getName(), true);
 		TraceRunner traceRunner = TraceRunner.getTraceRunner();

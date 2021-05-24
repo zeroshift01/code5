@@ -1,17 +1,21 @@
 package com.code5.fw.data;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author zero
  *
  */
-public class TableRecodeBase_test extends TestCase {
+class TableRecodeBase_test {
 
 	/**
 	 * 
 	 */
-	public void test_Table_기본기능() {
+	@Test
+	void test_Table_기본기능() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -30,7 +34,8 @@ public class TableRecodeBase_test extends TestCase {
 	/**
 	 * 
 	 */
-	public void test_Table_데이터수정() {
+	@Test
+	void test_Table_데이터수정() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -52,7 +57,8 @@ public class TableRecodeBase_test extends TestCase {
 	/**
 	 * 
 	 */
-	public void test_Table_수정할수없는데이터() {
+	@Test
+	void test_Table_수정할수없는데이터() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -78,7 +84,8 @@ public class TableRecodeBase_test extends TestCase {
 	/**
 	 * 
 	 */
-	public void test_Table_최대추가할수있는크기확인() {
+	@Test
+	void test_Table_최대추가할수있는크기확인() {
 
 		String[] cols = { "번호", "이름" };
 

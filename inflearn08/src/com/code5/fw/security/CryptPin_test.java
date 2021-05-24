@@ -1,14 +1,15 @@
 package com.code5.fw.security;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author zero
  *
  */
-public class CryptPin_test extends TestCase {
+class CryptPin_test {
 
-	public void test_01() {
+	@Test
+	void test_01() {
 
 		String A0_PIN = CryptPin.cryptPin("abcd1234", "id_A0");
 

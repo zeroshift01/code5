@@ -1,17 +1,21 @@
 package com.code5.fw.data;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author zero
  *
  */
-public class TableColumnBase_test extends TestCase {
+class TableColumnBase_test {
 
 	/**
 	 * 
 	 */
-	public void test_Table_기본기능() {
+	@Test
+	public void Table_기본기능() {
 
 		Table table = new TableColumnBase();
 
@@ -27,7 +31,8 @@ public class TableColumnBase_test extends TestCase {
 	/**
 	 * 
 	 */
-	public void test_Table_데이터수정() {
+	@Test
+	void Table_데이터수정() {
 
 		Table table = new TableColumnBase();
 
@@ -44,9 +49,10 @@ public class TableColumnBase_test extends TestCase {
 	}
 
 	/**
-	 * 	
+	 * 
 	 */
-	public void test_Table_수정할수없는데이터() {
+	@Test
+	void Table_수정할수없는데이터() {
 
 		Table table = new TableColumnBase();
 
