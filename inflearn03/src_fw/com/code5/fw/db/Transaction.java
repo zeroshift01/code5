@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public abstract class Transaction {
 
-	// conn »ý¼º -> createConnection, ´ÊÀº °´Ã¼ »ý¼º
-	// SQL ±â´É¿¡ ÇÊ¿äÇÑ ÀÚ¿ø »ý¼º -> PrepareStatement, Statement, ResultSet
-	// conn ¹Ý³³ -> SQL ±â´É¿¡ »ç¿ëµÈ ÀÚ¿ø ¹Ý³³, close
+	// conn ìƒì„± -> createConnection, ëŠ¦ì€ ê°ì²´ ìƒì„±
+	// SQL ê¸°ëŠ¥ì— í•„ìš”í•œ ìžì› ìƒì„± -> PrepareStatement, Statement, ResultSet
+	// conn ë°˜ë‚© -> SQL ê¸°ëŠ¥ì— ì‚¬ìš©ëœ ìžì› ë°˜ë‚©, close
 
 	// conn.setAutoCommit(false); -> setAutoCommitFalse
 	// conn.commit(); -> commit

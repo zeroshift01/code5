@@ -13,13 +13,13 @@ import junit.framework.TestCase;
  */
 public class SqlRunner_test extends TestCase {
 
-	// SQL ÀÇÁ¸¹®Á¦¸¦ ÇØ°áÇÏ±â À§ÇÑ ¹æ¹ý
+	// SQL ì˜ì¡´ë¬¸ì œë¥¼ í•´ê²°í•˜ê¸° ìœ„í•œ ë°©ë²•
 
-	// 1. SQL °ú JAVA ÄÚµå ºÐ¸® : EMP001D_01, EMP001D_02, FW_SQL
-	// 2. Á¤Àû SQL, µ¿Àû SQL ÀåÁ¡À» Èí¼öÇÑ ½¬¿î »ç¿ë : sql.getTable, sql.execute
-	// 3. ÄÃ·¢¼ÇÀÇ ´ÜÁ¡À» ÇØ°á : Table
+	// 1. SQL ê³¼ JAVA ì½”ë“œ ë¶„ë¦¬ : EMP001D_01, EMP001D_02, FW_SQL
+	// 2. ì •ì  SQL, ë™ì  SQL ìž¥ì ì„ í¡ìˆ˜í•œ ì‰¬ìš´ ì‚¬ìš© : sql.getTable, sql.execute
+	// 3. ì»¬ëž™ì…˜ì˜ ë‹¨ì ì„ í•´ê²° : Table
 
-	// TDD Å×½ºÆ®ÄÚµå·Î ¿ä±¸»çÇ×À» ½±°Ô Á¤ÀÇÇÏ°í ÀÌ Æ²¿¡ ¸Â´Â ÄÚµå¸¦ »¡¸® ¸¸µå´Â ±â¹ý
+	// TDD í…ŒìŠ¤íŠ¸ì½”ë“œë¡œ ìš”êµ¬ì‚¬í•­ì„ ì‰½ê²Œ ì •ì˜í•˜ê³  ì´ í‹€ì— ë§žëŠ” ì½”ë“œë¥¼ ë¹¨ë¦¬ ë§Œë“œëŠ” ê¸°ë²•
 
 	/**
 	 * @throws Exception

@@ -17,14 +17,14 @@ import com.code5.fw.web.TransactionContext;
  */
 public class SqlRunner {
 
-	// ½Ì±ÛÅæ ÆĞÅÏ
+	// ì‹±ê¸€í†¤ íŒ¨í„´
 
 	// Table getTable(String key)
 	// int executeSql(String key)
 
-	// ¿À¹ö·Îµù(overloading), AOP °üÁ¡ ±â´É È®Àå
+	// ì˜¤ë²„ë¡œë”©(overloading), AOP ê´€ì  ê¸°ëŠ¥ í™•ì¥
 
-	// SqlRunnerB ¾îÂ¿¼ö ¾ø´Â ³»¿ë °áÇÕÀÌ ÇÊ¿äÇÒ ¶© »ç¿ë ¹üÀ§¸¦ ÇÑÁ¤
+	// SqlRunnerB ì–´ì©”ìˆ˜ ì—†ëŠ” ë‚´ìš© ê²°í•©ì´ í•„ìš”í•  ë• ì‚¬ìš© ë²”ìœ„ë¥¼ í•œì •
 
 	/**
 	 * 

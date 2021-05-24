@@ -12,10 +12,10 @@ import com.code5.fw.web.TransactionContext;
  */
 public class EmpByCode5 {
 
-	// SQL ÀÇÁ¸¹®Á¦¸¦ ÇØ°áÇÏ±â À§ÇÑ ¹æ¹ı
-	// 1. SQL °ú JAVA ÄÚµå ºĞ¸® -> KEY
-	// 2. Á¤Àû SQL, µ¿Àû SQL ÀåÁ¡À» Èí¼öÇÑ ½¬¿î »ç¿ë -> getTable, executeSql
-	// 3. ÄÃ·¢¼ÇÀÇ ´ÜÁ¡À» ÇØ°á -> Table
+	// SQL ì˜ì¡´ë¬¸ì œë¥¼ í•´ê²°í•˜ê¸° ìœ„í•œ ë°©ë²•
+	// 1. SQL ê³¼ JAVA ì½”ë“œ ë¶„ë¦¬ -> KEY
+	// 2. ì •ì  SQL, ë™ì  SQL ì¥ì ì„ í¡ìˆ˜í•œ ì‰¬ìš´ ì‚¬ìš© -> getTable, executeSql
+	// 3. ì»¬ë™ì…˜ì˜ ë‹¨ì ì„ í•´ê²° -> Table
 
 	/**
 	 * @param x

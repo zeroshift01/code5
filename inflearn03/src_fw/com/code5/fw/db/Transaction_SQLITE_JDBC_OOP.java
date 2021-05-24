@@ -10,8 +10,8 @@ import java.sql.SQLException;
  */
 public class Transaction_SQLITE_JDBC_OOP extends Transaction {
 
-	// DriverManager °´Ã¼¿¡ org.sqlite.JDBC °´Ã¼¸¦ µî·Ï
-	// Reflection, DriverManager °´Ã¼¿¡ org.sqlite.JDBC °´Ã¼ µî·Ï
+	// DriverManager ê°ì²´ì— org.sqlite.JDBC ê°ì²´ë¥¼ ë“±ë¡
+	// Reflection, DriverManager ê°ì²´ì— org.sqlite.JDBC ê°ì²´ ë“±ë¡
 
 	/**
 	 *

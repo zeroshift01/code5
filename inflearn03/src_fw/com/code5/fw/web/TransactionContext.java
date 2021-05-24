@@ -11,11 +11,11 @@ import com.code5.fw.db.Transaction_SQLITE_JDBC;
  */
 public class TransactionContext {
 
-	// À¯Æ¿ Å¬·¡½º, private »ı¼ºÀÚ
+	// ìœ í‹¸ í´ë˜ìŠ¤, private ìƒì„±ì
 	// AOP -> ThreadLocal
 	// createDefaultTransaction -> Transaction_SQLITE_JDBC
-	// WAS È¯°æ¿¡¼± Transaction_SQLITE_POOL »ç¿ë
-	// °³¹ßÀÚ°¡ »ç¿ë±â ÆíÇÑ commit °ú rollback
+	// WAS í™˜ê²½ì—ì„  Transaction_SQLITE_POOL ì‚¬ìš©
+	// ê°œë°œìê°€ ì‚¬ìš©ê¸° í¸í•œ commit ê³¼ rollback
 
 	/**
 	 * 

@@ -34,7 +34,7 @@ public class Table {
 
 	/**
 	 * 
-	 * цъ╟║╣╔юлем╦╕ ╟Э╦╝го╢б дц╥╒╪г ╟╢ц╪
+	 * Л╤■Й╟─К█╟Л²╢М└╟К╔╪ Й╢─К╕╛М∙≤К┼■ Л╩╛К·≥Л┘≤ Й╟²Л╡╢
 	 */
 	private HashMap<String, String> addDatas = null;
 

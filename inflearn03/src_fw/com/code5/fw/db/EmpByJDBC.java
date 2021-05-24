@@ -18,18 +18,18 @@ import com.code5.fw.web.TransactionContext;
  */
 public class EmpByJDBC {
 
-	// Àß ¸¸µç Transaction À» »ç¿ëÇÑ JDBC ÇÁ·Î±×·¡¹Ö
+	// ìž˜ ë§Œë“  Transaction ì„ ì‚¬ìš©í•œ JDBC í”„ë¡œê·¸ëž˜ë°
 
-	// select, SELECT SQL, µ¿Àû SQL, VO ¸¦ »ç¿ë °á°ú ÀúÀå
+	// select, SELECT SQL, ë™ì  SQL, VO ë¥¼ ì‚¬ìš© ê²°ê³¼ ì €ìž¥
 
-	// update, UPDATE SQL, Á¤Àû SQL, 1°³ ÀÌ»óÀÇ SQL ÀÌ ³í¸®ÀûÀ¸·Î ¹­ÀÎ Æ®·£Àè¼Ç ´ÜÀ§
+	// update, UPDATE SQL, ì •ì  SQL, 1ê°œ ì´ìƒì˜ SQL ì´ ë…¼ë¦¬ì ìœ¼ë¡œ ë¬¶ì¸ íŠ¸ëžœìž­ì…˜ ë‹¨ìœ„
 
-	// selectForCollection, VO ´ÜÁ¡ÀÎ ³·Àº À¯¿¬¼ºÀ» ÇØ°áÇÏ±â À§ÇØ ÄÃ·¢¼ÇÀ» »ç¿ëÇßÁö¸¸ ¹®Á¦°¡ ÀÖÀ½
+	// selectForCollection, VO ë‹¨ì ì¸ ë‚®ì€ ìœ ì—°ì„±ì„ í•´ê²°í•˜ê¸° ìœ„í•´ ì»¬ëž™ì…˜ì„ ì‚¬ìš©í–ˆì§€ë§Œ ë¬¸ì œê°€ ìžˆìŒ
 
-	// SQL ÀÇÁ¸¹®Á¦¸¦ ÇØ°áÇÏ±â À§ÇÑ ¹æ¹ý
-	// 1. SQL °ú JAVA ÄÚµå ºÐ¸®
-	// 2. Á¤Àû SQL, µ¿Àû SQL ÀåÁ¡À» Èí¼öÇÑ ½¬¿î »ç¿ë
-	// 3. ÄÃ·¢¼ÇÀÇ ´ÜÁ¡À» ÇØ°á
+	// SQL ì˜ì¡´ë¬¸ì œë¥¼ í•´ê²°í•˜ê¸° ìœ„í•œ ë°©ë²•
+	// 1. SQL ê³¼ JAVA ì½”ë“œ ë¶„ë¦¬
+	// 2. ì •ì  SQL, ë™ì  SQL ìž¥ì ì„ í¡ìˆ˜í•œ ì‰¬ìš´ ì‚¬ìš©
+	// 3. ì»¬ëž™ì…˜ì˜ ë‹¨ì ì„ í•´ê²°
 
 	/**
 	 * @param x

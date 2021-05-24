@@ -21,10 +21,10 @@ import com.code5.fw.db.Transaction_SQLITE_POOL;
  */
 public class MasterController extends HttpServlet {
 
-	// TransactionContext ¸¦ »ç¿ë Transaction °´Ã¼¸¦ ºñÁî´Ï½º ·ÎÁ÷¿¡ Àü´Ş
-	// commit °ú rollback ±âÁØ Á¤ÀÇ
+	// TransactionContext ë¥¼ ì‚¬ìš© Transaction ê°ì²´ë¥¼ ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ì— ì „ë‹¬
+	// commit ê³¼ rollback ê¸°ì¤€ ì •ì˜
 
-	// conn °´Ã¼ »ı¸íÁÖ±â È®ÀÎ
+	// conn ê°ì²´ ìƒëª…ì£¼ê¸° í™•ì¸
 	// new conn 
 	// conn.commit()
 	// conn.rollback()
