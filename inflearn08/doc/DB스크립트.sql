@@ -1,5 +1,6 @@
 cd C:\public\lib\sqlite
-sqlite3 C:\public\lib\sqlite\code5.db
+sqlite3 C:\public\code5\doc\code5.db
+
 
 DROP TABLE EMP ;
 CREATE TABLE EMP (
@@ -47,6 +48,7 @@ INSERT INTO FW_SRT VALUES('S01','Aria_ECB_ZERO','E231C123B7512A8A9027E9EE99C0C68
 INSERT INTO FW_SRT VALUES('S02','Aria_CBC_PKCS7','B426E1A441F6DBFC2B2D2412D0066D20','52A9A4CC4FB1EF00A72FF87583D44E5C');
 INSERT INTO FW_SRT VALUES('S03','Aes_CBC_PKCS7','BF210BE9E2ED4620B442D5AF8D000E40','CF80492ACF3166C7CC039818619E4859');
 INSERT INTO FW_SRT VALUES('SDB','Aria_CBC_PKCS7','B426E1A441F6DBFC2B2D2412D0066D20','52A9A4CC4FB1EF00A72FF87583D44E5C');
+drop TABLE FW_VIEW ;
 CREATE TABLE FW_VIEW (
 KEY PRIMARY KEY
 , JSP
@@ -105,14 +107,13 @@ drop table FW_CONTROLLER;
 CREATE TABLE FW_CONTROLLER(
   KEY,
   CLASS_NAME,
-  METHOD_NAME
-, ERR_JSP_KEY, SESSION_CHECK_YN, AUTH);
-INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile',NULL,NULL,NULL);
-INSERT INTO FW_CONTROLLER VALUES('emp00110','com.code5.biz.emp.emp001.Emp001','emp00110','','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00120','com.code5.biz.emp.emp001.Emp001','emp00120','','Y','A0');
-INSERT INTO FW_CONTROLLER VALUES('emp00210','com.code5.biz.emp.emp002.Emp002','emp00210','nullView','Y','');
-INSERT INTO FW_CONTROLLER VALUES('emp00220','com.code5.biz.emp.emp002.Emp002','emp00220','','Y','');
-INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001','','Y','A0');
+  METHOD_NAME);
+INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login');
+INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView');
+INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload');
+INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile');
+INSERT INTO FW_CONTROLLER VALUES('emp00110','com.code5.biz.emp.emp001.Emp001','emp00110');
+INSERT INTO FW_CONTROLLER VALUES('emp00120','com.code5.biz.emp.emp001.Emp001','emp00120');
+INSERT INTO FW_CONTROLLER VALUES('emp00210','com.code5.biz.emp.emp002.Emp002','emp00210');
+INSERT INTO FW_CONTROLLER VALUES('emp00220','com.code5.biz.emp.emp002.Emp002','emp00220');
+INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001');

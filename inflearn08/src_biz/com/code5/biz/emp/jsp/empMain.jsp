@@ -3,7 +3,7 @@
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Box box = BoxContext.getThread();
+Box box = BoxContext.getThread();
 Box view = box.getBox(Box.KEY_FW_VIEW);
 String JSP = view.s("JSP");
 String TITLE = view.s("TITLE");

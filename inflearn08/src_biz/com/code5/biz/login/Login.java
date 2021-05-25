@@ -7,6 +7,7 @@ import com.code5.fw.security.CryptPin;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
+import com.code5.fw.web.ServiceAnnotation;
 
 /**
  * @author zero
@@ -18,6 +19,7 @@ public class Login implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ServiceAnnotation(isLogin = false)
 	public String login() throws Exception {
 
 		Box box = BoxContext.getThread();
@@ -45,13 +47,13 @@ public class Login implements BizController {
 				throw new Exception();
 			}
 
-			return MasterController.execute("loginView");
+			// return MasterController.execute("loginView");
 		}
 
 		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
 		if (FAIL_CNT > 5) {
 			box.put("ret", "패스워드를 5회 이상 실패하였습니다.");
-			return MasterController.execute("loginView");
+			// return MasterController.execute("loginView");
 		}
 
 		String AUTH = thisUser.s("AUTH");
@@ -64,13 +66,14 @@ public class Login implements BizController {
 			throw new Exception();
 		}
 
-		return MasterController.execute("emp00101");
+		return MasterController.execute("emp00110");
 	}
 
 	/**
 	 * @return
 	 * @throws Exception
 	 */
+	@ServiceAnnotation(isLogin = false)
 	public String logout() throws Exception {
 
 		BoxContext.getThread().setSessionB(null);
@@ -81,6 +84,7 @@ public class Login implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ServiceAnnotation(isLogin = false)
 	public String loginView() throws Exception {
 		return "loginView";
 	}

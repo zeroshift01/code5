@@ -12,17 +12,18 @@
 
 	Exception ex = (Exception) box.get(Box.KEY_EXCEPTION);
 
-	String msg = "�븣�닔 �뾾�뒗 �삤瑜섍� 諛쒖깮�뻽�뒿�땲�떎.";
+	String msg = "오류가 발생했습니다.";
 
 	if (ex instanceof LoginException) {
-		msg = "濡쒓렇�씤�씠 �븘�슂�빀�땲�떎.";
+		msg = "로그인이 필요합니다.";
 	}
 %>
 <pre>
-�궗�슜�옄�뿉寃� 蹂댁뿬二쇰뒗 �젙蹂�
+사용자에게 보여주는 에러 메세지
 <%=msg%>
 
 
-媛쒕컻�옄瑜� �쐞�븳 �뵒踰꾧렇 �젙蹂�
+개발자에게 보여주는 에러 메세지
+<%=ex.toString()%>
 <%=ex.getMessage()%>
 </pre>

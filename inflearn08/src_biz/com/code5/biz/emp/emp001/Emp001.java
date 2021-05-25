@@ -7,6 +7,7 @@ import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
+import com.code5.fw.web.ServiceAnnotation;
 import com.code5.fw.web.TransactionContext;
 
 /**
@@ -39,6 +40,7 @@ public class Emp001 implements BizController {
 	 * 
 	 *                   휴대폰 번호 업데이트
 	 */
+	@ServiceAnnotation(auth = "A0")
 	public String emp00120() throws Exception {
 
 		Box box = BoxContext.getThread();

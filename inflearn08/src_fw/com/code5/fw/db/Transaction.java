@@ -177,8 +177,9 @@ public abstract class Transaction {
 		}
 
 		setAutoCommit = true;
-
-		conn.setAutoCommit(false);
+		
+		Connection connection = getConnection();
+		connection.setAutoCommit(false);
 	}
 
 	/**

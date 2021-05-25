@@ -1,6 +1,7 @@
 package com.code5.fw.web;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,10 +28,6 @@ import com.code5.fw.trace.TraceRunner;
  *
  */
 public class MasterController extends HttpServlet {
-	
-	
-	
-	
 
 	/**
 	 * 
@@ -171,6 +168,95 @@ public class MasterController extends HttpServlet {
 	}
 
 	/**
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	private static Object[] createService(String KEY) throws Exception {
+
+		MasterControllerD dao = new MasterControllerD();
+
+		Box controller = dao.getController(KEY);
+		BoxContext.getThread().put(Box.KEY_FW_CONTROLLER, controller);
+
+		String CLASS_NAME = controller.s("CLASS_NAME");
+		String METHOD_NAME = controller.s("METHOD_NAME");
+
+		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
+
+		Object biz = cacheBizControllerMap.get(KEY);
+
+		if (biz == null) {
+
+			@SuppressWarnings("rawtypes")
+			Class newClass = Class.forName(CLASS_NAME);
+
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			Constructor constructor = newClass.getConstructor();
+
+			biz = constructor.newInstance();
+
+			if (!(biz instanceof BizController)) {
+				throw new AuthException();
+			}
+
+			cacheBizControllerMap.put(KEY, biz);
+
+		}
+
+		Method method = cacheMethodMap.get(KEY + "." + METHOD_NAME);
+
+		if (method == null) {
+
+			method = biz.getClass().getDeclaredMethod(METHOD_NAME);
+
+			cacheMethodMap.put(KEY + "." + METHOD_NAME, method);
+		}
+
+		ServiceAnnotation sa = cacheServiceAnnotationMap.get(KEY + "." + METHOD_NAME);
+
+		if (sa == null) {
+			sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
+
+			if (sa == null) {
+
+				sa = new ServiceAnnotation() {
+
+					@Override
+					public Class<? extends Annotation> annotationType() {
+						return null;
+					}
+
+					@Override
+					public boolean isLogin() {
+						return false;
+					}
+
+					@Override
+					public String errJspKey() {
+						return null;
+					}
+
+					@Override
+					public String auth() {
+						return null;
+					}
+				};
+
+			}
+
+			cacheServiceAnnotationMap.put(KEY + "." + METHOD_NAME, sa);
+		}
+
+		Object[] service = new Object[3];
+		service[0] = biz;
+		service[1] = method;
+		service[2] = sa;
+		return service;
+
+	}
+
+	/**
 	 * 
 	 * @param url
 	 * @return
@@ -178,67 +264,45 @@ public class MasterController extends HttpServlet {
 	 */
 	public static String execute(String KEY) throws Exception {
 
-		MasterControllerD dao = new MasterControllerD();
+		Object[] service = createService(KEY);
 
-		Box controller = dao.getController(KEY);
-		BoxContext.getThread().put(Box.KEY_FW_CONTROLLER, controller);
+		Object biz = service[0];
+		Method method = (Method) service[1];
+		ServiceAnnotation sa = (ServiceAnnotation) service[2];
 
-		boolean checkUrlAuth = checkUrlAuth(controller);
+		boolean checkUrlAuth = checkUrlAuth(sa);
 		if (!checkUrlAuth) {
 			throw new AuthException();
 		}
 
-		String CLASS_NAME = controller.s("CLASS_NAME");
-		String METHOD_NAME = controller.s("METHOD_NAME");
-
-		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
-
-		BizController bizController = cacheBizControllerMap.get(KEY);
-
-		if (bizController != null) {
-			Method method = bizController.getClass().getDeclaredMethod(METHOD_NAME);
-			String JSP_KEY = (String) method.invoke(bizController);
-			return JSP_KEY;
-		}
-
-		@SuppressWarnings("rawtypes")
-		Class newClass = Class.forName(CLASS_NAME);
-
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		Constructor constructor = newClass.getConstructor();
-
-		Object instance = constructor.newInstance();
-
-		if (!(instance instanceof BizController)) {
-			throw new AuthException();
-		}
-
-		if (instance instanceof BizControllerStartExecute) {
-			String JSP_KEY = ((BizControllerStartExecute) instance).start();
+		if (biz instanceof BizControllerStartExecute) {
+			String JSP_KEY = ((BizControllerStartExecute) biz).start();
 			if (JSP_KEY != null) {
 				return JSP_KEY;
 			}
 		}
 
-		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
-
-		String JSP_KEY = (String) method.invoke(instance);
+		String JSP_KEY = (String) method.invoke(biz);
 		return JSP_KEY;
 
 	}
 
 	/**
-	 * @param controller
+	 * @param sa
 	 * @return
 	 * @throws Exception
-	 * 
-	 * 
 	 */
-	private static boolean checkUrlAuth(Box controller) throws Exception {
+	private static boolean checkUrlAuth(ServiceAnnotation sa) throws Exception {
 
-		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
+		boolean isLogin = true;
+		String auth = "";
 
-		if (!"Y".equals(SESSION_CHECK_YN)) {
+		if (sa != null) {
+			isLogin = sa.isLogin();
+			auth = sa.auth();
+		}
+
+		if (!isLogin) {
 			return true;
 		}
 
@@ -248,17 +312,15 @@ public class MasterController extends HttpServlet {
 			throw new LoginException();
 		}
 
-		String AUTH = controller.s("AUTH");
-
-		if ("".equals(AUTH)) {
+		if ("".equals(auth)) {
 			return true;
 		}
 
-		if (AUTH.indexOf(user.getAuth()) >= 0) {
+		if (auth.indexOf(user.getAuth()) >= 0) {
 			return true;
 		}
 
-		trace.write("checkUrlAuth false [" + AUTH + "][" + user.getAuth() + "]");
+		trace.write("checkUrlAuth false [" + auth + "][" + user.getAuth() + "]");
 
 		return false;
 
@@ -273,11 +335,10 @@ public class MasterController extends HttpServlet {
 	 */
 	public static boolean checkUrlAuth(String KEY) throws Exception {
 
-		MasterControllerD dao = new MasterControllerD();
+		Object[] service = createService(KEY);
+		ServiceAnnotation sa = (ServiceAnnotation) service[2];
 
-		Box controller = dao.getController(KEY);
-
-		return checkUrlAuth(controller);
+		return checkUrlAuth(sa);
 
 	}
 
@@ -318,11 +379,23 @@ public class MasterController extends HttpServlet {
 	 * 
 	 */
 	public static void reload() {
+		MasterController.cacheServiceAnnotationMap.clear();
+		MasterController.cacheMethodMap.clear();
 		MasterController.cacheBizControllerMap.clear();
 	}
 
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, BizController> cacheBizControllerMap = new ConcurrentHashMap<String, BizController>();
+	private static ConcurrentHashMap<String, Object> cacheBizControllerMap = new ConcurrentHashMap<String, Object>();
+
+	/**
+	 * 
+	 */
+	private static ConcurrentHashMap<String, Method> cacheMethodMap = new ConcurrentHashMap<String, Method>();
+
+	/**
+	 * 
+	 */
+	private static ConcurrentHashMap<String, ServiceAnnotation> cacheServiceAnnotationMap = new ConcurrentHashMap<String, ServiceAnnotation>();
 }

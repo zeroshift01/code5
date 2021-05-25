@@ -1,6 +1,7 @@
 CODE5:
  WAS:
-  WEB_APP_DIR : C:\public\code5\web
-  BASE_DIR : C:\public\code5\temp
+  WEB_APP_DIR : C:/public/code5/web
+  BASE_DIR : C:/public/code5/temp
   WEB_PORT : 18080
   URL_ENCODING : UTF-8
+
