@@ -6,7 +6,7 @@ import com.code5.fw.data.Table;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class Emp001D {

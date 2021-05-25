@@ -1,5 +1,8 @@
 package com.code5.fw.db;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -7,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.code5.biz.emp.emp001.X;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
 import com.code5.fw.data.SessionB;
@@ -16,7 +20,6 @@ import com.code5.fw.security.CryptPin;
 import com.code5.fw.security.DataCrypt;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
@@ -37,7 +40,7 @@ public class SqlRunner {
 	/**
 	 *
 	 */
-	private SqlRunner() {
+	SqlRunner() {
 	}
 
 	/**
@@ -51,35 +54,90 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param transaction
-	 * @param SQL
+	 * @param key
 	 * @return
-	 * 
+	 * @throws SQLException
 	 */
-	SqlRunnerB getSqlRunnerBStep1(Transaction transaction, String key) throws SQLException {
+	SqlRunnerB getSqlRunnerBStep1(String key) throws SQLException {
 
-		PreparedStatement ps = transaction.prepareStatement("SELECT * FROM FW_SQL WHERE KEY = ?");
-		ps.setString(1, key);
+		InputStream is = null;
+		try {
 
-		ResultSet rs = transaction.getResultSet(ps);
+			key = key.replaceAll("\\.", "/");
+			int p = key.lastIndexOf("/");
 
-		if (!rs.next()) {
-			throw new RuntimeException("not SQL for KEY [" + key + "]");
+			String sqlUrl = key.substring(0, p) + ".sql";
+			String sqlKey = key.substring(p + 1);
+
+			String[] sqlKeys = sqlKey.split(",");
+			String findSqlKey = sqlKeys[0];
+
+			int timeOut = -1;
+			if (sqlKeys.length == 2) {
+				timeOut = Integer.getInteger(sqlKeys[1].trim());
+			}
+
+			ClassLoader cl = X.class.getClassLoader();
+
+			is = cl.getResourceAsStream(sqlUrl);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			StringBuffer sql = new StringBuffer();
+			boolean findSql = false;
+			while (true) {
+
+				String str = br.readLine();
+
+				if (str == null) {
+					break;
+				}
+
+				if (str.indexOf("--[[[") >= 0) {
+
+					if (str.indexOf(findSqlKey) >= 0) {
+						findSql = true;
+						continue;
+					}
+				}
+
+				if (str.indexOf("--]]]") >= 0) {
+					if (findSql) {
+						break;
+					}
+
+				}
+
+				if (findSql) {
+					sql.append(str + "\n");
+				}
+
+			}
+
+			String sqlOrg = sql.toString();
+			sqlOrg = sqlOrg.trim();
+
+			SqlRunnerB sqlRunnerB = new SqlRunnerB();
+			sqlRunnerB.sqlOrg = sqlOrg;
+			sqlRunnerB.key = key;
+			sqlRunnerB.timeOut = timeOut;
+
+			return sqlRunnerB;
+
+		} catch (Exception ex) {
+			trace.writeErr(ex);
+			throw new SQLException(ex.getMessage());
+		} finally {
+
+			if (is != null) {
+				try {
+					is.close();
+				} catch (Exception ex) {
+					trace.writeErr(ex);
+				}
+			}
+
 		}
-
-		String sql = rs.getString("SQL");
-		int timeOut = rs.getInt("TIME_OUT");
-		if (timeOut <= 0) {
-			timeOut = -1;
-		}
-
-		SqlRunnerB sqlRunnerB = new SqlRunnerB();
-		sqlRunnerB.sqlOrg = sql;
-		sqlRunnerB.key = key;
-		sqlRunnerB.timeOut = timeOut;
-
-		return sqlRunnerB;
 
 	}
 
@@ -110,7 +168,7 @@ public class SqlRunner {
 			}
 
 			String key = sql.substring(sp + 2, ep).trim();
-			SqlRunnerB thisSqlRunnerB = getSqlRunnerBStep1(transaction, key);
+			SqlRunnerB thisSqlRunnerB = getSqlRunnerBStep1(key);
 			String addSql = thisSqlRunnerB.sqlOrg;
 
 			sqlB.append(sql.substring(fromIndex + 2, sp));
@@ -200,7 +258,7 @@ public class SqlRunner {
 			return sqlRunnerB;
 		}
 
-		sqlRunnerB = getSqlRunnerBStep1(transaction, key);
+		sqlRunnerB = getSqlRunnerBStep1(key);
 
 		sqlRunnerB = getSqlRunnerBStep2(transaction, box, sqlRunnerB);
 
@@ -217,7 +275,7 @@ public class SqlRunner {
 	 * @throws SQLException
 	 * 
 	 */
-	public Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
+	Table getTable(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 
@@ -282,36 +340,6 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 * 
-	 */
-	public Table getTable(String FORM_NO) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-
-		return getTable(transaction, box, FORM_NO);
-	}
-
-	/**
-	 * 
-	 * @param box
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 * 
-	 */
-	public Table getTable(String FORM_NO, Box box) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-
-		return getTable(transaction, box, FORM_NO);
-	}
-
-	/**
 	 * @param transaction
 	 * @param box
 	 * @param FORM_NO
@@ -319,7 +347,7 @@ public class SqlRunner {
 	 * @throws SQLException
 	 * 
 	 */
-	public int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
+	int executeSql(Transaction transaction, Box box, String FORM_NO) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
 		trace.write(sqlRunnerB.key);
@@ -356,76 +384,18 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 * 
-	 */
-	public int executeSql(String FORM_NO) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-		return executeSql(transaction, box, FORM_NO);
-	}
-
-	/**
-	 * @param FORM_NO
-	 * @param box
-	 * @return
-	 * @throws SQLException
-	 * 
-	 */
-	public int executeSql(String FORM_NO, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		return executeSql(transaction, box, FORM_NO);
-	}
-
-	/**
-	 * 
-	 */
-	private ConcurrentHashMap<String, Table> cacheTableMap = new ConcurrentHashMap<String, Table>();
-
-	/**
-	 * 
-	 */
-	private ConcurrentHashMap<String, SqlRunnerB> cacheSqlMap = new ConcurrentHashMap<String, SqlRunnerB>();
-
-	/**
-	 * @param box
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTableByCache(String FORM_NO, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		return getTableByCache(transaction, FORM_NO, box);
-	}
-
-	/**
-	 * @param FORM_NO
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTableByCache(String FORM_NO) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-		return getTableByCache(transaction, FORM_NO, box);
-	}
-
-	/**
 	 * @param transaction
+	 * @param key
 	 * @param box
-	 * @param FORM_NO
 	 * @return
 	 * @throws SQLException
 	 */
-	public Table getTableByCache(Transaction transaction, String FORM_NO, Box box) throws SQLException {
+	Table getTableByCache(Transaction transaction, String key, Box box) throws SQLException {
 
 		StringBuffer cashKeyB = new StringBuffer();
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, FORM_NO);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, box, key);
 
-		cashKeyB.append(FORM_NO + "|");
+		cashKeyB.append(key + "|");
 
 		for (int i = 0; i < sqlRunnerB.param.size(); i++) {
 
@@ -440,11 +410,21 @@ public class SqlRunner {
 			return table;
 		}
 
-		table = getTable(transaction, box, FORM_NO);
+		table = getTable(transaction, box, key);
 		cacheTableMap.put(cashKey, table);
 		return table;
 
 	}
+
+	/**
+	 * 
+	 */
+	private ConcurrentHashMap<String, SqlRunnerB> cacheSqlMap = new ConcurrentHashMap<String, SqlRunnerB>();
+
+	/**
+	 * 
+	 */
+	private ConcurrentHashMap<String, Table> cacheTableMap = new ConcurrentHashMap<String, Table>();
 
 	/**
 	 * 
@@ -806,4 +786,77 @@ public class SqlRunner {
 
 		return box.s(key);
 	}
+
+	/**
+	 * @return
+	 */
+	static String getSql(String key) {
+
+		InputStream is = null;
+		try {
+
+			// key = "com.code5.biz.emp.emp001.Emp001D.EMP001D_01";
+
+			key = key.replaceAll("\\.", "/");
+			int p = key.lastIndexOf("/");
+
+			String sqlUrl = key.substring(0, p) + ".sql";
+			String sqlKey = key.substring(p + 1);
+
+			ClassLoader cl = X.class.getClassLoader();
+
+			is = cl.getResourceAsStream(sqlUrl);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			StringBuffer sql = new StringBuffer();
+			boolean findSql = false;
+			while (true) {
+
+				String str = br.readLine();
+
+				if (str == null) {
+					break;
+				}
+
+				if (str.indexOf("--[[[") >= 0) {
+
+					if (str.indexOf(sqlKey) >= 0) {
+						findSql = true;
+						continue;
+					}
+				}
+
+				if (str.indexOf("--]]]") >= 0) {
+					if (findSql) {
+						break;
+					}
+
+				}
+
+				if (findSql) {
+					sql.append(str + "\n");
+				}
+
+			}
+
+			return sql.toString().trim();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+
+			if (is != null) {
+				try {
+					is.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+
+		}
+
+	}
+
 }

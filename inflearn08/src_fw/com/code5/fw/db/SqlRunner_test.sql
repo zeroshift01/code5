@@ -1,0 +1,51 @@
+--[[[ SQLRUNNER_TEST_01
+
+SELECT EMP_N
+, EMP_NM
+, DEPT_N 
+FROM EMP 
+WHERE EMP_NM = [EMP_NM] 
+ORDER BY EMP_N
+
+--]]]
+
+--[[[ SQLRUNNER_TEST_02
+
+UPDATE EMP 
+SET HP_N = [HP_N] 
+WHERE EMP_N =[EMP_N]
+
+--]]]
+
+--[[[ SQLRUNNER_TEST_04
+
+[~ P1 ^ IS_NOT_NULL ^ AND [P1] = [P1] ~]
+[~ P2 ^ IS_NULL ^ AND 2 = 2 ~]
+[~ P3 ^ Y ^ AND 'Y' = [P3] ~]
+
+--]]]
+
+--[[[ SQLRUNNER_TEST_03
+
+SELECT
+[HP_N] HP_N
+, [HP_N] DEC__HP_N2__PRN_HP_N
+, [ENC__HP_N] HP_N3
+, [SYSDTM.DTM] DTM1
+, [SYSDTM.DTM] DTM2__PRN_DTM
+, [SESSIONB.ID] SESSION_ID
+, [SESSIONB.IP] SESSION_IP
+, [SESSIONB.AUTH] SESSION_AUTH
+, [PIN__PIN, ID ] PIN
+FROM EMP
+WHERE 1 = 1
+
+[~ P1 ^ IS_NOT_NULL ^ AND [P1] = [P1] ~]
+[~ P2 ^ IS_NULL ^ AND 2 = 2 ~]
+[~ P3 ^ Y ^ AND 'Y' = [P3] ~]
+
+[[ com.code5.fw.db.SqlRunner_test.SQLRUNNER_TEST_04 ]]
+
+AND 'FIN'='FIN'
+
+--]]]

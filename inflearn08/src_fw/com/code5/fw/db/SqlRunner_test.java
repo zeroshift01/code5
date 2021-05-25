@@ -219,7 +219,7 @@ public class SqlRunner_test {
 	 */
 	@Test
 	public void test_07() throws Exception {
-		SqlRunner sql = SqlRunner.getSqlRunner();
+		Sql sql = new Sql(this);
 		Box box = BoxContext.getThread();
 		box.setSessionB(new SessionB("IDx", "AUTHx", "IPx"));
 		box.put(Box.KEY_REMOTE_ADDR, "1.1.1.1");
@@ -238,7 +238,7 @@ public class SqlRunner_test {
 	}
 
 	public void 동작안함_test_10() throws Exception {
-		SqlRunner sql = SqlRunner.getSqlRunner();
+		Sql sql = new Sql(this);
 		sql.getTable("SQLRUNNER_TEST_10");
 	}
 }
