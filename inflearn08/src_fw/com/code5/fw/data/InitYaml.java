@@ -86,7 +86,7 @@ public class InitYaml {
 		if (obj != null) {
 			return obj;
 		}
-		
+
 		obj = _get(key + "." + "DEFAULT");
 		if (obj != null) {
 			return obj;
@@ -157,5 +157,19 @@ public class InitYaml {
 
 		return ret;
 
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public boolean is(String key) {
+		Object obj = get(key);
+		if (obj instanceof String) {
+			if ("true".equals((String) obj)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

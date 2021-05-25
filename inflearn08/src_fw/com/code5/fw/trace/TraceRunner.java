@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.web.BoxContext;
@@ -48,7 +49,7 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private boolean isWriteLog = InitProperty.IS_WRITE_LOG();
+	private boolean isWriteLog = InitYaml.get().is("WRITE_LOG");
 
 	/**
 	 * 
@@ -108,6 +109,7 @@ public final class TraceRunner {
 			}
 			this.isInit = true;
 
+			InitYaml.get().is("WRITE_LOG");
 			this.cntr = InitProperty.CNTR();
 			this.isMulti = InitProperty.IS_MULTI();
 			this.host = InitProperty.HOST();

@@ -13,7 +13,6 @@ public class Trace_test {
 
 	@Before
 	public void setUp() throws Exception {
-		InitProperty.init(Trace_test.class);
 	}
 
 	/**
@@ -75,6 +74,7 @@ public class Trace_test {
 	public void test_멀티쓰레드_로그기록() throws Exception {
 
 		InitProperty.init(Trace_test.class.getName(), true);
+		
 		TraceRunner traceRunner = TraceRunner.getTraceRunner();
 
 		Trace_test$[] t = new Trace_test$[10];

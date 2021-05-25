@@ -106,6 +106,7 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
+		
 		String tx = InitProperty.TRANSACTION_WAS();
 		Transaction transaction = Transaction.createTransaction(tx);
 		TransactionContext.setThread(transaction);

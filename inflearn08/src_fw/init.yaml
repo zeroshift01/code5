@@ -9,7 +9,7 @@ LOG :
     DEFAULT : "C:/public/logs/[host]/[cntr]"
     PRHOST : "/logs/[host]/[cntr]"
   LOG_FILE_PATTERN : "[rnd].[name].log"
-  IS_WRITE_LOG : 
+  WRITE_LOG : 
     DEFAULT : "false"
     PRHOST : "true"
 
@@ -36,3 +36,5 @@ NOLOG :
   SERVICE_KEY :
     - "loginView"
     - "logout"
+
+PRODUCT : "false"

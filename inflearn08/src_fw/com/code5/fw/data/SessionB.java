@@ -14,6 +14,11 @@ public class SessionB implements Serializable {
 	/**
 	 * 
 	 */
+	private static boolean IS_PRODUCT = InitYaml.get().is("PRODUCT");
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -74,7 +79,7 @@ public class SessionB implements Serializable {
 		byte[] iv = new byte[16];
 		byte[] key = new byte[16];
 
-		if (InitProperty.IS_PRODUCT()) {
+		if (IS_PRODUCT) {
 			random.nextBytes(iv);
 			random.nextBytes(key);
 		}

@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
-import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.BoxContext;
@@ -22,7 +21,6 @@ public class SqlRunner_test {
 
 	@Before
 	public void setUp() throws Exception {
-		InitProperty.init(this);
 	}
 
 	@After
