@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.Table;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 
 /**
  * @author zero
@@ -16,7 +16,7 @@ public class MasterControllerD {
 	/**
 	 * 
 	 */
-	private SqlRunner sql = SqlRunner.getSqlRunner();
+	private Sql sql = new Sql(this);
 
 	/**
 	 * 

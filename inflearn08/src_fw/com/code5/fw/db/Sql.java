@@ -32,6 +32,21 @@ public class Sql {
 	}
 
 	/**
+	 * @param cl
+	 */
+	public Sql(Class<?> cl) {
+		String className = cl.getName();
+		this.className = className;
+	}
+
+	/**
+	 * @param className
+	 */
+	public Sql(String className) {
+		this.className = className;
+	}
+
+	/**
 	 * @param key
 	 * @return
 	 */

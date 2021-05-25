@@ -1,0 +1,31 @@
+--[[[ LOGIND_01
+
+SELECT 
+ID
+, PIN
+, AUTH
+, FAIL_CNT
+, LAST_LOGIN_DTM 
+FROM 
+BZ_ID
+WHERE ID = [ID]
+
+--]]]
+
+--[[[ LOGIND_02
+
+UPDATE BZ_ID
+SET FAIL_CNT = FAIL_CNT + 1
+WHERE ID = [ID]
+
+--]]]
+
+
+--[[[ LOGIND_03
+
+UPDATE BZ_ID
+SET FAIL_CNT = 0
+, LAST_LOGIN_DTM = [LAST_LOGIN_DTM]
+WHERE ID = [ID]
+
+--]]]

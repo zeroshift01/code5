@@ -5,13 +5,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.Hex;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 
 /**
  * @author zero
  *
  */
 public class DataCrypt {
+
+	/**
+	 * 
+	 */
+	private static Sql sql = new Sql(DataCrypt.class);
 
 	/**
 	 * 
@@ -43,7 +48,7 @@ public class DataCrypt {
 
 		Box thisBox = new BoxLocal();
 		thisBox.put("OPT", OPT);
-		Box cryptInfo = SqlRunner.getSqlRunner().getTable("DATACRYPT_01", thisBox).getBox();
+		Box cryptInfo = sql.getTable("DATACRYPT_01", thisBox).getBox();
 
 		String MODE = cryptInfo.s("MODE");
 		String KEY = cryptInfo.s("KEY");

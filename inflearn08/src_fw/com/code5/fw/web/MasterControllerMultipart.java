@@ -12,7 +12,7 @@ import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.UploadFileB;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 
 /**
  * @author zero
@@ -136,7 +136,8 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 		box.put("file", uploadFileB);
 
-		SqlRunner.getSqlRunner().executeSql("DOWNLOADFILE_01");
+		Sql sql = new Sql(this);
+		sql.executeSql("DOWNLOADFILE_01");
 
 		return "downloadFile";
 	}

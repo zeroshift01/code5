@@ -2,7 +2,7 @@ package com.code5.fw.data;
 
 import java.io.File;
 
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 import com.code5.fw.security.CryptFile;
 import com.code5.fw.web.BoxContext;
 
@@ -11,6 +11,8 @@ import com.code5.fw.web.BoxContext;
  *
  */
 public class UploadFileB {
+
+	private Sql sql = new Sql(this);
 
 	private static String FORM_NO_01 = "UPLOADFILEB_01";
 	private static String FORM_NO_02 = "UPLOADFILEB_02";
@@ -90,7 +92,7 @@ public class UploadFileB {
 		Box box = BoxContext.getThread();
 		box.put("UPLOADFILEB.FILE_ID", fileId);
 
-		Table table = SqlRunner.getSqlRunner().getTable(FORM_NO_02);
+		Table table = sql.getTable(FORM_NO_02);
 		if (table.size() != 1) {
 			throw new Exception();
 		}
@@ -129,7 +131,7 @@ public class UploadFileB {
 		box.put("UPLOADFILEB.CONTENT_TYPE", this.contentType);
 		box.put("UPLOADFILEB.FILE_URL", this.fileUrl);
 
-		SqlRunner.getSqlRunner().executeSql(FORM_NO_01);
+		sql.executeSql(FORM_NO_01);
 
 		this.isSave = true;
 	}
@@ -158,7 +160,7 @@ public class UploadFileB {
 
 		box.put("UPLOADFILEB.FILE_ID", this.fileId);
 
-		SqlRunner.getSqlRunner().executeSql(FORM_NO_03);
+		sql.executeSql(FORM_NO_03);
 
 		this.isDelete = true;
 	}

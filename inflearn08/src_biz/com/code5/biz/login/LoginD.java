@@ -3,7 +3,7 @@ package com.code5.biz.login;
 import java.sql.SQLException;
 
 import com.code5.fw.data.Table;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 
 /**
  * @author zero
@@ -14,7 +14,7 @@ public class LoginD {
 	/**
 	 * 
 	 */
-	private SqlRunner sql = SqlRunner.getSqlRunner();
+	private Sql sql = new Sql(this);
 
 	/**
 	 * 
