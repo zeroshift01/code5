@@ -1,7 +1,38 @@
-CODE5:
- WAS:
-  WEB_APP_DIR : C:/public/code5/web
-  BASE_DIR : C:/public/code5/temp
-  WEB_PORT : 18080
-  URL_ENCODING : UTF-8
+RUN_CODE5:
+  WEB_APP_DIR : "C:/public/code5/web"
+  BASE_DIR : "C:/public/code5/temp"
+  WEB_PORT : "18080"
 
+
+LOG : 
+  LOG_DIR_PATTERN : 
+    DEFAULT : "C:/public/logs/[host]/[cntr]"
+    PRHOST : "/logs/[host]/[cntr]"
+  LOG_FILE_PATTERN : "[rnd].[name].log"
+  IS_WRITE_LOG : 
+    DEFAULT : "false"
+    PRHOST : "true"
+
+UPLOAD_FILE_DIR :
+  TEMP_URL : 
+    DEFAULT : "C:/public/log/temp"
+    PRHOST : "C:/public/log/temp"
+  URL : 
+    DEFAULT : "C:/public/file"
+    PRHOST : "C:/public/file"
+
+TRANSACTION :
+  WAS : 
+    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_POOL"
+    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL_TEST"
+  JOB :
+    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_POOL"
+    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL_TEST"
+
+
+NOLOG : 
+  CLASS_NAME : 
+    - "com.code5.fw.web.TransactionContext"
+  SERVICE_KEY :
+    - "loginView"
+    - "logout"

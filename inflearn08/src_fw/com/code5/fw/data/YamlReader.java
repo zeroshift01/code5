@@ -15,11 +15,10 @@ public class YamlReader {
 	 * @param n
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> getMap(String yamlName, String key) {
+	public static Map<String, Object> getMap(String yamlName) {
 
 		InputStream inputStream = null;
-		Map<String, Object> map = null;
+
 		try {
 
 			ClassLoader cl = YamlReader.class.getClassLoader();
@@ -29,7 +28,8 @@ public class YamlReader {
 			inputStream = cl.getResourceAsStream(yamlName);
 
 			Yaml yaml = new Yaml();
-			map = yaml.load(inputStream);
+			Map<String, Object> map = yaml.load(inputStream);
+			return map;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -43,17 +43,6 @@ public class YamlReader {
 				}
 			}
 		}
-
-		String[] keys = key.split("\\.");
-
-		for (int i = 0; i < keys.length; i++) {
-			map = (Map<String, Object>) map.get(keys[i]);
-			if (map == null) {
-				return null;
-			}
-		}
-
-		return map;
 
 	}
 }
