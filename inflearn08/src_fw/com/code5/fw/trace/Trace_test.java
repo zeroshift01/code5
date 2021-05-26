@@ -3,8 +3,6 @@ package com.code5.fw.trace;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.code5.fw.data.InitProperty;
-
 /**
  * @author zero
  *
@@ -73,8 +71,6 @@ public class Trace_test {
 	@Test
 	public void test_멀티쓰레드_로그기록() throws Exception {
 
-		InitProperty.init(Trace_test.class.getName(), true);
-		
 		TraceRunner traceRunner = TraceRunner.getTraceRunner();
 
 		Trace_test$[] t = new Trace_test$[10];

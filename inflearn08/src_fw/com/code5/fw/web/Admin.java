@@ -1,8 +1,9 @@
 package com.code5.fw.web;
 
+import java.util.ArrayList;
+
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
-import com.code5.fw.db.SqlRunner;
 
 /**
  * @author zero
@@ -39,11 +40,24 @@ public class Admin implements BizController, BizControllerStartExecute {
 	public String admin001() throws Exception {
 		Box box = BoxContext.getThread();
 
-		SqlRunner.getSqlRunner().reload();
-		MasterController.reload();
+		for (int i = 0; i < RELOAD_LIST.size(); i++) {
+			RELOAD_LIST.get(i).reload();
+		}
 
 		box.setAlertMsg("리로드가 수행되었습니다.");
 		return "nullView";
+	}
+
+	/**
+	 * 
+	 */
+	private static ArrayList<Reload> RELOAD_LIST = new ArrayList<Reload>();
+
+	/**
+	 * @param r
+	 */
+	public static void addReload(Reload r) {
+		RELOAD_LIST.add(r);
 	}
 
 }

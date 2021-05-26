@@ -9,13 +9,15 @@ import com.code5.fw.data.DateTime;
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
+import com.code5.fw.web.Admin;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.Reload;
 
 /**
  * @author zero
  *
  */
-public final class TraceRunner {
+public final class TraceRunner implements Reload {
 
 	/**
 	 * 
@@ -28,10 +30,10 @@ public final class TraceRunner {
 	 * 
 	 */
 	private TraceRunner() {
-		reload();
 		this.hostName = InitYaml.get().getHostName();
 		this.appName = InitYaml.get().getAppName();
-
+		reload();
+		Admin.addReload(this);
 	}
 
 	/**
@@ -50,7 +52,7 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String filePatten = null;
+	private String logFilePatten = null;
 
 	/**
 	 * 
@@ -75,7 +77,7 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private boolean isInit = false;
+	private boolean isLogDir = false;
 
 	/**
 	 * 
@@ -93,61 +95,12 @@ public final class TraceRunner {
 	private String appName = "";
 
 	/**
-	 * 
-	 */
-	public void init() {
-
-		if (this.isInit) {
-			return;
-		}
-		_init();
-	}
-
-	/**
-	 * 
-	 */
-	private synchronized void _init() {
-
-		try {
-
-			if (this.isInit) {
-				return;
-			}
-			this.isInit = true;
-
-			if (this.isWriteLog) {
-				if (this.isMulti) {
-					System.setOut(new TraceNotPrintStream());
-				}
-			}
-
-			String logDirx = InitProperty.LOG_DIR_PATTERN();
-
-			logDirx = logDirx.replace("[host]", this.host);
-			logDirx = logDirx.replace("[rnd]", this.rnd);
-			logDirx = logDirx.replace("[cntr]", this.cntr);
-
-			(new File(logDirx)).mkdir();
-
-			if (!(new File(logDirx)).isDirectory()) {
-				throw new Exception("not Directory [" + logDirx + "]");
-			}
-
-			this.logDir = logDirx;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-
-	/**
 	 * @param logKey
 	 * @return
 	 */
 	private String makeLogFileUrl(String logKey) {
 
-		if (this.logDir == null) {
+		if (this.isLogDir) {
 			return null;
 		}
 
@@ -156,12 +109,12 @@ public final class TraceRunner {
 			return null;
 		}
 
-		String logFilePatten = InitProperty.LOG_FILE_PATTERN();
+		String logFileName = this.logFilePatten;
 
-		logFilePatten = logFilePatten.replace("[rnd]", this.rnd);
-		logFilePatten = logFilePatten.replace("[name]", logKey);
+		logFileName = logFileName.replace("[rnd]", this.rnd);
+		logFileName = logFileName.replace("[name]", logKey);
 
-		return this.logDir + File.separatorChar + logFilePatten;
+		return this.logDir + File.separatorChar + logFileName;
 	}
 
 	/**
@@ -349,10 +302,6 @@ public final class TraceRunner {
 	 */
 	public void reload() {
 
-		this.logDir = InitYaml.get().s("LOG.DIR");
-
-		this.filePatten = InitYaml.get().s("LOG.FILE_PATTERN");
-
 		this.isWriteLog = InitYaml.get().is("WRITE_LOG");
 
 		noLogMap.clear();
@@ -376,12 +325,39 @@ public final class TraceRunner {
 			}
 		}
 
-		if (!(new File(this.logDir)).isDirectory()) {
-			(new Exception("not Directory [" + this.logDir + "]")).printStackTrace();
+		this.isLogDir = false;
+
+		this.logDir = InitYaml.get().s("LOG.DIR");
+		this.logFilePatten = InitYaml.get().s("LOG.FILE_PATTERN");
+
+		String checkLogDir = this.logDir;
+		File checkDir = new File(checkLogDir);
+
+		if (!checkDir.isDirectory()) {
+			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
 			return;
 		}
-		
-		if(this.hostName
+
+		checkLogDir = checkLogDir + File.separator + this.hostName;
+		checkDir = new File(checkLogDir);
+		checkDir.mkdir();
+
+		if (!checkDir.isDirectory()) {
+			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
+			return;
+		}
+
+		checkLogDir = checkLogDir + File.separator + this.appName;
+		checkDir = new File(checkLogDir);
+		checkDir.mkdir();
+
+		if (!checkDir.isDirectory()) {
+			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
+			return;
+		}
+
+		this.logDir = checkLogDir;
+		this.isLogDir = true;
 
 	}
 

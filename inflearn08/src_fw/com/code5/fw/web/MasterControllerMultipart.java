@@ -13,6 +13,7 @@ import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.db.Sql;
+import com.code5.fw.trace.Trace;
 
 /**
  * @author zero
@@ -20,7 +21,18 @@ import com.code5.fw.db.Sql;
  */
 public class MasterControllerMultipart extends MasterController implements BizController {
 
-	private static String UPLOAD_FILE_DIR_URL = InitYaml.get().s("UPLOAD_FILE_DIR.URL");
+	/**
+	 *
+	 */
+	public void reload() {
+		super.reload();
+		this.uploadFileDirUrl = InitYaml.get().s("UPLOAD_FILE_DIR.URL");
+	}
+
+	/**
+	 * 
+	 */
+	private String uploadFileDirUrl = InitYaml.get().s("UPLOAD_FILE_DIR.URL");
 
 	/**
 	 * 
@@ -82,7 +94,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 			String contentType = part.getContentType();
 
-			String fileUrl = UPLOAD_FILE_DIR_URL + File.separatorChar + fileId;
+			String fileUrl = this.uploadFileDirUrl + File.separatorChar + fileId;
 
 			part.write(fileUrl);
 			part.delete();
@@ -99,7 +111,6 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	 * @return
 	 */
 	private String createFileId() {
-
 		String RND = getRND();
 		return DateTime.getThisDTM() + "_" + getFileCnt() + "_" + RND;
 
@@ -127,7 +138,6 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		FILE_ID = box.getSessionB().getDataByToken(box.s(Box.KEY_SERVICE), FILE_ID);
 
 		box.put("FILE_ID", FILE_ID);
-		System.out.println(box.s("FILE_ID"));
 
 		UploadFileB uploadFileB = new UploadFileB(FILE_ID);
 
@@ -147,7 +157,8 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	/**
 	 *
 	 */
-	protected void endService() {
+	@Override
+	protected void closeAOP() {
 
 		try {
 
@@ -171,8 +182,11 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 			}
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Trace trace = new Trace(this);
+			trace.write(ex);
 		}
+
+		super.closeAOP();
 
 	}
 

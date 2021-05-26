@@ -28,19 +28,19 @@ import com.code5.fw.trace.TraceRunner;
  * @author zero
  *
  */
-public class MasterController extends HttpServlet {
+public class MasterController extends HttpServlet implements Reload {
 
 	/**
 	 * 
 	 */
-	public static String getRND() {
+	public String getRND() {
 		return RND;
 	}
 
 	/**
 	 * 
 	 */
-	private static String RND = MakeRnd.createRnd(8);
+	private String RND = MakeRnd.createRnd(8);
 
 	/**
 	 * 
@@ -56,10 +56,9 @@ public class MasterController extends HttpServlet {
 	 * @param request
 	 * @param response
 	 * @param box
-	 * @param THIS_JSP
+	 * @param JSP_KEY
 	 */
-	private void forward(HttpServletRequest request, HttpServletResponse response, Box box, String JSP_KEY)
-			throws ServletException {
+	private void forward(HttpServletRequest request, HttpServletResponse response, Box box, String JSP_KEY) {
 
 		try {
 
@@ -84,7 +83,6 @@ public class MasterController extends HttpServlet {
 
 		} catch (Exception ex) {
 			trace.write(ex);
-			throw new ServletException(ex);
 		}
 	}
 
@@ -94,7 +92,6 @@ public class MasterController extends HttpServlet {
 
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
-
 		Transaction transaction = Transaction.createTransaction(TRANSACTION_WAS);
 		TransactionContext.setThread(transaction);
 
@@ -116,43 +113,51 @@ public class MasterController extends HttpServlet {
 
 		} catch (Exception ex) {
 
-			try {
-				TransactionContext.rollback();
-			} catch (SQLException exx) {
-				trace.writeErr(exx);
-				box.put(Box.KEY_EXCEPTION, exx);
-			}
-
-			if (ex instanceof InvocationTargetException) {
-				ex = (Exception) ex.getCause();
-			}
-
-			if (ex instanceof LoginException) {
-				box.setAlertMsg("로그인이 필요합니다.");
-				forward(request, response, box, "loginView");
-				return;
-			}
-
-			trace.writeErr(ex);
-			box.put(Box.KEY_EXCEPTION, ex);
-
-			Box controller = box.getBox(Box.KEY_FW_CONTROLLER);
-			String ERR_JSP_KEY = controller.s("ERR_JSP_KEY");
-			if (!"".equals(ERR_JSP_KEY)) {
-				forward(request, response, box, ERR_JSP_KEY);
-				return;
-			}
-
-			forward(request, response, box, "errView");
+			forwardException(ex, request, response, box);
 
 		} finally {
 
-			endService();
+			closeAOP();
 
-			TransactionContext.removeThread();
-			BoxContext.removeThread();
 		}
 
+	}
+
+	/**
+	 * @param ex
+	 * @param request
+	 * @param response
+	 * @param box
+	 */
+	private void forwardException(Exception ex, HttpServletRequest request, HttpServletResponse response, Box box) {
+
+		Box controller = box.getBox(Box.KEY_FW_CONTROLLER);
+		String ERR_JSP_KEY = controller.s("ERR_JSP_KEY");
+		if ("".equals(ERR_JSP_KEY)) {
+			ERR_JSP_KEY = "errView";
+		}
+
+		try {
+			TransactionContext.rollback();
+		} catch (SQLException exx) {
+			box.put(Box.KEY_EXCEPTION, exx);
+			forward(request, response, box, ERR_JSP_KEY);
+			return;
+		}
+
+		if (ex instanceof InvocationTargetException) {
+			ex = (Exception) ex.getCause();
+		}
+
+		if (ex instanceof LoginException) {
+			box.setAlertMsg("로그인이 필요합니다.");
+			forward(request, response, box, "loginView");
+			return;
+		}
+
+		box.put(Box.KEY_EXCEPTION, ex);
+		forward(request, response, box, ERR_JSP_KEY);
+		return;
 	}
 
 	/**
@@ -172,7 +177,7 @@ public class MasterController extends HttpServlet {
 
 		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
-		Object biz = cacheBizControllerMap.get(KEY);
+		Object biz = BIZ_CONTROLLER_MAP.get(KEY);
 
 		if (biz == null) {
 
@@ -188,20 +193,20 @@ public class MasterController extends HttpServlet {
 				throw new AuthException();
 			}
 
-			cacheBizControllerMap.put(KEY, biz);
+			BIZ_CONTROLLER_MAP.put(KEY, biz);
 
 		}
 
-		Method method = cacheMethodMap.get(KEY + "." + METHOD_NAME);
+		Method method = METHOD_MAP.get(KEY + "." + METHOD_NAME);
 
 		if (method == null) {
 
 			method = biz.getClass().getDeclaredMethod(METHOD_NAME);
 
-			cacheMethodMap.put(KEY + "." + METHOD_NAME, method);
+			METHOD_MAP.put(KEY + "." + METHOD_NAME, method);
 		}
 
-		ServiceAnnotation sa = cacheServiceAnnotationMap.get(KEY + "." + METHOD_NAME);
+		ServiceAnnotation sa = SERVICE_ANNOTATION_MAP.get(KEY + "." + METHOD_NAME);
 
 		if (sa == null) {
 			sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
@@ -233,7 +238,7 @@ public class MasterController extends HttpServlet {
 
 			}
 
-			cacheServiceAnnotationMap.put(KEY + "." + METHOD_NAME, sa);
+			SERVICE_ANNOTATION_MAP.put(KEY + "." + METHOD_NAME, sa);
 		}
 
 		Object[] service = new Object[3];
@@ -350,12 +355,10 @@ public class MasterController extends HttpServlet {
 
 	}
 
-	private static String TRANSACTION_WAS = InitYaml.get().s("TRANSACTION.WAS");
-
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		InitYaml.get().setMulti(true);
-	}
+	/**
+	 * 
+	 */
+	private String TRANSACTION_WAS = InitYaml.get().s("TRANSACTION.WAS");
 
 	@Override
 	public void destroy() {
@@ -366,31 +369,42 @@ public class MasterController extends HttpServlet {
 	/**
 	 * 
 	 */
-	protected void endService() {
+	protected void closeAOP() {
 
+		TransactionContext.removeThread();
+		BoxContext.removeThread();
+	}
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		InitYaml.get().setMulti(true);
+		Admin.addReload(this);
 	}
 
 	/**
 	 * 
 	 */
-	public static void reload() {
-		MasterController.cacheServiceAnnotationMap.clear();
-		MasterController.cacheMethodMap.clear();
-		MasterController.cacheBizControllerMap.clear();
+	public void reload() {
+
+		MasterController.SERVICE_ANNOTATION_MAP.clear();
+		MasterController.METHOD_MAP.clear();
+		MasterController.BIZ_CONTROLLER_MAP.clear();
+
+		RND = MakeRnd.createRnd(8);
 	}
 
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, Object> cacheBizControllerMap = new ConcurrentHashMap<String, Object>();
+	private static ConcurrentHashMap<String, Object> BIZ_CONTROLLER_MAP = new ConcurrentHashMap<String, Object>();
 
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, Method> cacheMethodMap = new ConcurrentHashMap<String, Method>();
+	private static ConcurrentHashMap<String, Method> METHOD_MAP= new ConcurrentHashMap<String, Method>();
 
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, ServiceAnnotation> cacheServiceAnnotationMap = new ConcurrentHashMap<String, ServiceAnnotation>();
+	private static ConcurrentHashMap<String, ServiceAnnotation> SERVICE_ANNOTATION_MAP = new ConcurrentHashMap<String, ServiceAnnotation>();
 }

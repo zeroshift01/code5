@@ -19,13 +19,15 @@ import com.code5.fw.data.TableRecodeBase;
 import com.code5.fw.security.CryptPin;
 import com.code5.fw.security.DataCrypt;
 import com.code5.fw.trace.Trace;
+import com.code5.fw.web.Admin;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.Reload;
 
 /**
  * @author zero
  *
  */
-public class SqlRunner {
+public class SqlRunner implements Reload {
 
 	/**
 	 * 
@@ -41,6 +43,7 @@ public class SqlRunner {
 	 *
 	 */
 	SqlRunner() {
+		Admin.addReload(this);
 	}
 
 	/**
