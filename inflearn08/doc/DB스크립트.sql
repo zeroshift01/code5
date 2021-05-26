@@ -9,7 +9,7 @@ ID PRIMARY KEY
 , FAIL_CNT
 , LAST_LOGIN_DTM
 );
-INSERT INTO BZ_ID VALUES('id_A0','424ab5a6448f7b6aca9cd65c361b672c3d853622bd29001ee15bc5c50bcfa169','A0',0,'');
+INSERT INTO BZ_ID VALUES('id_A0','424ab5a6448f7b6aca9cd65c361b672c3d853622bd29001ee15bc5c50bcfa169','A0','0','');
 INSERT INTO BZ_ID VALUES('id_U0','337c1456c9b72fd82583e974ac3885295373b1968210cfc0cb5418c554935f4f','U0','0','');
 
 
@@ -42,9 +42,9 @@ KEY PRIMARY KEY
 , JSP
 , TMPL_JSP
 , TITLE);
-INSERT INTO FW_VIEW VALUES('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp',NULL,NULL);
+INSERT INTO FW_VIEW VALUES('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp','','');
+INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp','','');
+INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp','','');
 INSERT INTO FW_VIEW VALUES('emp00110','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00110.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 조회');
 INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
 INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
