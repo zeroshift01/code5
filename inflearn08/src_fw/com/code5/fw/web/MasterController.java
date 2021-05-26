@@ -370,7 +370,6 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	protected void closeAOP() {
-
 		TransactionContext.removeThread();
 		BoxContext.removeThread();
 	}
@@ -386,9 +385,9 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	public void reload() {
 
-		MasterController.SERVICE_ANNOTATION_MAP.clear();
-		MasterController.METHOD_MAP.clear();
-		MasterController.BIZ_CONTROLLER_MAP.clear();
+		SERVICE_ANNOTATION_MAP.clear();
+		METHOD_MAP.clear();
+		BIZ_CONTROLLER_MAP.clear();
 
 		RND = MakeRnd.createRnd(8);
 	}
@@ -401,7 +400,7 @@ public class MasterController extends HttpServlet implements Reload {
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, Method> METHOD_MAP= new ConcurrentHashMap<String, Method>();
+	private static ConcurrentHashMap<String, Method> METHOD_MAP = new ConcurrentHashMap<String, Method>();
 
 	/**
 	 * 
