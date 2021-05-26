@@ -12,13 +12,16 @@ public class RunCode5 {
 
 	public static void main(String[] args) throws Exception {
 
-		if (!InitYaml.IS_INIT()) {
+		InitYaml init = InitYaml.get();
+
+		if (!init.isRead()) {
 			return;
 		}
 
-		String webappDir = InitYaml.WEB_APP_DIR();
-		String baseDir = InitYaml.BASE_DIR();
-		int webPort = InitYaml.WEB_PORT();
+		String baseDir = init.s("RUN_CODE5.BASE_DIR");
+		int webPort = Integer.parseInt(init.s("RUN_CODE5.WEB_PORT"));
+
+		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
 
 		Tomcat tomcat = new Tomcat();
 

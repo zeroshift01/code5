@@ -9,7 +9,7 @@ import javax.servlet.http.Part;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
-import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.db.Sql;
@@ -19,6 +19,8 @@ import com.code5.fw.db.Sql;
  *
  */
 public class MasterControllerMultipart extends MasterController implements BizController {
+
+	private static String UPLOAD_FILE_DIR_URL = InitYaml.get().s("UPLOAD_FILE_DIR.URL");
 
 	/**
 	 * 
@@ -80,7 +82,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 			String contentType = part.getContentType();
 
-			String fileUrl = InitProperty.UPLOAD_FILE_DIR_URL() + File.separatorChar + fileId;
+			String fileUrl = UPLOAD_FILE_DIR_URL + File.separatorChar + fileId;
 
 			part.write(fileUrl);
 			part.delete();

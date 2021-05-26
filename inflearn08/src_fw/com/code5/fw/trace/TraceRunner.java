@@ -1,16 +1,11 @@
 package com.code5.fw.trace;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
-import com.code5.fw.data.InitProperty;
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
@@ -33,7 +28,10 @@ public final class TraceRunner {
 	 * 
 	 */
 	private TraceRunner() {
-		readTraceProperties();
+		reload();
+		this.hostName = InitYaml.get().getHostName();
+		this.appName = InitYaml.get().getAppName();
+
 	}
 
 	/**
@@ -44,12 +42,20 @@ public final class TraceRunner {
 		return TRACE;
 	}
 
+	/**
+	 * 
+	 */
 	private String logDir = null;
 
 	/**
 	 * 
 	 */
-	private boolean isWriteLog = InitYaml.get().is("WRITE_LOG");
+	private String filePatten = null;
+
+	/**
+	 * 
+	 */
+	private boolean isWriteLog = false;
 
 	/**
 	 * 
@@ -69,11 +75,6 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String cntr = "notCntr";
-
-	/**
-	 * 
-	 */
 	private boolean isInit = false;
 
 	/**
@@ -84,7 +85,12 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String host = "notHost";
+	private String hostName = "";
+
+	/**
+	 * 
+	 */
+	private String appName = "";
 
 	/**
 	 * 
@@ -109,11 +115,6 @@ public final class TraceRunner {
 			}
 			this.isInit = true;
 
-			InitYaml.get().is("WRITE_LOG");
-			this.cntr = InitProperty.CNTR();
-			this.isMulti = InitProperty.IS_MULTI();
-			this.host = InitProperty.HOST();
-
 			if (this.isWriteLog) {
 				if (this.isMulti) {
 					System.setOut(new TraceNotPrintStream());
@@ -121,17 +122,6 @@ public final class TraceRunner {
 			}
 
 			String logDirx = InitProperty.LOG_DIR_PATTERN();
-
-			try {
-				String hostName = InetAddress.getLocalHost().getHostName();
-				if (hostName.contains(".")) {
-					throw new Exception("error hostName [" + hostName + "]");
-				}
-
-				this.host = hostName;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
 
 			logDirx = logDirx.replace("[host]", this.host);
 			logDirx = logDirx.replace("[rnd]", this.rnd);
@@ -337,11 +327,11 @@ public final class TraceRunner {
 
 		String serviceKey = box.s(Box.KEY_SERVICE);
 
-		if (noLogMap.containsKey("noLog.serviceKey." + serviceKey)) {
+		if (noLogMap.containsKey("NOLOG.SERVICE_KEY." + serviceKey)) {
 			return true;
 		}
 
-		if (noLogMap.containsKey("noLog.className." + className)) {
+		if (noLogMap.containsKey("NOLOG.CLASS_NAME." + className)) {
 			return true;
 		}
 
@@ -357,50 +347,42 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private void readTraceProperties() {
-
-		BufferedReader br = null;
-		try {
-
-			String url = InitProperty.TRACE_CONFIG_URL();
-			if (url == null) {
-				return;
-			}
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(url)));
-
-			for (int i = 0; i < 10000; i++) {
-				String s = br.readLine();
-				if (s == null) {
-					break;
-				}
-
-				s = s.trim();
-
-				if ("".equals(s)) {
-					continue;
-				}
-
-				if (s.startsWith("#")) {
-					continue;
-				}
-
-				if (s.startsWith("noLog")) {
-					noLogMap.put(s, "true");
-				}
-
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	/**
-	 * 
-	 */
 	public void reload() {
+
+		this.logDir = InitYaml.get().s("LOG.DIR");
+
+		this.filePatten = InitYaml.get().s("LOG.FILE_PATTERN");
+
+		this.isWriteLog = InitYaml.get().is("WRITE_LOG");
+
 		noLogMap.clear();
-		readTraceProperties();
+
+		String[] ss = InitYaml.get().ss("NOLOG.CLASS_NAME");
+		for (int i = 0; i < ss.length; i++) {
+			noLogMap.put("NOLOG.CLASS_NAME." + ss[i], "");
+		}
+
+		ss = InitYaml.get().ss("NOLOG.SERVICE_KEY");
+		for (int i = 0; i < ss.length; i++) {
+			noLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "");
+		}
+
+		if (this.isWriteLog) {
+			if (this.isMulti) {
+
+				if (!(System.out instanceof TraceNotPrintStream)) {
+					System.setOut(new TraceNotPrintStream());
+				}
+			}
+		}
+
+		if (!(new File(this.logDir)).isDirectory()) {
+			(new Exception("not Directory [" + this.logDir + "]")).printStackTrace();
+			return;
+		}
+		
+		if(this.hostName
+
 	}
 
 	/**

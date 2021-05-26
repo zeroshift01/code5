@@ -5,10 +5,10 @@ RUN_CODE5:
 
 
 LOG : 
-  LOG_DIR_PATTERN : 
-    DEFAULT : "C:/public/logs/[host]/[cntr]"
-    PRHOST : "/logs/[host]/[cntr]"
-  LOG_FILE_PATTERN : "[rnd].[name].log"
+  DIR : 
+    DEFAULT : "C:/public/logs"
+    PRHOST : "/logs"
+  FILE_PATTERN : "[rnd].[name].log"
   WRITE_LOG : 
     DEFAULT : "false"
     PRHOST : "true"
@@ -20,6 +20,8 @@ UPLOAD_FILE_DIR :
   URL : 
     DEFAULT : "C:/public/file"
     PRHOST : "C:/public/file"
+
+
 
 TRANSACTION :
   WAS : 

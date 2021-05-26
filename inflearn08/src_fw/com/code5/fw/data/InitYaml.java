@@ -3,6 +3,7 @@ package com.code5.fw.data;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author zero
@@ -54,6 +55,30 @@ public class InitYaml {
 	/**
 	 * 
 	 */
+	private String appName = null;
+
+	/**
+	 * @return
+	 */
+	public String getAppName() {
+		return appName;
+	}
+
+	/**
+	 * @return
+	 */
+	public void setAppName(String appName) {
+
+		if (appName != null) {
+			return;
+		}
+		this.appName = appName;
+
+	}
+
+	/**
+	 * 
+	 */
 	private InitYaml() {
 
 		this.map = YamlReader.getMap("init");
@@ -72,6 +97,9 @@ public class InitYaml {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
+		Properties properties = System.getProperties();
+		this.appName = properties.getProperty("CODE5.APP_NAME");
 
 		isRead = true;
 	}
@@ -172,4 +200,30 @@ public class InitYaml {
 		}
 		return false;
 	}
+
+	/**
+	 * 
+	 */
+	boolean isMulti = false;
+
+	/**
+	 * @return
+	 */
+	public boolean isMulti() {
+		return isMulti;
+	}
+
+	/**
+	 * @param isMulti
+	 * @throws Exception
+	 */
+	public void setMulti(boolean isMulti) {
+
+		if (isMulti) {
+			return;
+		}
+
+		this.isMulti = isMulti;
+	}
+
 }

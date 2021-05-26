@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
-import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
@@ -91,24 +92,10 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		try {
-
-			InitProperty.init(request);
-
-			if (!InitProperty.IS_INIT_OK()) {
-				throw new ServletException();
-			}
-
-		} catch (Exception ex) {
-			throw new ServletException(ex);
-		}
-
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
-		
-		String tx = InitProperty.TRANSACTION_WAS();
-		Transaction transaction = Transaction.createTransaction(tx);
+		Transaction transaction = Transaction.createTransaction(TRANSACTION_WAS);
 		TransactionContext.setThread(transaction);
 
 		try {
@@ -361,6 +348,13 @@ public class MasterController extends HttpServlet {
 			box.put(Box.KEY_SESSIONB, sessionB);
 		}
 
+	}
+
+	private static String TRANSACTION_WAS = InitYaml.get().s("TRANSACTION.WAS");
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		InitYaml.get().setMulti(true);
 	}
 
 	@Override
