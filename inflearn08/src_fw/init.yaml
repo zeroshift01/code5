@@ -27,11 +27,11 @@ UPLOAD_FILE_DIR :
 
 TRANSACTION :
   WAS : 
-    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_POOL"
-    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL_TEST"
+    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL"
   JOB :
-    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_POOL"
-    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL_TEST"
+    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRHOST : "com.code5.fw.web.Transaction_SQLITE_JDBC_CODE5"
 
 
 NOLOG : 
