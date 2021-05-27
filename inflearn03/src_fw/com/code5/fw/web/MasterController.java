@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.code5.biz.welcome.Welcome;
+import com.biz.welcome.Welcome;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_POOL;
 
 /**
  * @author zero
@@ -21,15 +21,17 @@ import com.code5.fw.db.Transaction_SQLITE_POOL;
  */
 public class MasterController extends HttpServlet {
 
-	// TransactionContext 를 사용 Transaction 객체를 비즈니스 로직에 전달
-	// commit 과 rollback 기준 정의
+	/**
+	 * 
+	 */
+	private String transationWas = null;
 
-	// conn 객체 생명주기 확인
-	// new conn 
-	// conn.commit()
-	// conn.rollback()
-	// conn.close()
-	//
+	/**
+	 *
+	 */
+	public void init() throws ServletException {
+		transationWas = InitYaml.get().s("TRANSACTION.WAS");
+	}
 
 	/**
 	 * 
@@ -43,7 +45,7 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
-		Transaction transaction = new Transaction_SQLITE_POOL();
+		Transaction transaction = Transaction.createTransaction(transationWas);
 		TransactionContext.setThread(transaction);
 
 		try {
@@ -52,10 +54,10 @@ public class MasterController extends HttpServlet {
 
 			String jsp = welcome.execute();
 
-			TransactionContext.commit();
-
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jsp);
 			dispatcher.forward(request, response);
+
+			TransactionContext.commit();
 
 		} catch (Exception ex) {
 
@@ -70,7 +72,6 @@ public class MasterController extends HttpServlet {
 		} finally {
 
 			TransactionContext.removeThread();
-
 			BoxContext.removeThread();
 		}
 

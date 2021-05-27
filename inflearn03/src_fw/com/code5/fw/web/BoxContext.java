@@ -12,13 +12,6 @@ public class BoxContext {
 	/**
 	 * 
 	 */
-	private BoxContext() {
-
-	}
-
-	/**
-	 * 
-	 */
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
 	/**
@@ -32,7 +25,7 @@ public class BoxContext {
 	}
 
 	/**
-	 * 
+	 * 	
 	 */
 	static void removeThread() {
 		TL.remove();

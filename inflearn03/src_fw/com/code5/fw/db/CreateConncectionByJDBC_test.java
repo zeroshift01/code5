@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author zero
  *
  */
-public class CreateConncectionByJDBC {
+public class CreateConncectionByJDBC_test {
 
 	/**
 	 * @return

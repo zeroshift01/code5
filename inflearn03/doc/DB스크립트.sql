@@ -1,5 +1,6 @@
-cd C:\public\sqlite
-sqlite3 C:\public\sqlite\code5.db
+del C:\public\code5\doc\code5.db
+cd C:\public\lib\sqlite
+sqlite3 C:\public\code5\doc\code5.db
 
 DROP TABLE EMP ;
 
@@ -13,18 +14,3 @@ EMP_N PRIMARY KEY
 INSERT INTO EMP VALUES ('N01','ABC','','D01');
 INSERT INTO EMP VALUES ('N02','ZZZ','','D01');
 INSERT INTO EMP VALUES ('N03','ABC','','D02');
-
-
-
-DROP TABLE FW_SQL;
-
-CREATE TABLE FW_SQL (
-KEY PRIMARY KEY
-, SQL
-);
-
-
-INSERT INTO FW_SQL VALUES ('EMP001D_01', 'SELECT EMP_N, EMP_NM, HP_N, DEPT_N FROM EMP WHERE EMP_NM = [EMP_NM] ORDER BY EMP_N');
-
-INSERT INTO FW_SQL VALUES ('EMP001D_02', 'UPDATE EMP SET HP_N = [HP_N] WHERE EMP_N =[EMP_N]' );
-

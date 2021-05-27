@@ -96,7 +96,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
-		Transaction transaction = Transaction.createTransaction(TRANSACTION_WAS);
+		Transaction transaction = Transaction.createTransaction(transationWas);
 		TransactionContext.setThread(transaction);
 
 		try {
@@ -226,7 +226,7 @@ public class MasterController extends HttpServlet implements Reload {
 		ServiceAnnotation sa = (ServiceAnnotation) getCache(SERVICE_ANNOTATION_MAP, KEY + "." + METHOD_NAME);
 
 		if (sa == null) {
-			
+
 			sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
 
 			if (sa == null) {
@@ -376,7 +376,7 @@ public class MasterController extends HttpServlet implements Reload {
 	/**
 	 * 
 	 */
-	private String TRANSACTION_WAS = InitYaml.get().s("TRANSACTION.WAS");
+	private String transationWas = InitYaml.get().s("TRANSACTION.WAS");
 
 	@Override
 	public void destroy() {
@@ -396,6 +396,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 *
 	 */
 	public void init() throws ServletException {
+		reload();
 		Admin.addReload(this);
 	}
 
@@ -404,11 +405,13 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	public void reload() {
 
+		this.transationWas = InitYaml.get().s("TRANSACTION.WAS");
+
 		SERVICE_ANNOTATION_MAP.clear();
 		METHOD_MAP.clear();
 		BIZ_CONTROLLER_MAP.clear();
 
-		RND = MakeRnd.createRnd(8);
+		this.RND = MakeRnd.createRnd(8);
 	}
 
 	/**

@@ -2,8 +2,8 @@ package com.code5.fw.web;
 
 import java.sql.SQLException;
 
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 import com.code5.fw.trace.Trace;
 
 /**
@@ -11,6 +11,11 @@ import com.code5.fw.trace.Trace;
  *
  */
 public class TransactionContext {
+
+	/**
+	 * 
+	 */
+	private static String TRANSACTION_DEFAULT = InitYaml.get().s("TRANSACTION.JOB");
 
 	/**
 	 * 
@@ -75,10 +80,9 @@ public class TransactionContext {
 
 	/**
 	 * @return
-	 * 
 	 */
 	private static Transaction createDefaultTransaction() {
-		return new Transaction_SQLITE_JDBC();
+		return Transaction.createTransaction(TRANSACTION_DEFAULT);
 	}
 
 	/**
