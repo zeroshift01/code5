@@ -1,4 +1,4 @@
-package com.code5.biz.login;
+package com.biz.login;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.web.BizController;

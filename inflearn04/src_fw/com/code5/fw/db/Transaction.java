@@ -66,10 +66,7 @@ public abstract class Transaction {
 		}
 
 		this.close();
-
-		if (!this.conn.getAutoCommit()) {
-			this.conn.commit();
-		}
+		this.conn.commit();
 
 	}
 
@@ -83,10 +80,7 @@ public abstract class Transaction {
 		}
 
 		this.close();
-
-		if (!this.conn.getAutoCommit()) {
-			this.conn.rollback();
-		}
+		this.conn.rollback();
 
 	}
 
@@ -184,4 +178,24 @@ public abstract class Transaction {
 		conn.setAutoCommit(false);
 	}
 
+	/**
+	 * @param tx
+	 * @return
+	 */
+	public static Transaction createTransaction(String tx) {
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(tx)) {
+			return new Transaction_SQLITE_POOL();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5_DEV();
+		}
+
+		throw new RuntimeException();
+	}
 }

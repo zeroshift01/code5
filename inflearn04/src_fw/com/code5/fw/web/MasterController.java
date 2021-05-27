@@ -13,14 +13,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
 /**
  * @author zero
  *
  */
 public class MasterController extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	private String transationWas = null;
+
+	/**
+	 *
+	 */
+	public void init() throws ServletException {
+		transationWas = InitYaml.get().s("TRANSACTION.WAS");
+	}
 
 	/**
 	 * 
@@ -34,12 +46,13 @@ public class MasterController extends HttpServlet {
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
-		Transaction transaction = new Transaction_SQLITE_JDBC();
+		Transaction transaction = Transaction.createTransaction(transationWas);
 		TransactionContext.setThread(transaction);
 
 		try {
 
-			String KEY = request.getPathInfo().substring(1);
+			String pathInfo = request.getPathInfo();
+			String KEY = pathInfo.substring(1);
 
 			String JSP_KEY = execute(KEY);
 
@@ -47,10 +60,10 @@ public class MasterController extends HttpServlet {
 			Box view = dao.getView(JSP_KEY);
 			String JSP = view.s("JSP");
 
-			TransactionContext.commit();
-
 			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
+
+			TransactionContext.commit();
 
 		} catch (Exception ex) {
 
@@ -87,7 +100,6 @@ public class MasterController extends HttpServlet {
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
-		// TODO [4]
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
 
@@ -102,7 +114,6 @@ public class MasterController extends HttpServlet {
 
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 
-		// TODO [5]
 		String JSP_KEY = (String) method.invoke(instance);
 		return JSP_KEY;
 

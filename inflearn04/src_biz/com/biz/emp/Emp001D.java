@@ -1,9 +1,9 @@
-package com.code5.biz.emp;
+package com.biz.emp;
 
 import java.sql.SQLException;
 
 import com.code5.fw.data.Table;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.db.Sql;
 
 /**
  * @author zero
@@ -14,7 +14,7 @@ public class Emp001D {
 	/**
 	 * 
 	 */
-	private SqlRunner sql = SqlRunner.getSqlRunner();
+	private Sql sql = new Sql(this);
 
 	/**
 	 * @return

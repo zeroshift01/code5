@@ -1,4 +1,4 @@
-package com.code5.biz.emp;
+package com.biz.emp;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;

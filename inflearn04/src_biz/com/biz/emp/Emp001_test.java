@@ -1,21 +1,22 @@
-package com.code5.biz.emp;
+package com.biz.emp;
+
+import org.junit.Test;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
-import junit.framework.TestCase;
-
 /**
  * @author zero
  *
  */
-public class Emp001_test extends TestCase {
+public class Emp001_test {
 
 	/**
 	 * @throws Exception
 	 */
-	public void xtest_emp00110() throws Exception {
+	@Test
+	public void test_emp00110() throws Exception {
 
 		Box box = BoxContext.getThread();
 		box.put("EMP_NM", "ABC");
@@ -28,6 +29,7 @@ public class Emp001_test extends TestCase {
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_emp00120() throws Exception {
 
 		Box box = BoxContext.getThread();

@@ -1,29 +1,35 @@
 package com.code5.fw.db;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
-import junit.framework.TestCase;
-
 /**
  * @author zero
  *
  */
-public class SqlRunner_test extends TestCase {
+public class SqlRunner_test {
 
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_01() throws Exception {
 
 		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.getThread();
+
 		box.put("EMP_NM", "ABC");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		Table table = sql.getTable("EMP001D_01");
+		String key = "com.code5.fw.db.SqlRunner_test.SQLRUNNER_TEST_01";
+		Table table = sql.getTable(transaction, box, key);
 
 		assertEquals(2, table.size());
 
@@ -41,15 +47,19 @@ public class SqlRunner_test extends TestCase {
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_02() throws Exception {
 
 		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.getThread();
+
 		box.put("EMP_N", "N01");
 		box.put("HP_N", "010-2222-3333");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		int i = sql.executeSql("EMP001D_02");
+		String key = "com.code5.fw.db.SqlRunner_test.SQLRUNNER_TEST_02";
+		int i = sql.executeSql(transaction, box, key);
 
 		assertEquals(1, i);
 
