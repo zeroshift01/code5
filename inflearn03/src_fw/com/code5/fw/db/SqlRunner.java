@@ -196,7 +196,6 @@ public class SqlRunner {
 			String thisData = box.s(thisKey);
 			ps.setString(i + 1, thisData);
 
-			// [8]
 			exeSql = exeSql.replaceFirst("\\?", "'" + thisData + "'");
 		}
 
@@ -221,8 +220,7 @@ public class SqlRunner {
 			for (int i = 0; i < cols.length; i++) {
 				recode[i] = rs.getString(cols[i]);
 			}
-
-			// [9]
+			
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;
