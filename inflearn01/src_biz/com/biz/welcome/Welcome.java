@@ -20,7 +20,7 @@ public class Welcome {
 
 		request.setAttribute("MSG", MSG);
 
-		return "/WEB-INF/classes/com/code5/biz/welcome/welcome.jsp";
+		return "/WEB-INF/classes/com/biz/welcome/jsp/welcome.jsp";
 	}
 
 }
