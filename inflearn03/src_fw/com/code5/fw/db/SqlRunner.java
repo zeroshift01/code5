@@ -1,5 +1,8 @@
 package com.code5.fw.db;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -8,23 +11,12 @@ import java.util.ArrayList;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
-import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
  *
  */
 public class SqlRunner {
-
-	// 싱글톤 패턴
-
-	// Table getTable(String key)
-	// int executeSql(String key)
-
-	// 오버로딩(overloading), AOP 관점 기능 확장
-
-	// SqlRunnerB 어쩔수 없는 내용 결합이 필요할 땐 사용 범위를 한정
 
 	/**
 	 * 
@@ -45,37 +37,98 @@ public class SqlRunner {
 	}
 
 	/**
-	 * 
-	 * @param transaction
-	 * @param SQL
+	 * @param key
 	 * @return
+	 * @throws SQLException
 	 */
-	String getSQL(Transaction transaction, String KEY) throws SQLException {
+	SqlRunnerB getSqlRunnerBStep1(String key) throws SQLException {
 
-		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE KEY = ?");
-		ps.setString(1, KEY);
+		InputStream is = null;
+		try {
 
-		ResultSet rs = transaction.getResultSet(ps);
+			key = key.replaceAll("\\.", "/");
+			int p = key.lastIndexOf("/");
 
-		if (!rs.next()) {
-			throw new RuntimeException();
+			String sqlUrl = key.substring(0, p) + ".sql";
+			String sqlKey = key.substring(p + 1);
+
+			String[] sqlKeys = sqlKey.split(",");
+			String findSqlKey = sqlKeys[0];
+
+			ClassLoader cl = SqlRunner.class.getClassLoader();
+
+			is = cl.getResourceAsStream(sqlUrl);
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+
+			StringBuffer sql = new StringBuffer();
+			boolean findSql = false;
+			while (true) {
+
+				String str = br.readLine();
+
+				if (str == null) {
+					break;
+				}
+
+				if (str.indexOf("--[[[") >= 0) {
+
+					if (str.indexOf(findSqlKey) >= 0) {
+						findSql = true;
+						continue;
+					}
+				}
+
+				if (str.indexOf("--]]]") >= 0) {
+					if (findSql) {
+						break;
+					}
+
+				}
+
+				if (findSql) {
+					sql.append(str + "\n");
+				}
+
+			}
+
+			String sqlOrg = sql.toString();
+			sqlOrg = sqlOrg.trim();
+			if (sqlOrg.endsWith(";")) {
+				sqlOrg = sqlOrg.substring(0, sqlOrg.length() - 1);
+			}
+
+			SqlRunnerB sqlRunnerB = new SqlRunnerB();
+			sqlRunnerB.sqlOrg = sqlOrg;
+			sqlRunnerB.key = key;
+
+			return sqlRunnerB;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new SQLException(ex.getMessage());
+		} finally {
+
+			if (is != null) {
+				try {
+					is.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+
 		}
-
-		String sql = rs.getString("SQL");
-
-		transaction.close();
-
-		return sql;
 
 	}
 
 	/**
-	 * 
-	 * @param sql
+	 * @param sqlRunnerB
 	 * @return
 	 * @throws SQLException
 	 */
-	SqlRunnerB getSqlRunnerB(String sql) throws SQLException {
+	SqlRunnerB getSqlRunnerBStep2(SqlRunnerB sqlRunnerB) throws SQLException {
+
+		String sql = sqlRunnerB.sqlOrg;
 
 		ArrayList<String> param = new ArrayList<String>();
 
@@ -100,26 +153,21 @@ public class SqlRunner {
 			fromIndex = ep;
 		}
 
-		SqlRunnerB sqlRunnerB = new SqlRunnerB();
 		sqlRunnerB.param = param;
 		sqlRunnerB.sql = sqlB.toString();
-		sqlRunnerB.sqlOrg = sql;
 
 		return sqlRunnerB;
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param sql
+	 * @param key
 	 * @return
+	 * @throws SQLException
 	 */
-	SqlRunnerB getSqlRunnerB(Transaction transaction, String KEY) throws SQLException {
+	SqlRunnerB getSqlRunnerB(String key) throws SQLException {
 
-		String sql = getSQL(transaction, KEY);
-
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(sql);
-		sqlRunnerB.key = KEY;
+		SqlRunnerB sqlRunnerB = getSqlRunnerBStep1(key);
+		sqlRunnerB = getSqlRunnerBStep2(sqlRunnerB);
 
 		System.out.println(sqlRunnerB.sqlOrg);
 		System.out.println(sqlRunnerB.sql);
@@ -137,7 +185,7 @@ public class SqlRunner {
 	 */
 	public Table getTable(Transaction transaction, Box box, String key) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, key);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(key);
 
 		PreparedStatement ps = transaction.prepareStatement(sqlRunnerB.sql);
 
@@ -187,32 +235,6 @@ public class SqlRunner {
 	}
 
 	/**
-	 * @param key
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTable(String key) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-
-		return getTable(transaction, box, key);
-	}
-
-	/**
-	 * @param key
-	 * @param box
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTable(String key, Box box) throws SQLException {
-
-		Transaction transaction = TransactionContext.getThread();
-
-		return getTable(transaction, box, key);
-	}
-
-	/**
 	 * @param transaction
 	 * @param box
 	 * @param key
@@ -221,7 +243,7 @@ public class SqlRunner {
 	 */
 	public int executeSql(Transaction transaction, Box box, String key) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = getSqlRunnerB(transaction, key);
+		SqlRunnerB sqlRunnerB = getSqlRunnerB(key);
 
 		transaction.setAutoCommitFalse();
 
@@ -246,28 +268,6 @@ public class SqlRunner {
 		transaction.close();
 
 		return i;
-	}
-
-	/**
-	 * @param key
-	 * @return
-	 * @throws SQLException
-	 */
-	public int executeSql(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
-		return executeSql(transaction, box, key);
-	}
-
-	/**
-	 * @param key
-	 * @param box
-	 * @return
-	 * @throws SQLException
-	 */
-	public int executeSql(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		return executeSql(transaction, box, key);
 	}
 
 }

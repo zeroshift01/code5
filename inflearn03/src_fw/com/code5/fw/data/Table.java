@@ -118,6 +118,15 @@ public class Table {
 
 	/**
 	 * @param colName
+	 * 
+	 *                stub
+	 */
+	public void addCol(String colName, String[] xx) {
+
+	}
+
+	/**
+	 * @param colName
 	 * @param row
 	 * @return
 	 */

@@ -52,7 +52,7 @@ public class EmpByJDBC {
 
 		transaction.closeConnection();
 
-		transaction = new Transaction_SQLITE_JDBC_OOP();
+		transaction = new Transaction_SQLITE_JDBC_CODE5_DEV();
 
 		Box box = BoxContext.getThread();
 		box.put("EMP_NM", EMP_NM);

@@ -192,14 +192,14 @@ public abstract class Transaction {
 			return new Transaction_SQLITE_POOL();
 		}
 
-		if ("com.code5.fw.db.Transaction_SQLITE_POOL_TEST".equals(tx)) {
-			return new Transaction_SQLITE_POOL_TEST();
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5();
 		}
 
-		if ("com.code5.fw.db.Transaction_SQLITE_POOL_PRODUCT".equals(tx)) {
-			return new Transaction_SQLITE_POOL_PRODUCT();
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5_DEV();
 		}
 
-		return new Transaction_SQLITE_JDBC();
+		throw new RuntimeException();
 	}
 }

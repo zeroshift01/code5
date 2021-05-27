@@ -16,14 +16,6 @@ import java.util.ArrayList;
  */
 public abstract class Transaction {
 
-	// conn 생성 -> createConnection, 늦은 객체 생성
-	// SQL 기능에 필요한 자원 생성 -> PrepareStatement, Statement, ResultSet
-	// conn 반납 -> SQL 기능에 사용된 자원 반납, close
-
-	// conn.setAutoCommit(false); -> setAutoCommitFalse
-	// conn.commit(); -> commit
-	// conn.rollback(); -> rollback
-
 	/**
 	 * 
 	 */
@@ -186,4 +178,24 @@ public abstract class Transaction {
 		conn.setAutoCommit(false);
 	}
 
+	/**
+	 * @param tx
+	 * @return
+	 */
+	public static Transaction createTransaction(String tx) {
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(tx)) {
+			return new Transaction_SQLITE_POOL();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5_DEV();
+		}
+
+		throw new RuntimeException();
+	}
 }
