@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +28,11 @@ import com.code5.fw.trace.TraceRunner;
  *
  */
 public class MasterController extends HttpServlet implements Reload {
+
+	/**
+	 * 
+	 */
+	private static boolean isCache = InitYaml.get().isCache();
 
 	/**
 	 * 
@@ -161,6 +165,19 @@ public class MasterController extends HttpServlet implements Reload {
 	}
 
 	/**
+	 * @param hm
+	 * @param KEY
+	 * @return
+	 */
+	private static Object getCache(ConcurrentHashMap<String, ?> hm, String KEY) {
+
+		if (!isCache) {
+			return null;
+		}
+		return hm.get(KEY);
+	}
+
+	/**
 	 * @param KEY
 	 * @return
 	 * @throws Exception
@@ -177,7 +194,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
-		Object biz = BIZ_CONTROLLER_MAP.get(KEY);
+		Object biz = getCache(BIZ_CONTROLLER_MAP, KEY);
 
 		if (biz == null) {
 
@@ -197,7 +214,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		}
 
-		Method method = METHOD_MAP.get(KEY + "." + METHOD_NAME);
+		Method method = (Method) getCache(METHOD_MAP, KEY + "." + METHOD_NAME);
 
 		if (method == null) {
 
@@ -206,9 +223,10 @@ public class MasterController extends HttpServlet implements Reload {
 			METHOD_MAP.put(KEY + "." + METHOD_NAME, method);
 		}
 
-		ServiceAnnotation sa = SERVICE_ANNOTATION_MAP.get(KEY + "." + METHOD_NAME);
+		ServiceAnnotation sa = (ServiceAnnotation) getCache(SERVICE_ANNOTATION_MAP, KEY + "." + METHOD_NAME);
 
 		if (sa == null) {
+			
 			sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
 
 			if (sa == null) {
@@ -374,9 +392,10 @@ public class MasterController extends HttpServlet implements Reload {
 		BoxContext.removeThread();
 	}
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		InitYaml.get().setMulti(true);
+	/**
+	 *
+	 */
+	public void init() throws ServletException {
 		Admin.addReload(this);
 	}
 

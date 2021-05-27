@@ -30,8 +30,10 @@ public final class TraceRunner implements Reload {
 	 * 
 	 */
 	private TraceRunner() {
-		this.hostName = InitYaml.get().getHostName();
-		this.appName = InitYaml.get().getAppName();
+
+		InitYaml init = InitYaml.get();
+		this.hostName = init.getHostName();
+		this.appName = init.getAppName();
 		reload();
 		Admin.addReload(this);
 	}
@@ -87,12 +89,12 @@ public final class TraceRunner implements Reload {
 	/**
 	 * 
 	 */
-	private String hostName = "";
+	private String hostName = null;
 
 	/**
 	 * 
 	 */
-	private String appName = "";
+	private String appName = null;
 
 	/**
 	 * @param logKey
@@ -100,7 +102,7 @@ public final class TraceRunner implements Reload {
 	 */
 	private String makeLogFileUrl(String logKey) {
 
-		if (this.isLogDir) {
+		if (!this.isLogDir) {
 			return null;
 		}
 
@@ -302,18 +304,20 @@ public final class TraceRunner implements Reload {
 	 */
 	public void reload() {
 
-		this.isWriteLog = InitYaml.get().is("WRITE_LOG");
+		this.isMulti = InitYaml.get().is("LOG.MULTI");
+
+		this.isWriteLog = InitYaml.get().is("LOG.WRITE_LOG");
 
 		noLogMap.clear();
 
 		String[] ss = InitYaml.get().ss("NOLOG.CLASS_NAME");
 		for (int i = 0; i < ss.length; i++) {
-			noLogMap.put("NOLOG.CLASS_NAME." + ss[i], "");
+			noLogMap.put("NOLOG.CLASS_NAME." + ss[i], "NOLOG");
 		}
 
 		ss = InitYaml.get().ss("NOLOG.SERVICE_KEY");
 		for (int i = 0; i < ss.length; i++) {
-			noLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "");
+			noLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "NOLOG");
 		}
 
 		if (this.isWriteLog) {
@@ -338,12 +342,24 @@ public final class TraceRunner implements Reload {
 			return;
 		}
 
+		if (this.hostName == null) {
+			this.logDir = checkLogDir;
+			this.isLogDir = true;
+			return;
+		}
+
 		checkLogDir = checkLogDir + File.separator + this.hostName;
 		checkDir = new File(checkLogDir);
 		checkDir.mkdir();
 
 		if (!checkDir.isDirectory()) {
 			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
+			return;
+		}
+
+		if (this.appName == null) {
+			this.logDir = checkLogDir;
+			this.isLogDir = true;
 			return;
 		}
 

@@ -1,6 +1,7 @@
 package com.code5.fw.web;
 
 import java.net.Socket;
+import java.util.Properties;
 
 import org.apache.catalina.startup.Tomcat;
 
@@ -12,6 +13,10 @@ import com.code5.fw.data.InitYaml;
  */
 public class RunCode5 {
 
+	/**
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 
 		InitYaml init = InitYaml.get();
@@ -20,8 +25,6 @@ public class RunCode5 {
 			return;
 		}
 
-		init.setAppName(RunCode5.class.getName());
-
 		String baseDir = init.s("RUN_CODE5.BASE_DIR");
 		int webPort = Integer.parseInt(init.s("RUN_CODE5.WEB_PORT"));
 
@@ -29,6 +32,9 @@ public class RunCode5 {
 			System.out.println(webPort + " 는 사용중입니다.");
 			return;
 		}
+
+		Properties properties = System.getProperties();
+		properties.setProperty("CODE5.APP_NAME", "CODE5");
 
 		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
 

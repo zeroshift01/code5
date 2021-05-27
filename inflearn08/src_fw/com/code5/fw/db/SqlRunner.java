@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.DateTime;
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.TableRecodeBase;
@@ -27,6 +28,11 @@ import com.code5.fw.web.Reload;
  *
  */
 public class SqlRunner implements Reload {
+
+	/**
+	 * 
+	 */
+	private boolean isCache = InitYaml.get().isCache();
 
 	/**
 	 * 
@@ -118,6 +124,9 @@ public class SqlRunner implements Reload {
 
 			String sqlOrg = sql.toString();
 			sqlOrg = sqlOrg.trim();
+			if (sqlOrg.endsWith(";")) {
+				sqlOrg = sqlOrg.substring(0, sqlOrg.length() - 1);
+			}
 
 			SqlRunnerB sqlRunnerB = new SqlRunnerB();
 			sqlRunnerB.sqlOrg = sqlOrg;
@@ -257,7 +266,9 @@ public class SqlRunner implements Reload {
 
 		SqlRunnerB sqlRunnerB = cacheSqlMap.get(key);
 		if (sqlRunnerB != null) {
-			return sqlRunnerB;
+			if (isCache) {
+				return sqlRunnerB;
+			}
 		}
 
 		sqlRunnerB = getSqlRunnerBStep1(key);
@@ -409,7 +420,9 @@ public class SqlRunner implements Reload {
 		String cashKey = cashKeyB.toString();
 		Table table = cacheTableMap.get(cashKey);
 		if (table != null) {
-			return table;
+			if (isCache) {
+				return table;
+			}
 		}
 
 		table = getTable(transaction, box, key);

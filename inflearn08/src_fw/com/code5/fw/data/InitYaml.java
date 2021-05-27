@@ -65,15 +65,27 @@ public class InitYaml {
 	}
 
 	/**
+	 * 
+	 */
+	private boolean isProduct = false;
+
+	/**
 	 * @return
 	 */
-	public void setAppName(String appName) {
+	public boolean isProduct() {
+		return isProduct;
+	}
 
-		if (appName != null) {
-			return;
-		}
-		this.appName = appName;
+	/**
+	 * 
+	 */
+	private boolean isCache = false;
 
+	/**
+	 * @return
+	 */
+	public boolean isCache() {
+		return isCache;
 	}
 
 	/**
@@ -100,6 +112,10 @@ public class InitYaml {
 
 		Properties properties = System.getProperties();
 		this.appName = properties.getProperty("CODE5.APP_NAME");
+
+		this.isCache = is("CACHE");
+		
+		this.isProduct = is("PRODUCT");
 
 		isRead = true;
 	}
@@ -199,31 +215,6 @@ public class InitYaml {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * 
-	 */
-	boolean isMulti = false;
-
-	/**
-	 * @return
-	 */
-	public boolean isMulti() {
-		return isMulti;
-	}
-
-	/**
-	 * @param isMulti
-	 * @throws Exception
-	 */
-	public void setMulti(boolean isMulti) {
-
-		if (isMulti) {
-			return;
-		}
-
-		this.isMulti = isMulti;
 	}
 
 }

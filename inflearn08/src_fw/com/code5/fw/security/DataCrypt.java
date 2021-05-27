@@ -2,21 +2,14 @@ package com.code5.fw.security;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.code5.fw.data.Box;
-import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.Hex;
-import com.code5.fw.db.Sql;
+import com.code5.fw.data.InitYaml;
 
 /**
  * @author zero
  *
  */
 public class DataCrypt {
-
-	/**
-	 * 
-	 */
-	private static Sql sql = new Sql(DataCrypt.class);
 
 	/**
 	 * 
@@ -46,13 +39,11 @@ public class DataCrypt {
 			return dataCrypt;
 		}
 
-		Box thisBox = new BoxLocal();
-		thisBox.put("OPT", OPT);
-		Box cryptInfo = sql.getTable("DATACRYPT_01", thisBox).getBox();
+		InitYaml init = InitYaml.get();
 
-		String MODE = cryptInfo.s("MODE");
-		String KEY = cryptInfo.s("KEY");
-		String IV = cryptInfo.s("IV");
+		String MODE = init.s("SRT." + OPT + ".MODE");
+		String KEY = init.s("SRT." + OPT + ".KEY");
+		String IV = init.s("SRT." + OPT + ".IV");
 
 		byte[] keys = decryptKEY(KEY);
 		byte[] ivs = decryptKEY(IV);
@@ -156,6 +147,10 @@ public class DataCrypt {
 	 * @param enc
 	 */
 	private static byte[] decryptKEY(String key) throws Exception {
+
+		if ("".equals(key)) {
+			return new byte[16];
+		}
 
 		byte[] thisKey = new byte[16];
 		thisKey[15] = 5;

@@ -26,4 +26,5 @@
 개발자에게 보여주는 에러 메세지
 <%=ex.toString()%>
 <%=ex.getMessage()%>
+<%ex.printStackTrace();%>
 </pre>
