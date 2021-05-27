@@ -15,7 +15,7 @@ import com.code5.fw.web.TransactionContext;
  * @author zero
  *
  */
-public class EmpByJDBC {
+public class EmpByJDBC_test {
 
 	// 잘 만든 Transaction 을 사용한 JDBC 프로그래밍
 
