@@ -79,15 +79,7 @@ public class SqlRunner implements Reload {
 			}
 
 			String sqlUrl = key.substring(0, p) + ".sql";
-			String sqlKey = key.substring(p + 1);
-
-			String[] sqlKeys = sqlKey.split(",");
-			String findSqlKey = sqlKeys[0];
-
-			int timeOut = -1;
-			if (sqlKeys.length == 2) {
-				timeOut = Integer.getInteger(sqlKeys[1].trim());
-			}
+			String findSqlKey = key.substring(p + 1);
 
 			ClassLoader cl = SqlRunner.class.getClassLoader();
 
@@ -97,6 +89,7 @@ public class SqlRunner implements Reload {
 
 			StringBuffer sql = new StringBuffer();
 			boolean findSql = false;
+			String sqlKey = null;
 			while (true) {
 
 				String str = br.readLine();
@@ -109,6 +102,7 @@ public class SqlRunner implements Reload {
 
 					if (str.indexOf(findSqlKey) >= 0) {
 						findSql = true;
+						sqlKey = str;
 						continue;
 					}
 				}
@@ -137,9 +131,34 @@ public class SqlRunner implements Reload {
 			}
 
 			SqlRunnerB sqlRunnerB = new SqlRunnerB();
-			sqlRunnerB.sqlOrg = sqlOrg;
 			sqlRunnerB.key = key;
-			sqlRunnerB.timeOut = timeOut;
+			sqlRunnerB.sqlOrg = sqlOrg;
+			sqlRunnerB.sqlKey = sqlKey;
+			sqlRunnerB.timeOut = -1;
+			sqlRunnerB.limit = -1;
+
+			try {
+
+				String[] sqlKeys = sqlKey.split(",");
+
+				for (int i = 1; i < sqlKeys.length; i++) {
+					String[] x = sqlKeys[i].split("=");
+					String x1 = x[0].trim();
+					String x2 = x[1].trim();
+
+					if ("TIMEOUT".equals(x1)) {
+						sqlRunnerB.timeOut = Integer.parseInt(x2);
+						continue;
+					}
+
+					if ("LIMIT".equals(x1)) {
+						sqlRunnerB.limit = Integer.parseInt(x2);
+						continue;
+					}
+				}
+			} catch (Exception ex) {
+				trace.writeErr(ex);
+			}
 
 			return sqlRunnerB;
 
@@ -338,6 +357,9 @@ public class SqlRunner implements Reload {
 		}
 
 		Table table = new TableRecodeBase(cols);
+		if (sqlRunnerB.limit > 0) {
+			table.setLimit(sqlRunnerB.limit);
+		}
 
 		while (rs.next()) {
 

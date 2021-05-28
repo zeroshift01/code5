@@ -1,4 +1,4 @@
---[[[ LIST
+--[[[ LIST, TIMEOUT=10, LIMIT=10
 
 SELECT 
 N "TOENC__N, list"

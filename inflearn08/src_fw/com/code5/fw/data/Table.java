@@ -8,6 +8,8 @@ import com.code5.fw.web.BoxContext;
  */
 abstract public class Table {
 
+	abstract public void setLimit(int limit);
+
 	abstract public boolean addRecode(String[] recode);
 
 	abstract public boolean addRecode();

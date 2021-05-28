@@ -14,6 +14,18 @@ public class TableRecodeBase extends Table {
 	/**
 	 * 
 	 */
+	private int limit = -1;
+
+	/**
+	 * @param limit
+	 */
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	/**
+	 * 
+	 */
 	private HashMap<String, BigDecimal> colNameMap = new HashMap<String, BigDecimal>();;
 
 	/**
@@ -68,6 +80,13 @@ public class TableRecodeBase extends Table {
 		if (size() + 1 > MAX_RECODE_COUNT) {
 			this.isNextRecode = true;
 			return false;
+		}
+
+		if (this.limit > 0) {
+			if (size() + 1 > this.limit) {
+				this.isNextRecode = true;
+				return false;
+			}
 		}
 
 		if (recode == null) {

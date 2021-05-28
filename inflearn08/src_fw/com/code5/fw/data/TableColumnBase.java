@@ -153,6 +153,13 @@ public class TableColumnBase extends Table {
 	}
 
 	/**
+	 * 
+	 */
+	public void setLimit(int limit) {
+		throw new RuntimeException();
+	}
+
+	/**
 	 *
 	 */
 	public int maxRecodeCount() {
