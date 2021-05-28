@@ -47,7 +47,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
-	public String list() throws Exception {
+	public String callList() throws Exception {
 
 		Box box = BoxContext.getThread();
 
@@ -62,7 +62,15 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @return
 	 * @throws Exception
 	 */
-	public String write() throws Exception {
+	public String callWrite() throws Exception {
+		return "write";
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String exeWrite() throws Exception {
 
 		BoardD dao = new BoardD();
 		dao.write();
@@ -74,7 +82,15 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @return
 	 * @throws Exception
 	 */
-	public String update() throws Exception {
+	public String callUpdate() throws Exception {
+		return "update";
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String exeUpdate() throws Exception {
 
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
@@ -88,7 +104,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @return
 	 * @throws Exception
 	 */
-	public String delete() throws Exception {
+	public String exeDelete() throws Exception {
 
 		Box box = BoxContext.getThread();
 		box.put("CHECK_ID", "OK");

@@ -1,3 +1,23 @@
+--[[[ SELECT
+
+SELECT 
+TITLE
+, TXT
+, FILE_NM_1 "TOENC__FILE_NM_1, file001"
+, FILE_ID_1
+, FILE_NM_2 "TOENC__FILE_NM_2, file001"
+, FILE_ID_2
+, FILE_NM_3 "TOENC__FILE_NM_3, file001"
+, FILE_ID_3
+FROM
+BZ_BOARD
+WHERE N = [TODEC__N, list]
+ORDER BY N
+
+
+--]]]
+
+
 --[[[ LIST, TIMEOUT=10, LIMIT=10
 
 SELECT 
@@ -68,7 +88,7 @@ SET DEL_Y = 'Y'
 , MDF_IP = [SESSION.IP]
 , MDF_DTM = [DTM__DTM]
 WHERE N = [TODEC__N, list]
-[[ CHECK_ID ^ OK ^ AND RG_ID = [SESSION.ID] ]]
+[~ CHECK_ID ^ OK ^ AND RG_ID = [SESSION.ID] ~]
 
 --]]]
 

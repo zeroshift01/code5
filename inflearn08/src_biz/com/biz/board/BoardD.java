@@ -2,6 +2,7 @@ package com.biz.board;
 
 import java.sql.SQLException;
 
+import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
 import com.code5.fw.db.Sql;
 
@@ -22,6 +23,14 @@ public class BoardD {
 	 */
 	Table list() throws SQLException {
 		return sql.getTable("LIST");
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	Box select() throws SQLException {
+		return sql.getTable("SELECT").getBox();
 	}
 
 	/**

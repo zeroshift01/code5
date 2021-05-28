@@ -131,11 +131,11 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	/**
 	 * @return
 	 */
-	public String downloadFile() throws Exception {
+	public String file001() throws Exception {
 
 		Box box = BoxContext.getThread();
 		String FILE_ID = box.s("FILE_ID");
-		FILE_ID = box.getSessionB().getDataByToken(box.s(Box.KEY_SERVICE), FILE_ID);
+		FILE_ID = box.getSessionB().getDataByToken("file001", FILE_ID);
 
 		box.put("FILE_ID", FILE_ID);
 
@@ -151,7 +151,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		Sql sql = new Sql(this);
 		sql.executeSql("DOWNLOADFILE_01");
 
-		return "downloadFile";
+		return "file001";
 	}
 
 	/**

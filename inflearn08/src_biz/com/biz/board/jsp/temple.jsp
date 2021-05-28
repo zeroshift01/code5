@@ -20,16 +20,38 @@ String TITLE = view.s("TITLE");
 			alert(msg);
 		}
 	}
+	
+	function callUpdate(N){
+		var form = document.form1;
+		form.THIS_N.value = N; 
+		form.action = '/waf/callUpdate';
+		form.submit();
+	} 
+
+	function exeDelete(N){
+		var form = document.form1;
+		form.THIS_N.value = N; 
+		form.action = '/waf/exeDelete';
+		form.submit();
+	}
+
+	function callWrite(){
+		var form = document.form1;
+		form.action = '/waf/callWrite';
+		form.submit();
+	}
+	
 </script>
 <body onload='init();'>
 	<br>
-	<a href="/waf/listview">listview</a>
-	<a href="/waf/writeview">writeview</a>
+	
+	<button onclick="callWrite()">등록</button>
 	<br>
 	<jsp:include page="<%=JSP%>" flush="true"/>
-		<br>
-		<form name='main1'>
-			<input name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
-		</form></body>
+	<br>
+	<form name='main1'>
+		<input name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
+	</form>
+</body>
 </head>
 </html>

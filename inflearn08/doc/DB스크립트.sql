@@ -2,14 +2,16 @@ del C:\public\code5\doc\code5.db
 cd C:\public\lib\sqlite
 sqlite3 C:\public\code5\doc\code5.db
 
+DROP TABLE BZ_BOARD;
 CREATE TABLE BZ_BOARD(
 N INTEGER PRIMARY KEY AUTOINCREMENT
 , TITLE
 , TXT
 , EM
+, FILE_NM_1
 , FILE_ID_1
+, FILE_NM_2
 , FILE_ID_2
-, FILE_ID_3
 , RG_ID
 , RG_IP
 , RG_DTM
@@ -62,22 +64,22 @@ KEY
 , METHOD_NAME
 );
   
-INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login');
-INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView');
-INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload');
-INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile');
+INSERT INTO FW_CONTROLLER VALUES('exeLogin','com.code5.biz.login.Login','exeLogin');
+INSERT INTO FW_CONTROLLER VALUES('callLogin','com.code5.biz.login.Login','callLogin');
+INSERT INTO FW_CONTROLLER VALUES('file001','com.code5.fw.web.MasterControllerMultipart','file001');
 
-INSERT INTO FW_CONTROLLER VALUES('list','com.biz.board.Board','list');
-INSERT INTO FW_CONTROLLER VALUES('listjson','com.biz.board.Board','listJson');
+INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
+INSERT INTO FW_CONTROLLER VALUES('callListByJson','com.biz.board.Board','callListByJson');
 
-INSERT INTO FW_CONTROLLER VALUES('updateview','com.biz.board.Board','updateView');
-INSERT INTO FW_CONTROLLER VALUES('writeview','com.biz.board.Board','writeView');
+INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.board.Board','callUpdate');
+INSERT INTO FW_CONTROLLER VALUES('exeUpdate','com.biz.board.Board','exeUpdate');
 
-INSERT INTO FW_CONTROLLER VALUES('update','com.biz.board.Board','update');
-INSERT INTO FW_CONTROLLER VALUES('write','com.biz.board.Board','write');
+INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.board.Board','callWrite');
+INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.board.Board','exeWrite');
 
-INSERT INTO FW_CONTROLLER VALUES('delete','com.biz.board.Board','delete');
-INSERT INTO FW_CONTROLLER VALUES('forcedelete','com.biz.board.Board','forceDelete');
+INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.board.Board','exeDelete');
+INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.Board','forceDelete');
+INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.Board','allDelete');
 
 
 drop TABLE FW_VIEW ;
@@ -89,15 +91,14 @@ KEY PRIMARY KEY
 , TITLE);
 
 
-INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp','','');
-INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp','','');
-INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
-INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
+INSERT INTO FW_VIEW VALUES('file001','/WEB-INF/classes/com/code5/fw/web/jsp/file001.jsp','','');
+INSERT INTO FW_VIEW VALUES('null','/WEB-INF/classes/com/code5/fw/web/jsp/null.jsp','','');
+INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/jsp/err.jsp','','');
 
 INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
-INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
-INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
-INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
+INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','리스트');
+INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','등록화면');
+INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','수정화면');
 
 
 CREATE TABLE FW_FILE_DOWNLOAD (
@@ -135,3 +136,4 @@ FILE_ID
 , ID
 , DTM
 );
+
