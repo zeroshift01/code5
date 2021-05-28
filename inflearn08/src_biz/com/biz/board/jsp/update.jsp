@@ -15,7 +15,7 @@ function exeUpdate(){
 }
 </script>
 
-<form name="form1" method="post">
+<form name="form1" method="post" enctype = "multipart/form-data">
 
 TITLE : <input type="TEXT" name="TITLE" value="<%=board.s("TITLE")%>">
 <br>TXT : <input type="TEXT" name="TXT" value="<%=board.s("TXT")%>">
