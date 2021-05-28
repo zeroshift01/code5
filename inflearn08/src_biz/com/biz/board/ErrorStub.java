@@ -1,4 +1,4 @@
-package com.code5.biz.emp.emp002;
+package com.biz.board;
 
 import java.sql.SQLException;
 
@@ -12,14 +12,13 @@ import com.code5.fw.web.LoginException;
  * @author zero
  *
  */
-public class Emp002 implements BizController {
-
+public class ErrorStub implements BizController {
 	/**
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public String emp00210() throws Exception {
+	public String errstub1() throws Exception {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {
@@ -34,9 +33,10 @@ public class Emp002 implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String emp00220() throws Exception {
+	public String errstub2() throws Exception {
 
 		Box box = BoxContext.getThread();
+		
 		if ("1".equals(box.s("err"))) {
 			box.setAlertMsg("오류가 발생했습니다.");
 			throw new Exception();
@@ -60,5 +60,4 @@ public class Emp002 implements BizController {
 
 		return "nullView";
 	}
-
 }

@@ -1,7 +1,12 @@
 RUN_CODE5:
-  WEB_APP_DIR : "C:/public/code5/web"
-  BASE_DIR : "C:/public/code5/temp"
-  WEB_PORT : "18080"
+  WEB_APP_DIR : 
+    DEFAULT : "C:/public/code5/web"
+    DESKTOP-RG2P3HF : "C:/Users/skmpr/git/zeroshift01/inflearn08/web"
+  BASE_DIR :
+    DEFAULT : "C:/public/code5/temp"
+    DESKTOP-RG2P3HF : "C:/Users/skmpr/git/zeroshift01/inflearn08/temp" 
+  WEB_PORT :
+    DEFAULT : "18080"
 
 
 LOG : 

@@ -1,4 +1,4 @@
-package com.code5.biz.login;
+package com.biz.login;
 
 import java.sql.SQLException;
 

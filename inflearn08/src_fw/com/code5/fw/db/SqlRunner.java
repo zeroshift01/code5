@@ -74,6 +74,10 @@ public class SqlRunner implements Reload {
 			key = key.replaceAll("\\.", "/");
 			int p = key.lastIndexOf("/");
 
+			if (p == -1) {
+				throw new SQLException(key + " 를 확인해주세요.");
+			}
+
 			String sqlUrl = key.substring(0, p) + ".sql";
 			String sqlKey = key.substring(p + 1);
 
@@ -120,6 +124,10 @@ public class SqlRunner implements Reload {
 					sql.append(str + "\n");
 				}
 
+			}
+
+			if (!findSql) {
+				throw new SQLException("not found sql [" + findSqlKey + "]");
 			}
 
 			String sqlOrg = sql.toString();
@@ -175,7 +183,8 @@ public class SqlRunner implements Reload {
 			int ep = sql.indexOf("]]", sp + 1);
 
 			if (ep == -1) {
-				throw new SQLException();
+				trace.writeErr(sqlRunnerB.sqlOrg);
+				throw new SQLException("sql 구문을 확인해주세요");
 			}
 
 			String key = sql.substring(sp + 2, ep).trim();
@@ -567,11 +576,24 @@ public class SqlRunner implements Reload {
 
 			p.key = x0;
 			p.add1 = x1;
-		} else if (key.startsWith("TOKEN__")) {
+		} else if (key.startsWith("TOENC__")) {
 
 			p.isToken = true;
 
-			String x = key.substring("TOKEN__".length());
+			String x = key.substring("TOENC__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.key = x0;
+			p.add1 = x1;
+
+		} else if (key.startsWith("TODEC__")) {
+
+			p.isTokenDec = true;
+
+			String x = key.substring("TODEC__".length());
 			String[] xx = x.split(",");
 
 			String x0 = xx[0].trim();
@@ -711,6 +733,11 @@ public class SqlRunner implements Reload {
 			if (p.isToken) {
 				SessionB user = BoxContext.getThread().getSessionB();
 				return user.createToken(p.add1, data);
+			}
+
+			if (p.isTokenDec) {
+				SessionB user = BoxContext.getThread().getSessionB();
+				return user.getDataByToken(p.add1, data);
 			}
 
 			return data;

@@ -2,47 +2,22 @@ del C:\public\code5\doc\code5.db
 cd C:\public\lib\sqlite
 sqlite3 C:\public\code5\doc\code5.db
 
-drop table FW_CONTROLLER;
-CREATE TABLE FW_CONTROLLER(
-  KEY,
-  CLASS_NAME,
-  METHOD_NAME);
-  
-INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login');
-INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView');
-INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload');
-INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile');
-INSERT INTO FW_CONTROLLER VALUES('emp00110','com.code5.biz.emp.emp001.Emp001','emp00110');
-INSERT INTO FW_CONTROLLER VALUES('emp00120','com.code5.biz.emp.emp001.Emp001','emp00120');
-INSERT INTO FW_CONTROLLER VALUES('emp00210','com.code5.biz.emp.emp002.Emp002','emp00210');
-INSERT INTO FW_CONTROLLER VALUES('emp00220','com.code5.biz.emp.emp002.Emp002','emp00220');
-INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001');
-
-drop TABLE FW_VIEW ;
-CREATE TABLE FW_VIEW (
-KEY PRIMARY KEY
-, JSP
-, TMPL_JSP, TITLE);
-
-INSERT INTO FW_VIEW VALUES('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp',NULL,NULL);
-INSERT INTO FW_VIEW VALUES('emp00110','/WEB-INF/classes/com/code5/biz/emp/emp001/jsp/emp00110.jsp','/WEB-INF/classes/com/code5/biz/emp/jsp/empMain.jsp','EMP 조회');
-INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
-INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
-
-
-DROP TABLE EMP ;
-CREATE TABLE EMP (
-EMP_N PRIMARY KEY
-, EMP_NM
-, HP_N
-, DEPT_N
-, FILE_ID);
-INSERT INTO EMP VALUES('N0001','ABC','','D01','');
-INSERT INTO EMP VALUES('N0002','ZZZ','6b0e62cc4ad4508b108540aba547afa8','D01','');
-INSERT INTO EMP VALUES('N0003','ABC','55afea71894c57aa58405a112ab7532d','D02','');
-
+CREATE TABLE BZ_BOARD(
+N INTEGER PRIMARY KEY AUTOINCREMENT
+, TITLE
+, TXT
+, EM
+, FILE_ID_1
+, FILE_ID_2
+, FILE_ID_3
+, RG_ID
+, RG_IP
+, RG_DTM
+, MDF_ID
+, MDF_IP
+, MDF_DTM
+, DEL_Y
+);
 
 CREATE TABLE BZ_ID (
 ID PRIMARY KEY
@@ -51,8 +26,80 @@ ID PRIMARY KEY
 , FAIL_CNT
 , LAST_LOGIN_DTM
 );
-INSERT INTO BZ_ID VALUES('id_A0','424ab5a6448f7b6aca9cd65c361b672c3d853622bd29001ee15bc5c50bcfa169','A0',0,'');
-INSERT INTO BZ_ID VALUES('id_U0','337c1456c9b72fd82583e974ac3885295373b1968210cfc0cb5418c554935f4f','U0','0','');
+
+
+
+INSERT INTO BZ_ID VALUES(
+'admin'
+,'413190dd77a132b98077112e493ce5bceef53ef60dfb4360764c1f9ceba85289'
+,'A0'
+,'0'
+,''
+);
+
+INSERT INTO BZ_ID VALUES(
+'user1'
+,'eaab2eac6bfb55c5994efbac5ec6b116a45f53892649c700003fdeeab765a1a3'
+,'U0'
+,'0'
+,''
+);
+
+INSERT INTO BZ_ID VALUES(
+'user2'
+,'5ced0bc626a116b6dafbf341db47bad167c444f53c4a769d8d7c09e1c6231c17'
+,'U0'
+,'0'
+,''
+);
+
+
+drop table FW_CONTROLLER;
+
+CREATE TABLE FW_CONTROLLER(
+KEY
+, CLASS_NAME
+, METHOD_NAME
+);
+  
+INSERT INTO FW_CONTROLLER VALUES('login','com.code5.biz.login.Login','login');
+INSERT INTO FW_CONTROLLER VALUES('loginView','com.code5.biz.login.Login','loginView');
+INSERT INTO FW_CONTROLLER VALUES('filedownload','com.code5.fw.web.MasterControllerMultipart','fileDownload');
+INSERT INTO FW_CONTROLLER VALUES('downloadfile','com.code5.fw.web.MasterControllerMultipart','downloadFile');
+
+INSERT INTO FW_CONTROLLER VALUES('list','com.biz.board.Board','list');
+INSERT INTO FW_CONTROLLER VALUES('listjson','com.biz.board.Board','listJson');
+
+INSERT INTO FW_CONTROLLER VALUES('updateview','com.biz.board.Board','updateView');
+INSERT INTO FW_CONTROLLER VALUES('writeview','com.biz.board.Board','writeView');
+
+INSERT INTO FW_CONTROLLER VALUES('update','com.biz.board.Board','update');
+INSERT INTO FW_CONTROLLER VALUES('write','com.biz.board.Board','write');
+
+INSERT INTO FW_CONTROLLER VALUES('delete','com.biz.board.Board','delete');
+INSERT INTO FW_CONTROLLER VALUES('forcedelete','com.biz.board.Board','forceDelete');
+
+
+drop TABLE FW_VIEW ;
+
+CREATE TABLE FW_VIEW (
+KEY PRIMARY KEY
+, JSP
+, TMPL_JSP
+, TITLE);
+
+
+INSERT INTO FW_VIEW VALUES('fileDownload','/WEB-INF/classes/com/code5/fw/web/jsp/fileDownload.jsp','','');
+INSERT INTO FW_VIEW VALUES('downloadFile','/WEB-INF/classes/com/code5/fw/web/jsp/downloadFile.jsp','','');
+INSERT INTO FW_VIEW VALUES('nullView','/WEB-INF/classes/com/code5/fw/web/jsp/nullView.jsp','','');
+INSERT INTO FW_VIEW VALUES('errView','/WEB-INF/classes/com/code5/fw/web/jsp/errView.jsp','','');
+
+INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
+INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
+INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
+INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','조회');
+
+
 CREATE TABLE FW_FILE_DOWNLOAD (
 REAL_FILE_NAME
 , ID

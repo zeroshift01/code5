@@ -1,4 +1,4 @@
-package com.code5.biz.login;
+package com.biz.login;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
@@ -47,13 +47,13 @@ public class Login implements BizController {
 				throw new Exception();
 			}
 
-			// return MasterController.execute("loginView");
+			return MasterController.execute("loginView");
 		}
 
 		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
 		if (FAIL_CNT > 5) {
 			box.put("ret", "패스워드를 5회 이상 실패하였습니다.");
-			// return MasterController.execute("loginView");
+			return MasterController.execute("loginView");
 		}
 
 		String AUTH = thisUser.s("AUTH");
@@ -66,7 +66,7 @@ public class Login implements BizController {
 			throw new Exception();
 		}
 
-		return MasterController.execute("emp00110");
+		return MasterController.execute("list");
 	}
 
 	/**
@@ -75,7 +75,6 @@ public class Login implements BizController {
 	 */
 	@ServiceAnnotation(isLogin = false)
 	public String logout() throws Exception {
-
 		BoxContext.getThread().setSessionB(null);
 		return loginView();
 	}
@@ -86,7 +85,7 @@ public class Login implements BizController {
 	 */
 	@ServiceAnnotation(isLogin = false)
 	public String loginView() throws Exception {
-		return "loginView";
+		return "login";
 	}
 
 }

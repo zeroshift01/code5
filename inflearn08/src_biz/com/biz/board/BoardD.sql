@@ -1,0 +1,80 @@
+--[[[ LIST
+
+SELECT 
+N "TOENC__N, list"
+, TITLE
+, RG_DTM DTM__DTM
+, RG_ID
+FROM
+BZ_BOARD
+WHERE 1 = 1
+[~ TITLE ^ IS_NOT_NULL ^ AND TITLE LIKE '%'||[TITLE]||'%' ~]
+[~ NEXT_N ^ IS_NOT_NULL ^ AND N > [NEXT_N] ~]
+AND DEL_Y IS NULL
+ORDER BY N
+
+
+--]]]
+
+--[[[ WRITE
+
+INSERT INTO BZ_BOARD
+(
+TITLE
+, TXT
+, EM
+, FILE_ID_1
+, FILE_ID_2
+, FILE_ID_3
+, RG_ID
+, RG_IP
+, RG_DTM
+) VALUES (
+[TITLE]
+, [TXT]
+, [ENC__EM]
+, [FILE_ID_1]
+, [FILE_ID_2]
+, [FILE_ID_3]
+, [SESSION.ID]
+, [SESSION.IP]
+, [DTM__DTM]
+)
+
+--]]]
+
+--[[[ UPDATE
+
+UPDATE BZ_BOARD
+SET TITLE = [TITLE]
+, TXT = [TXT]
+, EM = [ENC__EM]
+, FILE_ID_1 = [FILE_ID_1]
+, FILE_ID_2 = [FILE_ID_2]
+, FILE_ID_3 = [FILE_ID_3]
+, MDF_ID = [SESSION.ID]
+, MDF_IP = [SESSION.IP]
+, MDF_DTM = [DTM__DTM]
+WHERE N = [TODEC__N, list]
+
+--]]]
+
+
+--[[[ DELETE
+
+UPDATE BZ_BOARD
+SET DEL_Y = 'Y'
+, MDF_ID = [SESSION.ID]
+, MDF_IP = [SESSION.IP]
+, MDF_DTM = [DTM__DTM]
+WHERE N = [TODEC__N, list]
+[[ CHECK_ID ^ OK ^ AND RG_ID = [SESSION.ID] ]]
+
+--]]]
+
+
+--[[[ DELETEALL
+
+DELETE BZ_BOARD;
+
+--]]]

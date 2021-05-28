@@ -23,8 +23,8 @@ String TITLE = view.s("TITLE");
 </script>
 <body onload='init();'>
 	<br>
-	<a href="/waf/emp00101">EMP 조회 emp00101</a>
-	<a href="/waf/emp00201">EMP 관리 emp00201</a>
+	<a href="/waf/listview">listview</a>
+	<a href="/waf/writeview">writeview</a>
 	<br>
 	<jsp:include page="<%=JSP%>" flush="true"/>
 		<br>

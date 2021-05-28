@@ -6,6 +6,10 @@ package com.code5.fw.web;
  */
 public interface BizControllerStartExecute {
 
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public String start() throws Exception;
 
 }
