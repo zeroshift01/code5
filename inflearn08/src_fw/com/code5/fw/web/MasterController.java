@@ -16,9 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
+import com.code5.fw.data.Table;
+import com.code5.fw.db.Sql;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.trace.TraceRunner;
@@ -60,15 +63,11 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @param request
 	 * @param response
 	 * @param box
-	 * @param JSP_KEY
+	 * @param view
 	 */
-	private void forward(HttpServletRequest request, HttpServletResponse response, Box box, String JSP_KEY) {
+	private void forward(HttpServletRequest request, HttpServletResponse response, Box view) {
 
 		try {
-
-			MasterControllerD dao = new MasterControllerD();
-			Box view = dao.getView(JSP_KEY);
-			box.put(Box.KEY_FW_VIEW, view);
 
 			String TMPL_JSP = view.s("TMPL_JSP");
 			String JSP = view.s("JSP");
@@ -82,7 +81,7 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(THIS_JSP);
-			box.setXssConvert(true);
+
 			dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
@@ -111,11 +110,21 @@ public class MasterController extends HttpServlet implements Reload {
 
 			trace.write("JSP_KEY [" + JSP_KEY + "]");
 
-			forward(request, response, box, JSP_KEY);
+			Box view = getView(JSP_KEY);
+
+			box.setXssConvert(true);
+
+			forward(request, response, view);
 
 			transaction.commit();
 
 		} catch (Exception ex) {
+
+			try {
+				transaction.rollback();
+			} catch (SQLException exx) {
+				throw new ServletException(exx);
+			}
 
 			forwardException(ex, request, response, box);
 
@@ -132,36 +141,34 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @param request
 	 * @param response
 	 * @param box
+	 * @throws ServletException
 	 */
-	private void forwardException(Exception ex, HttpServletRequest request, HttpServletResponse response, Box box) {
-
-		Box controller = box.getBox(Box.KEY_FW_CONTROLLER);
-		String ERR_JSP_KEY = controller.s("ERR_JSP_KEY");
-		if ("".equals(ERR_JSP_KEY)) {
-			ERR_JSP_KEY = "errView";
-		}
+	private void forwardException(Exception ex, HttpServletRequest request, HttpServletResponse response, Box box)
+			throws ServletException {
 
 		try {
-			TransactionContext.rollback();
-		} catch (SQLException exx) {
-			box.put(Box.KEY_EXCEPTION, exx);
-			forward(request, response, box, ERR_JSP_KEY);
+
+			String errKey = "err";
+
+			Box controller = box.getBox(Box.KEY_FW_CONTROLLER);
+			String ERR_JSP_KEY = controller.s("ERR_JSP_KEY");
+			if (!"".equals(ERR_JSP_KEY)) {
+				errKey = ERR_JSP_KEY;
+			}
+
+			Box errView = getView(errKey);
+
+			if (ex instanceof InvocationTargetException) {
+				ex = (Exception) ex.getCause();
+			}
+
+			box.put(Box.KEY_EXCEPTION, ex);
+			forward(request, response, errView);
 			return;
-		}
 
-		if (ex instanceof InvocationTargetException) {
-			ex = (Exception) ex.getCause();
+		} catch (Exception exx) {
+			throw new ServletException(exx);
 		}
-
-		if (ex instanceof LoginException) {
-			box.setAlertMsg("로그인이 필요합니다.");
-			forward(request, response, box, "loginView");
-			return;
-		}
-
-		box.put(Box.KEY_EXCEPTION, ex);
-		forward(request, response, box, ERR_JSP_KEY);
-		return;
 	}
 
 	/**
@@ -178,17 +185,13 @@ public class MasterController extends HttpServlet implements Reload {
 	}
 
 	/**
-	 * @param KEY
+	 * @param controller
 	 * @return
 	 * @throws Exception
 	 */
-	private static Object[] createService(String KEY) throws Exception {
+	private static Object[] createService(Box controller) throws Exception {
 
-		MasterControllerD dao = new MasterControllerD();
-
-		Box controller = dao.getController(KEY);
-		BoxContext.getThread().put(Box.KEY_FW_CONTROLLER, controller);
-
+		String KEY = controller.s("KEY");
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
@@ -275,7 +278,9 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	public static String execute(String KEY) throws Exception {
 
-		Object[] service = createService(KEY);
+		Box controller = getController(KEY);
+
+		Object[] service = createService(controller);
 
 		Object biz = service[0];
 		Method method = (Method) service[1];
@@ -346,7 +351,8 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	public static boolean checkUrlAuth(String KEY) throws Exception {
 
-		Object[] service = createService(KEY);
+		Box controller = getController(KEY);
+		Object[] service = createService(controller);
 		ServiceAnnotation sa = (ServiceAnnotation) service[2];
 
 		return checkUrlAuth(sa);
@@ -428,4 +434,51 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	private static ConcurrentHashMap<String, ServiceAnnotation> SERVICE_ANNOTATION_MAP = new ConcurrentHashMap<String, ServiceAnnotation>();
+
+	/**
+	 * 
+	 */
+	private static Sql SQL = new Sql(MasterController.class);
+
+	/**
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	private static Box getController(String KEY) throws Exception {
+
+		Box box = new BoxLocal();
+		box.put("KEY", KEY);
+		Table table = SQL.getTableByCache("MASTERCONTROLLER_01", box);
+		if (table.size() != 1) {
+			throw new Exception("controller [" + KEY + "] 를 확인해주세요.");
+
+		}
+
+		Box controller = table.getBox();
+		BoxContext.getThread().put(Box.KEY_FW_CONTROLLER, controller);
+		return controller;
+	}
+
+	/**
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	private static Box getView(String KEY) throws Exception {
+
+		Box box = new BoxLocal();
+		box.put("KEY", KEY);
+
+		Table table = SQL.getTableByCache("MASTERCONTROLLER_02", box);
+		if (table.size() != 1) {
+			throw new Exception("view [" + KEY + "] 를 확인해주세요.");
+
+		}
+
+		Box view = table.getBox();
+		BoxContext.getThread().put(Box.KEY_FW_VIEW, view);
+		return view;
+
+	}
 }

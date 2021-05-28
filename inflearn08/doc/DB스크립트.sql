@@ -63,10 +63,14 @@ KEY
 , CLASS_NAME
 , METHOD_NAME
 );
-  
-INSERT INTO FW_CONTROLLER VALUES('exeLogin','com.code5.biz.login.Login','exeLogin');
-INSERT INTO FW_CONTROLLER VALUES('callLogin','com.code5.biz.login.Login','callLogin');
+
+
 INSERT INTO FW_CONTROLLER VALUES('file001','com.code5.fw.web.MasterControllerMultipart','file001');
+
+INSERT INTO FW_CONTROLLER VALUES('exeLogin','com.biz.login.Login','exeLogin');
+INSERT INTO FW_CONTROLLER VALUES('exeLogout','com.biz.login.Login','exeLogout');
+INSERT INTO FW_CONTROLLER VALUES('callLogin','com.biz.login.Login','callLogin');
+
 
 INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
 INSERT INTO FW_CONTROLLER VALUES('callListByJson','com.biz.board.Board','callListByJson');
@@ -96,9 +100,9 @@ INSERT INTO FW_VIEW VALUES('null','/WEB-INF/classes/com/code5/fw/web/jsp/null.js
 INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/jsp/err.jsp','','');
 
 INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
-INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','리스트');
-INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','등록화면');
-INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/tmpl.jsp','수정화면');
+INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','리스트');
+INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','등록화면');
+INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','수정화면');
 
 
 CREATE TABLE FW_FILE_DOWNLOAD (

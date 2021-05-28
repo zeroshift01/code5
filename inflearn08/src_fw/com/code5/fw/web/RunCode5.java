@@ -27,6 +27,12 @@ public class RunCode5 {
 
 		String baseDir = init.s("RUN_CODE5.BASE_DIR");
 		int webPort = Integer.parseInt(init.s("RUN_CODE5.WEB_PORT"));
+		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
+
+		System.out.println("hostName [" + init.getHostName() + "]");
+		System.out.println("baseDir [" + baseDir + "]");
+		System.out.println("webappDir [" + webappDir + "]");
+		System.out.println("webPort [" + webPort + "]");
 
 		if (!isWebPort(webPort)) {
 			System.out.println(webPort + " 는 사용중입니다.");
@@ -35,8 +41,6 @@ public class RunCode5 {
 
 		Properties properties = System.getProperties();
 		properties.setProperty("CODE5.APP_NAME", "CODE5");
-
-		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
 
 		Tomcat tomcat = new Tomcat();
 

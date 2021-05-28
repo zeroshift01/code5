@@ -15,9 +15,9 @@
 <html><head>
 <script type="text/javascript">
 
-function login(){
+function exeLogin(){
 	var form = document.form1;
-	form.action = '/waf/login';
+	form.action = '/waf/exeLogin';
 	form.submit();
 } 
 
@@ -36,7 +36,7 @@ function login(){
 
 </form>
 
-<button onclick="login()">로그인</button>
+<button onclick="exeLogin()">로그인</button>
 
 </body>
 </head></html>

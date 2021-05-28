@@ -23,6 +23,8 @@ public class YamlReader {
 
 			ClassLoader cl = YamlReader.class.getClassLoader();
 
+			yamlName = yamlName.replaceAll("\\.", "\\/");
+
 			yamlName = yamlName + ".yaml";
 
 			inputStream = cl.getResourceAsStream(yamlName);

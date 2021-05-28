@@ -20,7 +20,7 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
-	public String login() throws Exception {
+	public String exeLogin() throws Exception {
 
 		Box box = BoxContext.getThread();
 
@@ -35,7 +35,7 @@ public class Login implements BizController {
 
 		if (user.size() != 1) {
 			box.put("ret", "아이디가 없거나 패스워드가 일치하지 않습니다.");
-			return MasterController.execute("loginView");
+			return MasterController.execute("callLogin");
 		}
 
 		Box thisUser = user.getBox();
@@ -47,13 +47,13 @@ public class Login implements BizController {
 				throw new Exception();
 			}
 
-			return MasterController.execute("loginView");
+			return MasterController.execute("callLogin");
 		}
 
 		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
 		if (FAIL_CNT > 5) {
 			box.put("ret", "패스워드를 5회 이상 실패하였습니다.");
-			return MasterController.execute("loginView");
+			return MasterController.execute("callLogin");
 		}
 
 		String AUTH = thisUser.s("AUTH");
@@ -66,7 +66,7 @@ public class Login implements BizController {
 			throw new Exception();
 		}
 
-		return MasterController.execute("list");
+		return MasterController.execute("callList");
 	}
 
 	/**
@@ -74,9 +74,9 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
-	public String logout() throws Exception {
+	public String exeLogout() throws Exception {
 		BoxContext.getThread().setSessionB(null);
-		return loginView();
+		return callLogin();
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
-	public String loginView() throws Exception {
+	public String callLogin() throws Exception {
 		return "login";
 	}
 

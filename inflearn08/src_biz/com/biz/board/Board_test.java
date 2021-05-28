@@ -63,7 +63,7 @@ public class Board_test {
 		try {
 
 			Box box = BoxContext.getThread();
-			
+
 			box.put("TITLE", "");
 
 			SessionB user = new SessionB("ID1", "U0", "1");
@@ -90,7 +90,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	// @Test
+	@Test
 	public void test_delete() throws Exception {
 		MasterController.execute("list");
 	}
@@ -98,7 +98,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	// @Test
+	@Test
 	public void test_deleteAll() throws Exception {
 		MasterController.execute("deleteall");
 	}
