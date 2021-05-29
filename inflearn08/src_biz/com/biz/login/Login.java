@@ -59,7 +59,8 @@ public class Login implements BizController {
 		String AUTH = thisUser.s("AUTH");
 		String IP = box.s(Box.KEY_REMOTE_ADDR);
 
-		SessionB sessionB = new SessionB(ID, AUTH, IP);
+		SessionB sessionB = box.getSessionB();
+		sessionB.set(ID, AUTH, IP);
 		box.setSessionB(sessionB);
 
 		if (dao.login_03() != 1) {

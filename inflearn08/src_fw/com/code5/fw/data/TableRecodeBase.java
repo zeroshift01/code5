@@ -77,18 +77,6 @@ public class TableRecodeBase extends Table {
 	 */
 	public boolean addRecode(String[] recode) {
 
-		if (size() + 1 > MAX_RECODE_COUNT) {
-			this.isNextRecode = true;
-			return false;
-		}
-
-		if (this.limit > 0) {
-			if (size() + 1 > this.limit) {
-				this.isNextRecode = true;
-				return false;
-			}
-		}
-
 		if (recode == null) {
 			throw new RuntimeException();
 		}
@@ -97,7 +85,24 @@ public class TableRecodeBase extends Table {
 			throw new RuntimeException();
 		}
 
+		if (this.isLimitRecode) {
+			return false;
+		}
+
 		recodes.add(recode);
+
+		if (size() > MAX_RECODE_COUNT) {
+			this.isLimitRecode = true;
+			return false;
+		}
+
+		if (this.limit > 0) {
+			if (size() > this.limit) {
+				this.isLimitRecode = true;
+				return false;
+			}
+		}
+
 		return true;
 
 	}
@@ -107,13 +112,25 @@ public class TableRecodeBase extends Table {
 	 */
 	public boolean addRecode() {
 
-		if (size() + 1 > MAX_RECODE_COUNT) {
-			this.isNextRecode = true;
+		String[] data = new String[colNameMap.size()];
+
+		if (this.isLimitRecode) {
 			return false;
 		}
 
-		String[] data = new String[colNameMap.size()];
 		recodes.add(data);
+
+		if (size() > MAX_RECODE_COUNT) {
+			this.isLimitRecode = true;
+			return false;
+		}
+
+		if (this.limit > 0) {
+			if (size() > this.limit) {
+				this.isLimitRecode = true;
+				return false;
+			}
+		}
 
 		return true;
 
@@ -269,7 +286,14 @@ public class TableRecodeBase extends Table {
 	 * @return
 	 */
 	public int size() {
-		return recodes.size();
+
+		int size = recodes.size();
+
+		if (this.isLimitRecode) {
+			return size - 1;
+		}
+
+		return size;
 	}
 
 	/**
@@ -294,13 +318,25 @@ public class TableRecodeBase extends Table {
 	/**
 	 *
 	 */
-	private boolean isNextRecode = false;
+	private boolean isLimitRecode = false;
 
 	/**
 	 * @return
 	 */
-	public boolean isNextRecode() {
-		return isNextRecode;
+	public boolean isLimitRecode() {
+		return isLimitRecode;
+	}
+
+	/**
+	 * @return
+	 */
+	public Box getLimitBox() {
+
+		if (!this.isLimitRecode) {
+			return new BoxLocal();
+		}
+
+		return getBox(this.recodes.size() - 1);
 	}
 
 	/**

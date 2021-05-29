@@ -148,7 +148,14 @@ public class TableColumnBase extends Table {
 	/**
 	 *
 	 */
-	public boolean isNextRecode() {
+	public boolean isLimitRecode() {
+		throw new RuntimeException();
+	}
+
+	/**
+	 * @return
+	 */
+	public Box getLimitBox() {
 		throw new RuntimeException();
 	}
 

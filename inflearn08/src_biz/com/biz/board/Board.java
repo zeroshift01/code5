@@ -3,6 +3,7 @@ package com.biz.board;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
+import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BizControllerStartExecute;
 import com.code5.fw.web.BoxContext;
@@ -72,10 +73,24 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeWrite() throws Exception {
 
+		Box box = BoxContext.getThread();
+
+		UploadFileB file1 = box.getUploadFileB("FILE_1");
+		UploadFileB file2 = box.getUploadFileB("FILE_2");
+
+		box.put("FILE_ID1", file1.getFileId());
+		box.put("FILE_NM1", file1.getFileName());
+
+		box.put("FILE_ID2", file2.getFileId());
+		box.put("FILE_NM2", file2.getFileName());
+
 		BoardD dao = new BoardD();
 		dao.write();
 
-		return MasterController.execute("list");
+		file1.save();
+		file2.save();
+
+		return MasterController.execute("callList");
 	}
 
 	/**
@@ -83,6 +98,13 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @throws Exception
 	 */
 	public String callUpdate() throws Exception {
+
+		Box box = BoxContext.getThread();
+
+		BoardD dao = new BoardD();
+		Box board = dao.select();
+		box.put("board", board);
+
 		return "update";
 	}
 
@@ -92,12 +114,80 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeUpdate() throws Exception {
 
+		Box box = BoxContext.getThread();
+
+		MasterController.execute("callUpdate");
+		Box thisBoard = box.getBox("board");
+
+		String THIS_FILE_ID1 = thisBoard.s("FILE_ID1");
+		String THIS_FILE_ID2 = thisBoard.s("FILE_ID2");
+
+		boolean isChangeFile1 = false;
+		boolean isChangeFile2 = false;
+
+		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID1);
+		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID2);
+
+		UploadFileB file1 = box.getUploadFileB("FILE_1");
+		UploadFileB file2 = box.getUploadFileB("FILE_2");
+
+		if (file1.getSize() > 0) {
+			isChangeFile1 = true;
+		}
+
+		if (file2.getSize() > 0) {
+			isChangeFile2 = true;
+		}
+
+		box.put("FILE_ID1", file1.getFileId());
+		box.put("FILE_NM1", file1.getFileName());
+
+		box.put("FILE_ID2", file2.getFileId());
+		box.put("FILE_NM2", file2.getFileName());
+
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
 			throw new Exception();
 		}
 
-		return MasterController.execute("list");
+		if (isChangeFile1) {
+			file1.save();
+			oldFile1.delete();
+		}
+
+		if (isChangeFile2) {
+			file1.save();
+			oldFile2.save();
+		}
+
+		return MasterController.execute("callList");
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	private void delete() throws Exception {
+
+		Box box = BoxContext.getThread();
+
+		Box thisBoard = box.getBox("board");
+
+		String THIS_FILE_ID1 = thisBoard.s("FILE_ID1");
+		String THIS_FILE_ID2 = thisBoard.s("FILE_ID2");
+
+		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID1);
+		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID2);
+
+		box.put("CHECK_ID", "OK");
+
+		BoardD dao = new BoardD();
+		if (dao.delete() != 1) {
+			throw new Exception();
+		}
+
+		oldFile1.delete();
+		oldFile2.delete();
+
 	}
 
 	/**
@@ -109,12 +199,9 @@ public class Board implements BizController, BizControllerStartExecute {
 		Box box = BoxContext.getThread();
 		box.put("CHECK_ID", "OK");
 
-		BoardD dao = new BoardD();
-		if (dao.delete() != 1) {
-			throw new Exception();
-		}
+		delete();
 
-		return MasterController.execute("list");
+		return MasterController.execute("callList");
 	}
 
 	/**
@@ -124,12 +211,12 @@ public class Board implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(auth = "A0,C0")
 	public String forceDelete() throws Exception {
 
-		BoardD dao = new BoardD();
-		if (dao.delete() != 1) {
-			throw new Exception();
-		}
+		Box box = BoxContext.getThread();
+		box.put("CHECK_ID", "");
 
-		return MasterController.execute("list");
+		delete();
+
+		return MasterController.execute("callList");
 	}
 
 	/**
@@ -147,7 +234,7 @@ public class Board implements BizController, BizControllerStartExecute {
 		Box box = BoxContext.getThread();
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
-		return MasterController.execute("list");
+		return MasterController.execute("callList");
 	}
 
 	/**
@@ -157,7 +244,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(isLogin = false)
 	public String listJson() throws Exception {
 
-		MasterController.execute("list");
+		MasterController.execute("callList");
 		return "listjson";
 
 	}

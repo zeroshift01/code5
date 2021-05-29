@@ -3,25 +3,26 @@
 SELECT 
 TITLE
 , TXT
-, FILE_NM_1 "TOENC__FILE_NM_1, file001"
-, FILE_ID_1
-, FILE_NM_2 "TOENC__FILE_NM_2, file001"
-, FILE_ID_2
-, FILE_NM_3 "TOENC__FILE_NM_3, file001"
-, FILE_ID_3
+, FILE_ID_1 "TOENC__T_FILE_ID_1, file001"
+, FILE_ID_1 
+, FILE_NM_1
+, FILE_ID_2 "TOENC__T_FILE_ID_2, file001"
+, FILE_ID_2 
+, FILE_NM_2
 FROM
 BZ_BOARD
-WHERE N = [TODEC__N, list]
+WHERE N = [TODEC__TOKEN_N, list]
 ORDER BY N
 
 
 --]]]
 
 
---[[[ LIST, TIMEOUT=10, LIMIT=10
+--[[[ LIST, TIMEOUT=10, LIMIT=2
 
 SELECT 
-N "TOENC__N, list"
+N "TOENC__TOKEN_N, list"
+, N
 , TITLE
 , RG_DTM DTM__DTM
 , RG_ID
@@ -44,8 +45,9 @@ TITLE
 , TXT
 , EM
 , FILE_ID_1
+, FILE_NM_1
 , FILE_ID_2
-, FILE_ID_3
+, FILE_NM_2
 , RG_ID
 , RG_IP
 , RG_DTM
@@ -54,8 +56,9 @@ TITLE
 , [TXT]
 , [ENC__EM]
 , [FILE_ID_1]
+, [FILE_NM_1]
 , [FILE_ID_2]
-, [FILE_ID_3]
+, [FILE_NM_2]
 , [SESSION.ID]
 , [SESSION.IP]
 , [DTM__DTM]
@@ -70,12 +73,13 @@ SET TITLE = [TITLE]
 , TXT = [TXT]
 , EM = [ENC__EM]
 , FILE_ID_1 = [FILE_ID_1]
-, FILE_ID_2 = [FILE_ID_2]
-, FILE_ID_3 = [FILE_ID_3]
+, FILE_NM_1 = [FILE_NM_1]
+, FILE_ID_1 = [FILE_ID_1]
+, FILE_NM_2 = [FILE_NM_2]
 , MDF_ID = [SESSION.ID]
 , MDF_IP = [SESSION.IP]
 , MDF_DTM = [DTM__DTM]
-WHERE N = [TODEC__N, list]
+WHERE N = [TODEC__TOKEN_N, list]
 
 --]]]
 
@@ -87,7 +91,7 @@ SET DEL_Y = 'Y'
 , MDF_ID = [SESSION.ID]
 , MDF_IP = [SESSION.IP]
 , MDF_DTM = [DTM__DTM]
-WHERE N = [TODEC__N, list]
+WHERE N = [TODEC__TOKEN_N, list]
 [~ CHECK_ID ^ OK ^ AND RG_ID = [SESSION.ID] ~]
 
 --]]]
@@ -95,6 +99,7 @@ WHERE N = [TODEC__N, list]
 
 --[[[ DELETEALL
 
-DELETE BZ_BOARD;
+UPDATE BZ_BOARD
+SET DEL_Y = 'Y';
 
 --]]]

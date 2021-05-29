@@ -799,9 +799,6 @@ public class SqlRunner implements Reload {
 			}
 
 			SessionB user = thisBox.getSessionB();
-			if (user == null) {
-				return "";
-			}
 
 			if ("ID".equals(key)) {
 				return user.getId();

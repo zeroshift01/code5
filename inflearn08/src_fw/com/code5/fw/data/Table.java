@@ -8,6 +8,10 @@ import com.code5.fw.web.BoxContext;
  */
 abstract public class Table {
 
+	abstract public boolean isLimitRecode();
+
+	abstract public Box getLimitBox();
+
 	abstract public void setLimit(int limit);
 
 	abstract public boolean addRecode(String[] recode);
@@ -23,8 +27,6 @@ abstract public class Table {
 	abstract public String s(String colName, int row);
 
 	abstract public int size();
-
-	abstract public boolean isNextRecode();
 
 	abstract public int maxRecodeCount();
 

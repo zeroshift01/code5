@@ -9,13 +9,13 @@ import org.junit.Test;
  * @author zero
  *
  */
-class TableRecodeBase_test {
+public class TableRecodeBase_test {
 
 	/**
 	 * 
 	 */
 	@Test
-	void test_Table_기본기능() {
+	public void test_Table_기본기능() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -35,7 +35,7 @@ class TableRecodeBase_test {
 	 * 
 	 */
 	@Test
-	void test_Table_데이터수정() {
+	public void test_Table_데이터수정() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -58,7 +58,7 @@ class TableRecodeBase_test {
 	 * 
 	 */
 	@Test
-	void test_Table_수정할수없는데이터() {
+	public void test_Table_수정할수없는데이터() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -85,7 +85,7 @@ class TableRecodeBase_test {
 	 * 
 	 */
 	@Test
-	void test_Table_최대추가할수있는크기확인() {
+	public void test_Table_최대추가할수있는크기확인() {
 
 		String[] cols = { "번호", "이름" };
 
@@ -93,14 +93,40 @@ class TableRecodeBase_test {
 
 		for (int i = 0; i < 10000; i++) {
 			table.addRecode(new String[] { "1", "홍길동" });
-			assertEquals(table.isNextRecode(), false);
+
 		}
+
+		assertEquals(table.isLimitRecode(), false);
 
 		assertEquals(table.size(), table.maxRecodeCount());
 
 		assertEquals(table.addRecode(new String[] { "1", "홍길동" }), false);
 
-		assertEquals(table.isNextRecode(), true);
+		table = new TableRecodeBase(cols);
+
+		for (int i = 0; i < 10001; i++) {
+			table.addRecode(new String[] { "1", "홍길동" });
+
+		}
+
+		assertEquals(table.isLimitRecode(), true);
+
+		assertEquals(table.size(), table.maxRecodeCount());
+
+		assertEquals(table.addRecode(new String[] { "1", "홍길동" }), false);
+
+		table = new TableRecodeBase(cols);
+
+		for (int i = 0; i < 10002; i++) {
+			table.addRecode(new String[] { "1", "홍길동" });
+
+		}
+
+		assertEquals(table.isLimitRecode(), true);
+
+		assertEquals(table.size(), table.maxRecodeCount());
+
+		assertEquals(table.addRecode(new String[] { "1", "홍길동" }), false);
 
 	}
 }

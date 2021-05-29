@@ -324,7 +324,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();
-		if (user == null) {
+		if (user.isLogin()) {
 			throw new LoginException();
 		}
 
@@ -370,11 +370,20 @@ public class MasterController extends HttpServlet implements Reload {
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);
 
-		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
+		String remoteAddr = request.getRemoteAddr();
+		box.put(Box.KEY_REMOTE_ADDR, remoteAddr);
 
-		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
-		if (sessionB instanceof SessionB) {
-			box.put(Box.KEY_SESSIONB, sessionB);
+		Object session = request.getSession().getAttribute(Box.KEY_SESSIONB);
+
+		if (session == null) {
+			SessionB user = new SessionB(remoteAddr);
+			box.setSessionB(user);
+			return;
+		}
+
+		if (session instanceof SessionB) {
+			box.put(Box.KEY_SESSIONB, session);
+			return;
 		}
 
 	}

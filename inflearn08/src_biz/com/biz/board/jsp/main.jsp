@@ -15,7 +15,7 @@ String TITLE = view.s("TITLE");
 <link rel="stylesheet" href="/css/main.css" />
 <script>
 	function init() {
-		var msg = document.main1.ALERT_MSG.value;
+		var msg = document.mainform.ALERT_MSG.value;
 		if (msg != '') {
 			alert(msg);
 		}
@@ -41,16 +41,25 @@ String TITLE = view.s("TITLE");
 		form.submit();
 	}
 	
+	function callList(){
+		var form = document.form1;
+		form.action = '/waf/callList';
+		form.submit();
+	}
+	
 </script>
 <body onload='init();'>
+	<br>----------상단메뉴-----------
+	<br><button onclick="callWrite()">등록 화면호출</button>
 	<br>
-	
-	<button onclick="callWrite()">등록</button>
-	<br>
+	<br><button onclick="callList()">게시판 화면호출</button>
+	<br>--------------------------
 	<jsp:include page="<%=JSP%>" flush="true"/>
 	<br>
-	<form name='main1'>
-		<input name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
+	<br>
+	<br>
+	<form name='mainform'>
+		mainform.ALERT_MSG : <input id='TEXT' name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
 	</form>
 </body>
 </head>

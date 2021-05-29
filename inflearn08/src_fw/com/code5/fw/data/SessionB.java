@@ -24,6 +24,11 @@ public class SessionB implements Serializable {
 	/**
 	 * 
 	 */
+	private boolean isLogin = false;
+
+	/**
+	 * 
+	 */
 	private String id = null;
 
 	/**
@@ -63,15 +68,11 @@ public class SessionB implements Serializable {
 	}
 
 	/**
-	 * @param id
-	 * @param auth
-	 * @param ip
 	 * @throws Exception
+	 * 
 	 */
-	public SessionB(String id, String auth, String ip) throws Exception {
+	public SessionB(String ip) throws Exception {
 
-		this.id = id;
-		this.auth = auth;
 		this.ip = ip;
 
 		SecureRandom random = new SecureRandom();
@@ -85,6 +86,33 @@ public class SessionB implements Serializable {
 		}
 
 		aria = new Aria_CBC_PKCS7(iv, key);
+	}
+
+	/**
+	 * @param id
+	 * @param auth
+	 * @param ip
+	 * @throws Exception
+	 */
+	public SessionB(String id, String auth, String ip) throws Exception {
+		this(ip);
+		set(id, auth, ip);
+	}
+
+	/**
+	 * @param id
+	 * @param auth
+	 * @param ip
+	 * @throws Exception
+	 */
+	public void set(String id, String auth, String ip) throws Exception {
+
+		this.id = id;
+		this.auth = auth;
+		this.ip = ip;
+
+		this.isLogin = true;
+
 	}
 
 	/**
@@ -141,5 +169,12 @@ public class SessionB implements Serializable {
 		}
 
 		return data;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isLogin() {
+		return this.isLogin;
 	}
 }
