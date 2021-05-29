@@ -1,12 +1,17 @@
+<%@page import="com.code5.fw.data.SessionB"%>
 <%@page import="com.code5.fw.data.Table"%>
 <%@page import="com.code5.fw.data.Box"%>
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
+
 Box box = BoxContext.getThread();
 Box view = box.getBox(Box.KEY_FW_VIEW);
 String JSP = view.s("JSP");
 String TITLE = view.s("TITLE");
+
+SessionB user = box.getSessionB();
+
 %>
 <html>
 <head>
@@ -43,16 +48,27 @@ String TITLE = view.s("TITLE");
 	
 	function callList(){
 		var form = document.form1;
+		form1.TOKEN_N.value = '';
 		form.action = '/waf/callList';
+		form.submit();
+	}
+	
+	function exeLogout(){
+		var form = document.form1;
+		form.action = '/waf/exeLogout';
 		form.submit();
 	}
 	
 </script>
 <body onload='init();'>
 	<br>----------상단메뉴-----------
+	<br><%=user.getId() %> <br><%=user.getAuth() %>
+	<br>
 	<br><button onclick="callWrite()">등록 화면호출</button>
 	<br>
 	<br><button onclick="callList()">게시판 화면호출</button>
+	<br>
+	<br><button onclick="exeLogout()">logout</button>
 	<br>--------------------------
 	<jsp:include page="<%=JSP%>" flush="true"/>
 	<br>

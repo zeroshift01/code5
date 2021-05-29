@@ -94,13 +94,14 @@ public class MasterController extends HttpServlet implements Reload {
 			throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
-		BoxContext.setThread(box);
 		Transaction transaction = Transaction.createTransaction(transationWas);
-		TransactionContext.setThread(transaction);
 
 		try {
-
 			setBox(request, box);
+
+			BoxContext.setThread(box);
+
+			TransactionContext.setThread(transaction);
 
 			String KEY = box.s(Box.KEY_SERVICE);
 
@@ -238,12 +239,12 @@ public class MasterController extends HttpServlet implements Reload {
 
 					@Override
 					public Class<? extends Annotation> annotationType() {
-						return null;
+						return ServiceAnnotation.class;
 					}
 
 					@Override
 					public boolean isLogin() {
-						return false;
+						return true;
 					}
 
 					@Override
@@ -253,7 +254,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 					@Override
 					public String auth() {
-						return null;
+						return "";
 					}
 				};
 
@@ -288,6 +289,14 @@ public class MasterController extends HttpServlet implements Reload {
 
 		boolean checkUrlAuth = checkUrlAuth(sa);
 		if (!checkUrlAuth) {
+
+			Box box = BoxContext.getThread();
+			SessionB user = box.getSessionB();
+
+			if (!user.isLogin()) {
+				throw new LoginException();
+			}
+
 			throw new AuthException();
 		}
 
@@ -310,22 +319,16 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static boolean checkUrlAuth(ServiceAnnotation sa) throws Exception {
 
-		boolean isLogin = true;
-		String auth = "";
-
-		if (sa != null) {
-			isLogin = sa.isLogin();
-			auth = sa.auth();
-		}
-
-		if (!isLogin) {
-			return true;
-		}
-
 		Box box = BoxContext.getThread();
 		SessionB user = box.getSessionB();
-		if (user.isLogin()) {
-			throw new LoginException();
+
+		boolean isLogin = sa.isLogin();
+		String auth = sa.auth();
+
+		if (isLogin) {
+			if (!user.isLogin()) {
+				return false;
+			}
 		}
 
 		if ("".equals(auth)) {

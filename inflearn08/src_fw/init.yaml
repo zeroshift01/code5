@@ -41,10 +41,10 @@ TRANSACTION :
 
 NOLOG : 
   CLASS_NAME : 
-    - "com.code5.fw.web.TransactionContext"
+    - "x.com.code5.fw.web.TransactionContext"
   SERVICE_KEY :
-    - "loginView"
-    - "logout"
+    - "x.loginView"
+    - "x.logout"
 
 PRODUCT : "false"
 

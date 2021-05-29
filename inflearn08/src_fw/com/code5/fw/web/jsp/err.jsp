@@ -1,3 +1,4 @@
+<%@page import="com.code5.fw.web.AuthException"%>
 <%@page import="com.code5.fw.web.LoginException"%>
 <%@page import="com.code5.fw.data.Box"%>
 <%@page import="com.code5.fw.web.BoxContext"%>
@@ -19,6 +20,12 @@
 		msg = "로그인이 필요합니다.";
 		isCallLogin = true;
 	}
+	
+	if (ex instanceof AuthException) {
+		msg = "권한이 필요합니다.";
+	}
+	
+	
 %>
 <pre>+
 사용자에게 보여주는 에러 메세지

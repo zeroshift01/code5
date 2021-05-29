@@ -164,14 +164,14 @@ public class TableRecodeBase extends Table {
 
 		BigDecimal colB = colNameMap.get(colName);
 		if (colB == null) {
-			throw new RuntimeException();
+			return "";
 		}
 
 		int colPosion = colB.intValue();
 
 		String[] recode = recodes.get(row);
 		if (recode == null) {
-			throw new RuntimeException();
+			return "";
 		}
 
 		if (recode.length == 0) {
@@ -274,7 +274,7 @@ public class TableRecodeBase extends Table {
 	public Box getBox() {
 
 		if (size() != 1) {
-			throw new RuntimeException();
+			return new BoxLocal();
 		}
 
 		return getBox(0);

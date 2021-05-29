@@ -1,7 +1,6 @@
 package com.biz.board;
 
 import com.code5.fw.data.Box;
-import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
@@ -30,12 +29,11 @@ public class Board implements BizController, BizControllerStartExecute {
 			return null;
 		}
 
-		SessionB user = box.getSessionB();
-
-		String ip = user.getIp();
 		String remoteAddr = box.s(Box.KEY_REMOTE_ADDR);
 
-		if (!remoteAddr.equals(ip)) {
+		String adminIP = "0:0:0:0:0:0:0:1";
+
+		if (!remoteAddr.equals(adminIP)) {
 			box.setAlertMsg("알수없는 오류가 발생했습니다.");
 			return "error";
 		}
@@ -78,11 +76,11 @@ public class Board implements BizController, BizControllerStartExecute {
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
 
-		box.put("FILE_ID1", file1.getFileId());
-		box.put("FILE_NM1", file1.getFileName());
+		box.put("FILE_ID_1", file1.getFileId());
+		box.put("FILE_NM_1", file1.getFileName());
 
-		box.put("FILE_ID2", file2.getFileId());
-		box.put("FILE_NM2", file2.getFileName());
+		box.put("FILE_ID_2", file2.getFileId());
+		box.put("FILE_NM_2", file2.getFileName());
 
 		BoardD dao = new BoardD();
 		dao.write();
@@ -119,14 +117,14 @@ public class Board implements BizController, BizControllerStartExecute {
 		MasterController.execute("callUpdate");
 		Box thisBoard = box.getBox("board");
 
-		String THIS_FILE_ID1 = thisBoard.s("FILE_ID1");
-		String THIS_FILE_ID2 = thisBoard.s("FILE_ID2");
+		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
+		String THIS_FILE_ID_2 = thisBoard.s("FILE_ID_2");
 
 		boolean isChangeFile1 = false;
 		boolean isChangeFile2 = false;
 
-		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID1);
-		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID2);
+		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID_1);
+		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID_2);
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
@@ -139,15 +137,17 @@ public class Board implements BizController, BizControllerStartExecute {
 			isChangeFile2 = true;
 		}
 
-		box.put("FILE_ID1", file1.getFileId());
-		box.put("FILE_NM1", file1.getFileName());
+		box.put("FILE_ID_1", file1.getFileId());
+		box.put("FILE_NM_1", file1.getFileName());
 
-		box.put("FILE_ID2", file2.getFileId());
+		box.put("FILE_ID_2", file2.getFileId());
 		box.put("FILE_NM2", file2.getFileName());
 
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
-			throw new Exception();
+
+			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
+			return MasterController.execute("callUpdate");
 		}
 
 		if (isChangeFile1) {
@@ -160,7 +160,8 @@ public class Board implements BizController, BizControllerStartExecute {
 			oldFile2.save();
 		}
 
-		return MasterController.execute("callList");
+		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
+		return MasterController.execute("callUpdate");
 	}
 
 	/**
@@ -172,17 +173,18 @@ public class Board implements BizController, BizControllerStartExecute {
 
 		Box thisBoard = box.getBox("board");
 
-		String THIS_FILE_ID1 = thisBoard.s("FILE_ID1");
-		String THIS_FILE_ID2 = thisBoard.s("FILE_ID2");
+		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
+		String THIS_FILE_ID_2 = thisBoard.s("FILE_ID_2");
 
-		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID1);
-		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID2);
+		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID_1);
+		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID_2);
 
 		box.put("CHECK_ID", "OK");
 
 		BoardD dao = new BoardD();
 		if (dao.delete() != 1) {
-			throw new Exception();
+			box.setAlertMsg("자신의 글만 삭제할 있습니다.");
+			return;
 		}
 
 		oldFile1.delete();
@@ -208,7 +210,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 * @return
 	 * @throws Exception
 	 */
-	@ServiceAnnotation(auth = "A0,C0")
+	@ServiceAnnotation(auth = "A0")
 	public String forceDelete() throws Exception {
 
 		Box box = BoxContext.getThread();
@@ -232,6 +234,25 @@ public class Board implements BizController, BizControllerStartExecute {
 		TransactionContext.commit();
 
 		Box box = BoxContext.getThread();
+		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
+
+		return MasterController.execute("callList");
+	}
+
+	@ServiceAnnotation(auth = "A0")
+	public String allUpdate() throws Exception {
+
+		Box box = BoxContext.getThread();
+		Table input = box.createTableByKey("TOKEN_N");
+
+		BoardD dao = new BoardD();
+		for (int i = 0; i < input.size(); i++) {
+			box.putFromTable(input, i);
+			dao.updateAll();
+		}
+
+		TransactionContext.commit();
+
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
 		return MasterController.execute("callList");

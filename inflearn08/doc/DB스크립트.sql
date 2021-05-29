@@ -84,6 +84,7 @@ INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.board.Board','exeWrite');
 INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.board.Board','exeDelete');
 INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.Board','forceDelete');
 INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.Board','allDelete');
+INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.board.Board','allUpdate');
 
 
 drop TABLE FW_VIEW ;

@@ -76,7 +76,11 @@ public class Login implements BizController {
 	 */
 	@ServiceAnnotation(isLogin = false)
 	public String exeLogout() throws Exception {
-		BoxContext.getThread().setSessionB(null);
+
+		Box box = BoxContext.getThread();
+		String remoteAddr = box.s(Box.KEY_REMOTE_ADDR);
+		SessionB user = new SessionB(remoteAddr);
+		box.setSessionB(user);
 		return callLogin();
 	}
 

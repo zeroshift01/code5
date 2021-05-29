@@ -62,15 +62,17 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
 
-		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
+		SessionB sessionB = (SessionB) request.getSession().getAttribute(Box.KEY_SESSIONB);
 
 		if (sessionB == null) {
 			throw new LoginException();
 		}
 
-		if (sessionB instanceof SessionB) {
-			box.put(Box.KEY_SESSIONB, sessionB);
+		if (!sessionB.isLogin()) {
+			throw new LoginException();
 		}
+
+		box.put(Box.KEY_SESSIONB, sessionB);
 
 		Collection<Part> parts = request.getParts();
 

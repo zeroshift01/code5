@@ -65,4 +65,11 @@ public class BoardD {
 		sql.executeSql("DELETEALL");
 	}
 
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	int updateAll() throws SQLException {
+		return sql.executeSql("UPDATE_ALL");
+	}
 }

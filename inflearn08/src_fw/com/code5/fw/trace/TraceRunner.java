@@ -144,8 +144,10 @@ public final class TraceRunner implements Reload {
 		}
 
 		SessionB user = box.getSessionB();
-		if (user.isLogin()) {
-			sb.append("[" + user.getId() + "]");
+		if (user != null) {
+			if (user.isLogin()) {
+				sb.append("[" + user.getId() + "]");
+			}
 		}
 
 		sb.append(log);
