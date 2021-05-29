@@ -1,7 +1,12 @@
 RUN_CODE5:
-  WEB_APP_DIR : "C:/public/code5/web"
-  BASE_DIR : "C:/public/code5/temp"
-  WEB_PORT : "18080"
+  WEB_APP_DIR : 
+    DEFAULT : "C:/public/code5/web"
+    zero : "C:/public/git/zeroshift01/inflearn01/web"
+  BASE_DIR :
+    DEFAULT : "C:/public/code5/temp"
+    zero : "C:/public/git/zeroshift01/inflearn01/temp"
+  WEB_PORT :
+    DEFAULT : "18080"
 
 
 LOG : 
@@ -27,11 +32,11 @@ UPLOAD_FILE_DIR :
 
 TRANSACTION :
   WAS : 
-    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_POOL_CODE5_DEV"
-    PRHOST : "com.code5.fw.web.Transaction_SQLITE_POOL_CODE5"
+    DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRHOST : "com.code5.fw.db.Transaction_SQLITE_POOL"
   JOB :
-    DEFAULT : "com.code5.fw.web.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRHOST : "com.code5.fw.web.Transaction_SQLITE_JDBC_CODE5"
+    DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRHOST : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5"
 
 
 NOLOG : 

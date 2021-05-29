@@ -3,6 +3,7 @@ cd C:\public\lib\sqlite
 sqlite3 C:\public\code5\doc\code5.db
 
 DROP TABLE BZ_BOARD;
+
 CREATE TABLE BZ_BOARD(
 N INTEGER PRIMARY KEY AUTOINCREMENT
 , TITLE
@@ -105,23 +106,6 @@ INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp',
 INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','등록화면');
 INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','수정화면');
 
-
-CREATE TABLE FW_FILE_DOWNLOAD (
-REAL_FILE_NAME
-, ID
-, ST_DTM
-, ED_DTM
-);
-CREATE TABLE FW_FILE_UPLOAD (
-FILE_ID primary KEY
-, SIZE
-, NAME
-, CONTENT_TYPE
-, FILE_NAME
-, FILE_URL
-, RG_ID
-, RG_DTM
-);
 drop table FW_UPLOAD_FILE;
 CREATE TABLE FW_UPLOAD_FILE (
 FILE_ID primary KEY
