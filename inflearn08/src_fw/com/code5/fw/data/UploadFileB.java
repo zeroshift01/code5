@@ -133,6 +133,8 @@ public class UploadFileB {
 
 		sql.executeSql(FORM_NO_01);
 
+		(new File(from)).delete();
+
 		this.isSave = true;
 	}
 

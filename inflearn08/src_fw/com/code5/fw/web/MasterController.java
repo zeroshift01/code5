@@ -94,14 +94,14 @@ public class MasterController extends HttpServlet implements Reload {
 			throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
+		BoxContext.setThread(box);
+
 		Transaction transaction = Transaction.createTransaction(transationWas);
+		TransactionContext.setThread(transaction);
 
 		try {
+			
 			setBox(request, box);
-
-			BoxContext.setThread(box);
-
-			TransactionContext.setThread(transaction);
 
 			String KEY = box.s(Box.KEY_SERVICE);
 

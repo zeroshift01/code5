@@ -3,6 +3,7 @@
 <%@page import="com.code5.fw.data.Box"%>
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<pre>
 <%
 
 	response.setHeader("cache-control", "no-cache");
@@ -12,7 +13,7 @@
 	Box box = BoxContext.getThread();
 
 	Exception ex = (Exception) box.get(Box.KEY_EXCEPTION);
-
+	
 	String msg = "오류가 발생했습니다.";
 
 	boolean isCallLogin = false;
@@ -27,7 +28,7 @@
 	
 	
 %>
-<pre>+
+
 사용자에게 보여주는 에러 메세지
 
 <%=msg%>
