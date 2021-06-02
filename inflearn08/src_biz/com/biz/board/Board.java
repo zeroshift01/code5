@@ -111,7 +111,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeUpdate() throws Exception {
 
-		Box box = BoxContext.getThread();
+ 		Box box = BoxContext.getThread();
 
 		MasterController.execute("callUpdate");
 		Box thisBoard = box.getBox("board");
@@ -140,7 +140,7 @@ public class Board implements BizController, BizControllerStartExecute {
 		box.put("FILE_NM_1", file1.getFileName());
 
 		box.put("FILE_ID_2", file2.getFileId());
-		box.put("FILE_NM2", file2.getFileName());
+		box.put("FILE_NM_2", file2.getFileName());
 
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
@@ -155,8 +155,8 @@ public class Board implements BizController, BizControllerStartExecute {
 		}
 
 		if (isChangeFile2) {
-			file1.save();
-			oldFile2.save();
+			file2.save();
+			oldFile2.delete();
 		}
 
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");

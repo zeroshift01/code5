@@ -26,57 +26,35 @@ SessionB user = box.getSessionB();
 		}
 	}
 	
-	function callUpdate(N){
-		var form = document.form1;
-		form.THIS_N.value = N; 
-		form.action = '/waf/callUpdate';
-		form.submit();
-	} 
-
-	function exeDelete(N){
-		var form = document.form1;
-		form.THIS_N.value = N; 
-		form.action = '/waf/exeDelete';
-		form.submit();
-	}
-
 	function callWrite(){
-		var form = document.form1;
+		var form = document.mainform;
 		form.action = '/waf/callWrite';
 		form.submit();
 	}
 	
 	function callList(){
-		var form = document.form1;
-		form1.TOKEN_N.value = '';
+		var form = document.mainform;
 		form.action = '/waf/callList';
 		form.submit();
 	}
 	
 	function exeLogout(){
-		var form = document.form1;
+		var form = document.mainform;
 		form.action = '/waf/exeLogout';
 		form.submit();
 	}
 	
 </script>
 <body onload='init();'>
-	<br>----------상단메뉴-----------
-	<br><%=user.getId() %> <br><%=user.getAuth() %>
-	<br>
-	<br><button onclick="callWrite()">등록 화면호출</button>
-	<br>
-	<br><button onclick="callList()">게시판 화면호출</button>
-	<br>
-	<br><button onclick="exeLogout()">logout</button>
-	<br>--------------------------
-	<jsp:include page="<%=JSP%>" flush="true"/>
-	<br>
-	<br>
-	<br>
-	<form name='mainform'>
-		mainform.ALERT_MSG : <input id='TEXT' name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
-	</form>
+<br>로그인한 아이디 : <%=user.getId() %>, 권한코드 : <%=user.getAuth() %>
+<br><button onclick="callWrite()">callWrite</button> <button onclick="callList()">callList</button> <button onclick="exeLogout()">logout</button>
+<hr>
+메뉴명:<%=TITLE%>
+<jsp:include page="<%=JSP%>" flush="true"/>
+<hr>
+<form name='mainform' method="post">
+mainform.ALERT_MSG : <input id='TEXT' name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />
+</form>
 </body>
 </head>
 </html>

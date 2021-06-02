@@ -16,7 +16,7 @@ public class Transaction_SQLITE_JDBC_CODE5_DEV extends Transaction {
 	 */
 	protected Connection createConnection() throws SQLException {
 
-		String url = "jdbc:sqlite:C:/public/code5/doc/code5.db";
+		String url = "jdbc:sqlite:C:/public/sqlite/code5.db";
 
 		SQLiteConfig config = new SQLiteConfig();
 		Connection conn = org.sqlite.JDBC.createConnection(url, config.toProperties());

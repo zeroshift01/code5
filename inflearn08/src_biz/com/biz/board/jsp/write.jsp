@@ -10,18 +10,14 @@ function exeWrite(){
 	form.submit();
 }
 </script>
-
-<br>
-<br>
+<hr>
 <form name="form1" method="post" enctype = "multipart/form-data">
+post, multipart/form-data
+<br>
 <br>form1.TITLE : <input type="TEXT" name="TITLE">
 <br>form1.TXT : <input type="TEXT" name="TXT"> 
 <br>form1.EM : <input type="TEXT" name="EM">
-<br>
-<br>
 <br>form1.file1 : <input type="FILE" name="FILE_1">
 <br>form1.file2 : <input type="FILE" name="FILE_2">
-
 </form>
-
-<button onclick="exeWrite()">등록 실행</button>
+<button onclick="exeWrite()">exeWrite</button>

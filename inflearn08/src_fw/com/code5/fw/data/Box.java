@@ -153,7 +153,6 @@ public abstract class Box implements Serializable {
 	public SessionB getSessionB() {
 
 		try {
-			// return new SessionB("A0", "A0", "1");
 			return (SessionB) get(KEY_SESSIONB);
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -77,50 +77,28 @@ function allUpdate(){
 
 
 <form name="form1" method="post">
-
+<hr>
+<button onclick="callList()">callList</button>
+<button onclick="allUpdate()">allUpdate</button>
+<button onclick="allDelete()">allDelete</button>
 <br>form1.NEXT_N : <input type="TEXT" name="NEXT_N" value="<%=box.s("NEXT_N")%>">
 <br>form1.THIS_TOKEN_N : <input type="TEXT" name="THIS_TOKEN_N" value="<%=box.s("THIS_TOKEN_N")%>">
-
 <br>form1.FIND_OPT : <input type="TEXT" name="FIND_OPT" value="<%=box.s("FIND_OPT")%>">
 <br>form1.FIND_SRT : <input type="TEXT" name="FIND_SRT" value="<%=box.s("FIND_OPT")%>">
-<br><button onclick="callList()">callList</button> allUpdate
-<br>
-<br>
-<br>- 게시물 리스트
-<br>--------------------------------------------
-	<%
-		for (int i = 0; i < list.size(); i++) {
-	%>
-	
-	
-	<br>N : <%=list.s("N", i)%>
-	
-	<br>TITLE : <input type="TEXT" name="TITLE" value="<%=list.s("TITLE", i)%>">
-	<br>EM : <input type="TEXT" name="EM" value="<%=list.s("EM", i)%>">
-	<br>TOKEN_N : <input type="TEXT" readonly="readonly" name="TOKEN_N" value="<%=list.s("TOKEN_N", i)%>">
-	
-	<br><button onclick="callUpdate('<%=list.s("TOKEN_N", i)%>')">callUpdate</button>
-	<br><button onclick="exeDelete('<%=list.s("TOKEN_N", i)%>')">exeDelete</button>
-	
-	<%if(isForceDelete) { %>
-	<br><button onclick="forceDelete('<%=list.s("TOKEN_N", i)%>')">forceDelete</button>
+<hr>
+	<%for (int i = 0; i < list.size(); i++) {%>
+		N:<%=list.s("N", i)%>
+		<button onclick="callUpdate('<%=list.s("TOKEN_N", i)%>')">callUpdate</button>
+		<button onclick="exeDelete('<%=list.s("TOKEN_N", i)%>')">exeDelete</button>
+		<%if(isForceDelete) { %>
+		<button onclick="forceDelete('<%=list.s("TOKEN_N", i)%>')">forceDelete</button>
+		<%}%>
+		<br>form1.TITLE : <input type="TEXT" name="TITLE" value="<%=list.s("TITLE", i)%>">
+		<br>form1.EM : <input type="TEXT" name="EM" value="<%=list.s("EM", i)%>">
+		<br>form1.TOKEN_N : <input type="TEXT" readonly="readonly" name="TOKEN_N" value="<%=list.s("TOKEN_N", i)%>">
+		<hr>
 	<%}%>
-	
-	
-	<br>--------------------------------------------
-	<%}%>
+	<% if(isLimitRecode) {%>
+		<button onclick="callNextList('<%=limitBox.s("N")%>')">callNextList,<%=limitBox.s("N")%></button>
+	<% }%>
 </form>
-
-<% if(isLimitRecode) {%>
-<br>다음 페이지가 있습니다.
-<br><button onclick="callNextList('<%=limitBox.s("N")%>')">callNextList</button>
-<br><%=limitBox.s("N")%>
-<br><%=limitBox.s("TOKEN_N")%>
-<br>--------------------------------------------
-<% }%>
-
-<br>
-<br>
-<br><button onclick="allUpdate()">allUpdate</button> 
-<br> 
-<br><button onclick="allDelete()">allDelete</button> 
