@@ -188,7 +188,7 @@ public class Board implements BizController, BizControllerStartExecute {
 
 		BoardD dao = new BoardD();
 		if (dao.delete() != 1) {
-			throw new Exception();
+			throw new Exception("삭제할 데이터가 없습니다.");
 		}
 
 		oldFile1.delete();

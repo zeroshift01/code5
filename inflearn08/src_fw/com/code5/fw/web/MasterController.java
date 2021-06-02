@@ -166,8 +166,13 @@ public class MasterController extends HttpServlet implements Reload {
 
 			Box errView = getView(errKey);
 
-			if (ex instanceof InvocationTargetException) {
+			for (int i = 0; i < 10; i++) {
+
+				if (!(ex instanceof InvocationTargetException)) {
+					break;
+				}
 				ex = (Exception) ex.getCause();
+
 			}
 
 			box.put(Box.KEY_EXCEPTION, ex);
