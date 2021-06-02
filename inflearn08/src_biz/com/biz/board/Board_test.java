@@ -25,7 +25,7 @@ public class Board_test {
 
 			box.put("TITLE", "A");
 
-			MasterController.execute("list");
+			MasterController.executeService("list");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class Board_test {
 			box.put("TXT", "TXT_1");
 			box.put("EM", "aaa@bb.cc");
 
-			MasterController.execute("write");
+			MasterController.executeService("write");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class Board_test {
 			SessionB user = new SessionB("ID1", "U0", "1");
 			box.put(Box.KEY_SESSIONB, user);
 
-			MasterController.execute("list");
+			MasterController.executeService("list");
 
 			Table list = box.getTable("list");
 			String N = list.s("N", 0);
@@ -80,7 +80,7 @@ public class Board_test {
 			box.put("TXT", "u-TXT_1");
 			box.put("EM", "u-aaa@bb.cc");
 
-			MasterController.execute("update");
+			MasterController.executeService("update");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class Board_test {
 	 */
 	@Test
 	public void test_delete() throws Exception {
-		MasterController.execute("list");
+		MasterController.executeService("list");
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class Board_test {
 	 */
 	@Test
 	public void test_deleteAll() throws Exception {
-		MasterController.execute("deleteall");
+		MasterController.executeService("deleteall");
 	}
 
 }

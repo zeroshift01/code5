@@ -5,7 +5,6 @@ import com.code5.fw.data.Table;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BizControllerStartExecute;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.MasterController;
 import com.code5.fw.web.ServiceAnnotation;
 import com.code5.fw.web.TransactionContext;
 
@@ -47,7 +46,11 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(auth = "A0")
 	public String forceDelete() throws Exception {
 
-		return MasterController.execute("exeDelete");
+		execute("callUpdate");
+
+		execute("delete");
+
+		return execute("callList");
 
 	}
 
@@ -66,7 +69,7 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 		Box box = BoxContext.getThread();
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
-		return MasterController.execute("callList");
+		return execute("callList");
 	}
 
 	@ServiceAnnotation(auth = "A0")
@@ -85,7 +88,7 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
-		return MasterController.execute("callList");
+		return execute("callList");
 	}
 
 }

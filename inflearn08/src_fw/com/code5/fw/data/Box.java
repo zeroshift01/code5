@@ -52,6 +52,14 @@ public abstract class Box implements Serializable {
 
 	/**
 	 * @param key
+	 * @param t
+	 */
+	public void put(String key, boolean t) {
+		put(key, "" + t);
+	}
+
+	/**
+	 * @param key
 	 * @return
 	 * 
 	 * 

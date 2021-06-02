@@ -6,7 +6,6 @@ import com.code5.fw.data.Table;
 import com.code5.fw.security.CryptPin;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.MasterController;
 import com.code5.fw.web.ServiceAnnotation;
 
 /**
@@ -35,7 +34,7 @@ public class Login implements BizController {
 
 		if (user.size() != 1) {
 			box.put("ret", "아이디가 없거나 패스워드가 일치하지 않습니다.");
-			return MasterController.execute("callLogin");
+			return execute("callLogin");
 		}
 
 		Box thisUser = user.getBox();
@@ -47,13 +46,13 @@ public class Login implements BizController {
 				throw new Exception();
 			}
 
-			return MasterController.execute("callLogin");
+			return execute("callLogin");
 		}
 
 		int FAIL_CNT = thisUser.getInt("FAIL_CNT");
 		if (FAIL_CNT > 5) {
 			box.put("ret", "패스워드를 5회 이상 실패하였습니다.");
-			return MasterController.execute("callLogin");
+			return execute("callLogin");
 		}
 
 		String AUTH = thisUser.s("AUTH");
@@ -67,7 +66,7 @@ public class Login implements BizController {
 			throw new Exception();
 		}
 
-		return MasterController.execute("callList");
+		return execute("callList");
 	}
 
 	/**

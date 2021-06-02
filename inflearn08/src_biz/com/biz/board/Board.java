@@ -1,12 +1,12 @@
 package com.biz.board;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BizControllerStartExecute;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.MasterController;
 import com.code5.fw.web.ServiceAnnotation;
 
 /**
@@ -87,7 +87,7 @@ public class Board implements BizController, BizControllerStartExecute {
 		file1.save();
 		file2.save();
 
-		return MasterController.execute("callList");
+		return execute("callList");
 	}
 
 	/**
@@ -100,6 +100,13 @@ public class Board implements BizController, BizControllerStartExecute {
 
 		BoardD dao = new BoardD();
 		Box board = dao.select();
+
+		String RG_ID = board.s("RG_ID");
+		SessionB user = box.getSessionB();
+		if (RG_ID.equals(user.getId())) {
+			board.put("IS_RG_ID", true);
+		}
+
 		box.put("board", board);
 
 		return "update";
@@ -111,9 +118,9 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeUpdate() throws Exception {
 
- 		Box box = BoxContext.getThread();
+		Box box = BoxContext.getThread();
 
-		MasterController.execute("callUpdate");
+		execute("callUpdate");
 		Box thisBoard = box.getBox("board");
 
 		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
@@ -146,7 +153,7 @@ public class Board implements BizController, BizControllerStartExecute {
 		if (dao.update() != 1) {
 
 			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
-			return MasterController.execute("callUpdate");
+			return execute("callUpdate");
 		}
 
 		if (isChangeFile1) {
@@ -160,14 +167,14 @@ public class Board implements BizController, BizControllerStartExecute {
 		}
 
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
-		return MasterController.execute("callUpdate");
+		return execute("callUpdate");
 	}
 
 	/**
-	 * @return
 	 * @throws Exception
 	 */
-	public String exeDelete() throws Exception {
+	@ServiceAnnotation(isInternal = true)
+	public void delete() throws Exception {
 
 		Box box = BoxContext.getThread();
 
@@ -181,14 +188,33 @@ public class Board implements BizController, BizControllerStartExecute {
 
 		BoardD dao = new BoardD();
 		if (dao.delete() != 1) {
-			box.setAlertMsg("자신의 글만 삭제할 있습니다.");
-			return MasterController.execute("callList");
+			throw new Exception();
 		}
 
 		oldFile1.delete();
 		oldFile2.delete();
+	}
 
-		return MasterController.execute("callList");
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String exeDelete() throws Exception {
+
+		Box box = BoxContext.getThread();
+
+		execute("callUpdate");
+
+		Box thisBoard = box.getBox("board");
+
+		if (!thisBoard.getBoolean("IS_RG_ID")) {
+			box.setAlertMsg("자신의 글만 삭제할 있습니다.");
+			return execute("callList");
+		}
+
+		execute("delete");
+
+		return execute("callList");
 	}
 
 	/**
@@ -198,7 +224,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(isLogin = false)
 	public String listJson() throws Exception {
 
-		MasterController.execute("callList");
+		execute("callList");
 		return "listjson";
 
 	}
