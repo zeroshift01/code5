@@ -71,18 +71,18 @@ INSERT INTO FW_CONTROLLER VALUES('callLogin','com.biz.login.Login','callLogin');
 
 
 INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
+INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.board.Board','callWrite');
+INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.board.Board','callUpdate');
 INSERT INTO FW_CONTROLLER VALUES('callListByJson','com.biz.board.Board','callListByJson');
 
-INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.board.Board','callUpdate');
+
 INSERT INTO FW_CONTROLLER VALUES('exeUpdate','com.biz.board.Board','exeUpdate');
-
-INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.board.Board','callWrite');
 INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.board.Board','exeWrite');
-
 INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.board.Board','exeDelete');
-INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.Board','forceDelete');
-INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.Board','allDelete');
-INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.board.Board','allUpdate');
+
+INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.BoardAdmin','forceDelete');
+INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.BoardAdmin','allDelete');
+INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.board.BoardAdmin','allUpdate');
 
 
 drop TABLE FW_VIEW ;

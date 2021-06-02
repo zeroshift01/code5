@@ -8,7 +8,6 @@ import com.code5.fw.web.BizControllerStartExecute;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.MasterController;
 import com.code5.fw.web.ServiceAnnotation;
-import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
@@ -165,9 +164,10 @@ public class Board implements BizController, BizControllerStartExecute {
 	}
 
 	/**
+	 * @return
 	 * @throws Exception
 	 */
-	private void delete() throws Exception {
+	public String exeDelete() throws Exception {
 
 		Box box = BoxContext.getThread();
 
@@ -179,81 +179,14 @@ public class Board implements BizController, BizControllerStartExecute {
 		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID_1);
 		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID_2);
 
-		box.put("CHECK_ID", "OK");
-
 		BoardD dao = new BoardD();
 		if (dao.delete() != 1) {
 			box.setAlertMsg("자신의 글만 삭제할 있습니다.");
-			return;
+			return MasterController.execute("callList");
 		}
 
 		oldFile1.delete();
 		oldFile2.delete();
-
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	public String exeDelete() throws Exception {
-
-		Box box = BoxContext.getThread();
-		box.put("CHECK_ID", "OK");
-
-		delete();
-
-		return MasterController.execute("callList");
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@ServiceAnnotation(auth = "A0")
-	public String forceDelete() throws Exception {
-
-		Box box = BoxContext.getThread();
-		box.put("CHECK_ID", "");
-
-		delete();
-
-		return MasterController.execute("callList");
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@ServiceAnnotation(auth = "A0")
-	public String allDelete() throws Exception {
-
-		BoardD dao = new BoardD();
-		dao.deleteAll();
-
-		TransactionContext.commit();
-
-		Box box = BoxContext.getThread();
-		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
-
-		return MasterController.execute("callList");
-	}
-
-	@ServiceAnnotation(auth = "A0")
-	public String allUpdate() throws Exception {
-
-		Box box = BoxContext.getThread();
-		Table input = box.createTableByKey("TOKEN_N");
-
-		BoardD dao = new BoardD();
-		for (int i = 0; i < input.size(); i++) {
-			box.putFromTable(input, i);
-			dao.updateAll();
-		}
-
-		TransactionContext.commit();
-
-		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
 		return MasterController.execute("callList");
 	}
