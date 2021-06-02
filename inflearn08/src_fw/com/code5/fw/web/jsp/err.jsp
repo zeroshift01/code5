@@ -38,7 +38,9 @@
 
 <%=ex.toString()%>
 <%=ex.getMessage()%>
-<%ex.printStackTrace();%>
+<%if(!isCallLogin) {%>
+	<%ex.printStackTrace();%>
+<%}%>
 </pre>
 
 <button onclick="history.back(-1)">뒤로 가기</button>
