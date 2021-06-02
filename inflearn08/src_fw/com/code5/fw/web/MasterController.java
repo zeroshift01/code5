@@ -35,7 +35,12 @@ public class MasterController extends HttpServlet implements Reload {
 	/**
 	 * 
 	 */
-	private static boolean isCache = InitYaml.get().isCache();
+	private static boolean IS_CACHE = InitYaml.get().isCache();
+
+	/**
+	 * 
+	 */
+	private String characterSet = InitYaml.get().getCharacterSet();
 
 	/**
 	 * 
@@ -93,6 +98,8 @@ public class MasterController extends HttpServlet implements Reload {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		request.setCharacterEncoding(this.characterSet);
+
 		Box box = new BoxHttp(request);
 		BoxContext.setThread(box);
 
@@ -100,7 +107,7 @@ public class MasterController extends HttpServlet implements Reload {
 		TransactionContext.setThread(transaction);
 
 		try {
-			
+
 			setBox(request, box);
 
 			String KEY = box.s(Box.KEY_SERVICE);
@@ -179,7 +186,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static Object getCache(ConcurrentHashMap<String, ?> hm, String KEY) {
 
-		if (!isCache) {
+		if (!IS_CACHE) {
 			return null;
 		}
 		return hm.get(KEY);
@@ -367,8 +374,6 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @return
 	 */
 	protected void setBox(HttpServletRequest request, Box box) throws Exception {
-
-		request.setCharacterEncoding("UTF-8");
 
 		String KEY = request.getPathInfo().substring(1);
 		box.put(Box.KEY_SERVICE, KEY);

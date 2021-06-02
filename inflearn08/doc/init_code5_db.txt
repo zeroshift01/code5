@@ -1,0 +1,3 @@
+"c:/public/sqlite/sqlite3" "c:/public/code5/doc/code5.db"
+
+.read "c:/public/code5/doc/init_code5_db.sql"

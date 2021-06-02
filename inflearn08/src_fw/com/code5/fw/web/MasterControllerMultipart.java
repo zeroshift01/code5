@@ -44,8 +44,6 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	 */
 	protected void setBox(HttpServletRequest request, Box box) throws Exception {
 
-		request.setCharacterEncoding("UTF-8");
-
 		String boxContentType = request.getContentType();
 		if (boxContentType == null) {
 			throw new ServletException();

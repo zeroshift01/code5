@@ -1,8 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@page import="com.code5.fw.web.MasterController"%>
 <%@page import="com.code5.fw.data.Table"%>
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@page import="com.code5.fw.data.Box"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Box box = BoxContext.getThread();
 	Table list = box.getTable("list");
