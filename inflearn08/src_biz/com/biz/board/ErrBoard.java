@@ -12,13 +12,13 @@ import com.code5.fw.web.LoginException;
  * @author zero
  *
  */
-public class Error_stub implements BizController {
+public class ErrBoard implements BizController {
 	/**
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public String errstub1() throws Exception {
+	public String errStub1() throws Exception {
 
 		Box box = BoxContext.getThread();
 		if ("1".equals(box.s("err"))) {
@@ -33,7 +33,7 @@ public class Error_stub implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
-	public String errstub2() throws Exception {
+	public String errStub2() throws Exception {
 
 		Box box = BoxContext.getThread();
 		
