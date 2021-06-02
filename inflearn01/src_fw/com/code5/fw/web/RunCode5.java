@@ -3,6 +3,7 @@ package com.code5.fw.web;
 import java.net.Socket;
 import java.util.Properties;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 
 import com.code5.fw.data.InitYaml;
@@ -47,6 +48,11 @@ public class RunCode5 {
 		tomcat.setBaseDir(baseDir);
 		tomcat.setPort(webPort);
 		tomcat.addWebapp("", webappDir);
+
+		String characterSet = init.getCharacterSet();
+		System.out.println("uri characterSet [" + characterSet + "]");
+		Connector conn = tomcat.getConnector();
+		conn.setURIEncoding(characterSet);
 
 		tomcat.start();
 

@@ -67,6 +67,18 @@ public class InitYaml {
 	/**
 	 * 
 	 */
+	private String characterSet = null;
+
+	/**
+	 * @return
+	 */
+	public String getCharacterSet() {
+		return characterSet;
+	}
+
+	/**
+	 * 
+	 */
 	private boolean isProduct = false;
 
 	/**
@@ -114,8 +126,10 @@ public class InitYaml {
 		this.appName = properties.getProperty("CODE5.APP_NAME");
 
 		this.isCache = is("CACHE");
-		
+
 		this.isProduct = is("PRODUCT");
+
+		this.characterSet = s("CHARACTER_SET");
 
 		isRead = true;
 	}

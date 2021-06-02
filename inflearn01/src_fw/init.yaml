@@ -1,13 +1,15 @@
 RUN_CODE5:
   WEB_APP_DIR : 
     DEFAULT : "C:/public/code5/web"
-    zero : "C:/public/git/zeroshift01/inflearn01/web"
+    zero : "C:/public/git/zeroshift01/inflearn08/web"
   BASE_DIR :
     DEFAULT : "C:/public/code5/temp"
-    zero : "C:/public/git/zeroshift01/inflearn01/temp"
+    zero : "C:/public/git/zeroshift01/inflearn08/temp"
   WEB_PORT :
     DEFAULT : "18080"
 
+CHARACTER_SET : 
+  DEFAULT : "UTF-8"
 
 LOG : 
   DIR : 
