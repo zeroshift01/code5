@@ -113,8 +113,8 @@ public final class TraceRunner implements Reload {
 
 		String logFileName = this.logFilePatten;
 
-		logFileName = logFileName.replace("[rnd]", this.rnd);
-		logFileName = logFileName.replace("[name]", logKey);
+		logFileName = logFileName.replace("[RND]", this.rnd);
+		logFileName = logFileName.replace("[NAME]", logKey);
 
 		return this.logDir + File.separatorChar + logFileName;
 	}

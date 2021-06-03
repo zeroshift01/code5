@@ -47,7 +47,7 @@ public class InitCode5DBByDev {
 				continue;
 			}
 
-			System.out.println(sql);
+			System.out.println(sql + ";");
 			try {
 				Statement st = transaction.createStatement();
 				st.execute(sql);
