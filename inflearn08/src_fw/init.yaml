@@ -18,7 +18,7 @@ LOG :
     DEFAULT : "[APP_ROOT_URL]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap1"
-  FILE_PATTERN : "[rnd].[name].log"
+  FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
     PRHOST : "true"
