@@ -1,5 +1,6 @@
 package com.code5.fw.data;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,18 @@ public class InitYaml {
 	 */
 	public String getHostName() {
 		return hostName;
+	}
+
+	/**
+	 * 
+	 */
+	private String appRootUrl = null;
+
+	/**
+	 * @return
+	 */
+	public String getAppRootUrl() {
+		return appRootUrl;
 	}
 
 	/**
@@ -131,6 +144,8 @@ public class InitYaml {
 
 		this.characterSet = s("CHARACTER_SET");
 
+		this.appRootUrl = new File(".").getAbsolutePath();
+
 		isRead = true;
 	}
 
@@ -184,15 +199,30 @@ public class InitYaml {
 	}
 
 	/**
+	 * @param s
+	 * @return
+	 */
+	private String convert$(String s) {
+		if (this.appRootUrl != null) {
+			s = s.replace("[APP_ROOT_URL]", this.appRootUrl);
+		}
+		return s;
+	}
+
+	/**
 	 * @param key
 	 * @return
 	 */
 	public String s(String key) {
 		Object obj = get(key);
-		if (obj instanceof String) {
-			return (String) obj;
+		if (!(obj instanceof String)) {
+			return "";
+
 		}
-		return "";
+
+		String s = (String) obj;
+		s = convert$(s);
+		return s;
 	}
 
 	/**
@@ -210,7 +240,10 @@ public class InitYaml {
 
 		String[] ret = new String[list.size()];
 		for (int i = 0; i < ret.length; i++) {
-			ret[i] = list.get(i);
+
+			String s = list.get(i);
+			s = convert$(s);
+			ret[i] = s;
 		}
 
 		return ret;

@@ -1,10 +1,12 @@
 RUN_CODE5:
   WEB_APP_DIR : 
-    DEFAULT : "C:/public/code5/web"
-    zero : "C:/public/git/zeroshift01/inflearn01/web"
+    DEFAULT : "[APP_ROOT_URL]/web"
+    PRAP1 : "/contents/code5/web"
+    PRAP2 : "/contents/code5/web"
   BASE_DIR :
-    DEFAULT : "C:/public/code5/temp"
-    zero : "C:/public/git/zeroshift01/inflearn01/temp"
+    DEFAULT : "[APP_ROOT_URL]/temp"
+    PRAP1 : "/contents/code5/temp"
+    PRAP2 : "/contents/code5/temp"
   WEB_PORT :
     DEFAULT : "18080"
 
@@ -13,8 +15,9 @@ CHARACTER_SET :
 
 LOG : 
   DIR : 
-    DEFAULT : "C:/public/logs"
-    PRHOST : "/logs"
+    DEFAULT : "[APP_ROOT_URL]/logs"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap1"
   FILE_PATTERN : "[rnd].[name].log"
   WRITE_LOG : 
     DEFAULT : "false"
@@ -25,11 +28,13 @@ LOG :
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
-    DEFAULT : "C:/public/log/temp"
-    PRHOST : "C:/public/log/temp"
+    DEFAULT : "[APP_ROOT_URL]/temp"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap2"
   URL : 
-    DEFAULT : "C:/public/file"
-    PRHOST : "C:/public/file"
+    DEFAULT : "[APP_ROOT_URL]/file"
+    PRAP1 : "/contents/file"
+    PRAP2 : "/contents/file"
 
 
 TRANSACTION :
@@ -39,6 +44,9 @@ TRANSACTION :
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
     PRHOST : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5"
+
+Transaction_SQLITE_JDBC_CODE5_DEV :
+  URL : "jdbc:sqlite:[APP_ROOT_URL]/doc/code5.db"
 
 
 NOLOG : 
