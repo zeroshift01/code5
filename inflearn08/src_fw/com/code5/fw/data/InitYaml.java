@@ -1,6 +1,5 @@
 package com.code5.fw.data;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +143,7 @@ public class InitYaml {
 
 		this.characterSet = s("CHARACTER_SET");
 
-		this.appRootUrl = new File(".").getAbsolutePath();
+		this.appRootUrl = s("APP_ROOT_URL");
 
 		isRead = true;
 	}
