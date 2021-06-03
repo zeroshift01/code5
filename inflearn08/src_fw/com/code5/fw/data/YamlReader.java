@@ -61,20 +61,7 @@ public class YamlReader {
 			Map<String, Object> map = yaml.load(inputStream);
 
 			String path = cl.getResource(yamlName).getPath();
-
-			// init.yaml
-			File file = new File(path);
-			// classes/init.yaml
-			file = file.getParentFile();
-			// WEB-INF/classes/init.yaml
-			file = file.getParentFile();
-			// web/WEB-INF/classes/init.yaml
-			file = file.getParentFile();
-			// root/web/WEB-INF/classes/init.yaml
-			file = file.getParentFile();
-
-			String appRootUrl = file.getAbsolutePath();
-			map.put("APP_ROOT_URL", appRootUrl);
+			map.put("THIS_YAML_URL", path);
 
 			return map;
 

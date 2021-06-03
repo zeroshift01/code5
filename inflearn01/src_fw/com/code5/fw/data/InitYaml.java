@@ -144,7 +144,22 @@ public class InitYaml {
 
 		this.characterSet = s("CHARACTER_SET");
 
-		this.appRootUrl = new File(".").getAbsolutePath();
+		String yamlUrl = s("THIS_YAML_URL");
+
+		// init.yaml
+		File file = new File(yamlUrl);
+		// classes/init.yaml
+		file = file.getParentFile();
+		// WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// root/web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+
+		String appRootUrl = file.getAbsolutePath();
+
+		this.appRootUrl = appRootUrl;
 
 		isRead = true;
 	}

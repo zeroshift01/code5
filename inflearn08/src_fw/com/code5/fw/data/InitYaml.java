@@ -1,5 +1,6 @@
 package com.code5.fw.data;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
@@ -143,7 +144,22 @@ public class InitYaml {
 
 		this.characterSet = s("CHARACTER_SET");
 
-		this.appRootUrl = s("APP_ROOT_URL");
+		String yamlUrl = s("THIS_YAML_URL");
+
+		// init.yaml
+		File file = new File(yamlUrl);
+		// classes/init.yaml
+		file = file.getParentFile();
+		// WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// root/web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+
+		String appRootUrl = file.getAbsolutePath();
+
+		this.appRootUrl = appRootUrl;
 
 		isRead = true;
 	}
