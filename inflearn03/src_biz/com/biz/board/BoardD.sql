@@ -1,0 +1,55 @@
+--[[[ LIST
+
+SELECT 
+N
+, TITLE
+, EM
+FROM
+BZ_BOARD
+WHERE 1 = 1
+AND TITLE LIKE '%'||[FIND_STR]||'%'
+AND DEL_Y IS NULL
+ORDER BY N DESC
+
+
+--]]]
+
+--[[[ WRITE
+
+INSERT INTO BZ_BOARD
+(
+TITLE
+, TXT
+, EM
+, RG_DTM
+) VALUES (
+[TITLE]
+, [TXT]
+, [EM]
+, [DTM]
+)
+
+--]]]
+
+--[[[ UPDATE
+
+UPDATE BZ_BOARD
+SET TITLE = [TITLE]
+, TXT = [TXT]
+, EM = [EM]
+, MDF_DTM = [DTM]
+WHERE N = [N]
+
+--]]]
+
+
+--[[[ DELETE 
+
+UPDATE BZ_BOARD
+SET DEL_Y = 'Y'
+, MDF_DTM = [DTM]
+WHERE N = [N]
+AND DEL_Y IS NULL
+
+
+--]]]

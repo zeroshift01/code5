@@ -3,6 +3,7 @@ package com.code5.fw.web;
 import java.net.Socket;
 import java.util.Properties;
 
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 
 import com.code5.fw.data.InitYaml;
@@ -27,6 +28,12 @@ public class RunCode5 {
 
 		String baseDir = init.s("RUN_CODE5.BASE_DIR");
 		int webPort = Integer.parseInt(init.s("RUN_CODE5.WEB_PORT"));
+		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
+
+		System.out.println("hostName [" + init.getHostName() + "]");
+		System.out.println("baseDir [" + baseDir + "]");
+		System.out.println("webappDir [" + webappDir + "]");
+		System.out.println("webPort [" + webPort + "]");
 
 		if (!isWebPort(webPort)) {
 			System.out.println(webPort + " 는 사용중입니다.");
@@ -36,14 +43,16 @@ public class RunCode5 {
 		Properties properties = System.getProperties();
 		properties.setProperty("CODE5.APP_NAME", "CODE5");
 
-		String webappDir = init.s("RUN_CODE5.WEB_APP_DIR");
-
 		Tomcat tomcat = new Tomcat();
 
 		tomcat.setBaseDir(baseDir);
 		tomcat.setPort(webPort);
-
 		tomcat.addWebapp("", webappDir);
+
+		String characterSet = init.getCharacterSet();
+		System.out.println("uri characterSet [" + characterSet + "]");
+		Connector conn = tomcat.getConnector();
+		conn.setURIEncoding(characterSet);
 
 		tomcat.start();
 

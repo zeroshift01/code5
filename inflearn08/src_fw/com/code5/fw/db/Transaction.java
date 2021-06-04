@@ -176,8 +176,17 @@ public abstract class Transaction {
 			return;
 		}
 
+		if (this.conn == null) {
+
+			this.conn = createConnection();
+		}
+
 		setAutoCommit = true;
-		
+
+		conn.setAutoCommit(false);
+
+		setAutoCommit = true;
+
 		Connection connection = getConnection();
 		connection.setAutoCommit(false);
 	}

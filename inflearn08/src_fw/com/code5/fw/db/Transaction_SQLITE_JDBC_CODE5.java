@@ -5,11 +5,15 @@ import java.sql.SQLException;
 
 import org.sqlite.SQLiteConfig;
 
+import com.code5.fw.data.InitYaml;
+
 /**
  * @author zero
  *
  */
 public class Transaction_SQLITE_JDBC_CODE5 extends Transaction {
+
+	private static String URL = InitYaml.get().s("Transaction_SQLITE_JDBC_CODE5.URL");
 
 	/**
 	 *
@@ -17,8 +21,7 @@ public class Transaction_SQLITE_JDBC_CODE5 extends Transaction {
 	protected Connection createConnection() throws SQLException {
 
 		SQLiteConfig config = new SQLiteConfig();
-		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:/public/code5/doc/code5.db",
-				config.toProperties());
+		Connection conn = org.sqlite.JDBC.createConnection(URL, config.toProperties());
 
 		return conn;
 

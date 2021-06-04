@@ -1,5 +1,6 @@
 package com.code5.fw.data;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,18 @@ public class InitYaml {
 	/**
 	 * 
 	 */
+	private String appRootUrl = null;
+
+	/**
+	 * @return
+	 */
+	public String getAppRootUrl() {
+		return appRootUrl;
+	}
+
+	/**
+	 * 
+	 */
 	private String appName = null;
 
 	/**
@@ -62,6 +75,18 @@ public class InitYaml {
 	 */
 	public String getAppName() {
 		return appName;
+	}
+
+	/**
+	 * 
+	 */
+	private String characterSet = null;
+
+	/**
+	 * @return
+	 */
+	public String getCharacterSet() {
+		return characterSet;
 	}
 
 	/**
@@ -114,8 +139,27 @@ public class InitYaml {
 		this.appName = properties.getProperty("CODE5.APP_NAME");
 
 		this.isCache = is("CACHE");
-		
+
 		this.isProduct = is("PRODUCT");
+
+		this.characterSet = s("CHARACTER_SET");
+
+		String yamlUrl = s("THIS_YAML_URL");
+
+		// init.yaml
+		File file = new File(yamlUrl);
+		// classes/init.yaml
+		file = file.getParentFile();
+		// WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+		// root/web/WEB-INF/classes/init.yaml
+		file = file.getParentFile();
+
+		String appRootUrl = file.getAbsolutePath();
+
+		this.appRootUrl = appRootUrl;
 
 		isRead = true;
 	}
@@ -170,15 +214,30 @@ public class InitYaml {
 	}
 
 	/**
+	 * @param s
+	 * @return
+	 */
+	private String convert$(String s) {
+		if (this.appRootUrl != null) {
+			s = s.replace("[APP_ROOT_URL]", this.appRootUrl);
+		}
+		return s;
+	}
+
+	/**
 	 * @param key
 	 * @return
 	 */
 	public String s(String key) {
 		Object obj = get(key);
-		if (obj instanceof String) {
-			return (String) obj;
+		if (!(obj instanceof String)) {
+			return "";
+
 		}
-		return "";
+
+		String s = (String) obj;
+		s = convert$(s);
+		return s;
 	}
 
 	/**
@@ -196,7 +255,10 @@ public class InitYaml {
 
 		String[] ret = new String[list.size()];
 		for (int i = 0; i < ret.length; i++) {
-			ret[i] = list.get(i);
+
+			String s = list.get(i);
+			s = convert$(s);
+			ret[i] = s;
 		}
 
 		return ret;
