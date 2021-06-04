@@ -1,14 +1,24 @@
 RUN_CODE5:
-  WEB_APP_DIR : "C:/public/code5/web"
-  BASE_DIR : "C:/public/code5/temp"
-  WEB_PORT : "18080"
+  WEB_APP_DIR : 
+    DEFAULT : "[APP_ROOT_URL]/web"
+    PRAP1 : "/contents/code5/web"
+    PRAP2 : "/contents/code5/web"
+  BASE_DIR :
+    DEFAULT : "[APP_ROOT_URL]/temp"
+    PRAP1 : "/contents/code5/temp"
+    PRAP2 : "/contents/code5/temp"
+  WEB_PORT :
+    DEFAULT : "18080"
 
+CHARACTER_SET : 
+  DEFAULT : "UTF-8"
 
 LOG : 
   DIR : 
-    DEFAULT : "C:/public/logs"
-    PRHOST : "/logs"
-  FILE_PATTERN : "[rnd].[name].log"
+    DEFAULT : "[APP_ROOT_URL]/logs"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap1"
+  FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
     PRHOST : "true"
@@ -18,11 +28,13 @@ LOG :
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
-    DEFAULT : "C:/public/log/temp"
-    PRHOST : "C:/public/log/temp"
+    DEFAULT : "[APP_ROOT_URL]/temp"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap2"
   URL : 
-    DEFAULT : "C:/public/file"
-    PRHOST : "C:/public/file"
+    DEFAULT : "[APP_ROOT_URL]/files"
+    PRAP1 : "/contents/files"
+    PRAP2 : "/contents/files"
 
 
 TRANSACTION :
@@ -32,6 +44,9 @@ TRANSACTION :
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
     PRHOST : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5"
+
+Transaction_SQLITE_JDBC_CODE5_DEV :
+  URL : "jdbc:sqlite:[APP_ROOT_URL]/doc/code5.db"
 
 
 NOLOG : 
