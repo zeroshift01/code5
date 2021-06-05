@@ -16,6 +16,13 @@ public class Transaction_SQLITE_JDBC_CODE5_DEV extends Transaction {
 	private static String URL = InitYaml.get().s("Transaction_SQLITE_JDBC_CODE5_DEV.URL");
 
 	/**
+	 * @return
+	 */
+	public static String getURL() {
+		return URL;
+	}
+
+	/**
 	 *
 	 */
 	protected Connection createConnection() throws SQLException {

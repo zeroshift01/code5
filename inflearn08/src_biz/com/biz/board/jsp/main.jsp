@@ -6,16 +6,18 @@
 <%
 
 Box box = BoxContext.getThread();
-Box view = box.getBox(Box.KEY_FW_VIEW);
-String JSP = view.s("JSP");
-String TITLE = view.s("TITLE");
+Box fwView = box.getBox(Box.KEY_FW_VIEW);
+String view = fwView.s("VIEW");
+String title = fwView.s("TITLE");
+
+System.out.println("---------"+view);
 
 SessionB user = box.getSessionB();
 
 %>
 <html>
 <head>
-<title><%=TITLE%></title>
+<title><%=title%></title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="/css/main.css" />
 <script>
@@ -49,8 +51,8 @@ SessionB user = box.getSessionB();
 <br>로그인한 아이디 : <%=user.getId() %>, 권한코드 : <%=user.getAuth() %>
 <br><button onclick="callWrite()">callWrite</button> <button onclick="callList()">callList</button> <button onclick="exeLogout()">logout</button>
 <hr>
-메뉴명:<%=TITLE%>
-<jsp:include page="<%=JSP%>" flush="true"/>
+메뉴명:<%=title%>
+<jsp:include page="<%=view%>" flush="true"/>
 <hr>
 <form name='mainform' method="post">
 mainform.ALERT_MSG : <input id='TEXT' name='ALERT_MSG' value='<%=box.getAlertMsg()%>' />

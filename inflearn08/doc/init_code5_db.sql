@@ -91,8 +91,8 @@ drop TABLE FW_VIEW ;
 
 CREATE TABLE FW_VIEW (
 KEY PRIMARY KEY
-, JSP
-, TMPL_JSP
+, VIEW
+, TMPL
 , TITLE);
 
 
@@ -101,9 +101,9 @@ INSERT INTO FW_VIEW VALUES('null','/WEB-INF/classes/com/code5/fw/web/jsp/null.js
 INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/jsp/err.jsp','','');
 
 INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
-INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','리스트');
-INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','등록화면');
-INSERT INTO FW_VIEW VALUES('update','/WEB-INF/classes/com/biz/board/jsp/update.jsp','/WEB-INF/classes/com/biz/board/jsp/main.jsp','수정화면');
+INSERT INTO FW_VIEW VALUES('list','list.jsp','main.jsp','리스트');
+INSERT INTO FW_VIEW VALUES('write','write.jsp','main.jsp','등록화면');
+INSERT INTO FW_VIEW VALUES('update','update.jsp','main.jsp','수정화면');
 
 drop table FW_UPLOAD_FILE;
 CREATE TABLE FW_UPLOAD_FILE (

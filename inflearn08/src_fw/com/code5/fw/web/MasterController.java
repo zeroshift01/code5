@@ -1,5 +1,6 @@
 package com.code5.fw.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -35,6 +36,11 @@ public class MasterController extends HttpServlet implements Reload {
 	/**
 	 * 
 	 */
+	private static String WEB_APP_DIR = InitYaml.get().getWebAppDir();
+
+	/**
+	 * 
+	 */
 	private static boolean IS_CACHE = InitYaml.get().isCache();
 
 	/**
@@ -65,27 +71,53 @@ public class MasterController extends HttpServlet implements Reload {
 	private static Trace trace = new Trace(MasterController.class);
 
 	/**
+	 * @param view
+	 * @return
+	 */
+	private static String convertUrlForView(String view) {
+
+		if ("".equals(view)) {
+			return view;
+		}
+
+		if (view.startsWith("/")) {
+			return view;
+		}
+
+		Box box = BoxContext.getThread();
+		ServiceB serviceB = (ServiceB) box.get(Box.KEY_SERVICEB);
+		view = serviceB.classUrl + File.separatorChar + "jsp" + File.separatorChar + view;
+
+		if (File.separatorChar == '\\') {
+			view = view.replace("\\", "/");
+		}
+
+		return view;
+
+	}
+
+	/**
 	 * @param request
 	 * @param response
 	 * @param box
 	 * @param view
 	 */
-	private void forward(HttpServletRequest request, HttpServletResponse response, Box view) {
+	private void forward(HttpServletRequest request, HttpServletResponse response, Box fwView) {
 
 		try {
 
-			String TMPL_JSP = view.s("TMPL_JSP");
-			String JSP = view.s("JSP");
+			String view = fwView.s("VIEW");
+			String tmpl = fwView.s("TMPL");
 
-			trace.write("TMPL_JSP [" + TMPL_JSP + "]");
-			trace.write("VIEW [" + JSP + "]");
+			trace.write("view [" + view + "]");
+			trace.write("tmpl [" + tmpl + "]");
 
-			String THIS_JSP = TMPL_JSP;
-			if ("".equals(THIS_JSP)) {
-				THIS_JSP = JSP;
+			String dispatcherView = tmpl;
+			if ("".equals(dispatcherView)) {
+				dispatcherView = view;
 			}
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(THIS_JSP);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
 
 			dispatcher.forward(request, response);
 
@@ -110,15 +142,15 @@ public class MasterController extends HttpServlet implements Reload {
 
 			setBox(request, box);
 
-			String KEY = box.s(Box.KEY_SERVICE);
+			String serviceKey = box.s(Box.KEY_SERVICE);
 
-			trace.write("KEY [" + KEY + "]");
+			trace.write("serviceKey [" + serviceKey + "]");
 
-			String JSP_KEY = executeService(KEY);
+			String jspKey = executeService(serviceKey);
 
-			trace.write("JSP_KEY [" + JSP_KEY + "]");
+			trace.write("jspKey [" + jspKey + "]");
 
-			Box view = getView(JSP_KEY);
+			Box view = getView(jspKey);
 
 			box.setXssConvert(true);
 
@@ -202,7 +234,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Object[] createService(Box controller) throws Exception {
+	private static ServiceB createService(Box controller) throws Exception {
 
 		String KEY = controller.s("KEY");
 		String CLASS_NAME = controller.s("CLASS_NAME");
@@ -210,7 +242,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
-		Object biz = getCache(BIZ_CONTROLLER_MAP, KEY);
+		BizController biz = (BizController) getCache(BIZ_CONTROLLER_MAP, KEY);
 
 		if (biz == null) {
 
@@ -220,13 +252,36 @@ public class MasterController extends HttpServlet implements Reload {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			Constructor constructor = newClass.getConstructor();
 
-			biz = constructor.newInstance();
+			Object ins = constructor.newInstance();
 
-			if (!(biz instanceof BizController)) {
+			if (!(ins instanceof BizController)) {
 				throw new AuthException();
 			}
 
-			BIZ_CONTROLLER_MAP.put(KEY, biz);
+			biz = (BizController) ins;
+
+			BIZ_CONTROLLER_MAP.put(KEY, (BizController) biz);
+
+		}
+
+		String classUrl = (String) getCache(CLASS_URL_MAP, KEY);
+
+		if (classUrl == null) {
+
+			String resource = CLASS_NAME.replaceAll("\\.", "\\/") + ".class";
+
+			ClassLoader cl = MasterController.class.getClassLoader();
+			String path = cl.getResource(resource).getPath();
+
+			classUrl = new File(path).getParent();
+
+			if (!classUrl.startsWith(WEB_APP_DIR)) {
+				throw new AuthException();
+			}
+
+			classUrl = classUrl.replace(WEB_APP_DIR, "");
+
+			CLASS_URL_MAP.put(KEY, classUrl);
 
 		}
 
@@ -282,11 +337,13 @@ public class MasterController extends HttpServlet implements Reload {
 			SERVICE_ANNOTATION_MAP.put(KEY + "." + METHOD_NAME, sa);
 		}
 
-		Object[] service = new Object[3];
-		service[0] = biz;
-		service[1] = method;
-		service[2] = sa;
-		return service;
+		ServiceB serviceB = new ServiceB();
+
+		serviceB.biz = biz;
+		serviceB.method = method;
+		serviceB.sa = sa;
+		serviceB.classUrl = classUrl;
+		return serviceB;
 
 	}
 
@@ -296,20 +353,22 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String executeService(String KEY) throws Exception {
+	public static String executeService(String key) throws Exception {
 
-		Box controller = getController(KEY);
+		Box controller = getController(key);
 
-		Object[] service = createService(controller);
+		ServiceB serviceB = createService(controller);
 
-		Object biz = service[0];
-		Method method = (Method) service[1];
-		ServiceAnnotation sa = (ServiceAnnotation) service[2];
+		Object biz = serviceB.biz;
+		Method method = serviceB.method;
+		ServiceAnnotation sa = serviceB.sa;
+
+		Box box = BoxContext.getThread();
+		box.put(Box.KEY_SERVICEB, serviceB);
 
 		boolean checkUrlAuth = checkUrlAuth(sa);
 		if (!checkUrlAuth) {
 
-			Box box = BoxContext.getThread();
 			SessionB user = box.getSessionB();
 
 			if (!user.isLogin()) {
@@ -326,8 +385,8 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 		}
 
-		String JSP_KEY = (String) method.invoke(biz);
-		return JSP_KEY;
+		String jspKey = (String) method.invoke(biz);
+		return jspKey;
 
 	}
 
@@ -385,9 +444,8 @@ public class MasterController extends HttpServlet implements Reload {
 	public static boolean checkUrlAuth(String KEY) throws Exception {
 
 		Box controller = getController(KEY);
-		Object[] service = createService(controller);
-		ServiceAnnotation sa = (ServiceAnnotation) service[2];
-
+		ServiceB serviceB = createService(controller);
+		ServiceAnnotation sa = serviceB.sa;
 		return checkUrlAuth(sa);
 
 	}
@@ -456,6 +514,8 @@ public class MasterController extends HttpServlet implements Reload {
 		SERVICE_ANNOTATION_MAP.clear();
 		METHOD_MAP.clear();
 		BIZ_CONTROLLER_MAP.clear();
+		CLASS_URL_MAP.clear();
+		FW_VIEW_MAP.clear();
 
 		this.RND = MakeRnd.createRnd(8);
 	}
@@ -463,7 +523,12 @@ public class MasterController extends HttpServlet implements Reload {
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, Object> BIZ_CONTROLLER_MAP = new ConcurrentHashMap<String, Object>();
+	private static ConcurrentHashMap<String, String> CLASS_URL_MAP = new ConcurrentHashMap<String, String>();
+
+	/**
+	 * 
+	 */
+	private static ConcurrentHashMap<String, BizController> BIZ_CONTROLLER_MAP = new ConcurrentHashMap<String, BizController>();
 
 	/**
 	 * 
@@ -474,6 +539,11 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	private static ConcurrentHashMap<String, ServiceAnnotation> SERVICE_ANNOTATION_MAP = new ConcurrentHashMap<String, ServiceAnnotation>();
+
+	/**
+	 * 
+	 */
+	private static ConcurrentHashMap<String, Box> FW_VIEW_MAP = new ConcurrentHashMap<String, Box>();
 
 	/**
 	 * 
@@ -507,6 +577,12 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static Box getView(String KEY) throws Exception {
 
+		Box fwView = FW_VIEW_MAP.get(KEY);
+
+		if (fwView != null) {
+			return fwView;
+		}
+
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 
@@ -516,9 +592,25 @@ public class MasterController extends HttpServlet implements Reload {
 
 		}
 
-		Box view = table.getBox();
-		BoxContext.getThread().put(Box.KEY_FW_VIEW, view);
-		return view;
+		fwView = table.getBox();
+
+		String view = fwView.s("VIEW");
+		String tmpl = fwView.s("TMPL");
+
+		fwView.put("ORG_VIEW", view);
+		fwView.put("ORG_TEMP", tmpl);
+
+		view = convertUrlForView(view);
+		tmpl = convertUrlForView(tmpl);
+
+		fwView.put("VIEW", view);
+		fwView.put("TMPL", tmpl);
+
+		BoxContext.getThread().put(Box.KEY_FW_VIEW, fwView);
+
+		FW_VIEW_MAP.put(KEY, fwView);
+
+		return fwView;
 
 	}
 }

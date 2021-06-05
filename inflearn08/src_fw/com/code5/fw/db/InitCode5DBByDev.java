@@ -15,7 +15,7 @@ public class InitCode5DBByDev {
 
 	public static void main(String[] xx) throws Exception {
 
-		String url = InitYaml.get().getAppRootUrl() + "/doc/init_code5_db.sql";
+		String url = InitYaml.get().getAppRootDir() + "/doc/init_code5_db.sql";
 
 		FileInputStream in = new FileInputStream(url);
 		InputStreamReader isr = new InputStreamReader(in);

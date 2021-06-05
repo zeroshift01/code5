@@ -14,10 +14,26 @@ import com.code5.fw.web.MasterController;
  */
 public class Board_test {
 
+	@Test
+	public void test_forceDelete() {
+
+		try {
+			Box box = BoxContext.getThread();
+
+			SessionB user = new SessionB("A", "A0", "1.10.1");
+
+			box.setSessionB(user);
+
+			MasterController.executeService("forceDelete");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	/**
 	 * @throws Exception
 	 */
-	@Test
+	// @Test
 	public void test_list() {
 
 		try {
@@ -34,7 +50,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	@Test
+	// @Test
 	public void test_write() throws Exception {
 
 		try {
@@ -57,7 +73,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	@Test
+	// @Test
 	public void test_update() throws Exception {
 
 		try {
@@ -90,7 +106,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	@Test
+	// @Test
 	public void test_delete() throws Exception {
 		MasterController.executeService("list");
 	}
@@ -98,7 +114,7 @@ public class Board_test {
 	/**
 	 * @throws Exception
 	 */
-	@Test
+	// @Test
 	public void test_deleteAll() throws Exception {
 		MasterController.executeService("deleteall");
 	}

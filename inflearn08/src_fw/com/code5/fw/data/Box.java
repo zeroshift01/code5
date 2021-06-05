@@ -13,6 +13,7 @@ public abstract class Box implements Serializable {
 	public static String KEY_SERVICE = "com.code5.fw.web.KEY_SERVICE";
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 	public static String KEY_CONTENT_TYPE = "com.code5.fw.web.KEY_CONTENT_TYPE";
+	public static String KEY_SERVICEB = "com.code5.fw.web.KEY_SERVICEB";
 
 	public static String KEY_FW_VIEW = "com.code5.fw.web.KEY_FW_VIEW";
 	public static String KEY_FW_CONTROLLER = "com.code5.fw.web.KEY_FW_CONTROLLER";
