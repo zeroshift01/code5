@@ -86,7 +86,12 @@ public class MasterController extends HttpServlet implements Reload {
 
 		Box box = BoxContext.getThread();
 		ServiceB serviceB = (ServiceB) box.get(Box.KEY_SERVICEB);
-		view = serviceB.classUrl + File.separatorChar + "jsp" + File.separatorChar + view;
+
+		if (view.endsWith("jsp")) {
+			view = serviceB.classUrl + File.separatorChar + "jsp" + File.separatorChar + view;
+		} else if (view.endsWith("html")) {
+			view = serviceB.classUrl + File.separatorChar + "html" + File.separatorChar + view;
+		}
 
 		if (File.separatorChar == '\\') {
 			view = view.replace("\\", "/");
