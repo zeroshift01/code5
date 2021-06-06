@@ -585,6 +585,9 @@ public class MasterController extends HttpServlet implements Reload {
 		Box fwView = FW_VIEW_MAP.get(KEY);
 
 		if (fwView != null) {
+
+			BoxContext.getThread().put(Box.KEY_FW_VIEW, fwView);
+
 			return fwView;
 		}
 
