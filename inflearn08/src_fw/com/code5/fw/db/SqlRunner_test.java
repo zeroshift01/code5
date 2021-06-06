@@ -124,14 +124,14 @@ public class SqlRunner_test {
 		assertEquals(data, "data");
 
 		p = sql.paramParsing("DEC__D1__PRN_HP_N");
-		box.put("D1", "80c253dcf3a330c5dbb29239f52c8fca");
+		box.put("D1", "9148ca06a3a1de5616d949bc74f5f687");
 		data = sql.getDataByParam(p, box);
-		assertEquals(data, "data휴대폰형식화");
+		assertEquals(data, "010-1111-2222");
 
 		p = sql.paramParsing("D1__PRN_HP_N");
-		box.put("D1", "data");
+		box.put("D1", "01011112222");
 		data = sql.getDataByParam(p, box);
-		assertEquals(data, "data휴대폰형식화");
+		assertEquals(data, "010-1111-2222");
 
 		p = sql.paramParsing("PIN__PIN, ID");
 		box.put("PIN", "abcd1234");
@@ -198,17 +198,6 @@ public class SqlRunner_test {
 		data = sql.getDataByParam(p, thisBox);
 		assertEquals(data,
 				"6c4c4558324c97e8e6b8655b68e27666b000a31d04835cfb0e86d91e302a0fb150e5cc4b6178363ff73ff8457ec4ca7d");
-
-		p = sql.paramParsing("BOX.P1__PRN_HP_N");
-		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "80c253dcf3a330c5dbb29239f52c8fca휴대폰형식화");
-
-		p = sql.paramParsing("BOX.DEC__P1__PRN_HP_N");
-		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "data휴대폰형식화");
-
-		data = sql.getDataByParam(p, thisBox);
-		assertEquals(data, "data휴대폰형식화");
 
 	}
 

@@ -692,19 +692,27 @@ public class SqlRunner implements Reload {
 	 */
 	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
 
-		if (p.isPrnHpN) {
-			return data + "휴대폰형식화";
-		}
+		try {
+			if (p.isPrnHpN) {
+				return data.substring(0, 3) + "-" + data.substring(3, 7) +"-"+ data.substring(7, 11);
 
-		if (p.isPrnD) {
-			return data + "날짜형식화";
-		}
+			}
 
-		if (p.isPrnDTM) {
-			return data + "DTM형식화";
-		}
+			if (p.isPrnD) {
+				return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8);
 
-		return data;
+			}
+
+			if (p.isPrnDTM) {
+				return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8) + " "
+						+ data.substring(8, 10) + ":" + data.substring(10, 12) + ":" + data.substring(12, 14);
+
+			}
+
+			return data;
+		} catch (Exception ex) {
+			return data;
+		}
 	}
 
 	/**
