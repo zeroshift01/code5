@@ -310,17 +310,19 @@ public final class TraceRunner implements Reload {
 
 		this.isWriteLog = InitYaml.get().is("LOG.WRITE_LOG");
 
-		noLogMap.clear();
+		ConcurrentHashMap<String, String> thisNoLogMap = new ConcurrentHashMap<String, String>();
 
 		String[] ss = InitYaml.get().ss("NOLOG.CLASS_NAME");
 		for (int i = 0; i < ss.length; i++) {
-			noLogMap.put("NOLOG.CLASS_NAME." + ss[i], "NOLOG");
+			thisNoLogMap.put("NOLOG.CLASS_NAME." + ss[i], "NOLOG");
 		}
 
 		ss = InitYaml.get().ss("NOLOG.SERVICE_KEY");
 		for (int i = 0; i < ss.length; i++) {
-			noLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "NOLOG");
+			thisNoLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "NOLOG");
 		}
+
+		noLogMap = thisNoLogMap;
 
 		if (this.isWriteLog) {
 			if (this.isMulti) {
