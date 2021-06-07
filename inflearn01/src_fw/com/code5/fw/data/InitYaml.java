@@ -56,13 +56,13 @@ public class InitYaml {
 	/**
 	 * 
 	 */
-	private String appRootUrl = null;
+	private String appRootDir = null;
 
 	/**
 	 * @return
 	 */
-	public String getAppRootUrl() {
-		return appRootUrl;
+	public String getAppRootDir() {
+		return appRootDir;
 	}
 
 	/**
@@ -113,6 +113,10 @@ public class InitYaml {
 		return isCache;
 	}
 
+	private String tempDir = null;
+	private int webPort = 0;
+	private String webAppDir = null;
+
 	/**
 	 * 
 	 */
@@ -136,7 +140,7 @@ public class InitYaml {
 		}
 
 		Properties properties = System.getProperties();
-		this.appName = properties.getProperty("CODE5.APP_NAME");
+		this.appName = properties.getProperty("com.code5.app.name");
 
 		this.isCache = is("CACHE");
 
@@ -159,9 +163,35 @@ public class InitYaml {
 
 		String appRootUrl = file.getAbsolutePath();
 
-		this.appRootUrl = appRootUrl;
+		this.appRootDir = appRootUrl;
+
+		this.webPort = Integer.parseInt(s("WEB_PORT"));
+
+		this.webAppDir = new File(s("WEB_APP_DIR")).getAbsolutePath();
+		this.tempDir = new File(s("TEMP_DIR")).getAbsolutePath();
 
 		isRead = true;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTempDir() {
+		return tempDir;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getWebPort() {
+		return webPort;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getWebAppDir() {
+		return webAppDir;
 	}
 
 	/**
@@ -218,8 +248,8 @@ public class InitYaml {
 	 * @return
 	 */
 	private String convert$(String s) {
-		if (this.appRootUrl != null) {
-			s = s.replace("[APP_ROOT_URL]", this.appRootUrl);
+		if (this.appRootDir != null) {
+			s = s.replace("[APP_ROOT_DIR]", this.appRootDir);
 		}
 		return s;
 	}
