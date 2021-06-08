@@ -12,7 +12,7 @@ WEB_PORT :
 CHARACTER_SET : 
   DEFAULT : "UTF-8"
 
-LOG : 
+LOG :
   DIR : 
     DEFAULT : "[APP_ROOT_DIR]/logs"
     PRAP1 : "/logs/prap1"
@@ -20,10 +20,12 @@ LOG :
   FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
-    PRHOST : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
   MULTI : 
     DEFAULT : "true"
-    PRHOST : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
@@ -39,10 +41,11 @@ UPLOAD_FILE_DIR :
 TRANSACTION :
   WAS : 
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRHOST : "com.code5.fw.db.Transaction_SQLITE_POOL"
+    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_POOL"
+    PRAP2 : "com.code5.fw.db.Transaction_SQLITE_POOL"
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRHOST : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5"
+    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_JDBC"
 
 Transaction_SQLITE_JDBC_CODE5_DEV :
   URL : "jdbc:sqlite:[APP_ROOT_DIR]/doc/code5.db"

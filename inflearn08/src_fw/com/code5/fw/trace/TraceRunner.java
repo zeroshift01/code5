@@ -310,6 +310,9 @@ public final class TraceRunner implements Reload {
 
 		this.isWriteLog = InitYaml.get().is("LOG.WRITE_LOG");
 
+		this.logDir = InitYaml.get().s("LOG.DIR");
+		this.logFilePatten = InitYaml.get().s("LOG.FILE_PATTERN");
+
 		ConcurrentHashMap<String, String> thisNoLogMap = new ConcurrentHashMap<String, String>();
 
 		String[] ss = InitYaml.get().ss("NOLOG.CLASS_NAME");
@@ -334,9 +337,6 @@ public final class TraceRunner implements Reload {
 		}
 
 		this.isLogDir = false;
-
-		this.logDir = InitYaml.get().s("LOG.DIR");
-		this.logFilePatten = InitYaml.get().s("LOG.FILE_PATTERN");
 
 		String checkLogDir = this.logDir;
 		File checkDir = new File(checkLogDir);
