@@ -771,12 +771,12 @@ public class SqlRunner implements Reload {
 			}
 
 			if (p.isToken) {
-				SessionB user = BoxContext.getThread().getSessionB();
+				SessionB user = BoxContext.getBox().getSessionB();
 				return user.createToken(p.add1, data);
 			}
 
 			if (p.isTokenDec) {
-				SessionB user = BoxContext.getThread().getSessionB();
+				SessionB user = BoxContext.getBox().getSessionB();
 				return user.getDataByToken(p.add1, data);
 			}
 
@@ -800,7 +800,7 @@ public class SqlRunner implements Reload {
 
 		if (p.isGetBox) {
 
-			Box thisBox = BoxContext.getThread();
+			Box thisBox = BoxContext.getBox();
 			if (thisBox == null) {
 				return "";
 			}
@@ -811,7 +811,7 @@ public class SqlRunner implements Reload {
 
 		if (p.isGetSessionB) {
 
-			Box thisBox = BoxContext.getThread();
+			Box thisBox = BoxContext.getBox();
 			if (thisBox == null) {
 				return "";
 			}

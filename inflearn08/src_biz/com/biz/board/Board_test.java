@@ -18,7 +18,7 @@ public class Board_test {
 	public void test_forceDelete() {
 
 		try {
-			Box box = BoxContext.getThread();
+			Box box = BoxContext.getBox();
 
 			SessionB user = new SessionB("A", "A0", "1.10.1");
 
@@ -37,7 +37,7 @@ public class Board_test {
 	public void test_list() {
 
 		try {
-			Box box = BoxContext.getThread();
+			Box box = BoxContext.getBox();
 
 			box.put("TITLE", "A");
 
@@ -56,7 +56,7 @@ public class Board_test {
 		try {
 
 			SessionB user = new SessionB("ID1", "U0", "1");
-			Box box = BoxContext.getThread();
+			Box box = BoxContext.getBox();
 			box.put(Box.KEY_SESSIONB, user);
 
 			box.put("TITLE", "TITLE_1");
@@ -78,7 +78,7 @@ public class Board_test {
 
 		try {
 
-			Box box = BoxContext.getThread();
+			Box box = BoxContext.getBox();
 
 			box.put("TITLE", "");
 

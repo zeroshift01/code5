@@ -25,7 +25,7 @@ public class SqlRunner_test {
 
 	@After
 	public void tearDown() throws Exception {
-		TransactionContext.getThread().commit();
+		TransactionContext.getTransaction().commit();
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class SqlRunner_test {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		String xx = "";
 
 		box.put("P2", "");
@@ -100,7 +100,7 @@ public class SqlRunner_test {
 	public void test_06() throws Exception {
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		box.setSessionB(new SessionB("IDx", "AUTHx", "IPx"));
 		box.put(Box.KEY_REMOTE_ADDR, "1.1.1.1");
 
@@ -207,7 +207,7 @@ public class SqlRunner_test {
 	@Test
 	public void test_07() throws Exception {
 		Sql sql = new Sql(this);
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		box.setSessionB(new SessionB("IDx", "AUTHx", "IPx"));
 		box.put(Box.KEY_REMOTE_ADDR, "1.1.1.1");
 

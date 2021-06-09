@@ -133,7 +133,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	 */
 	public String file001() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		String FILE_ID = box.s("FILE_ID");
 		FILE_ID = box.getSessionB().getDataByToken("file001", FILE_ID);
 
@@ -162,7 +162,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 		try {
 
-			Box box = BoxContext.getThread();
+			Box box = BoxContext.getBox();
 
 			String[] keys = box.getKeys();
 			for (int i = 0; i < keys.length; i++) {

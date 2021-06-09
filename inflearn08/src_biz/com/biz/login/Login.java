@@ -20,7 +20,7 @@ public class Login implements BizController {
 	@ServiceAnnotation(isLogin = false)
 	public String exeLogin() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		LoginD dao = LoginD.getLoginD();
 
@@ -75,7 +75,7 @@ public class Login implements BizController {
 	@ServiceAnnotation(isLogin = false)
 	public String exeLogout() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		String remoteAddr = box.s(Box.KEY_REMOTE_ADDR);
 		SessionB user = new SessionB(remoteAddr);
 		box.setSessionB(user);

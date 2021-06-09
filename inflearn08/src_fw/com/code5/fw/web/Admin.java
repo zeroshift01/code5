@@ -16,7 +16,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 	 */
 	public String start() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 		String IP = box.s(Box.KEY_REMOTE_ADDR);
 
 		SessionB user = box.getSessionB();
@@ -38,7 +38,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 	 * @throws Exception
 	 */
 	public String admin001() throws Exception {
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		for (int i = 0; i < RELOAD_LIST.size(); i++) {
 			RELOAD_LIST.get(i).reload();

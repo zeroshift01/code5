@@ -20,7 +20,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String start() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		String service = box.s(Box.KEY_SERVICE);
 
@@ -47,7 +47,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(isLogin = false)
 	public String callList() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		BoardD dao = new BoardD();
 		Table list = dao.list();
@@ -70,7 +70,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeWrite() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
@@ -96,7 +96,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String callUpdate() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		BoardD dao = new BoardD();
 		Box board = dao.select();
@@ -118,7 +118,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeUpdate() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		execute("callUpdate");
 		Box thisBoard = box.getBox("board");
@@ -176,7 +176,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(isInternal = true)
 	public void delete() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		Box thisBoard = box.getBox("board");
 
@@ -201,7 +201,7 @@ public class Board implements BizController, BizControllerStartExecute {
 	 */
 	public String exeDelete() throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		execute("callUpdate");
 

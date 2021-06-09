@@ -196,7 +196,7 @@ public final class TraceRunner implements Reload {
 	 */
 	void write(String logKey, String className, String log) {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
 		boolean isNotLogWrite = isNotLogWrite(className, box);
 		if (isNotLogWrite) {

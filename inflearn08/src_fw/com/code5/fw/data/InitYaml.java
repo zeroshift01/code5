@@ -78,6 +78,18 @@ public class InitYaml {
 	}
 
 	/**
+	 * @return
+	 */
+	public void setAppName(String appName) {
+
+		if (appName != null) {
+			return;
+		}
+
+		this.appName = appName;
+	}
+
+	/**
 	 * 
 	 */
 	private String characterSet = null;

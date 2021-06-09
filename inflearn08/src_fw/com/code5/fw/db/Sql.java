@@ -68,8 +68,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
+		Box box = BoxContext.getBox();
 		return executeSql(transaction, box, key);
 	}
 
@@ -80,7 +80,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
 		return executeSql(transaction, box, key);
 	}
 
@@ -90,8 +90,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
+		Box box = BoxContext.getBox();
 		return getTable(transaction, box, key);
 	}
 
@@ -102,7 +102,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
 		return getTable(transaction, box, key);
 	}
 
@@ -126,7 +126,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTableByCache(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
 		return getTableByCache(transaction, key, box);
 	}
 
@@ -136,8 +136,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTableByCache(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.getTransaction();
+		Box box = BoxContext.getBox();
 		return getTableByCache(transaction, key, box);
 	}
 

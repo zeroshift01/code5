@@ -13,12 +13,13 @@ import com.code5.fw.trace.Trace;
  *
  */
 public class InitCode5DBByDev {
-	
-	Trace 
+
+	private static Trace trace = new Trace(InitCode5DBByDev.class);
+	private static Sql sql = new Sql(InitCode5DBByDev.class);
 
 	public static void main(String[] xx) throws Exception {
-		
-		
+
+		InitYaml.get().setAppName(InitCode5DBByDev.class.getName());
 
 		String url = InitYaml.get().getAppRootDir() + "/doc/init_code5_db.sql";
 
