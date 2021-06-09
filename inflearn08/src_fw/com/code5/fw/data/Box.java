@@ -43,36 +43,14 @@ public abstract class Box implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param key
-	 * @param object
-	 * 
-	 *
-	 */
 	public abstract void put(String key, Object object);
 
-	/**
-	 * @param key
-	 * @param t
-	 */
 	public void put(String key, boolean t) {
 		put(key, "" + t);
 	}
 
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
 	public abstract Object get(String key);
 
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
 	public int getInt(String key) {
 
 		String s = s(key);

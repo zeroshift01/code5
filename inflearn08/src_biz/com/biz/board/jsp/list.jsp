@@ -84,7 +84,7 @@ function allUpdate(){
 <br>form1.NEXT_N : <input type="TEXT" name="NEXT_N" value="<%=box.s("NEXT_N")%>">
 <br>form1.THIS_TOKEN_N : <input type="TEXT" name="THIS_TOKEN_N" value="<%=box.s("THIS_TOKEN_N")%>">
 <br>form1.FIND_OPT : <input type="TEXT" name="FIND_OPT" value="<%=box.s("FIND_OPT")%>">
-<br>form1.FIND_SRT : <input type="TEXT" name="FIND_SRT" value="<%=box.s("FIND_OPT")%>">
+<br>form1.FIND_STR : <input type="TEXT" name="FIND_STR" value="<%=box.s("FIND_STR")%>">
 <hr>
 	<%for (int i = 0; i < list.size(); i++) {%>
 		N:<%=list.s("N", i)%>

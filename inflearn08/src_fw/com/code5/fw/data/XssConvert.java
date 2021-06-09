@@ -11,16 +11,15 @@ public class XssConvert {
 	 * @return
 	 */
 	public static String xssConvert(String data) {
-
+		data = data.replaceAll("<", "&lt;");
+		data = data.replaceAll(">", "&gt;");
+		data = data.replaceAll("'", "&#39;");
+		data = data.replaceAll("\\(", "&#40;");
+		data = data.replaceAll("\\)", "&#41;");
 		data = data.replaceAll("&", "&amp;");
 		data = data.replaceAll("#", "&#35;");
 		data = data.replaceAll(";", "&#59;");
 		data = data.replaceAll("\\\\", "&#92;");
-		data = data.replaceAll("<", "&lt;");
-		data = data.replaceAll(">", "&gt;");
-		data = data.replaceAll("\\(", "&#40;");
-		data = data.replaceAll("\\)", "&#41;");
-		data = data.replaceAll("'", "&#39;");
 		data = data.replaceAll("\"", "&quot;");
 		data = data.replaceAll("[$]", "&#36;");
 		data = data.replaceAll("[*]", "&#42;");
