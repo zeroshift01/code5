@@ -1,5 +1,10 @@
 package com.biz.a1;
 
+/**
+ * @author zero
+ *
+ *         인터페이스는 교체비용을 줄이기 위해 사용합니다.
+ */
 class A {
 
 	void execute() {
@@ -33,7 +38,7 @@ class A {
 class B {
 
 	void execute1() {
-		// 1. 오류 / 타임아웃 복잡함
+		// 1. 오류 / 타임아웃 / 복잡함
 	}
 
 	void execute2() {

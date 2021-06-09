@@ -1,5 +1,10 @@
 package com.biz.a3;
 
+/**
+ * @author zero
+ *
+ *         인터페이스는 교체비용을 줄이기 위해 사용합니다.
+ */
 class A {
 
 	void execute() {
