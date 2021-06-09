@@ -576,21 +576,21 @@ public class SqlRunner implements Reload {
 
 		key = p.key;
 
-		if (key.startsWith("ENC__")) {
+		if (key.startsWith("__ENC")) {
 
 			p.isEnc = true;
-			p.key = key.substring("ENC__".length());
+			p.key = key.substring("__ENC".length());
 
-		} else if (key.startsWith("DEC__")) {
+		} else if (key.startsWith("__DEC")) {
 
 			p.isDec = true;
-			p.key = key.substring("DEC__".length());
+			p.key = key.substring("__DEC".length());
 
-		} else if (key.startsWith("PIN__")) {
+		} else if (key.startsWith("__PIN")) {
 
 			p.isPin = true;
 
-			String x = key.substring("PIN__".length());
+			String x = key.substring("__PIN".length());
 			String[] xx = x.split(",");
 
 			String x0 = xx[0].trim();
@@ -598,11 +598,11 @@ public class SqlRunner implements Reload {
 
 			p.key = x0;
 			p.add1 = x1;
-		} else if (key.startsWith("TOENC__")) {
+		} else if (key.startsWith("__TOENC")) {
 
 			p.isToken = true;
 
-			String x = key.substring("TOENC__".length());
+			String x = key.substring("__TOENC".length());
 			String[] xx = x.split(",");
 
 			String x0 = xx[0].trim();
@@ -611,11 +611,11 @@ public class SqlRunner implements Reload {
 			p.key = x0;
 			p.add1 = x1;
 
-		} else if (key.startsWith("TODEC__")) {
+		} else if (key.startsWith("__TODEC")) {
 
 			p.isTokenDec = true;
 
-			String x = key.substring("TODEC__".length());
+			String x = key.substring("__TODEC".length());
 			String[] xx = x.split(",");
 
 			String x0 = xx[0].trim();
@@ -627,15 +627,18 @@ public class SqlRunner implements Reload {
 
 		key = p.key;
 
-		if (key.endsWith("__PRN_HP_N")) {
+		if (key.endsWith("PRN_HP_N__")) {
 			p.isPrnHpN = true;
-			p.key = key.substring(0, key.length() - "__PRN_HP_N".length());
-		} else if (key.endsWith("__PRN_DTM")) {
+			p.key = key.substring(0, key.length() - "PRN_HP_N__".length());
+		} else if (key.endsWith("PRN_DTM__")) {
 			p.isPrnDTM = true;
-			p.key = key.substring(0, key.length() - "__PRN_DTM".length());
-		} else if (key.endsWith("__PRN_D")) {
+			p.key = key.substring(0, key.length() - "PRN_DTM__".length());
+		} else if (key.endsWith("PRN_D__")) {
 			p.isPrnD = true;
-			p.key = key.substring(0, key.length() - "__PRN_D".length());
+			p.key = key.substring(0, key.length() - "PRN_D__".length());
+		} else if (key.endsWith("PARAM__")) {
+			p.isParam = true;
+			p.key = key.substring(0, key.length() - "PARAM__".length());
 		}
 
 		return p;
@@ -690,11 +693,11 @@ public class SqlRunner implements Reload {
 	 * @param data
 	 * @return
 	 */
-	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
+	String getDataByParamStep2(SqlRunnerParamB p, Box box, String data) {
 
 		try {
 			if (p.isPrnHpN) {
-				return data.substring(0, 3) + "-" + data.substring(3, 7) +"-"+ data.substring(7, 11);
+				return data.substring(0, 3) + "-" + data.substring(3, 7) + "-" + data.substring(7, 11);
 
 			}
 
@@ -709,6 +712,13 @@ public class SqlRunner implements Reload {
 
 			}
 
+			if (p.isParam) {
+				data = data.replaceAll("-", "");
+				data = data.replaceAll("(", "");
+				data = data.replaceAll(",", "");
+				return data;
+			}
+
 			return data;
 		} catch (Exception ex) {
 			return data;
@@ -721,7 +731,7 @@ public class SqlRunner implements Reload {
 	 * @param data
 	 * @return
 	 */
-	String getDataByParamStep2(SqlRunnerParamB p, Box box, String data) {
+	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
 
 		try {
 

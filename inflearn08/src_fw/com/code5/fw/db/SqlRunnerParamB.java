@@ -24,6 +24,7 @@ class SqlRunnerParamB {
 	boolean isPrnHpN = false;
 	boolean isPrnDTM = false;
 	boolean isPrnD = false;
+	boolean isParam = false;
 
 	boolean isGetBox = false;
 	boolean isGetSessionB = false;

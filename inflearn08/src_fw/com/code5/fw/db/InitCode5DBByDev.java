@@ -6,14 +6,19 @@ import java.io.InputStreamReader;
 import java.sql.Statement;
 
 import com.code5.fw.data.InitYaml;
+import com.code5.fw.trace.Trace;
 
 /**
  * @author zero
  *
  */
 public class InitCode5DBByDev {
+	
+	Trace 
 
 	public static void main(String[] xx) throws Exception {
+		
+		
 
 		String url = InitYaml.get().getAppRootDir() + "/doc/init_code5_db.sql";
 
