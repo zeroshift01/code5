@@ -6,6 +6,8 @@ package com.code5.fw.db;
  */
 class SqlRunnerParamB {
 
+	boolean isParam = false;
+
 	String keyOrg = null;
 	String key = null;
 
@@ -15,19 +17,11 @@ class SqlRunnerParamB {
 	String add1 = null;
 	String add2 = null;
 
-	boolean isEnc = false;
-	boolean isDec = false;
-	boolean isPin = false;
-	boolean isToken = false;
-	boolean isTokenDec = false;
-
-	boolean isPrnHpN = false;
-	boolean isPrnDTM = false;
-	boolean isPrnD = false;
-	boolean isParam = false;
-
 	boolean isGetBox = false;
 	boolean isGetSessionB = false;
 	boolean isGetSysdtm = false;
+
+	SqlRunnerParamConvertB prefix = new SqlRunnerParamConvertB();
+	SqlRunnerParamConvertB suffix = new SqlRunnerParamConvertB();
 
 }

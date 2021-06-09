@@ -82,7 +82,7 @@ public class InitYaml {
 	 */
 	public void setAppName(String appName) {
 
-		if (appName != null) {
+		if (this.appName != null) {
 			return;
 		}
 

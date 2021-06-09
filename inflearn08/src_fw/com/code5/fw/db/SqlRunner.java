@@ -523,18 +523,17 @@ public class SqlRunner implements Reload {
 	}
 
 	/**
-	 * @param key
+	 * @param b
 	 * @return
+	 * @throws Exception
 	 */
-	SqlRunnerParamB paramParsing(String key) {
+	private SqlRunnerParamB setDataWhich(SqlRunnerParamB b) throws Exception {
 
-		SqlRunnerParamB p = new SqlRunnerParamB();
-		p.keyOrg = key;
-		p.key = key;
+		String key = b.key;
 
 		if (key.startsWith("SYSDTM.")) {
 
-			p.isGetSysdtm = true;
+			b.isGetSysdtm = true;
 
 			String x = key.substring("SYSDTM.".length());
 
@@ -554,41 +553,219 @@ public class SqlRunner implements Reload {
 				x1 = xx[1].trim();
 			}
 
-			p.key = x0;
-			p.add1 = x1;
-			p.add2 = x2;
-
-		} else if (key.startsWith("SESSIONB.")) {
-
-			p.isGetSessionB = true;
-
-			key = key.substring("SESSIONB.".length());
-			p.key = key;
-
-		} else if (key.startsWith("BOX.")) {
-
-			p.isGetBox = true;
-
-			key = key.substring("BOX.".length());
-			p.key = key;
+			b.key = x0;
+			b.add1 = x1;
+			b.add2 = x2;
+			return b;
 
 		}
 
-		key = p.key;
+		if (key.startsWith("SESSIONB.")) {
+
+			b.isGetSessionB = true;
+
+			key = key.substring("SESSIONB.".length());
+			b.key = key;
+			return b;
+		}
+
+		if (key.startsWith("BOX.")) {
+
+			b.isGetBox = true;
+
+			key = key.substring("BOX.".length());
+			b.key = key;
+			return b;
+		}
+
+		return b;
+
+	}
+
+	/**
+	 * @param SqlRunnerParamB
+	 * @return
+	 */
+	private SqlRunnerParamB setPrefixRule(SqlRunnerParamB b) throws Exception {
+
+		String key = b.key;
+		SqlRunnerParamConvertB p = b.prefix;
+
+		if (key.endsWith("PARAM__")) {
+			p.isParam = true;
+			b.key = key.substring(0, key.length() - "PARAM__".length());
+			return b;
+		}
+
+		if (key.startsWith("ENC__")) {
+
+			p.isEnc = true;
+			b.key = key.substring("ENC__".length());
+			return b;
+
+		}
+
+		if (key.startsWith("E__")) {
+
+			p.isEnc = true;
+			b.key = key.substring("E__".length());
+			return b;
+
+		}
+
+		if (key.startsWith("DEC__")) {
+
+			p.isDec = true;
+			b.key = key.substring("DEC__".length());
+			return b;
+
+		}
+
+		if (key.startsWith("D__")) {
+
+			p.isDec = true;
+			b.key = key.substring("D__".length());
+			return b;
+
+		}
+
+		if (key.startsWith("PIN__")) {
+
+			String x = key.substring("PIN__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.isPin = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
+		}
+
+		if (key.startsWith("TOENC__")) {
+
+			String x = key.substring("TOENC__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.isToken = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
+
+		}
+
+		if (key.startsWith("TODEC__")) {
+
+			String x = key.substring("TODEC__".length());
+			String[] xx = x.split(",");
+
+			String x0 = xx[0].trim();
+			String x1 = xx[1].trim();
+
+			p.isTokenDec = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
+		}
+
+		if (key.endsWith("PRN_HP_N__")) {
+			p.isPrnHpN = true;
+			b.key = key.substring(0, key.length() - "PRN_HP_N__".length());
+			return b;
+		}
+
+		if (key.endsWith("PRN_DTM__")) {
+			p.isPrnDTM = true;
+			b.key = key.substring(0, key.length() - "PRN_DTM__".length());
+			return b;
+		}
+
+		if (key.endsWith("PRN_D__")) {
+			p.isPrnD = true;
+			b.key = key.substring(0, key.length() - "PRN_D__".length());
+			return b;
+		}
+
+		if (key.endsWith("PARAM__")) {
+			p.isParam = true;
+			b.key = key.substring(0, key.length() - "PARAM__".length());
+			return b;
+		}
+
+		if (key.endsWith("PRN_HP_N__")) {
+			p.isPrnHpN = true;
+			b.key = key.substring(0, key.length() - "PRN_HP_N__".length());
+			return b;
+		}
+
+		if (key.endsWith("PRN_DTM__")) {
+			p.isPrnDTM = true;
+			b.key = key.substring(0, key.length() - "PRN_DTM__".length());
+			return b;
+		}
+
+		if (key.endsWith("PRN_D__")) {
+			p.isPrnD = true;
+			b.key = key.substring(0, key.length() - "PRN_D__".length());
+			return b;
+		}
+
+		return b;
+
+	}
+
+	/**
+	 * @param SqlRunnerParamB
+	 * @return
+	 */
+	private SqlRunnerParamB setSuffixRule(SqlRunnerParamB b) throws Exception {
+
+		String key = b.key;
+		SqlRunnerParamConvertB p = b.suffix;
+
+		if (key.endsWith("__PARAM")) {
+			p.isParam = true;
+			b.key = key.substring(0, key.length() - "__PARAM".length());
+			return b;
+		}
 
 		if (key.startsWith("__ENC")) {
 
 			p.isEnc = true;
-			p.key = key.substring("__ENC".length());
+			b.key = key.substring("__ENC".length());
+			return b;
 
-		} else if (key.startsWith("__DEC")) {
+		}
+
+		if (key.startsWith("__E")) {
+
+			p.isEnc = true;
+			b.key = key.substring("__E".length());
+			return b;
+
+		}
+
+		if (key.startsWith("__DEC")) {
 
 			p.isDec = true;
-			p.key = key.substring("__DEC".length());
+			b.key = key.substring("__DEC".length());
+			return b;
 
-		} else if (key.startsWith("__PIN")) {
+		}
 
-			p.isPin = true;
+		if (key.startsWith("__D")) {
+
+			p.isDec = true;
+			b.key = key.substring("__D".length());
+			return b;
+
+		}
+
+		if (key.startsWith("__PIN")) {
 
 			String x = key.substring("__PIN".length());
 			String[] xx = x.split(",");
@@ -596,11 +773,13 @@ public class SqlRunner implements Reload {
 			String x0 = xx[0].trim();
 			String x1 = xx[1].trim();
 
-			p.key = x0;
-			p.add1 = x1;
-		} else if (key.startsWith("__TOENC")) {
+			p.isPin = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
+		}
 
-			p.isToken = true;
+		if (key.startsWith("__TOENC")) {
 
 			String x = key.substring("__TOENC".length());
 			String[] xx = x.split(",");
@@ -608,12 +787,14 @@ public class SqlRunner implements Reload {
 			String x0 = xx[0].trim();
 			String x1 = xx[1].trim();
 
-			p.key = x0;
-			p.add1 = x1;
+			p.isToken = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
 
-		} else if (key.startsWith("__TODEC")) {
+		}
 
-			p.isTokenDec = true;
+		if (key.startsWith("__TODEC")) {
 
 			String x = key.substring("__TODEC".length());
 			String[] xx = x.split(",");
@@ -621,169 +802,105 @@ public class SqlRunner implements Reload {
 			String x0 = xx[0].trim();
 			String x1 = xx[1].trim();
 
-			p.key = x0;
-			p.add1 = x1;
+			p.isTokenDec = true;
+			b.key = x0;
+			b.add1 = x1;
+			return b;
 		}
 
-		key = p.key;
-
-		if (key.endsWith("PRN_HP_N__")) {
+		if (key.endsWith("__PRN_HP_N")) {
 			p.isPrnHpN = true;
-			p.key = key.substring(0, key.length() - "PRN_HP_N__".length());
-		} else if (key.endsWith("PRN_DTM__")) {
+			b.key = key.substring(0, key.length() - "__PRN_HP_N".length());
+			return b;
+		}
+
+		if (key.endsWith("__PRN_DTM")) {
 			p.isPrnDTM = true;
-			p.key = key.substring(0, key.length() - "PRN_DTM__".length());
-		} else if (key.endsWith("PRN_D__")) {
+			b.key = key.substring(0, key.length() - "__PRN_DTM".length());
+			return b;
+		}
+
+		if (key.endsWith("__PRN_D")) {
 			p.isPrnD = true;
-			p.key = key.substring(0, key.length() - "PRN_D__".length());
-		} else if (key.endsWith("PARAM__")) {
+			b.key = key.substring(0, key.length() - "__PRN_D".length());
+			return b;
+		}
+
+		if (key.endsWith("__PARAM")) {
 			p.isParam = true;
-			p.key = key.substring(0, key.length() - "PARAM__".length());
+			b.key = key.substring(0, key.length() - "__PARAM".length());
+			return b;
 		}
 
-		return p;
+		if (key.endsWith("__PRN_HP_N")) {
+			p.isPrnHpN = true;
+			b.key = key.substring(0, key.length() - "__PRN_HP_N".length());
+			return b;
+		}
+
+		if (key.endsWith("__PRN_DTM")) {
+			p.isPrnDTM = true;
+			b.key = key.substring(0, key.length() - "__PRN_DTM".length());
+			return b;
+		}
+
+		if (key.endsWith("__PRN_D")) {
+			p.isPrnD = true;
+			b.key = key.substring(0, key.length() - "__PRN_D".length());
+			return b;
+		}
+
+		return b;
+
 	}
 
 	/**
-	 * @param p
-	 * @param box
+	 * @param key
 	 * @return
 	 */
-	String getDataByParam(SqlRunnerParamB p, Box box) {
+	SqlRunnerParamB paramParsing(String key) {
 
-		String data = getDataByParamStep1(p, box);
-
-		if ("".equals(data)) {
-			return data;
-		}
-
-		data = getDataByParamStep2(p, box, data);
-
-		if ("".equals(data)) {
-			return data;
-		}
-
-		data = getDataByParamStep3(p, box, data);
-
-		return data;
-	}
-
-	/**
-	 * @param p
-	 * @param box
-	 * @param data
-	 * @return
-	 */
-	String getDataByParam(SqlRunnerParamB p, Box box, String data) {
-
-		data = getDataByParamStep2(p, box, data);
-
-		if ("".equals(data)) {
-			return data;
-		}
-
-		data = getDataByParamStep3(p, box, data);
-
-		return data;
-	}
-
-	/**
-	 * @param p
-	 * @param box
-	 * @param data
-	 * @return
-	 */
-	String getDataByParamStep2(SqlRunnerParamB p, Box box, String data) {
+		SqlRunnerParamB b = new SqlRunnerParamB();
+		b.key = key;
+		b.keyOrg = key;
 
 		try {
-			if (p.isPrnHpN) {
-				return data.substring(0, 3) + "-" + data.substring(3, 7) + "-" + data.substring(7, 11);
 
-			}
+			b = setDataWhich(b);
 
-			if (p.isPrnD) {
-				return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8);
+			b = setPrefixRule(b);
 
-			}
+			b = setSuffixRule(b);
 
-			if (p.isPrnDTM) {
-				return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8) + " "
-						+ data.substring(8, 10) + ":" + data.substring(10, 12) + ":" + data.substring(12, 14);
+			b.isParam = true;
 
-			}
+			return b;
 
-			if (p.isParam) {
-				data = data.replaceAll("-", "");
-				data = data.replaceAll("(", "");
-				data = data.replaceAll(",", "");
+		} catch (Exception ex) {
+			trace.write(ex);
+			return b;
+		}
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @return
+	 */
+	String getDataByParam(SqlRunnerParamB b, Box box) {
+
+		try {
+
+			String data = getDataWhich(b, box);
+
+			if ("".equals(data)) {
 				return data;
 			}
 
-			return data;
-		} catch (Exception ex) {
-			return data;
-		}
-	}
-
-	/**
-	 * @param p
-	 * @param box
-	 * @param data
-	 * @return
-	 */
-	String getDataByParamStep3(SqlRunnerParamB p, Box box, String data) {
-
-		try {
-
-			if (p.isEnc) {
-
-				String cacheKey = "getDataByParamStep2_enc" + data.hashCode();
-				String ret = box.s(cacheKey);
-				if (!"".equals(ret)) {
-					return ret;
-				}
-
-				DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
-				ret = dataCrypt.encrypt(data);
-				box.put(cacheKey, ret);
-				return ret;
-
-			}
-
-			if (p.isDec) {
-
-				String cacheKey = "getDataByParamStep2_dec" + data.hashCode();
-				String ret = box.s(cacheKey);
-				if (!"".equals(ret)) {
-					return ret;
-				}
-
-				DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
-				ret = dataCrypt.decrypt(data);
-				box.put(cacheKey, ret);
-				return ret;
-
-			}
-
-			if (p.isPin) {
-				String salt = box.s(p.add1);
-				return CryptPin.cryptPin(data, salt);
-			}
-
-			if (p.isToken) {
-				SessionB user = BoxContext.getBox().getSessionB();
-				return user.createToken(p.add1, data);
-			}
-
-			if (p.isTokenDec) {
-				SessionB user = BoxContext.getBox().getSessionB();
-				return user.getDataByToken(p.add1, data);
-			}
-
-			return data;
+			return getDataByParam(b, box, data);
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			trace.write(ex);
 			return "";
 		}
 	}
@@ -793,7 +910,110 @@ public class SqlRunner implements Reload {
 	 * @param box
 	 * @return
 	 */
-	String getDataByParamStep1(SqlRunnerParamB p, Box box) {
+	String getDataByParam(SqlRunnerParamB b, Box box, String data) {
+
+		try {
+
+			data = convert(b, b.prefix, box, data);
+
+			data = convert(b, b.suffix, box, data);
+
+			return data;
+
+		} catch (Exception ex) {
+			trace.write(ex);
+			return "";
+		}
+	}
+
+	/**
+	 * @param p
+	 * @param c
+	 * @param box
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	private String convert(SqlRunnerParamB p, SqlRunnerParamConvertB c, Box box, String data) throws Exception {
+
+		if (c.isPrnHpN) {
+			return data.substring(0, 3) + "-" + data.substring(3, 7) + "-" + data.substring(7, 11);
+
+		}
+
+		if (c.isPrnD) {
+			return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8);
+
+		}
+
+		if (c.isPrnDTM) {
+			return data.substring(0, 4) + "/" + data.substring(4, 6) + "/" + data.substring(6, 8) + " "
+					+ data.substring(8, 10) + ":" + data.substring(10, 12) + ":" + data.substring(12, 14);
+
+		}
+
+		if (c.isParam) {
+			data = data.replaceAll("-", "");
+			data = data.replaceAll("(", "");
+			data = data.replaceAll(",", "");
+			return data;
+		}
+
+		if (c.isEnc) {
+
+			String cacheKey = "getDataByParamStep2_enc" + data.hashCode();
+			String ret = box.s(cacheKey);
+			if (!"".equals(ret)) {
+				return ret;
+			}
+
+			DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
+			ret = dataCrypt.encrypt(data);
+			box.put(cacheKey, ret);
+			return ret;
+
+		}
+
+		if (c.isDec) {
+
+			String cacheKey = "getDataByParamStep2_dec" + data.hashCode();
+			String ret = box.s(cacheKey);
+			if (!"".equals(ret)) {
+				return ret;
+			}
+
+			DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
+			ret = dataCrypt.decrypt(data);
+			box.put(cacheKey, ret);
+			return ret;
+
+		}
+
+		if (c.isPin) {
+			String salt = box.s(p.add1);
+			return CryptPin.cryptPin(data, salt);
+		}
+
+		if (c.isToken) {
+			SessionB user = BoxContext.getBox().getSessionB();
+			return user.createToken(p.add1, data);
+		}
+
+		if (c.isTokenDec) {
+			SessionB user = BoxContext.getBox().getSessionB();
+			return user.getDataByToken(p.add1, data);
+		}
+
+		return data;
+
+	}
+
+	/**
+	 * @param p
+	 * @param box
+	 * @return
+	 */
+	String getDataWhich(SqlRunnerParamB p, Box box) {
 
 		String key = p.key;
 		String data = null;
