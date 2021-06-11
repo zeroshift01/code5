@@ -16,8 +16,6 @@ class A {
 		b.execute2();
 		b.execute2("p");
 
-		b.execute3();
-
 		// 인터페이스를 사용한다고 해서 결합도가 낮아지는건 아님
 
 		// 인터페이스 때문에
@@ -30,40 +28,30 @@ class A {
 
 interface B {
 
+	// 3. 교체
+	// public void execute3();
+
 	public void execute1();
 
 	public void execute2();
 
 	public void execute2(String p);
 
-	public void execute3();
 }
 
 class BImpl implements B {
 
+	// 1. 오류 / 타임아웃 / 복잡함
 	public void execute1() {
-		// 1. 오류 / 타임아웃 / 복잡함
 	}
 
+	// 2. 기존기능
 	public void execute2() {
-		// 2. 기존기능
 	}
 
+	// 2. 기능추가, 오버로딩
 	public void execute2(String p) {
-		// 2. 기능추가, 오버로딩
-	}
 
-	public void execute3() {
-
-		// 3. 교체
-
-		boolean isDev = true;
-		if (isDev) {
-			// stub
-			return;
-		}
-
-		// api call
 	}
 
 }

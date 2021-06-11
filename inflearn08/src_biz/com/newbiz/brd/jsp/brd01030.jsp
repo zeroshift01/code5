@@ -7,9 +7,9 @@
 	Box board = box.getBox("board");
 %>
 <script type="text/javascript">
-function exeUpdate(){
+function brd01031(){
 	var form = document.form1;
-	form.action = '/multipart/exeUpdate';
+	form.action = '/multipart/brd01031';
 	form.submit();
 }
 </script>
@@ -28,4 +28,4 @@ post, multipart/form-data
 
 </form>
 
-<button onclick="exeUpdate()">exeUpdate</button>
+<button onclick="brd01031()">exeUpdate</button>
