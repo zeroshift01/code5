@@ -11,7 +11,7 @@
 
 try {
 
-	Box box = BoxContext.getThread();
+	Box box = BoxContext.getBox();
 	UploadFileB file = box.getUploadFileB("file");
 	String fileUrl = file.getFileUrl();
 	String fileName = file.getFileName();

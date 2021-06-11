@@ -10,8 +10,6 @@ Box fwView = box.getBox(Box.KEY_FW_VIEW);
 String view = fwView.s("VIEW");
 String title = fwView.s("TITLE");
 
-System.out.println("---------"+view);
-
 SessionB user = box.getSessionB();
 
 %>
@@ -28,15 +26,15 @@ SessionB user = box.getSessionB();
 		}
 	}
 	
-	function callWrite(){
+	function brd01020(){
 		var form = document.mainform;
-		form.action = '/waf/callWrite';
+		form.action = '/waf/brd01020';
 		form.submit();
 	}
 	
-	function callList(){
+	function brd01010(){
 		var form = document.mainform;
-		form.action = '/waf/callList';
+		form.action = '/waf/brd01010';
 		form.submit();
 	}
 	
@@ -49,7 +47,7 @@ SessionB user = box.getSessionB();
 </script>
 <body onload='init();'>
 <br>로그인한 아이디 : <%=user.getId() %>, 권한코드 : <%=user.getAuth() %>
-<br><button onclick="callWrite()">callWrite</button> <button onclick="callList()">callList</button> <button onclick="exeLogout()">logout</button>
+<br><button onclick="brd01020()">brd01020</button> <button onclick="brd01010()">brd01010</button> <button onclick="exeLogout()">logout</button>
 <hr>
 메뉴명:<%=title%>
 <jsp:include page="<%=view%>" flush="true"/>

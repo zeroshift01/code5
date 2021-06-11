@@ -22,6 +22,8 @@ class A {
 
 		// 낮은 결합도는 파급효과를 제거하는 비용이 적다.
 
+		// 파급효과 제거 기준은 B
+
 		B b = new B();
 
 		b.execute1();
@@ -29,7 +31,13 @@ class A {
 		b.execute2();
 		b.execute2("p");
 
-		b.execute3();
+		boolean isDev = true;
+		if (isDev) {
+			b.execute3_dev();
+			return;
+		}
+
+		b.execute3_pr();
 
 	}
 
@@ -37,28 +45,26 @@ class A {
 
 class B {
 
+	// 1. 오류 / 타임아웃 / 복잡함
 	void execute1() {
-		// 1. 오류 / 타임아웃 / 복잡함
 	}
 
+	// 2. 기존기능
 	void execute2() {
-		// 2. 기존기능
 	}
 
+	// 2. 기능추가, 오버로딩
 	void execute2(String p) {
-		// 2. 기능추가, 오버로딩
+
 	}
 
-	void execute3() {
+	// 3. 교체
+	void execute3_dev() {
+		// stub
+	}
 
-		// 3. 교체
-
-		boolean isDev = true;
-		if (isDev) {
-			// stub
-			return;
-		}
-
+	// 3. 교체
+	void execute3_pr() {
 		// api call
 	}
 

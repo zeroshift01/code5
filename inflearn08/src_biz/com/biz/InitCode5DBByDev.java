@@ -1,7 +1,9 @@
-package com.code5.fw.db;
+package com.biz;
 
 import com.code5.fw.data.InitYaml;
+import com.code5.fw.db.Sql;
 import com.code5.fw.trace.Trace;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
@@ -33,7 +35,7 @@ public class InitCode5DBByDev {
 
 		trace.write("[" + initYaml.getAppName() + "]");
 
-		for (int i = 1; i <= 37; i++) {
+		for (int i = 1; i <= 50; i++) {
 
 			String x = ("" + (100 + i)).substring(1);
 
@@ -43,6 +45,7 @@ public class InitCode5DBByDev {
 
 		}
 
+		TransactionContext.getTransaction().commit();
 		trace.write("ok");
 	}
 

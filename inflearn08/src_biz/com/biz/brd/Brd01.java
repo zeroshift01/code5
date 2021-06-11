@@ -1,4 +1,4 @@
-package com.biz.board;
+package com.biz.brd;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
@@ -12,37 +12,43 @@ import com.code5.fw.web.ServiceAnnotation;
  * @author zero
  *
  */
-public class Board implements BizController {
+public class Brd01 implements BizController {
 
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   callList
 	 */
 	@ServiceAnnotation(isLogin = false)
-	public String callList() throws Exception {
+	public String brd01010() throws Exception {
 
 		Box box = BoxContext.getBox();
 
-		BoardD dao = new BoardD();
-		Table list = dao.list();
+		BrdD dao = new BrdD();
+		Table list = dao.brd01010();
 		box.put("list", list);
 
-		return "list";
+		return "brd01010";
 	}
 
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   callWrite
 	 */
-	public String callWrite() throws Exception {
-		return "write";
+	public String brd01020() throws Exception {
+		return "brd01020";
 	}
 
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   exeWrite
 	 */
-	public String exeWrite() throws Exception {
+	public String brd01021() throws Exception {
 
 		Box box = BoxContext.getBox();
 
@@ -55,25 +61,27 @@ public class Board implements BizController {
 		box.put("FILE_ID_2", file2.getFileId());
 		box.put("FILE_NM_2", file2.getFileName());
 
-		BoardD dao = new BoardD();
+		BrdD dao = new BrdD();
 		dao.write();
 
 		file1.save();
 		file2.save();
 
-		return execute("callList");
+		return execute("brd01020");
 	}
 
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   callUpdate
 	 */
-	public String callUpdate() throws Exception {
+	public String brd01030() throws Exception {
 
 		Box box = BoxContext.getBox();
 
-		BoardD dao = new BoardD();
-		Box board = dao.select();
+		BrdD dao = new BrdD();
+		Box board = dao.brd01030();
 
 		String RG_ID = board.s("RG_ID");
 		SessionB user = box.getSessionB();
@@ -83,18 +91,20 @@ public class Board implements BizController {
 
 		box.put("board", board);
 
-		return "update";
+		return "brd01030";
 	}
 
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   exeUpdate
 	 */
-	public String exeUpdate() throws Exception {
+	public String brd01031() throws Exception {
 
 		Box box = BoxContext.getBox();
 
-		execute("callUpdate");
+		execute("brd01020");
 		Box thisBoard = box.getBox("board");
 
 		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
@@ -123,11 +133,11 @@ public class Board implements BizController {
 		box.put("FILE_ID_2", file2.getFileId());
 		box.put("FILE_NM_2", file2.getFileName());
 
-		BoardD dao = new BoardD();
-		if (dao.update() != 1) {
+		BrdD dao = new BrdD();
+		if (dao.brd01031() != 1) {
 
 			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
-			return execute("callUpdate");
+			return execute("brd01030");
 		}
 
 		if (isChangeFile1) {
@@ -141,11 +151,13 @@ public class Board implements BizController {
 		}
 
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
-		return execute("callUpdate");
+		return execute("brd01030");
 	}
 
 	/**
 	 * @throws Exception
+	 * 
+	 *                   delete
 	 */
 	@ServiceAnnotation(isInternal = true)
 	public void delete() throws Exception {
@@ -160,7 +172,7 @@ public class Board implements BizController {
 		UploadFileB oldFile1 = new UploadFileB(THIS_FILE_ID_1);
 		UploadFileB oldFile2 = new UploadFileB(THIS_FILE_ID_2);
 
-		BoardD dao = new BoardD();
+		BrdD dao = new BrdD();
 		if (dao.delete() != 1) {
 			throw new Exception("삭제할 데이터가 없습니다.");
 		}
@@ -172,12 +184,14 @@ public class Board implements BizController {
 	/**
 	 * @return
 	 * @throws Exception
+	 * 
+	 *                   exeDelete
 	 */
-	public String exeDelete() throws Exception {
+	public String brd01040() throws Exception {
 
 		Box box = BoxContext.getBox();
 
-		execute("callUpdate");
+		execute("brd01030");
 
 		Box thisBoard = box.getBox("board");
 
@@ -186,21 +200,9 @@ public class Board implements BizController {
 			return execute("callList");
 		}
 
-		execute("delete");
+		execute("Brd01.delete");
 
-		return execute("callList");
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@ServiceAnnotation(isLogin = false)
-	public String listJson() throws Exception {
-
-		execute("callList");
-		return "listjson";
-
+		return execute("brd01010");
 	}
 
 }

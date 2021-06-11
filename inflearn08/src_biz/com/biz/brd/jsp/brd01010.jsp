@@ -10,64 +10,64 @@
 	boolean isLimitRecode = list.isLimitRecode();
 	Box limitBox = list.getLimitBox();
 	
-	boolean isAllDelete = MasterController.checkUrlAuth("allDelete");
-	boolean isAllUpdate = MasterController.checkUrlAuth("allUpdate");
-	boolean isForceDelete = MasterController.checkUrlAuth("forceDelete");
+	boolean is_brd02011 = MasterController.checkUrlAuth("brd02011");
+	boolean is_brd02021 = MasterController.checkUrlAuth("brd02021");
+	boolean is_brd02031 = MasterController.checkUrlAuth("brd02031");
 %>
 
 <script type="text/javascript">
-function callNextList(NEXT_N){
+function brd01010_next(NEXT_N){
 
 	var form = document.form1;
 	form1.NEXT_N.value = NEXT_N;
-	form.action = '/waf/callList';
+	form.action = '/waf/brd01010';
 	
 	form.submit();
 	
 }
 
-function callUpdate(TOKEN_N){
+function brd01030(TOKEN_N){
 	var form = document.form1;
 	form1.THIS_TOKEN_N.value = TOKEN_N;
-	form.action = '/waf/callUpdate';
+	form.action = '/waf/brd01030';
 	form.submit();
 }
 
-function exeDelete(TOKEN_N){
+function brd01040(TOKEN_N){
 	var form = document.form1;
 	form1.THIS_TOKEN_N.value = TOKEN_N;
-	form.action = '/waf/exeDelete';
+	form.action = '/waf/brd01040';
 	form.submit();
 }
 
-function forceDelete(TOKEN_N){
+function brd02031(TOKEN_N){
 	var form = document.form1;
 	form1.THIS_TOKEN_N.value = TOKEN_N;
-	form.action = '/waf/forceDelete';
+	form.action = '/waf/brd02031';
 	form.submit();
 }
 
-function allDelete(){
+function brd02011(){
 	
-	<%if(!isAllDelete){%>
+	<%if(!is_brd02011){%>
 		alert('권한이 없습니다.');
 		return;
 	<%}%>
 	
 	var form = document.form1;
-	form.action = '/waf/allDelete';
+	form.action = '/waf/brd02011';
 	form.submit();
 }
 
-function allUpdate(){
+function brd02021(){
 	
-	<%if(!isAllUpdate){%>
+	<%if(!is_brd02021){%>
 		alert('권한이 없습니다.');
 		return;
 	<%}%>
 	
 	var form = document.form1;
-	form.action = '/waf/allUpdate';
+	form.action = '/waf/brd02021';
 	form.submit();
 }
 
@@ -78,9 +78,9 @@ function allUpdate(){
 
 <form name="form1" method="post">
 <hr>
-<button onclick="callList()">callList</button>
-<button onclick="allUpdate()">allUpdate</button>
-<button onclick="allDelete()">allDelete</button>
+<button onclick="brd01010()">brd01010</button>
+<button onclick="brd02021()">brd02021</button>
+<button onclick="brd02011()">brd02011</button>
 <br>form1.NEXT_N : <input type="TEXT" name="NEXT_N" value="<%=box.s("NEXT_N")%>">
 <br>form1.THIS_TOKEN_N : <input type="TEXT" name="THIS_TOKEN_N" value="<%=box.s("THIS_TOKEN_N")%>">
 <br>form1.FIND_OPT : <input type="TEXT" name="FIND_OPT" value="<%=box.s("FIND_OPT")%>">
@@ -88,10 +88,10 @@ function allUpdate(){
 <hr>
 	<%for (int i = 0; i < list.size(); i++) {%>
 		N:<%=list.s("N", i)%>
-		<button onclick="callUpdate('<%=list.s("TOKEN_N", i)%>')">callUpdate</button>
-		<button onclick="exeDelete('<%=list.s("TOKEN_N", i)%>')">exeDelete</button>
-		<%if(isForceDelete) { %>
-		<button onclick="forceDelete('<%=list.s("TOKEN_N", i)%>')">forceDelete</button>
+		<button onclick="brd01030('<%=list.s("TOKEN_N", i)%>')">brd01030</button>
+		<button onclick="brd01040('<%=list.s("TOKEN_N", i)%>')">brd01040</button>
+		<%if(is_brd02031) { %>
+		<button onclick="brd02030('<%=list.s("TOKEN_N", i)%>')">brd02030</button>
 		<%}%>
 		<br>form1.TITLE : <input type="TEXT" name="TITLE" value="<%=list.s("TITLE", i)%>">
 		<br>form1.EM : <input type="TEXT" name="EM" value="<%=list.s("EM", i)%>">
@@ -99,6 +99,6 @@ function allUpdate(){
 		<hr>
 	<%}%>
 	<% if(isLimitRecode) {%>
-		<button onclick="callNextList('<%=limitBox.s("N")%>')">callNextList,<%=limitBox.s("N")%></button>
+		<button onclick="brd01010_next('<%=limitBox.s("N")%>')">brd01010_next,<%=limitBox.s("N")%></button>
 	<% }%>
 </form>

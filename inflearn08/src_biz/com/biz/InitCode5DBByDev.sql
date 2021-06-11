@@ -238,3 +238,60 @@ FILE_ID
 );
 
 --]]]
+
+
+
+--]]]
+--[[[ INITCODE5DBBYDEV_38
+INSERT INTO FW_CONTROLLER VALUES('brd01010','com.biz.brd.Brd01','brd01010');
+--]]]
+--[[[ INITCODE5DBBYDEV_39
+
+INSERT INTO FW_CONTROLLER VALUES('brd01020','com.biz.brd.Brd01','brd01020');
+--]]]
+--[[[ INITCODE5DBBYDEV_40
+
+INSERT INTO FW_CONTROLLER VALUES('brd01021','com.biz.brd.Brd01','brd01021');
+--]]]
+--[[[ INITCODE5DBBYDEV_41
+
+INSERT INTO FW_CONTROLLER VALUES('brd01030','com.biz.brd.Brd01','brd01030');
+--]]]
+--[[[ INITCODE5DBBYDEV_42
+
+INSERT INTO FW_CONTROLLER VALUES('brd01031','com.biz.brd.Brd01','brd01031');
+--]]]
+--[[[ INITCODE5DBBYDEV_43
+
+INSERT INTO FW_CONTROLLER VALUES('brd01040','com.biz.brd.Brd01','brd01040');
+--]]]
+--[[[ INITCODE5DBBYDEV_44
+
+INSERT INTO FW_CONTROLLER VALUES('Brd01.delete','com.biz.brd.Brd01','delete');
+--]]]
+--[[[ INITCODE5DBBYDEV_45
+
+INSERT INTO FW_CONTROLLER VALUES('brd02011','com.biz.brd.Brd02','brd02011');
+--]]]
+--[[[ INITCODE5DBBYDEV_46
+
+INSERT INTO FW_CONTROLLER VALUES('brd02021','com.biz.brd.Brd02','brd02021');
+--]]]
+--[[[ INITCODE5DBBYDEV_47
+
+INSERT INTO FW_CONTROLLER VALUES('brd02031','com.biz.brd.Brd02','brd02031');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_48
+INSERT INTO FW_VIEW VALUES('brd01010','brd01010.jsp','brdtmpl.jsp','리스트');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_49
+INSERT INTO FW_VIEW VALUES('brd01020','brd01020.jsp','brdtmpl.jsp','등록화면');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_50
+INSERT INTO FW_VIEW VALUES('brd01030','brd01030.jsp','brdtmpl.jsp','수정화면');
+--]]]
+
+

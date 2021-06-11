@@ -84,6 +84,9 @@ public class SqlRunner implements Reload {
 			ClassLoader cl = SqlRunner.class.getClassLoader();
 
 			is = cl.getResourceAsStream(sqlUrl);
+			if (is == null) {
+				throw new SQLException(key + " 가 있는 Sql 파일을 찾을 수 없습니다.");
+			}
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
 

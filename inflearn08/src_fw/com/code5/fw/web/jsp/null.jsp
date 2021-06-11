@@ -7,7 +7,7 @@
 	response.setHeader("expires", "0");
 	response.setHeader("pragma", "no-cache");
 	
-	Box box = BoxContext.getThread();
+	Box box = BoxContext.getBox();
 %>
 <html>
 <head>
