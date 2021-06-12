@@ -17,11 +17,11 @@ public class RunCode5ByResourceBundle {
 		for (int i = 0; i < classpaths.length; i++) {
 			System.out.println(classpaths[i]);
 		}
-
+		
 		ResourceBundle init = ResourceBundle.getBundle("com.code5.fw.init");
 
 		String webappDir = init.getString("webappDir");
-		String baseDir = init.getString("webappDir");
+		String baseDir = init.getString("baseDir");
 		int webPort = Integer.parseInt(init.getString("webPort"));
 
 		Tomcat tomcat = new Tomcat();

@@ -2,18 +2,6 @@
 <web-app>
 
 	<servlet>
-		<servlet-name>board</servlet-name>
-		<servlet-class>com.code5.fw.web.BoardServlet
-		</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>board</servlet-name>
-		<url-pattern>/board</url-pattern>
-	</servlet-mapping>
-
-
-	<servlet>
 		<servlet-name>waf</servlet-name>
 		<servlet-class>com.code5.fw.web.MasterController
 		</servlet-class>

@@ -7,11 +7,13 @@
 
 	<br>
 	<br>
-	<a href="/board?mode=callList">/board?mode=callList</a>
+	<a href="/waf/callList?findStr=abcd">callList?findStr=abcd</a>
 	<br>
 	<br>
+	<a href="/waf/callWrite">callWrite</a>
 	<br>
-	<a href="/waf/callList">callList</a>
+	<br>
+	<a href="/waf/exeWrite">exeWrite</a>
 
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 ppt
 
-1.2 첫번째 서블릿을 만듭니다. - Board
+1.2 첫번째 서블릿을 만듭니다. - BoardServlet
 
 BoardServlet.java  
 
@@ -33,9 +33,35 @@ RunCode5BySimple.java
 5. 실행하고 기능을 확인
 
 
-
-1.2 첫번째 서블릿을 만듭니다. - Board
 1.3 MVC 아키텍쳐 스타일로 리펙토링 합니다. - MasterController
+
+1.3.1 
+
+BoardServlet.java 
+M : 입력/출력 (데이터)
+V : jsp
+C : 콘트롤러, 서비스
+
+
+Board.java 
+서비스
+
+MasterController.java 
+콘트롤러
+M : request
+V : request.getRequestDispatcher
+C : 모델 생성, 서비스 결정, 뷰 결정
+
+
+RunCode5BySimple.java
+
+web.xml 필요함
+
+
 1.4 임베디드 톰캣을 실행하고 작동하는 소프트웨어를 확인합니다.
+
+
+RunCode5.java
+
 
 

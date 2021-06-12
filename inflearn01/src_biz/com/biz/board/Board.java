@@ -14,12 +14,9 @@ public class Board {
 	 */
 	public String callList(HttpServletRequest request) {
 
-		String FIND_STR = request.getParameter("FIND_STR");
-		String FIND_OPT = request.getParameter("FIND_OPT");
+		String findStr = request.getParameter("findStr");
 
-		String boardData = FIND_OPT + "=" + FIND_STR;
-
-		request.setAttribute("BOARD_DATA", boardData);
+		System.out.println(findStr);
 
 		return "/WEB-INF/classes/com/biz/board/jsp/list.jsp";
 	}
@@ -41,7 +38,7 @@ public class Board {
 	 */
 	public String exeWrite(HttpServletRequest request) {
 
-		request.setAttribute("MSG", "exeWrite ok");
+		request.setAttribute("exeWriteResult", "ok");
 
 		return callList(request);
 	}

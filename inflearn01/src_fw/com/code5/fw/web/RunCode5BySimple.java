@@ -38,6 +38,8 @@ public class RunCode5BySimple {
 		HttpServlet board = new BoardServlet();
 
 		tomcat.addServlet("/", "board", board);
+		
+		// http://localhost:18080/board?mode=callList
 		context.addServletMappingDecoded("/board", "board");
 
 		
