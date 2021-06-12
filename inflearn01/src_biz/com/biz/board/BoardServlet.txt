@@ -1,0 +1,14 @@
+BoardServlet.java
+
+
+1. 1개의 서블릿 3개의 서비스
+
+2. mode 로 서비스 구분
+
+3. HttpServlet 상속
+
+4. Servlet 은 직렬화 대상 serialVersionUID
+
+
+
+BoardServlet.java  

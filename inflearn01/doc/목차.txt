@@ -1,0 +1,41 @@
+1.1 작동하는 소프트웨어를 쉽게 만들 수 있도록 준비합니다.
+
+ppt
+
+1.2 첫번째 서블릿을 만듭니다. - Board
+
+BoardServlet.java  
+
+1.2.0
+작동하는 소프트웨어는 작동하는 코드로 잘 설명
+자원을 미리 준비하고 각자 환경에서 소스코드 열기
+라인은 최대한 맞추겠지만 다를 경우 메소드로 찾아가기
+
+1.2.1 1개의 서블릿 3개의 서비스
+
+1.2.2. 먼 옛날 mode 로 서비스 구분, 서블릿은 무겁기 때문
+
+1.2.3. HttpServlet 상속, 잘 만들어진 코드를 재사용
+
+1.2.4. Servlet 은 직렬화 대상 serialVersionUID  
+
+
+RunCode5BySimple.java
+
+1. 임베디드 톰캣
+
+2. web.xml 이 없어도 실행
+
+2. baseDir, webPort
+
+4. addServletMappingDecoded
+
+5. 실행하고 기능을 확인
+
+
+
+1.2 첫번째 서블릿을 만듭니다. - Board
+1.3 MVC 아키텍쳐 스타일로 리펙토링 합니다. - MasterController
+1.4 임베디드 톰캣을 실행하고 작동하는 소프트웨어를 확인합니다.
+
+

@@ -78,6 +78,10 @@ function brd02021(){
 
 <form name="form1" method="post">
 <hr>
+
+<table border="1">
+		<tr>
+			<td>
 <button onclick="brd01010()">brd01010</button>
 <button onclick="brd02021()">brd02021</button>
 <button onclick="brd02011()">brd02011</button>
@@ -85,19 +89,37 @@ function brd02021(){
 <br>form1.THIS_TOKEN_N : <input type="TEXT" name="THIS_TOKEN_N" value="<%=box.s("THIS_TOKEN_N")%>">
 <br>form1.FIND_OPT : <input type="TEXT" name="FIND_OPT" value="<%=box.s("FIND_OPT")%>">
 <br>form1.FIND_SRT : <input type="TEXT" name="FIND_SRT" value="<%=box.s("FIND_OPT")%>">
+			</td>
+		</tr>
+	</table>
+
 <hr>
+
+<table border="1">
+		<tr>
+			<td>N</td>
+			<td>TITLE</td>
+			<td>EM</td>
+			<td>TOKEN_N</td>
+			<td>service</td>
+		</tr>
 	<%for (int i = 0; i < list.size(); i++) {%>
-		N:<%=list.s("N", i)%>
-		<button onclick="brd01030('<%=list.s("TOKEN_N", i)%>')">brd01030</button>
-		<button onclick="brd01040('<%=list.s("TOKEN_N", i)%>')">brd01040</button>
-		<%if(is_brd02031) { %>
-		<button onclick="brd02030('<%=list.s("TOKEN_N", i)%>')">brd02030</button>
-		<%}%>
-		<br>form1.TITLE : <input type="TEXT" name="TITLE" value="<%=list.s("TITLE", i)%>">
-		<br>form1.EM : <input type="TEXT" name="EM" value="<%=list.s("EM", i)%>">
-		<br>form1.TOKEN_N : <input type="TEXT" readonly="readonly" name="TOKEN_N" value="<%=list.s("TOKEN_N", i)%>">
-		<hr>
+	
+	<tr>
+		<td><%=list.s("N", i)%></td>
+		<td><input type="TEXT" name="TITLE" value="<%=list.s("TITLE", i)%>"></td>
+		<td><input type="TEXT" name="EM" value="<%=list.s("EM", i)%>"></td>
+		<td><input type="TEXT" readonly="readonly" name="TOKEN_N" value="<%=list.s("TOKEN_N", i)%>"></td>
+		<td>
+			<button onclick="brd01030('<%=list.s("TOKEN_N", i)%>')">brd01030</button>
+			<button onclick="brd01040('<%=list.s("TOKEN_N", i)%>')">brd01040</button>
+			<%if(is_brd02031) { %>
+			<button onclick="brd02030('<%=list.s("TOKEN_N", i)%>')">brd02030</button>
+			<%}%>
+		</td>
+	</tr>
 	<%}%>
+	</table>
 	<% if(isLimitRecode) {%>
 		<button onclick="brd01010_next('<%=limitBox.s("N")%>')">brd01010_next,<%=limitBox.s("N")%></button>
 	<% }%>

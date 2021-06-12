@@ -18,7 +18,7 @@ public class RunCode5ByResourceBundle {
 			System.out.println(classpaths[i]);
 		}
 
-		ResourceBundle init = ResourceBundle.getBundle("init");
+		ResourceBundle init = ResourceBundle.getBundle("com.code5.fw.init");
 
 		String webappDir = init.getString("webappDir");
 		String baseDir = init.getString("webappDir");
@@ -27,7 +27,6 @@ public class RunCode5ByResourceBundle {
 		Tomcat tomcat = new Tomcat();
 
 		tomcat.addWebapp("", webappDir);
-
 		tomcat.setBaseDir(baseDir);
 		tomcat.setPort(webPort);
 
