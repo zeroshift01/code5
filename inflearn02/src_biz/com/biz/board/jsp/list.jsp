@@ -2,9 +2,9 @@
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Box box = BoxContext.getThread();
-	String boardData = (String) box.get("BOARD_DATA");
-	String msg = (String) box.get("MSG");
+	Box box = BoxContext.getBox();
+	String list = (String) box.get("list");
+	String exeWriteResult = (String) box.get("exeWriteResult");
 %>
 <html>
 <head>
@@ -13,9 +13,9 @@
 
 list.jsp
 
-BOARD_DATA : <%=boardData%>
+list : <%=list%>
 
-MSG : <%=msg%>
+exeWriteResult : <%=exeWriteResult%>
 
 </pre>
 </body>

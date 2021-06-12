@@ -10,24 +10,22 @@ import com.code5.fw.web.BoxContext;
 public class Board {
 
 	/**
-	 * @param request
 	 * @return
 	 */
 	public String callList() {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
-		String FIND_STR = (String) box.get("FIND_STR");
-		String FIND_OPT = (String) box.get("FIND_OPT");
+		String findStr = (String) box.get("findStr");
 
-		String boardData = FIND_OPT + "=" + FIND_STR;
-
-		box.put("BOARD_DATA", boardData);
+		box.put("list", "list=[" + findStr + "]");
 
 		return "/WEB-INF/classes/com/biz/board/jsp/list.jsp";
 	}
 
 	/**
+	 * @param request
+	 * @param out
 	 * @return
 	 */
 	public String callWrite() {
@@ -37,13 +35,14 @@ public class Board {
 	}
 
 	/**
-	 * @return
+	 * @param request
+	 * @param response
 	 */
 	public String exeWrite() {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
-		box.put("MSG", "exeWrite ok");
+		box.put("exeWriteResult", "ok");
 
 		return callList();
 	}

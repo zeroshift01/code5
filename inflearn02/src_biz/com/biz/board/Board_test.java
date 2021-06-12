@@ -11,7 +11,7 @@ import com.code5.fw.web.BoxContext;
  * @author zero
  *
  */
-public class Board_test2 {
+public class Board_test {
 
 	/**
 	 * 
@@ -19,17 +19,16 @@ public class Board_test2 {
 	@Test
 	public void testCallList() {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.getBox();
 
-		box.put("FIND_OPT", "01");
-		box.put("FIND_STR", "A");
+		box.put("findStr", "abcd");
 
 		Board b = new Board();
-		b.callList();
+		b.exeWrite();
 
-		String boardData = (String) box.get("BOARD_DATA");
+		String list = (String) box.get("list");
 
-		assertEquals("01=A", boardData);
+		assertEquals("list=[abcd]", list);
 
 	}
 

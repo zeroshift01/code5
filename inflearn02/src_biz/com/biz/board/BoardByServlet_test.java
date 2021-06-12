@@ -31,14 +31,10 @@ public class BoardByServlet_test {
 	@Test
 	public void testCallList2() {
 
-		req2.setAttribute("FIND_OPT", "01");
-		req2.setAttribute("FIND_STR", "A");
+		req2.setAttribute("findStr", "A");
 
 		BoardByServlet b = new BoardByServlet();
 		b.callList(req2);
-
-		// String FIND_STR = request.getParameter("FIND_STR");
-		// String FIND_OPT = request.getParameter("FIND_OPT");
 
 	}
 
