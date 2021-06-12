@@ -1,4 +1,4 @@
-package com.code5.fw.web;
+package com.biz.board;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,25 +23,25 @@ public class BoardServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String MODE = request.getParameter("MODE");
+		String mode = request.getParameter("mode");
 		PrintWriter out = response.getWriter();
 
-		if ("callList".equals(MODE)) {
+		if ("callList".equals(mode)) {
 			callList(request, out);
 			return;
 		}
 
-		if ("callWrite".equals(MODE)) {
+		if ("callWrite".equals(mode)) {
 			callWrite(request, out);
 			return;
 		}
 
-		if ("exeWrite".equals(MODE)) {
+		if ("exeWrite".equals(mode)) {
 			exeWrite(request, out);
 			return;
 		}
 
-		out.println("");
+		out.println("mode=" + mode);
 
 	}
 
@@ -50,12 +50,7 @@ public class BoardServlet extends HttpServlet {
 	 * @param response
 	 */
 	void callList(HttpServletRequest request, PrintWriter out) {
-
-		String FIND_STR = request.getParameter("FIND_STR");
-		String FIND_OPT = request.getParameter("FIND_OPT");
-
-		String boardData = FIND_OPT + "=" + FIND_STR;
-		out.print(boardData);
+		out.print("this View callList");
 	}
 
 	/**
@@ -63,6 +58,7 @@ public class BoardServlet extends HttpServlet {
 	 * @param response
 	 */
 	void callWrite(HttpServletRequest request, PrintWriter out) {
+		out.print("this View callWrite");
 	}
 
 	/**
@@ -70,9 +66,7 @@ public class BoardServlet extends HttpServlet {
 	 * @param response
 	 */
 	void exeWrite(HttpServletRequest request, PrintWriter out) {
-
 		out.println("exeWrite ok");
-
 		callList(request, out);
 	}
 

@@ -10,8 +10,6 @@ Box fwView = box.getBox(Box.KEY_FW_VIEW);
 String view = fwView.s("VIEW");
 String title = fwView.s("TITLE");
 
-System.out.println("---------"+view);
-
 SessionB user = box.getSessionB();
 
 %>
@@ -32,18 +30,21 @@ SessionB user = box.getSessionB();
 		var form = document.mainform;
 		form.action = '/waf/callWrite';
 		form.submit();
+		return;
 	}
 	
 	function callList(){
 		var form = document.mainform;
 		form.action = '/waf/callList';
 		form.submit();
+		return;
 	}
 	
 	function exeLogout(){
 		var form = document.mainform;
 		form.action = '/waf/exeLogout';
 		form.submit();
+		return;
 	}
 	
 </script>

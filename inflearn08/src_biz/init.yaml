@@ -1,9 +1,9 @@
 WEB_APP_DIR : 
-  DEFAULT : "[APP_ROOT_DIR]/web"
+  DEFAULT : "[WEB_APP_ROOT]/web"
   PRAP1 : "/contents/code5/web"
   PRAP2 : "/contents/code5/web"
 TEMP_DIR :
-  DEFAULT : "[APP_ROOT_DIR]/temp"
+  DEFAULT : "[WEB_APP_ROOT]/temp"
   PRAP1 : "/contents/code5/temp"
   PRAP2 : "/contents/code5/temp"
 WEB_PORT :
@@ -14,7 +14,7 @@ CHARACTER_SET :
 
 LOG :
   DIR : 
-    DEFAULT : "[APP_ROOT_DIR]/logs"
+    DEFAULT : "[WEB_APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap1"
   FILE_PATTERN : "[RND].[NAME].log"
@@ -29,11 +29,11 @@ LOG :
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
-    DEFAULT : "[APP_ROOT_DIR]/temp"
+    DEFAULT : "[WEB_APP_ROOT]/temp"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
   URL : 
-    DEFAULT : "[APP_ROOT_DIR]/files"
+    DEFAULT : "[WEB_APP_ROOT]/files"
     PRAP1 : "/contents/files"
     PRAP2 : "/contents/files"
 
@@ -48,7 +48,7 @@ TRANSACTION :
     PRAP1 : "com.code5.fw.db.Transaction_SQLITE_JDBC"
 
 Transaction_SQLITE_JDBC_CODE5_DEV :
-  URL : "jdbc:sqlite:[APP_ROOT_DIR]/doc/code5.db"
+  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
 
 
 NOLOG : 

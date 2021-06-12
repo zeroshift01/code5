@@ -56,13 +56,13 @@ public class InitYaml {
 	/**
 	 * 
 	 */
-	private String appRootDir = null;
+	private String webAppRoot = null;
 
 	/**
 	 * @return
 	 */
-	public String getAppRootDir() {
-		return appRootDir;
+	public String getWebAppRoot() {
+		return webAppRoot;
 	}
 
 	/**
@@ -162,20 +162,24 @@ public class InitYaml {
 
 		String yamlUrl = s("THIS_YAML_URL");
 
-		// init.yaml
+		// webAppRoot/web/WEB-INF/classes/init.yaml
 		File file = new File(yamlUrl);
-		// classes/init.yaml
-		file = file.getParentFile();
-		// WEB-INF/classes/init.yaml
-		file = file.getParentFile();
-		// web/WEB-INF/classes/init.yaml
-		file = file.getParentFile();
-		// root/web/WEB-INF/classes/init.yaml
+
+		// webAppRoot/web/WEB-INF/classes
 		file = file.getParentFile();
 
-		String appRootUrl = file.getAbsolutePath();
+		// webAppRoot/web/WEB-INF
+		file = file.getParentFile();
+		
+		// webAppRoot/WEB-INF
+		file = file.getParentFile();
 
-		this.appRootDir = appRootUrl;
+		// webAppRoot
+		file = file.getParentFile();
+
+		String webAppRoot = file.getAbsolutePath();
+
+		this.webAppRoot = webAppRoot;
 
 		this.webPort = Integer.parseInt(s("WEB_PORT"));
 
@@ -260,8 +264,8 @@ public class InitYaml {
 	 * @return
 	 */
 	private String convert$(String s) {
-		if (this.appRootDir != null) {
-			s = s.replace("[APP_ROOT_DIR]", this.appRootDir);
+		if (this.webAppRoot != null) {
+			s = s.replace("[WEB_APP_ROOT]", this.webAppRoot);
 		}
 		return s;
 	}
