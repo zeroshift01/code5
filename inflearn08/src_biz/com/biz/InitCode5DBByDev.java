@@ -41,7 +41,11 @@ public class InitCode5DBByDev {
 
 			String key = "INITCODE5DBBYDEV_" + x;
 
-			sql.executeSql(key);
+			try {
+				sql.executeSql(key);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 
 		}
 

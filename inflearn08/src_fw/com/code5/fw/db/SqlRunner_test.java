@@ -214,7 +214,8 @@ public class SqlRunner_test {
 		box.put("P1", "HI");
 		box.put("P2", "");
 		box.put("P3", "Y");
-
+		box.put("HP_N", "01022223333");
+		
 		Table table = sql.getTable("SQLRUNNER_TEST_03");
 		System.out.println(table.toString());
 		for (int i = 0; i < 1000; i++) {
