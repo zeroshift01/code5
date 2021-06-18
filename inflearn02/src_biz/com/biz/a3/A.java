@@ -1,33 +1,37 @@
 package com.biz.a3;
 
+import com.code5.fw.data.InitYaml;
+
 /**
  * @author zero
  *
- *         인터페이스는 교체비용을 줄이기 위해 사용합니다.
+ *         파급효과를 줄이기 위해 인터페이스를 쉽게 사용하지 마세요.
  */
 class A {
 
 	void execute() {
 
-		// 인터페이스는 교체의 요구사항이 있을때 사용
+		// 인터페이스는 기능의 교체 요구사항이 있을때 사용
 
-		// 교체 : 2개이상의 기능이 동시에 사용되고
-		// 실행시점에 그중 하나만 선택되어 사용되는 객체지향 기능
+		// 기능의 교체 : 여러개의 기능이 준비되고 실행시점에 하나의 기능만 선택되어 실행됨
 
-		// 대부분의 요구사항은
-		// 인터페이스와 구현클래스가 1:1 관계
-		// 교체의 요구사항이 아니다.
+		// 여러개의 기능이 준비
+		// BPrImpl.execute3(), BDvImpl.execute3()
 
-		// 기능의 정의
-		boolean isDev = true;
+		// 실행시점에 하나의 기능만 선택
+		// 운영환경 : BPrImpl.execute3()
+		// 개발환경 : BDvImpl.execute3()
 
+		// 실행시점
+		boolean isDev = InitYaml.get().is("isDev");
+
+		B b = null;
 		if (isDev) {
-			B b = new BDevImpl();
-			b.execute3();
-			return;
+			b = new BDvImpl();
+		} else {
+			b = new BPrImpl();
 		}
 
-		B b = new BPrImpl();
 		b.execute3();
 
 	}
@@ -35,14 +39,13 @@ class A {
 }
 
 interface B {
-
 	public void execute3();
 }
 
-class BDevImpl implements B {
+class BDvImpl implements B {
 
 	public void execute3() {
-		// stub
+		// 가상의 이체기능 실행
 	}
 
 }
@@ -50,7 +53,7 @@ class BDevImpl implements B {
 class BPrImpl implements B {
 
 	public void execute3() {
-		// api call
+		// 이체기능 실행
 	}
 
 }
