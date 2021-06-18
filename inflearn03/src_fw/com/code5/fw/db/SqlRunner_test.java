@@ -24,7 +24,7 @@ public class SqlRunner_test {
 		Box box = BoxContext.get();
 		Transaction transaction = TransactionContext.get();
 
-		box.put("EMP_NM", "ABC");
+		box.put("FIND_STR", "ABCD");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 
@@ -35,12 +35,11 @@ public class SqlRunner_test {
 
 		String[] cols = table.getCols();
 
-		assertEquals("EMP_N", cols[0]);
-		assertEquals("EMP_NM", cols[1]);
-		assertEquals("HP_N", cols[2]);
-
-		assertEquals("N01", table.s("EMP_N", 0));
-		assertEquals("N03", table.s("EMP_N", 1));
+		assertEquals("TXT", cols[2]);
+		assertEquals("EM", cols[3]);
+		
+		assertEquals("ABCD", table.s("TXT", 0));
+		assertEquals("ABCD", table.s("TXT", 1));
 
 	}
 
@@ -53,8 +52,8 @@ public class SqlRunner_test {
 		Box box = BoxContext.get();
 		Transaction transaction = TransactionContext.get();
 
-		box.put("EMP_N", "N01");
-		box.put("HP_N", "010-2222-3333");
+		box.put("N", "1");
+		box.put("EM", "aa@bb.com");
 
 		SqlRunner sql = SqlRunner.getSqlRunner();
 

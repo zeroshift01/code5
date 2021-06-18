@@ -23,10 +23,11 @@ public class BoardByJDBC {
 	 */
 	public static void main(String[] x) throws Exception {
 
-		String FIND_STR = "A";
+		String findStr = "ABCD";
+		String em = "aa@bb.com";
 
 		BoardDTO input = new BoardDTO();
-		input.setFindStr(FIND_STR);
+		input.setFindStr(findStr);
 
 		Transaction transaction = TransactionContext.get();
 
@@ -42,6 +43,8 @@ public class BoardByJDBC {
 		System.out.println(dto.getEm());
 		System.out.println("BoardDTO---");
 		System.out.println();
+
+		input.setEm(em);
 
 		update(transaction, list, input);
 
@@ -103,7 +106,7 @@ public class BoardByJDBC {
 		SQL += "\n WHERE 1 = 1 ";
 
 		if (!"".equals(findStr)) {
-			SQL += "\n AND TITLE LIKE '%'||'" + findStr + "'||'%' ";
+			SQL += "\n AND TXT LIKE '%'||'" + findStr + "'||'%' ";
 		}
 
 		SQL += "\n AND DEL_Y IS NULL ";
@@ -209,7 +212,7 @@ public class BoardByJDBC {
 
 				String n = thisEmpDTO.getN();
 
-				String SQL = "UPDATE BOARD SET EM = ? WHERE N = ? ";
+				String SQL = "UPDATE BZ_BOARD SET EM = ? WHERE N = ? ";
 
 				PreparedStatement ps = transaction.prepareStatement(SQL);
 				ps.setString(1, em);

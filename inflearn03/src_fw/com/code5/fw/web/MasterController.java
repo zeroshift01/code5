@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.biz.board.Board;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.InitYaml;
@@ -50,30 +49,7 @@ public class MasterController extends HttpServlet {
 
 		try {
 
-			String pathInfo = request.getPathInfo();
-
-			String jspUrl = null;
-
-			if ("/callList".equals(pathInfo)) {
-
-				Board board = new Board();
-				jspUrl = board.callList();
-
-			} else if ("/callWrite".contentEquals(pathInfo)) {
-
-				Board board = new Board();
-				jspUrl = board.callWrite();
-
-			} else if ("/exeWrite".contentEquals(pathInfo)) {
-
-				Board board = new Board();
-				jspUrl = board.exeWrite();
-
-			}
-
-			if (jspUrl == null) {
-				throw new ServletException();
-			}
+			String jspUrl = "서비스로직 수행 결과";
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(jspUrl);
 			dispatcher.forward(request, response);
