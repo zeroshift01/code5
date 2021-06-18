@@ -1,11 +1,6 @@
 package com.code5.fw.db;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.sql.Statement;
-
-import com.code5.fw.data.InitYaml;
+import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
@@ -15,54 +10,18 @@ public class InitCode5DBByDev {
 
 	public static void main(String[] xx) throws Exception {
 
-		String url = InitYaml.get().getAppRootUrl() + "/doc/init_code5_db.sql";
+		Sql sql = new Sql(InitCode5DBByDev.class);
 
-		FileInputStream in = new FileInputStream(url);
-		InputStreamReader isr = new InputStreamReader(in);
-		BufferedReader br = new BufferedReader(isr);
-		StringBuffer sb = new StringBuffer();
+		sql.executeSql("INITCODE5DBBYDEV_01");
+		sql.executeSql("INITCODE5DBBYDEV_02");
+		sql.executeSql("INITCODE5DBBYDEV_03");
+		sql.executeSql("INITCODE5DBBYDEV_04");
+		sql.executeSql("INITCODE5DBBYDEV_05");
+		sql.executeSql("INITCODE5DBBYDEV_06");
+		sql.executeSql("INITCODE5DBBYDEV_07");
+		sql.executeSql("INITCODE5DBBYDEV_08");
 
-		while (true) {
-			String str = br.readLine();
-			if (str == null) {
-				break;
-			}
-			sb.append(str + "\n");
-		}
-
-		in.close();
-
-		Transaction transaction = new Transaction_SQLITE_JDBC_CODE5_DEV();
-		transaction.setAutoCommitFalse();
-
-		String[] sqls = sb.toString().split(";");
-		for (int i = 0; i < sqls.length; i++) {
-
-			String sql = sqls[i];
-
-			if (sql == null) {
-				continue;
-			}
-
-			sql = sql.trim();
-
-			if ("".equals(sql)) {
-				continue;
-			}
-
-			System.out.println(sql + ";");
-			try {
-				Statement st = transaction.createStatement();
-				st.execute(sql);
-				transaction.commit();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		transaction.commit();
-
-		System.out.println("FIN " + url);
+		TransactionContext.get().commit();
 
 	}
 

@@ -33,7 +33,7 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	public static Transaction getThread() {
+	public static Transaction get() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 			return transaction;
@@ -41,7 +41,7 @@ public class TransactionContext {
 		}
 
 		transaction = createDefaultTransaction();
-		setThread(transaction);
+		set(transaction);
 
 		return transaction;
 	}
@@ -51,14 +51,14 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	static void setThread(Transaction transaction) {
+	static void set(Transaction transaction) {
 		TL.set(transaction);
 	}
 
 	/**
 	 *
 	 */
-	static void removeThread() {
+	static void remove() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 			TL.get().closeConnection();

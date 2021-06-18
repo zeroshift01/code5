@@ -19,7 +19,7 @@ public class Board_test {
 	@Test
 	public void testCallList() {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		box.put("findStr", "abcd");
 

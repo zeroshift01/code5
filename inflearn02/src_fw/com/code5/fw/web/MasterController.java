@@ -28,7 +28,7 @@ public class MasterController extends HttpServlet {
 			throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
-		BoxContext.setBox(box);
+		BoxContext.set(box);
 
 		try {
 
@@ -64,7 +64,7 @@ public class MasterController extends HttpServlet {
 			ex.printStackTrace();
 		} finally {
 
-			BoxContext.removeBox();
+			BoxContext.remove();
 		}
 
 	}

@@ -20,7 +20,7 @@ public class ErrBoard implements BizController {
 	 */
 	public String errStub1() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		if ("1".equals(box.s("err"))) {
 			box.setAlertMsg("오류가 발생했습니다.");
 			throw new Exception();
@@ -35,7 +35,7 @@ public class ErrBoard implements BizController {
 	 */
 	public String errStub2() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		
 		if ("1".equals(box.s("err"))) {
 			box.setAlertMsg("오류가 발생했습니다.");

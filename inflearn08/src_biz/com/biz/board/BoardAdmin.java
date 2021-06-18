@@ -19,7 +19,7 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 	 */
 	public String start() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		String service = box.s(Box.KEY_SERVICE);
 
@@ -66,7 +66,7 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 
 		TransactionContext.commit();
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
 		return execute("callList");
@@ -75,7 +75,7 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(auth = "A0")
 	public String allUpdate() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		Table input = box.createTableByKey("TOKEN_N");
 
 		BoardD dao = new BoardD();

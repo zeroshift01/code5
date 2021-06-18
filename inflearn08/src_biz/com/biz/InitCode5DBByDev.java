@@ -49,7 +49,7 @@ public class InitCode5DBByDev {
 
 		}
 
-		TransactionContext.getTransaction().commit();
+		TransactionContext.get().commit();
 		trace.write("ok");
 	}
 

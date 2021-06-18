@@ -15,7 +15,7 @@ public class Board {
 	 */
 	public String callList() {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.get();
 
 		String FIND_STR = (String) box.get("FIND_STR");
 		String FIND_OPT = (String) box.get("FIND_OPT");
@@ -41,7 +41,7 @@ public class Board {
 	 */
 	public String exeWrite() {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.get();
 
 		box.put("MSG", "exeWrite ok");
 

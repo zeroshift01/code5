@@ -64,7 +64,7 @@ abstract public class Table {
 	 */
 	public Box getBox(int row) {
 
-		Box box = new BoxLocal(BoxContext.getBox().isXssConvert());
+		Box box = new BoxLocal(BoxContext.get().isXssConvert());
 
 		String[] cols = getCols();
 		for (int i = 0; i < cols.length; i++) {

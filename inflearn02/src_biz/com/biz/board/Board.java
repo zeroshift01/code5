@@ -14,7 +14,7 @@ public class Board {
 	 */
 	public String callList() {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		String findStr = (String) box.get("findStr");
 
@@ -40,7 +40,7 @@ public class Board {
 	 */
 	public String exeWrite() {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		box.put("exeWriteResult", "ok");
 

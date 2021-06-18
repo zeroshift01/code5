@@ -998,12 +998,12 @@ public class SqlRunner implements Reload {
 		}
 
 		if (c.isToken) {
-			SessionB user = BoxContext.getBox().getSessionB();
+			SessionB user = BoxContext.get().getSessionB();
 			return user.createToken(p.add1, data);
 		}
 
 		if (c.isTokenDec) {
-			SessionB user = BoxContext.getBox().getSessionB();
+			SessionB user = BoxContext.get().getSessionB();
 			return user.getDataByToken(p.add1, data);
 		}
 
@@ -1023,7 +1023,7 @@ public class SqlRunner implements Reload {
 
 		if (p.isGetBox) {
 
-			Box thisBox = BoxContext.getBox();
+			Box thisBox = BoxContext.get();
 			if (thisBox == null) {
 				return "";
 			}
@@ -1034,7 +1034,7 @@ public class SqlRunner implements Reload {
 
 		if (p.isGetSessionB) {
 
-			Box thisBox = BoxContext.getBox();
+			Box thisBox = BoxContext.get();
 			if (thisBox == null) {
 				return "";
 			}
