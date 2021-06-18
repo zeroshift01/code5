@@ -16,11 +16,6 @@ public class Sql {
 	/**
 	 * 
 	 */
-	private SqlRunner sqlRunner = SqlRunner.getSqlRunner();
-
-	/**
-	 * 
-	 */
 	private String className = null;
 
 	/**
@@ -32,14 +27,6 @@ public class Sql {
 	}
 
 	/**
-	 * @param cl
-	 */
-	public Sql(Class<?> cl) {
-		String className = cl.getName();
-		this.className = className;
-	}
-
-	/**
 	 * @param className
 	 */
 	public Sql(String className) {
@@ -47,11 +34,16 @@ public class Sql {
 	}
 
 	/**
-	 * @param key
-	 * @return
+	* 
+	*/
+	private SqlRunner sqlRunner = SqlRunner.getSqlRunner();
+
+	/**
+	 * @param cl
 	 */
-	private String setKey(String key) {
-		return this.className + "." + key;
+	public Sql(Class<?> cl) {
+		String className = cl.getName();
+		this.className = className;
 	}
 
 	/**
@@ -82,6 +74,14 @@ public class Sql {
 	public int executeSql(String key, Box box) throws SQLException {
 		Transaction transaction = TransactionContext.getTransaction();
 		return executeSql(transaction, box, key);
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	private String setKey(String key) {
+		return this.className + "." + key;
 	}
 
 	/**
