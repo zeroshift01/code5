@@ -5,7 +5,7 @@ import com.code5.fw.data.InitYaml;
 /**
  * @author zero
  *
- *         파급효과를 줄이기 위해 인터페이스를 쉽게 사용하지 마세요.
+ *         파급효과를 줄이기 위해 인터페이스를 사용하지 마세요.
  */
 class A {
 
