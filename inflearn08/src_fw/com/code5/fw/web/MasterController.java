@@ -84,7 +84,7 @@ public class MasterController extends HttpServlet implements Reload {
 			return view;
 		}
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		ServiceB serviceB = (ServiceB) box.get(Box.KEY_SERVICEB);
 
 		if (view.endsWith("jsp")) {
@@ -138,10 +138,10 @@ public class MasterController extends HttpServlet implements Reload {
 		request.setCharacterEncoding(this.characterSet);
 
 		Box box = new BoxHttp(request);
-		BoxContext.setBox(box);
+		BoxContext.set(box);
 
 		Transaction transaction = Transaction.createTransaction(transationWas);
-		TransactionContext.setTransaction(transaction);
+		TransactionContext.set(transaction);
 
 		try {
 
@@ -368,7 +368,7 @@ public class MasterController extends HttpServlet implements Reload {
 		Method method = serviceB.method;
 		ServiceAnnotation sa = serviceB.sa;
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		box.put(Box.KEY_SERVICEB, serviceB);
 
 		boolean checkUrlAuth = checkUrlAuth(sa);
@@ -402,7 +402,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static boolean checkUrlAuth(ServiceAnnotation sa) throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		SessionB user = box.getSessionB();
 
 		boolean isLogin = sa.isLogin();
@@ -497,8 +497,8 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	protected void closeAOP() {
-		TransactionContext.removeTransaction();
-		BoxContext.removeBox();
+		TransactionContext.remove();
+		BoxContext.get();
 	}
 
 	/**
@@ -571,7 +571,7 @@ public class MasterController extends HttpServlet implements Reload {
 		}
 
 		Box controller = table.getBox();
-		BoxContext.getBox().put(Box.KEY_FW_CONTROLLER, controller);
+		BoxContext.get().put(Box.KEY_FW_CONTROLLER, controller);
 		return controller;
 	}
 
@@ -586,7 +586,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 		if (fwView != null) {
 
-			BoxContext.getBox().put(Box.KEY_FW_VIEW, fwView);
+			BoxContext.get().put(Box.KEY_FW_VIEW, fwView);
 
 			return fwView;
 		}
@@ -614,7 +614,7 @@ public class MasterController extends HttpServlet implements Reload {
 		fwView.put("VIEW", view);
 		fwView.put("TMPL", tmpl);
 
-		BoxContext.getBox().put(Box.KEY_FW_VIEW, fwView);
+		BoxContext.get().put(Box.KEY_FW_VIEW, fwView);
 
 		FW_VIEW_MAP.put(KEY, fwView);
 

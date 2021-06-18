@@ -89,7 +89,7 @@ public class UploadFileB {
 			return;
 		}
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		box.put("UPLOADFILEB.FILE_ID", fileId);
 
 		Table table = sql.getTable(FORM_NO_02);
@@ -117,7 +117,7 @@ public class UploadFileB {
 			return;
 		}
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		String from = this.fileUrl;
 		String to = this.fileUrl + ".enc";
@@ -158,7 +158,7 @@ public class UploadFileB {
 			return;
 		}
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		box.put("UPLOADFILEB.FILE_ID", this.fileId);
 

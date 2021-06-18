@@ -19,7 +19,7 @@ public class Brd02 implements BizController, BizControllerStartExecute {
 	 */
 	public String start() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		String service = box.s(Box.KEY_SERVICE);
 
@@ -70,7 +70,7 @@ public class Brd02 implements BizController, BizControllerStartExecute {
 
 		TransactionContext.commit();
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		box.setAlertMsg("성공적으로 작업이 수행되었습니다.");
 
 		return execute("callList");
@@ -85,7 +85,7 @@ public class Brd02 implements BizController, BizControllerStartExecute {
 	@ServiceAnnotation(auth = "A0")
 	public String brd02021() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 		Table input = box.createTableByKey("TOKEN_N");
 
 		BrdD dao = new BrdD();

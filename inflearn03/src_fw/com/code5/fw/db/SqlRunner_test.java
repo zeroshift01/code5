@@ -21,8 +21,8 @@ public class SqlRunner_test {
 	@Test
 	public void test_01() throws Exception {
 
-		Box box = BoxContext.getThread();
-		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.get();
+		Transaction transaction = TransactionContext.get();
 
 		box.put("EMP_NM", "ABC");
 
@@ -50,8 +50,8 @@ public class SqlRunner_test {
 	@Test
 	public void test_02() throws Exception {
 
-		Box box = BoxContext.getThread();
-		Transaction transaction = TransactionContext.getThread();
+		Box box = BoxContext.get();
+		Transaction transaction = TransactionContext.get();
 
 		box.put("EMP_N", "N01");
 		box.put("HP_N", "010-2222-3333");

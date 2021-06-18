@@ -68,8 +68,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.get();
+		Box box = BoxContext.get();
 		return executeSql(transaction, box, key);
 	}
 
@@ -80,7 +80,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.get();
 		return executeSql(transaction, box, key);
 	}
 
@@ -90,8 +90,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
-		Box box = BoxContext.getThread();
+		Transaction transaction = TransactionContext.get();
+		Box box = BoxContext.get();
 		return getTable(transaction, box, key);
 	}
 
@@ -102,7 +102,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.get();
 		return getTable(transaction, box, key);
 	}
 

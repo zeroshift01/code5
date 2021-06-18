@@ -28,7 +28,7 @@ public class BoardByJDBC {
 		BoardDTO input = new BoardDTO();
 		input.setFindStr(FIND_STR);
 
-		Transaction transaction = TransactionContext.getThread();
+		Transaction transaction = TransactionContext.get();
 
 		List<BoardDTO> list = selectForDto(transaction, input);
 
@@ -138,7 +138,7 @@ public class BoardByJDBC {
 	 */
 	private static List<String[]> selectForCollection(Transaction transaction) throws Exception {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.get();
 
 		String findStr = box.s("FIND_STR");
 

@@ -60,8 +60,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
-		Box box = BoxContext.getBox();
+		Transaction transaction = TransactionContext.get();
+		Box box = BoxContext.get();
 		return executeSql(transaction, box, key);
 	}
 
@@ -72,7 +72,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public int executeSql(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
+		Transaction transaction = TransactionContext.get();
 		return executeSql(transaction, box, key);
 	}
 
@@ -90,8 +90,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
-		Box box = BoxContext.getBox();
+		Transaction transaction = TransactionContext.get();
+		Box box = BoxContext.get();
 		return getTable(transaction, box, key);
 	}
 
@@ -102,7 +102,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTable(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
+		Transaction transaction = TransactionContext.get();
 		return getTable(transaction, box, key);
 	}
 
@@ -126,7 +126,7 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTableByCache(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
+		Transaction transaction = TransactionContext.get();
 		return getTableByCache(transaction, key, box);
 	}
 
@@ -136,8 +136,8 @@ public class Sql {
 	 * @throws SQLException
 	 */
 	public Table getTableByCache(String key) throws SQLException {
-		Transaction transaction = TransactionContext.getTransaction();
-		Box box = BoxContext.getBox();
+		Transaction transaction = TransactionContext.get();
+		Box box = BoxContext.get();
 		return getTableByCache(transaction, key, box);
 	}
 

@@ -23,7 +23,7 @@ public class Brd01 implements BizController {
 	@ServiceAnnotation(isLogin = false)
 	public String brd01010() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		BrdD dao = new BrdD();
 		Table list = dao.brd01010();
@@ -50,7 +50,7 @@ public class Brd01 implements BizController {
 	 */
 	public String brd01021() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
@@ -78,7 +78,7 @@ public class Brd01 implements BizController {
 	 */
 	public String brd01030() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		BrdD dao = new BrdD();
 		Box board = dao.brd01030();
@@ -102,7 +102,7 @@ public class Brd01 implements BizController {
 	 */
 	public String brd01031() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		execute("brd01020");
 		Box thisBoard = box.getBox("board");
@@ -162,7 +162,7 @@ public class Brd01 implements BizController {
 	@ServiceAnnotation(isInternal = true)
 	public void delete() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		Box thisBoard = box.getBox("board");
 
@@ -189,7 +189,7 @@ public class Brd01 implements BizController {
 	 */
 	public String brd01040() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		execute("brd01030");
 

@@ -21,7 +21,7 @@ public class Board implements BizController {
 	@ServiceAnnotation(isLogin = false)
 	public String callList() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		BoardD dao = new BoardD();
 		Table list = dao.list();
@@ -44,7 +44,7 @@ public class Board implements BizController {
 	 */
 	public String exeWrite() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
@@ -70,7 +70,7 @@ public class Board implements BizController {
 	 */
 	public String callUpdate() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		BoardD dao = new BoardD();
 		Box board = dao.select();
@@ -92,7 +92,7 @@ public class Board implements BizController {
 	 */
 	public String exeUpdate() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		execute("callUpdate");
 		Box thisBoard = box.getBox("board");
@@ -150,7 +150,7 @@ public class Board implements BizController {
 	@ServiceAnnotation(isInternal = true)
 	public void delete() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		Box thisBoard = box.getBox("board");
 
@@ -175,7 +175,7 @@ public class Board implements BizController {
 	 */
 	public String exeDelete() throws Exception {
 
-		Box box = BoxContext.getBox();
+		Box box = BoxContext.get();
 
 		execute("callUpdate");
 
