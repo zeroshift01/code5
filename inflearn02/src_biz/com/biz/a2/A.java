@@ -1,9 +1,11 @@
 package com.biz.a2;
 
+import com.code5.fw.data.InitYaml;
+
 /**
  * @author zero
  *
- *         파급효과를 줄이기 위해 인터페이스를 사용하지 마세요.
+ *         인터페이스와 구현클래스가 1:1 관계일때 인터페이스를 제거하세요.
  */
 class A {
 
@@ -26,20 +28,23 @@ class A {
 
 		// 낮은 결합도를 위해
 		// 구현클래스와 인터페이스를 1:1 관계로 구성
-		B b = new BImpl();
 
-		b.execute1();
+		// 인터페이스 : 필요한 기능을 추상화 한 틀
+		// 인터페이스 구현 : 틀에 맞춰 기능을 구현
 
-		b.execute2();
+		// B 틀
+		// BImpl 틀에 맞춰 구현된 코드
+		B 객체 = new BImpl();
 
-		b.execute2("P");
+		객체.문제가있음();
 
-		b.execute3();
+		객체.잘만들어짐();
+		객체.잘만들어짐(0);
 
-		// 추상화된 인터페이스에는 내용결합이 필요함
+		객체.실행시점에따라다름();
 
-		// 따라서 인터페이스를 사용한다고
-		// 내용결합에 있던 파급효과가 없어지는 건 아님
+		// 인터페이스를 사용한다고
+		// 내용결합에 있던 문제가 없어지는 건 아님
 
 		// 오히려 인터페이스 때문에 코드 복잡도가 높아지고
 		// 정보은닉을 하지 못함. (public, protected)
@@ -50,33 +55,49 @@ class A {
 
 interface B {
 
-	public void execute1();
+	public void 문제가있음();
 
-	public void execute2();
+	public int 잘만들어짐();
 
-	public void execute2(String p);
+	public int 잘만들어짐(int i);
 
-	public void execute3();
+	public void 실행시점에따라다름();
 }
 
 class BImpl implements B {
 
-	// 파급효과 1
-	// 오류, 지연, 난해함 이 있는 기능
-	public void execute1() {
+	public void 문제가있음() {
+		// 문제1 해결 : 기능의 수정, 결함제거/리펙토링
 	}
 
-	// 파급효과 2
-	// 잘 만들어진 기능이지만 추가기능이 필요
-	public void execute2() {
+	private int 잘만들어진기능에서사용하는데이터 = 0;
+
+	public int 잘만들어짐() {
+		return 잘만들어진기능에서사용하는데이터++;
 	}
 
-	public void execute2(String p) {
+	public int 잘만들어짐(int i) {
+
+		// 문제2 해결 : 기능의 추가, 오버로딩/새로운메소드
+
+		잘만들어진기능에서사용하는데이터 = i;
+		잘만들어진기능에서사용하는데이터++;
+		return 잘만들어진기능에서사용하는데이터;
+
 	}
 
-	// 파급효과 3
-	// 이체기능이 실행되지만 개발환경에선 가상의 이체기능이 실행되어야 함
-	public void execute3() {
+	public void 실행시점에따라다름() {
+
+		// 문제3 해결 : 기능의 교체, 실행시점에 기능이 결정
+
+		boolean isDev = InitYaml.get().is("isDev");
+		if (isDev) {
+			// 가상의 기능
+			// stub : 다른 모듈의 테스트를 위해 만들어진 가상의 기능
+			return;
+		}
+
+		// 실제 기능
 	}
 
 }
