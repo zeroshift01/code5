@@ -15,8 +15,36 @@ import com.code5.fw.data.InitYaml;
  */
 public class CreateConncectionByJDBC_test {
 
+	// 1. sqlite : 서버리스, 관계형DB, 트랜잭션지원
+
+	// 2. url : sqlite 실행에 필요한 데이터 파일 위치
+
+	// 3. 객체지향관점 Connection 생성
+
+	// 4. 개발자코드로 Connection 생성
+
+	// 5. 우리는 개발자코드로 Connection 을 생성합니다.
+
 	// jdbc:sqlite:/a/b/code5.db
 	private String url = InitYaml.get().s("Transaction_SQLITE_JDBC_CODE5_DEV.URL");
+
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	public void createConnectionByDriverManager() throws Exception {
+
+		String className = "org.sqlite.JDBC";
+
+		// org.sqlite.JDBC static 생성자 호출
+		// DriverInfo 자료구조에 저장
+		Class.forName(className);
+
+		// DriverInfo 자료구조 사용
+		Connection conn = DriverManager.getConnection(url);
+		conn.setAutoCommit(true);
+
+	}
 
 	/**
 	 * @return
@@ -29,20 +57,6 @@ public class CreateConncectionByJDBC_test {
 		Properties properties = config.toProperties();
 
 		Connection conn = org.sqlite.JDBC.createConnection(url, properties);
-		conn.setAutoCommit(true);
-
-	}
-
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void createConnectionByDriverManager() throws Exception {
-
-		String className = "org.sqlite.JDBC";
-		Class.forName(className);
-
-		Connection conn = DriverManager.getConnection(url);
 		conn.setAutoCommit(true);
 
 	}

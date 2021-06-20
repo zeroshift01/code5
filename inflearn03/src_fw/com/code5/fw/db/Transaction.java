@@ -10,11 +10,19 @@ import java.util.ArrayList;
 /**
  * @author zero
  * 
- * 
- * 
  *
  */
 public abstract class Transaction {
+
+	// 1. Connection 객체 생성
+
+	// 2. 트랜잭션시작 conn.setAutoCommit
+
+	// 3. SQL 기능에 필요한 객체 생성
+
+	// 4. 트랜잭션종료 commit, rollback
+
+	// 5. Connection 객체 자원 반환
 
 	/**
 	 * 

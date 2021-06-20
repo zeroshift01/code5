@@ -5,11 +5,7 @@ import com.code5.fw.data.InitYaml;
 /**
  * @author zero
  *
-<<<<<<< HEAD
- *         인터페이스와 구현클래스가 1:1 관계일때 인터페이스를 제거하세요.
-=======
- *         파급효과를 줄이기 위해 인터페이스를 사용하지 마세요.
->>>>>>> refs/remotes/origin/master
+ *         인터페이스와 구현클래스가 1:1 관계일때는 인터페이스를 제거합니다.
  */
 class A {
 
