@@ -1,0 +1,28 @@
+<html>
+<head>
+<title></title>
+</head>
+<script type="text/javascript">
+
+function fileupload(){
+	var form = document.form1;
+	form.action = '/multipart/fileupload';
+	form.submit();
+} 
+
+</script>
+<body>
+	<form name="form1" method="post" enctype="multipart/form-data">
+		<br><input type="file" name="file1" /> file1 
+		<br><input type="file" name="file2" /> file2
+		<br><input type="file" name="file3" /> file3
+		<br><input type="text" name="p1"> p1
+		<br><input type="text" name="p2"> p2
+		<br><input type="text" name="p3"> p3
+		<br><input type="text" name="p3"> p3
+		<br><input type="text" name="p3"> p3
+	</form>
+	
+<button onclick="fileupload()">fileupload</button>
+</body>
+</html>
