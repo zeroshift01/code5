@@ -44,10 +44,10 @@ public class MasterController extends HttpServlet {
 			throws ServletException, IOException {
 
 		Box box = new BoxHttp(request);
-		BoxContext.setThread(box);
+		BoxContext.set(box);
 
 		Transaction transaction = Transaction.createTransaction(transationWas);
-		TransactionContext.setThread(transaction);
+		TransactionContext.set(transaction);
 
 		try {
 
@@ -77,9 +77,9 @@ public class MasterController extends HttpServlet {
 
 		} finally {
 
-			TransactionContext.removeThread();
+			TransactionContext.remove();
 
-			BoxContext.removeThread();
+			BoxContext.remove();
 		}
 
 	}

@@ -20,14 +20,14 @@ public class BoxContext {
 	 * 
 	 * @param box
 	 */
-	static void setThread(Box box) {
+	static void set(Box box) {
 		TL.set(box);
 	}
 
 	/**
-	 * 	
+	 * 
 	 */
-	static void removeThread() {
+	static void remove() {
 		TL.remove();
 	}
 
@@ -37,7 +37,7 @@ public class BoxContext {
 	 * 
 	 * @param box
 	 */
-	public static Box getThread() {
+	public static Box get() {
 
 		Box box = TL.get();
 
@@ -45,7 +45,7 @@ public class BoxContext {
 			return box;
 		}
 		box = new BoxLocal();
-		setThread(box);
+		set(box);
 		return box;
 	}
 

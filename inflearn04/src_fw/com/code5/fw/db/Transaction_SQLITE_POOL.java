@@ -3,7 +3,9 @@ package com.code5.fw.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.sqlite.SQLiteConfig;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 /**
  * @author zero
@@ -16,11 +18,19 @@ public class Transaction_SQLITE_POOL extends Transaction {
 	 */
 	protected Connection createConnection() throws SQLException {
 
-		SQLiteConfig config = new SQLiteConfig();
-		Connection conn = org.sqlite.JDBC.createConnection("jdbc:sqlite:C:/public/code5/doc/code5.db",
-				config.toProperties());
+		try {
 
-		return conn;
+			Context ctx = new InitialContext();
+
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/code5");
+
+			Connection conn = ds.getConnection();
+
+			return conn;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new SQLException(ex);
+		}
 
 	}
 

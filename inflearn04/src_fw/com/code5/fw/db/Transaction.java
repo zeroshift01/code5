@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 /**
  * @author zero
- * 
- * 
- * 
  *
  */
 public abstract class Transaction {
@@ -66,7 +63,10 @@ public abstract class Transaction {
 		}
 
 		this.close();
-		this.conn.commit();
+
+		if (!this.conn.getAutoCommit()) {
+			this.conn.commit();
+		}
 
 	}
 
@@ -80,7 +80,10 @@ public abstract class Transaction {
 		}
 
 		this.close();
-		this.conn.rollback();
+
+		if (!this.conn.getAutoCommit()) {
+			this.conn.rollback();
+		}
 
 	}
 
@@ -173,9 +176,19 @@ public abstract class Transaction {
 			return;
 		}
 
+		if (this.conn == null) {
+
+			this.conn = createConnection();
+		}
+
 		setAutoCommit = true;
 
 		conn.setAutoCommit(false);
+
+		setAutoCommit = true;
+
+		Connection connection = getConnection();
+		connection.setAutoCommit(false);
 	}
 
 	/**

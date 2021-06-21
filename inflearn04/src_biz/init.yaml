@@ -1,0 +1,80 @@
+WEB_APP_DIR : 
+  DEFAULT : "[WEB_APP_ROOT]/web"
+  PRAP1 : "/contents/code5/web"
+  PRAP2 : "/contents/code5/web"
+TEMP_DIR :
+  DEFAULT : "[WEB_APP_ROOT]/temp"
+  PRAP1 : "/contents/code5/temp"
+  PRAP2 : "/contents/code5/temp"
+WEB_PORT :
+  DEFAULT : "18080"
+
+CHARACTER_SET : 
+  DEFAULT : "UTF-8"
+
+LOG :
+  DIR : 
+    DEFAULT : "[WEB_APP_ROOT]/logs"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap1"
+  FILE_PATTERN : "[RND].[NAME].log"
+  WRITE_LOG : 
+    DEFAULT : "false"
+    PRAP1 : "true"
+    PRAP2 : "true"
+  MULTI : 
+    DEFAULT : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
+
+UPLOAD_FILE_DIR :
+  TEMP_URL : 
+    DEFAULT : "[WEB_APP_ROOT]/temp"
+    PRAP1 : "/logs/prap1"
+    PRAP2 : "/logs/prap2"
+  URL : 
+    DEFAULT : "[WEB_APP_ROOT]/files"
+    PRAP1 : "/contents/files"
+    PRAP2 : "/contents/files"
+
+
+TRANSACTION :
+  WAS : 
+    DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_POOL"
+    PRAP2 : "com.code5.fw.db.Transaction_SQLITE_POOL"
+  JOB :
+    DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
+    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_JDBC"
+
+Transaction_SQLITE_JDBC_CODE5_DEV :
+  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
+
+
+NOLOG : 
+  CLASS_NAME : 
+    - "com.code5.fw.web.TransactionContext"
+  SERVICE_KEY :
+    - "loginView"
+    - "logout"
+
+PRODUCT : "false"
+
+CACHE : "false"
+
+SRT :
+  S01 :
+    MODE : Aria_ECB_ZERO
+    KEY : E231C123B7512A8A9027E9EE99C0C684
+  S02 :
+    MODE : Aria_CBC_PKCS7
+    KEY : B426E1A441F6DBFC2B2D2412D0066D20
+    IV : 52A9A4CC4FB1EF00A72FF87583D44E5C
+  S03 :
+    MODE : Aes_CBC_PKCS7
+    KEY : BF210BE9E2ED4620B442D5AF8D000E40
+    IV : CF80492ACF3166C7CC039818619E4859
+  SDB :
+    MODE : Aria_CBC_PKCS7
+    KEY : B426E1A441F6DBFC2B2D2412D0066D20
+    IV : 52A9A4CC4FB1EF00A72FF87583D44E5C

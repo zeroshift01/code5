@@ -56,13 +56,13 @@ public class InitYaml {
 	/**
 	 * 
 	 */
-	private String appRootUrl = null;
+	private String webAppRoot = null;
 
 	/**
 	 * @return
 	 */
-	public String getAppRootUrl() {
-		return appRootUrl;
+	public String getWebAppRoot() {
+		return webAppRoot;
 	}
 
 	/**
@@ -75,6 +75,18 @@ public class InitYaml {
 	 */
 	public String getAppName() {
 		return appName;
+	}
+
+	/**
+	 * @return
+	 */
+	public void setAppName(String appName) {
+
+		if (this.appName != null) {
+			return;
+		}
+
+		this.appName = appName;
 	}
 
 	/**
@@ -113,6 +125,10 @@ public class InitYaml {
 		return isCache;
 	}
 
+	private String tempDir = null;
+	private int webPort = 0;
+	private String webAppDir = null;
+
 	/**
 	 * 
 	 */
@@ -136,7 +152,7 @@ public class InitYaml {
 		}
 
 		Properties properties = System.getProperties();
-		this.appName = properties.getProperty("CODE5.APP_NAME");
+		this.appName = properties.getProperty("com.code5.app.name");
 
 		this.isCache = is("CACHE");
 
@@ -146,22 +162,52 @@ public class InitYaml {
 
 		String yamlUrl = s("THIS_YAML_URL");
 
-		// init.yaml
+		// webAppRoot/web/WEB-INF/classes/init.yaml
 		File file = new File(yamlUrl);
-		// classes/init.yaml
-		file = file.getParentFile();
-		// WEB-INF/classes/init.yaml
-		file = file.getParentFile();
-		// web/WEB-INF/classes/init.yaml
-		file = file.getParentFile();
-		// root/web/WEB-INF/classes/init.yaml
+
+		// webAppRoot/web/WEB-INF/classes
 		file = file.getParentFile();
 
-		String appRootUrl = file.getAbsolutePath();
+		// webAppRoot/web/WEB-INF
+		file = file.getParentFile();
+		
+		// webAppRoot/WEB-INF
+		file = file.getParentFile();
 
-		this.appRootUrl = appRootUrl;
+		// webAppRoot
+		file = file.getParentFile();
+
+		String webAppRoot = file.getAbsolutePath();
+
+		this.webAppRoot = webAppRoot;
+
+		this.webPort = Integer.parseInt(s("WEB_PORT"));
+
+		this.webAppDir = new File(s("WEB_APP_DIR")).getAbsolutePath();
+		this.tempDir = new File(s("TEMP_DIR")).getAbsolutePath();
 
 		isRead = true;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTempDir() {
+		return tempDir;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getWebPort() {
+		return webPort;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getWebAppDir() {
+		return webAppDir;
 	}
 
 	/**
@@ -218,8 +264,8 @@ public class InitYaml {
 	 * @return
 	 */
 	private String convert$(String s) {
-		if (this.appRootUrl != null) {
-			s = s.replace("[APP_ROOT_URL]", this.appRootUrl);
+		if (this.webAppRoot != null) {
+			s = s.replace("[WEB_APP_ROOT]", this.webAppRoot);
 		}
 		return s;
 	}
