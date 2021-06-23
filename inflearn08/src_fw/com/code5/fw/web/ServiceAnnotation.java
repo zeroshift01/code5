@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface ServiceAnnotation {
 
-	String errJspKey() default "errView";
+	String errJspKey() default "err";
 
 	boolean isLogin() default true;
 
