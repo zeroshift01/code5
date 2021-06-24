@@ -112,23 +112,12 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 
 	}
 
-	/**
-	 * @return
-	 */
 	private String createFileId() {
-
 		return DateTime.getThisDTM() + "_" + getFileCnt() + "_" + this.appNmae;
-
 	}
 
-	/**
-	 * 
-	 */
 	private static int fileCnt = 0;
 
-	/**
-	 * @return
-	 */
 	synchronized int getFileCnt() {
 		return fileCnt++;
 	}
