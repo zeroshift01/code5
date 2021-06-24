@@ -19,7 +19,6 @@ import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.InitYaml;
-import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.db.Sql;
@@ -47,18 +46,6 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	private String characterSet = InitYaml.get().getCharacterSet();
-
-	/**
-	 * 
-	 */
-	public String getRND() {
-		return RND;
-	}
-
-	/**
-	 * 
-	 */
-	private String RND = MakeRnd.createRnd(8);
 
 	/**
 	 * 
@@ -521,8 +508,6 @@ public class MasterController extends HttpServlet implements Reload {
 		BIZ_CONTROLLER_MAP.clear();
 		CLASS_URL_MAP.clear();
 		FW_VIEW_MAP.clear();
-
-		this.RND = MakeRnd.createRnd(8);
 	}
 
 	/**

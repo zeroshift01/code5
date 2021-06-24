@@ -22,6 +22,11 @@ import com.code5.fw.trace.Trace;
 public class MasterControllerMultipart extends MasterController implements BizController {
 
 	/**
+	 * 
+	 */
+	private String appNmae = InitYaml.get().getAppName();
+
+	/**
 	 *
 	 */
 	public void reload() {
@@ -111,8 +116,8 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 	 * @return
 	 */
 	private String createFileId() {
-		String RND = getRND();
-		return DateTime.getThisDTM() + "_" + getFileCnt() + "_" + RND;
+
+		return DateTime.getThisDTM() + "_" + getFileCnt() + "_" + this.appNmae;
 
 	}
 
