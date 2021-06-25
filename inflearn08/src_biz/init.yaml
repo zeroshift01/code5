@@ -1,5 +1,5 @@
 WEB_APP_DIR : 
-  DEFAULT : "[WEB_APP_ROOT]/web"
+  DEFAULT : "[APP_ROOT]/web"
   PRAP1 : "/contents/code5/web"
   PRAP2 : "/contents/code5/web"
 TEMP_DIR :
@@ -41,14 +41,14 @@ UPLOAD_FILE_DIR :
 TRANSACTION :
   WAS : 
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_POOL"
-    PRAP2 : "com.code5.fw.db.Transaction_SQLITE_POOL"
+    DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_POOL"
+    PRAP1 : "com.code5.fw.db.Transaction_ORACLE_POOL"
+    PRAP2 : "com.code5.fw.db.Transaction_ORACLE_POOL"
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRAP1 : "com.code5.fw.db.Transaction_SQLITE_JDBC"
-
-Transaction_SQLITE_JDBC_CODE5_DEV :
-  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
+    DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_JDBC"
+    PRAP1 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
+    PRAP2 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
 
 
 NOLOG : 
@@ -58,9 +58,27 @@ NOLOG :
     - "loginView"
     - "logout"
 
-PRODUCT : "false"
+PRODUCT :
+  DEFAULT : "false"
+  DVAP : "false"
+  PRAP1 : "false"
+  PRAP2 : "true"
 
-CACHE : "false"
+CACHE :
+  DEFAULT : "false"
+  DVAP : "false"
+  PRAP1 : "false"
+  PRAP2 : "true"
+
+Transaction_SQLITE_JDBC_CODE5_DEV :
+  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
+
+Transaction_ORACLE_DV_JDBC :
+  URL : "9585bffed13a6e82198cd7d8e0999ce3c12d09e4719da2cfef8456d77f55e547be261795fb5861f6a2e4c2765a0440a4"
+
+Transaction_ORACLE_JDBC :
+  URL : "921ce6ac9ff5fd5b08c023b91654c6798642a8a35f874ab884b60f3dae0a342e646161f5747d16f65fa6cbdde78b6cd1"
+
 
 SRT :
   S01 :
