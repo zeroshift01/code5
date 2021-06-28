@@ -1,9 +1,12 @@
-package com.code5.fw.data;
+package com.biz.board;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import com.code5.fw.data.Box;
+import com.code5.fw.data.BoxLocal;
 
 /**
  * @author zero
@@ -11,11 +14,10 @@ import java.lang.annotation.Target;
  *         공통기능을 제공하는 3가지 방법
  *
  */
-class A {
+class BoardByAOP {
 
 	// 1. 파라메터
-
-	void execute_01(Box box) {
+	void callList(Box box) {
 		box.get("name");
 	}
 
@@ -28,7 +30,7 @@ class A {
 
 	private static Box BOX3 = new BoxLocal();
 
-	void execute_02() {
+	void callList() {
 		box1.get("name");
 		box2.get("name");
 		BOX3.get("name");
@@ -38,21 +40,24 @@ class A {
 
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
-	void set() {
+	void setAOP() {
 		Box box = new BoxLocal();
 		TL.set(box);
 	}
 
-	void remove() {
+	void removeAOP() {
 		TL.remove();
 	}
 
-	void execute_03_1() {
+	static void exeWrite() {
 		Box box = TL.get();
-		box.get("name");
+		box.put("name","ABC");
 	}
 
-	static void execute_03_2() {
+	void callWrite() {
+
+		BoardByAOP.exeWrite();
+
 		Box box = TL.get();
 		box.get("name");
 	}
