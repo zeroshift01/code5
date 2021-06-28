@@ -16,7 +16,13 @@ public class BoardByServlet {
 
 		String findStr = request.getParameter("findStr");
 
-		System.out.println(findStr);
+		request.setAttribute("list", "list=[" + findStr + "]");
+
+		/*
+		 * 
+		 * <% request.getAttribute("list") %>
+		 * 
+		 */
 
 		return "/WEB-INF/classes/com/biz/board/jsp/list.jsp";
 	}

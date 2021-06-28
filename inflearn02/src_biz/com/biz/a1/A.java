@@ -5,7 +5,7 @@ import com.code5.fw.data.InitYaml;
 /**
  * @author zero
  *
- *         인터페이스와 구현클래스가 1:1 관계일때는 인터페이스를 제거합니다.
+ *         인터페이스와 구현클래스가 1:1 관계일때는 인터페이스는 필요하지 않습니다.
  */
 class A {
 
