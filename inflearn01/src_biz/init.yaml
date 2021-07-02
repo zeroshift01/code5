@@ -1,9 +1,9 @@
 WEB_APP_DIR : 
-  DEFAULT : "[WEB_APP_ROOT]/web"
+  DEFAULT : "[APP_ROOT]/web"
   PRAP1 : "/contents/code5/web"
   PRAP2 : "/contents/code5/web"
 TEMP_DIR :
-  DEFAULT : "[WEB_APP_ROOT]/temp"
+  DEFAULT : "[APP_ROOT]/temp"
   PRAP1 : "/contents/code5/temp"
   PRAP2 : "/contents/code5/temp"
 WEB_PORT :
@@ -12,26 +12,28 @@ WEB_PORT :
 CHARACTER_SET : 
   DEFAULT : "UTF-8"
 
-LOG : 
+LOG :
   DIR : 
-    DEFAULT : "[WEB_APP_ROOT]/logs"
+    DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap1"
   FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
-    PRHOST : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
   MULTI : 
     DEFAULT : "true"
-    PRHOST : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
-    DEFAULT : "[WEB_APP_ROOT]/temp"
+    DEFAULT : "[APP_ROOT]/temp"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
   URL : 
-    DEFAULT : "[WEB_APP_ROOT]/files"
+    DEFAULT : "[APP_ROOT]/files"
     PRAP1 : "/contents/files"
     PRAP2 : "/contents/files"
 
@@ -39,13 +41,14 @@ UPLOAD_FILE_DIR :
 TRANSACTION :
   WAS : 
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRHOST : "com.code5.fw.db.Transaction_SQLITE_POOL"
+    DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_POOL"
+    PRAP1 : "com.code5.fw.db.Transaction_ORACLE_POOL"
+    PRAP2 : "com.code5.fw.db.Transaction_ORACLE_POOL"
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
-    PRHOST : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5"
-
-Transaction_SQLITE_JDBC_CODE5_DEV :
-  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
+    DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_JDBC"
+    PRAP1 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
+    PRAP2 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
 
 
 NOLOG : 
@@ -55,9 +58,27 @@ NOLOG :
     - "loginView"
     - "logout"
 
-PRODUCT : "false"
+PRODUCT :
+  DEFAULT : "false"
+  DVAP : "false"
+  PRAP1 : "false"
+  PRAP2 : "true"
 
-CACHE : "false"
+CACHE :
+  DEFAULT : "false"
+  DVAP : "false"
+  PRAP1 : "false"
+  PRAP2 : "true"
+
+Transaction_SQLITE_JDBC_CODE5_DEV :
+  URL : "jdbc:sqlite:[APP_ROOT]/doc/code5.db"
+
+Transaction_ORACLE_DV_JDBC :
+  URL : "9585bffed13a6e82198cd7d8e0999ce3c12d09e4719da2cfef8456d77f55e547be261795fb5861f6a2e4c2765a0440a4"
+
+Transaction_ORACLE_JDBC :
+  URL : "921ce6ac9ff5fd5b08c023b91654c6798642a8a35f874ab884b60f3dae0a342e646161f5747d16f65fa6cbdde78b6cd1"
+
 
 SRT :
   S01 :

@@ -3,7 +3,7 @@ WEB_APP_DIR :
   PRAP1 : "/contents/code5/web"
   PRAP2 : "/contents/code5/web"
 TEMP_DIR :
-  DEFAULT : "[WEB_APP_ROOT]/temp"
+  DEFAULT : "[APP_ROOT]/temp"
   PRAP1 : "/contents/code5/temp"
   PRAP2 : "/contents/code5/temp"
 WEB_PORT :
@@ -14,7 +14,7 @@ CHARACTER_SET :
 
 LOG :
   DIR : 
-    DEFAULT : "[WEB_APP_ROOT]/logs"
+    DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap1"
   FILE_PATTERN : "[RND].[NAME].log"
@@ -29,11 +29,11 @@ LOG :
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
-    DEFAULT : "[WEB_APP_ROOT]/temp"
+    DEFAULT : "[APP_ROOT]/temp"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
   URL : 
-    DEFAULT : "[WEB_APP_ROOT]/files"
+    DEFAULT : "[APP_ROOT]/files"
     PRAP1 : "/contents/files"
     PRAP2 : "/contents/files"
 
@@ -71,7 +71,7 @@ CACHE :
   PRAP2 : "true"
 
 Transaction_SQLITE_JDBC_CODE5_DEV :
-  URL : "jdbc:sqlite:[WEB_APP_ROOT]/doc/code5.db"
+  URL : "jdbc:sqlite:[APP_ROOT]/doc/code5.db"
 
 Transaction_ORACLE_DV_JDBC :
   URL : "9585bffed13a6e82198cd7d8e0999ce3c12d09e4719da2cfef8456d77f55e547be261795fb5861f6a2e4c2765a0440a4"
