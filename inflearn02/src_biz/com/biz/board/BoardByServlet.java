@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author zero
- *
+ * 
+ *         WAS 의 기능이 있어야지만 실행할 수 있는 코드
+ * 
  */
 public class BoardByServlet {
 

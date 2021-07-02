@@ -42,6 +42,10 @@ public class Board {
 
 		Box box = BoxContext.get();
 
+		String txt = (String) box.get("txt");
+
+		System.out.println("exeWrite [" + txt + "]");
+
 		box.put("exeWriteResult", "ok");
 
 		return callList();

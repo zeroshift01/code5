@@ -17,11 +17,17 @@ import com.code5.fw.data.BoxLocal;
 class BoardByAOP {
 
 	// 1. 파라메터
+	// 단순함
+	// 파라메터가 늘어 날 수 있고 사용방법이 복잡해짐
 	void callList(Box box) {
 		box.get("name");
 	}
 
 	// 2. 맴버객체 or 전역객체(static)
+	// 객체지향적인 개발
+	// 실행시점에 기능과 데이터를 결정할 수 있음
+	// 다른 클래스와 공통기능 공유가 힘들어짐
+	// 전역 객체는 멀티 쓰레드 환경에서 동작을 보장하지 못함
 
 	private Box box1 = new BoxLocal();
 
@@ -37,6 +43,14 @@ class BoardByAOP {
 	}
 
 	// 3. ThreadLocal
+	// 우리가 만든 공통기능은 ThreadLocal 제공
+	// 쓰레드의 시작과 종료부분에 setAOP, removeAOP 호출
+
+	// 단순함
+	// 다른 클래스와 공통기능 공유가 가능
+	// 전역메소드(유틸리티)에서도 공통기능 공유 가능, 일관된 동작 보장
+
+	// 프레임워크에서 명시적으로 기능을 구현해야 함
 
 	private static ThreadLocal<Box> TL = new ThreadLocal<Box>();
 
@@ -49,14 +63,17 @@ class BoardByAOP {
 		TL.remove();
 	}
 
-	static void exeWrite() {
+	static void setDefault() {
 		Box box = TL.get();
-		box.put("name","ABC");
+		if (box.get("name") == null) {
+			box.put("name", "ABC");
+		}
+
 	}
 
 	void callWrite() {
 
-		BoardByAOP.exeWrite();
+		BoardByAOP.setDefault();
 
 		Box box = TL.get();
 		box.get("name");

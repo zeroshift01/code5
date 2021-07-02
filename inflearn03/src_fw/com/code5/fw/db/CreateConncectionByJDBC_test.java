@@ -15,17 +15,16 @@ import com.code5.fw.data.InitYaml;
  */
 public class CreateConncectionByJDBC_test {
 
-	// 1. sqlite : 서버리스, 관계형DB, 트랜잭션지원
+	// sqlite 소개 : 서버리스, 관계형DB, 트랜잭션기능 제공, 영속성에 제한이 있음
+	// jdbc:sqlite:/a/b/code5.db, InitYaml 에서 제공
 
-	// 2. url : sqlite 실행에 필요한 데이터 파일 위치
+	// 개발은 sqlite, 운영은 상용 DBMS 사용
 
-	// 3. 객체지향관점 Connection 생성
+	// 객체지향 Connection 생성과 클래스지향 Connection 생성 비교
 
-	// 4. 개발자코드로 Connection 생성
+	// 실행 시점에 특정 클래스를 선택해 사용하면 되기 때문에
+	// 클래스지향 Connection 생성 코드를 사용
 
-	// 5. 우리는 개발자코드로 Connection 을 생성합니다.
-
-	// jdbc:sqlite:/a/b/code5.db
 	private String url = InitYaml.get().s("Transaction_SQLITE_JDBC_CODE5_DEV.URL");
 
 	/**

@@ -17,6 +17,10 @@ import com.code5.fw.web.TransactionContext;
  */
 public class BoardByJDBC {
 
+	// InitCode5DBByDev 실행
+
+	// SQL 의존적인 java 코드
+
 	/**
 	 * @param x
 	 * @throws Exception

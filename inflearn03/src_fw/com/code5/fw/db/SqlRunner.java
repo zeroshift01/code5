@@ -18,6 +18,13 @@ import com.code5.fw.data.Table;
  */
 public class SqlRunner {
 
+	// 테스트 케이스를 통해 SQL 기능을 이해
+	// 이해된 SQL 기능 구현
+
+	// 1) KEY 를 통해 SQL 구문 가져오기
+	// 2) 바인딩 변수 처리를 위한 SQL 구문 해석 및 자료구조 생성
+	// 3) 실행
+
 	/**
 	 * 
 	 */
@@ -220,7 +227,7 @@ public class SqlRunner {
 			for (int i = 0; i < cols.length; i++) {
 				recode[i] = rs.getString(cols[i]);
 			}
-			
+
 			boolean isAddRecode = table.addRecode(recode);
 			if (!isAddRecode) {
 				break;

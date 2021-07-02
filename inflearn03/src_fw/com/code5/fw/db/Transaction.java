@@ -14,15 +14,19 @@ import java.util.ArrayList;
  */
 public abstract class Transaction {
 
-	// 1. Connection 객체 생성
+	// 트랜잭션 기능을 제공할
+	// setAutoCommitFalse(), commit(), rollback() 구현
 
-	// 2. 트랜잭션시작 conn.setAutoCommit
+	// 위 기능을 위해 JDBC Connection 객체를 맴버객체로 보관
+	// 위임전략, 필요한 것만 사용
 
-	// 3. SQL 기능에 필요한 객체 생성
+	// 객체지향, Connection 객체는 실행 시점에 종류가 결정되고 생성됨
 
-	// 4. 트랜잭션종료 commit, rollback
+	// setAutoCommitFalse(), PreparedStatement() 사용시 createConnection() 실행
+	// 늦은 객체 생성, 생성비용이 높은 객체사용에 효과적
 
-	// 5. Connection 객체 자원 반환
+	// SQL 실행에 필요한 자원을 개발자가 고민 없이 마무리
+	// closeConnection()
 
 	/**
 	 * 
@@ -108,8 +112,12 @@ public abstract class Transaction {
 	 * @throws Exception
 	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
-		Connection connection = getConnection();
-		PreparedStatement ps = connection.prepareStatement(SQL);
+
+		if (this.conn == null) {
+			this.conn = getConnection();
+		}
+
+		PreparedStatement ps = this.conn.prepareStatement(SQL);
 		stList.add(ps);
 		return ps;
 
@@ -120,8 +128,10 @@ public abstract class Transaction {
 	 * @throws SQLException
 	 */
 	Statement createStatement() throws SQLException {
-		Connection connection = getConnection();
-		Statement st = connection.createStatement();
+		if (this.conn == null) {
+			this.conn = getConnection();
+		}
+		Statement st = this.conn.createStatement();
 		stList.add(st);
 		return st;
 

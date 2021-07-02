@@ -20,6 +20,15 @@ import com.code5.fw.db.Transaction;
  */
 public class MasterController extends HttpServlet {
 
+	// transationWas, 실행시점에 사용할 Connection 객체 결정
+	// 개발환경일 경우 Transaction_SQLITE_JDBC_CODE5_DEV
+
+	// 운영환경일 경우 Transaction_SQLITE_POOL
+	// Connection POOL 을 통해 생성비용이 큰 객체를 재사용
+	// 개발환경에선 불필요
+
+	// Exception 이 발생했을때 rollback 규칙을 프레임워크 코드로 정의
+
 	/**
 	 * 
 	 */

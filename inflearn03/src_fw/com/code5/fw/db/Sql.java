@@ -13,6 +13,16 @@ import com.code5.fw.web.TransactionContext;
  */
 public class Sql {
 
+	// className, SQL 을 사용하는 클래스의 패키지 이름
+	// className 을 통해 SQL 파일을 찾기 쉽게 함
+	// setKey()
+	// com.code5.fw.db.SqlRunner_test.SQLRUNNER_TEST_01 -> SQLRUNNER_TEST_01
+
+	// executeSql(), getTable()
+	// 오버로딩, 개발자의 코드를 쉽게 해줌
+
+	// Sql 같은 클래스를 통해 복잡한 기능 이해 없이 쉽게 사용할 수 있게 함
+
 	/**
 	 * 
 	 */

@@ -11,6 +11,10 @@ import com.code5.fw.db.Transaction;
  */
 public class TransactionContext {
 
+	// Transaction 을 공통기능으로 제공하는 유틸 클래스
+	// Transaction null = SQL 기능 사용 안함
+	// Transaction null 을 가정 commit(), rollback() 구현, 개발자가 쉽게 코드를 만들 수 있음
+
 	/**
 	 * 
 	 */

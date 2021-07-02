@@ -44,6 +44,10 @@ public class BoxContext {
 		if (box != null) {
 			return box;
 		}
+
+		// set() 메소드가 호출 안된 경우
+		// 독립적 프로그램, 테스트 유닛
+		// 개발자는 실행하는 환경에 의존하지 않는 코드를 만들 수 있음
 		box = new BoxLocal();
 		set(box);
 		return box;
