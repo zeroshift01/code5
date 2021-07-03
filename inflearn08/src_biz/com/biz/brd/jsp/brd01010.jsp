@@ -4,7 +4,7 @@
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@page import="com.code5.fw.data.Box"%>
 <%
-	Box box = BoxContext.getBox();
+	Box box = BoxContext.get();
 	Table list = box.getTable("list");
 	
 	boolean isLimitRecode = list.isLimitRecode();

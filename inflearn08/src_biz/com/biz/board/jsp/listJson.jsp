@@ -3,7 +3,7 @@
 <%@page import="com.code5.fw.data.Box"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Box box = BoxContext.getBox();
+	Box box = BoxContext.get();
 	Table list = box.getTable("list");
 %>
 [

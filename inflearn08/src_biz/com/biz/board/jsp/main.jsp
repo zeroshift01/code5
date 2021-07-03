@@ -5,7 +5,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 
-Box box = BoxContext.getBox();
+Box box = BoxContext.get();
 Box fwView = box.getBox(Box.KEY_FW_VIEW);
 String view = fwView.s("VIEW");
 String title = fwView.s("TITLE");
