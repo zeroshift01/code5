@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 public class Table_test extends TestCase {
 
 	/**
-	 * TODO [1]
+	 * 
 	 */
 	public void test_Table_기본기능() {
 
@@ -28,7 +28,7 @@ public class Table_test extends TestCase {
 	}
 
 	/**
-	 * TODO [2]
+	 * 
 	 */
 	public void test_Table_데이터수정() {
 
@@ -50,7 +50,7 @@ public class Table_test extends TestCase {
 	}
 
 	/**
-	 * TODO [3]
+	 * 
 	 */
 	public void test_Table_수정할수없는데이터() {
 
@@ -76,7 +76,7 @@ public class Table_test extends TestCase {
 	}
 
 	/**
-	 * TODO [4]
+	 * 
 	 */
 	public void test_Table_최대추가할수있는크기확인() {
 
