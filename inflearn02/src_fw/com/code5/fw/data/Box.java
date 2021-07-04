@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author zero
  *
  */
-public abstract class Box implements Serializable {
+public abstract class Box implements Serializable { 
 
 	/**
 	 * 
