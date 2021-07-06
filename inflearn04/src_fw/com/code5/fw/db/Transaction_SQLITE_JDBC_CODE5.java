@@ -13,7 +13,7 @@ import com.code5.fw.data.InitYaml;
  */
 public class Transaction_SQLITE_JDBC_CODE5 extends Transaction {
 
-	private static String URL = InitYaml.get().s("Transaction_SQLITE_JDBC_CODE5.URL");
+	private static String URL = InitYaml.get().dec("Transaction_SQLITE_JDBC_CODE5.URL");
 
 	/**
 	 *
