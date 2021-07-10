@@ -142,3 +142,14 @@ INSERT INTO FW_CONTROLLER VALUES('callLogin','com.biz.login.Login','callLogin');
 INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp');
 --]]]
 
+--[[[ INITCODE5DBBYDEV_20
+INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 1','TXT 1', 'EM 1');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_21
+INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 2','TXT 2', 'EM 2');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_22
+INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 3','TXT 3', 'EM 3');
+--]]]

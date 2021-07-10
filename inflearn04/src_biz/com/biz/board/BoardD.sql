@@ -3,6 +3,7 @@
 SELECT 
 N
 , TITLE
+, TXT
 , EM
 FROM
 BZ_BOARD

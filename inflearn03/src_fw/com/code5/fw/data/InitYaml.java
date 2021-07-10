@@ -56,13 +56,14 @@ public class InitYaml {
 	/**
 	 * 
 	 */
-	private String webAppRoot = null;
+	private String appRoot = null;
 
 	/**
 	 * @return
 	 */
-	public String getWebAppRoot() {
-		return webAppRoot;
+	public String getAppRoot() {
+		InitYaml.get().getAppName();
+		return appRoot;
 	}
 
 	/**
@@ -129,10 +130,15 @@ public class InitYaml {
 	private int webPort = 0;
 	private String webAppDir = null;
 
+	// private Aria_ECB_ZERO crypt = null;
+
 	/**
 	 * 
 	 */
 	private InitYaml() {
+
+		Properties properties = System.getProperties();
+		this.appName = properties.getProperty("com.code5.app.name");
 
 		this.map = YamlReader.getMap("init");
 
@@ -151,9 +157,6 @@ public class InitYaml {
 			ex.printStackTrace();
 		}
 
-		Properties properties = System.getProperties();
-		this.appName = properties.getProperty("com.code5.app.name");
-
 		this.isCache = is("CACHE");
 
 		this.isProduct = is("PRODUCT");
@@ -170,16 +173,16 @@ public class InitYaml {
 
 		// webAppRoot/web/WEB-INF
 		file = file.getParentFile();
-		
+
 		// webAppRoot/WEB-INF
 		file = file.getParentFile();
 
 		// webAppRoot
 		file = file.getParentFile();
 
-		String webAppRoot = file.getAbsolutePath();
+		String appRoot = file.getAbsolutePath();
 
-		this.webAppRoot = webAppRoot;
+		this.appRoot = appRoot;
 
 		this.webPort = Integer.parseInt(s("WEB_PORT"));
 
@@ -264,8 +267,8 @@ public class InitYaml {
 	 * @return
 	 */
 	private String convert$(String s) {
-		if (this.webAppRoot != null) {
-			s = s.replace("[WEB_APP_ROOT]", this.webAppRoot);
+		if (this.appRoot != null) {
+			s = s.replace("[APP_ROOT]", this.appRoot);
 		}
 		return s;
 	}
@@ -323,6 +326,26 @@ public class InitYaml {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public String dec(String key) {
+
+		// stub
+		return null;
+	}
+
+	/**
+	 * @param data
+	 * @return
+	 */
+	public String enc(String data) {
+		// stub
+		return null;
+
 	}
 
 }

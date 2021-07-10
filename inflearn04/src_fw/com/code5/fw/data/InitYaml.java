@@ -130,6 +130,8 @@ public class InitYaml {
 	private int webPort = 0;
 	private String webAppDir = null;
 
+	// private Aria_ECB_ZERO crypt = null;
+
 	/**
 	 * 
 	 */

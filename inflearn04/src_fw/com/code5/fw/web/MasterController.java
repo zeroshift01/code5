@@ -58,9 +58,9 @@ public class MasterController extends HttpServlet {
 
 			MasterControllerD dao = new MasterControllerD();
 			Box view = dao.getView(JSP_KEY);
-			String JSP = view.s("JSP");
+			String VIEW = view.s("VIEW");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW);
 			dispatcher.forward(request, response);
 
 			TransactionContext.commit();

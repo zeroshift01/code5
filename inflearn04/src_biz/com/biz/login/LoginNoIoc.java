@@ -36,7 +36,8 @@ public class LoginNoIoc implements BizController {
 	 * @throws Exception
 	 */
 	public String callLogin() throws Exception {
-		return "login";
+		// stub
+		return null;
 	}
 
 }

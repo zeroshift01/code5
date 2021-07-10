@@ -24,7 +24,7 @@ public class BoardNoIoc implements BizController {
 		Table list = dao.list();
 		box.put("list", list);
 
-		return "list";
+		return "/WEB-INF/classes/com/biz/board/jsp/list.jsp";
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class BoardNoIoc implements BizController {
 	 */
 	public String callWrite() throws Exception {
 
-		return "write";
+		return "/WEB-INF/classes/com/biz/board/jsp/write.jsp";
 
 	}
 

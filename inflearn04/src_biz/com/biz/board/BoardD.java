@@ -19,7 +19,7 @@ public class BoardD {
 	 */
 	Table list() throws SQLException {
 
-		return sql.getTable("LIST");
+		return sql.getTable("SELECT");
 	}
 
 	/**

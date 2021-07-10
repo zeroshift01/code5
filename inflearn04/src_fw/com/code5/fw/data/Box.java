@@ -405,4 +405,12 @@ public abstract class Box implements Serializable {
 		return s(KEY_ALERT_MSG);
 	}
 
+	/**
+	 * @param key
+	 * @param b
+	 */
+	public void put(String key, boolean b) {
+		put(key, "" + b);
+	}
+
 }
