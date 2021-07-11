@@ -22,7 +22,9 @@ public class LoginNoIoc_test {
 		box.put("isLogin", true);
 
 		LoginNoIoc login = new LoginNoIoc();
-		login.exeLogin();
+		String key = login.exeLogin();
+
+		System.out.println(key);
 	}
 
 	/**
@@ -35,7 +37,9 @@ public class LoginNoIoc_test {
 		box.put("isLogin", false);
 
 		LoginNoIoc login = new LoginNoIoc();
-		login.exeLogin();
+		String key = login.exeLogin();
+
+		System.out.println(key);
 	}
 
 }

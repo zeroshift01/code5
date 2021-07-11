@@ -15,12 +15,3 @@ FROM FW_VIEW
 WHERE KEY = [KEY]
 
 --]]]
-
-
---[[[ MASTERCONTROLLERD_03
-
-SELECT 
-* 
-FROM FW_VIEW
-
---]]]

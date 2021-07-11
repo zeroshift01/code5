@@ -43,6 +43,12 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// IoC
+		// 1. 컴파일 없이
+		// 2. 서비스 실행에 필요한 자원을 준비하고
+		// 3. 서비스를 실행 후
+		// 4. 작업을 마무리
+
 		Box box = new BoxHttp(request);
 		BoxContext.set(box);
 
@@ -96,13 +102,21 @@ public class MasterController extends HttpServlet {
 
 		MasterControllerD dao = new MasterControllerD();
 
+		// DI
+		// 어떤 기능을 사용하는지 알려준다.
+		// KEY -> FW_CONTROLLER -> CLASS_NAME.METHOD_NAME
+
 		Box controller = dao.getController(KEY);
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
+		// 1. 클래스 확인
+		// (개발자의 코드를 확인하고)
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
 
+		// 2. 객체로 생성
+		// (실행시점에 기능과 데이터가 결정된)
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		Constructor constructor = newClass.getConstructor();
 
@@ -112,6 +126,8 @@ public class MasterController extends HttpServlet {
 			throw new Exception();
 		}
 
+		// 3. 객체의 기능을 실행
+		// (서비스를 실행)
 		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
 
 		String JSP_KEY = (String) method.invoke(instance);

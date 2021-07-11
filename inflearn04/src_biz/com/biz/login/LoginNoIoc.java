@@ -23,8 +23,8 @@ public class LoginNoIoc implements BizController {
 		if (isLogin) {
 
 			BoardNoIoc board = new BoardNoIoc();
-
-			return board.callList();
+			String key = board.callList();
+			return key;
 
 		}
 
@@ -37,7 +37,7 @@ public class LoginNoIoc implements BizController {
 	 */
 	public String callLogin() throws Exception {
 		// stub
-		return null;
+		return "login";
 	}
 
 }
