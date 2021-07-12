@@ -36,8 +36,7 @@ public class LoginNoIoc implements BizController {
 	 * @throws Exception
 	 */
 	public String callLogin() throws Exception {
-		// stub
-		return "login";
+		return "/WEB-INF/classes/com/biz/login/jsp/login.jsp";
 	}
 
 }

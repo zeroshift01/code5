@@ -33,7 +33,7 @@ public class Login implements BizController {
 	 * @throws Exception
 	 */
 	public String callLogin() throws Exception {
-		return "login";
+		return "/WEB-INF/classes/com/biz/login/jsp/login.jsp";
 	}
 
 }

@@ -26,7 +26,7 @@ public class Board implements BizController {
 
 		box.put("list", list);
 
-		return "list";
+		return "/WEB-INF/classes/com/biz/board/jsp/list.jsp";
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class Board implements BizController {
 	 */
 	public String callWrite() throws Exception {
 
-		return "write";
+		return "/WEB-INF/classes/com/biz/board/jsp/write.jsp";
 
 	}
 

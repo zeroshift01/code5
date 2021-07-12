@@ -1,5 +1,7 @@
 package com.biz.login;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import com.code5.fw.data.Box;
@@ -22,9 +24,9 @@ public class LoginNoIoc_test {
 		box.put("isLogin", true);
 
 		LoginNoIoc login = new LoginNoIoc();
-		String key = login.exeLogin();
+		String JSP = login.exeLogin();
 
-		System.out.println(key);
+		assertEquals("/WEB-INF/classes/com/biz/board/jsp/list.jsp", JSP);
 	}
 
 	/**
@@ -37,9 +39,9 @@ public class LoginNoIoc_test {
 		box.put("isLogin", false);
 
 		LoginNoIoc login = new LoginNoIoc();
-		String key = login.exeLogin();
+		String JSP = login.exeLogin();
 
-		System.out.println(key);
+		assertEquals("/WEB-INF/classes/com/biz/login/jsp/login.jsp", JSP);
 	}
 
 }

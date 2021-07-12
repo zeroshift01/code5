@@ -2,7 +2,7 @@
 <html>
 <head>
 <body>
-loginView.jsp
+login.jsp
 </body>
 </head>
 </html>

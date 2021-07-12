@@ -25,25 +25,25 @@ N INTEGER PRIMARY KEY AUTOINCREMENT
 
 --]]]
 
---[[[ INITCODE5DBBYDEV_20
+--[[[ INITCODE5DBBYDEV_03
 INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 1','TXT 1', 'EM 1');
 --]]]
 
---[[[ INITCODE5DBBYDEV_21
+--[[[ INITCODE5DBBYDEV_04
 INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 2','TXT 2', 'EM 2');
 --]]]
 
---[[[ INITCODE5DBBYDEV_22
+--[[[ INITCODE5DBBYDEV_05
 INSERT INTO BZ_BOARD (TITLE, TXT, EM) VALUES('TITLE 3','TXT 3', 'EM 3');
 --]]]
 
 
---[[[ INITCODE5DBBYDEV_03
+--[[[ INITCODE5DBBYDEV_06
 
 DROP TABLE BZ_ID;
 
 --]]]
---[[[ INITCODE5DBBYDEV_04
+--[[[ INITCODE5DBBYDEV_07
 
 CREATE TABLE BZ_ID (
 ID PRIMARY KEY
@@ -54,40 +54,7 @@ ID PRIMARY KEY
 );
 
 --]]]
---[[[ INITCODE5DBBYDEV_05
 
-
-INSERT INTO BZ_ID VALUES(
-'admin'
-,'1'
-,'A0'
-,'0'
-,''
-);
-
---]]]
---[[[ INITCODE5DBBYDEV_06
-
-INSERT INTO BZ_ID VALUES(
-'user1'
-,'1'
-,'U0'
-,'0'
-,''
-);
-
---]]]
---[[[ INITCODE5DBBYDEV_07
-
-INSERT INTO BZ_ID VALUES(
-'user2'
-,'1'
-,'U0'
-,'0'
-,''
-);
-
---]]]
 --[[[ INITCODE5DBBYDEV_08
 
 
@@ -104,53 +71,23 @@ KEY
 
 --]]]
 
+
 --[[[ INITCODE5DBBYDEV_10
-
-
-drop TABLE FW_VIEW ;
-
---]]]
---[[[ INITCODE5DBBYDEV_11
-
-CREATE TABLE FW_VIEW (
-KEY PRIMARY KEY
-, VIEW
-);
-
---]]]
-
-
-
---[[[ INITCODE5DBBYDEV_12
 INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
 --]]]
 
---[[[ INITCODE5DBBYDEV_13
+--[[[ INITCODE5DBBYDEV_11
 INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.board.Board','callWrite');
 --]]]
 
---[[[ INITCODE5DBBYDEV_14
+--[[[ INITCODE5DBBYDEV_12
 INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.board.Board','exeWrite');
 --]]]
 
---[[[ INITCODE5DBBYDEV_15
-INSERT INTO FW_VIEW VALUES('list','/WEB-INF/classes/com/biz/board/jsp/list.jsp');
---]]]
---[[[ INITCODE5DBBYDEV_16
-INSERT INTO FW_VIEW VALUES('write','/WEB-INF/classes/com/biz/board/jsp/write.jsp');
---]]]
-
-
-
---[[[ INITCODE5DBBYDEV_17
+--[[[ INITCODE5DBBYDEV_13
 INSERT INTO FW_CONTROLLER VALUES('exeLogin','com.biz.login.Login','exeLogin');
 --]]]
 
---[[[ INITCODE5DBBYDEV_18
+--[[[ INITCODE5DBBYDEV_14
 INSERT INTO FW_CONTROLLER VALUES('callLogin','com.biz.login.Login','callLogin');
 --]]]
-
---[[[ INITCODE5DBBYDEV_19
-INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp');
---]]]
-

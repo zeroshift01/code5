@@ -27,7 +27,7 @@ public class BoardD {
 	 */
 	void write() throws SQLException {
 
-		sql.getTable("WRITE");
+		sql.executeSql("WRITE");
 	}
 
 }

@@ -35,7 +35,7 @@ public class InitCode5DBByDev {
 
 		trace.write("[" + initYaml.getAppName() + "]");
 
-		for (int i = 1; i <= 22; i++) {
+		for (int i = 1; i <= 14; i++) {
 
 			String x = ("" + (100 + i)).substring(1);
 

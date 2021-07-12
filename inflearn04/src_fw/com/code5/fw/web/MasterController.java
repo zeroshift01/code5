@@ -60,13 +60,9 @@ public class MasterController extends HttpServlet {
 			String pathInfo = request.getPathInfo();
 			String KEY = pathInfo.substring(1);
 
-			String JSP_KEY = execute(KEY);
+			String JSP = execute(KEY);
 
-			MasterControllerD dao = new MasterControllerD();
-			Box view = dao.getView(JSP_KEY);
-			String VIEW = view.s("VIEW");
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher(VIEW);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(JSP);
 			dispatcher.forward(request, response);
 
 			TransactionContext.commit();
