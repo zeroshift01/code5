@@ -1,4 +1,4 @@
-<%@page import="com.code5.fw.data.SessionB"%>
+ㄴ<%@page import="com.code5.fw.data.SessionB"%>
 <%@page import="com.code5.fw.data.Table"%>
 <%@page import="com.code5.fw.data.Box"%>
 <%@page import="com.code5.fw.web.BoxContext"%>

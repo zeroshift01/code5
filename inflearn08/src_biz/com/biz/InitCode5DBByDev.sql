@@ -196,12 +196,39 @@ INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/jsp/err.jsp'
 INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
 
 --]]]
---[[[ INITCODE5DBBYDEV_31
-INSERT INTO FW_VIEW VALUES('list','list.jsp','main.jsp','리스트');
+--[[[ INITCODE5DBBYDEV_31S
+
+
+INSERT INTO FW_VIEW (
+KEY
+, VIEW
+, TMPL
+, TITLE
+)
+VALUES(
+'list'
+,'/WEB-INF/classes/com/code5/biz/board/jsp/list.jsp'
+,'/WEB-INF/classes/com/code5/biz/board/jsp/main.jsp'
+,'리스트'
+);
+
+
 
 --]]]
 --[[[ INITCODE5DBBYDEV_32
-INSERT INTO FW_VIEW VALUES('write','write.jsp','main.jsp','등록화면');
+
+INSERT INTO FW_VIEW (
+KEY
+, VIEW
+, TMPL
+, TITLE)
+VALUES(
+'write'
+,'write.jsp'
+,'main.jsp'
+,'등록화면'
+);
+
 
 --]]]
 --[[[ INITCODE5DBBYDEV_33
