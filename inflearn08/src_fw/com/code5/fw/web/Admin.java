@@ -45,7 +45,7 @@ public class Admin implements BizController, BizControllerStartExecute {
 		}
 
 		box.setAlertMsg("리로드가 수행되었습니다.");
-		return "nullView";
+		return "null";
 	}
 
 	/**

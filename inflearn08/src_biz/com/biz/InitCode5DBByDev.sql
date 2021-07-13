@@ -127,7 +127,7 @@ INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.board.Board','callUpdate'
 
 --]]]
 --[[[ INITCODE5DBBYDEV_17
-INSERT INTO FW_CONTROLLER VALUES('callListByJson','com.biz.board.Board','callListByJson');
+INSERT INTO FW_CONTROLLER VALUES('listJson','com.biz.board.Board','listJson');
 
 --]]]
 --[[[ INITCODE5DBBYDEV_18
@@ -207,8 +207,8 @@ KEY
 )
 VALUES(
 'list'
-,'/WEB-INF/classes/com/code5/biz/board/jsp/list.jsp'
-,'/WEB-INF/classes/com/code5/biz/board/jsp/main.jsp'
+,'/WEB-INF/classes/com/biz/board/jsp/list.jsp'
+,'/WEB-INF/classes/com/biz/board/jsp/main.jsp'
 ,'리스트'
 );
 
@@ -321,8 +321,39 @@ INSERT INTO FW_VIEW VALUES('brd01010','brd01010.jsp','brdtmpl.jsp','리스트');
 INSERT INTO FW_VIEW VALUES('brd01020','brd01020.jsp','brdtmpl.jsp','등록화면');
 --]]]
 
+
 --[[[ INITCODE5DBBYDEV_50
-INSERT INTO FW_VIEW VALUES('brd01030','brd01030.jsp','brdtmpl.jsp','수정화면');
+
+INSERT INTO FW_VIEW (
+KEY
+, VIEW
+, TMPL
+, TITLE
+)
+VALUES(
+'listJson'
+,'listJson.jsp'
+,''
+,'JSON'
+);
+
+--]]]
+
+--[[[ INITCODE5DBBYDEV_51
+
+INSERT INTO FW_CONTROLLER VALUES('admin001','com.code5.fw.web.Admin','admin001');
+
 --]]]
 
 
+--[[[ INITCODE5DBBYDEV_BZ_BOARD_I1
+INSERT INTO BZ_BOARD (TITLE, TXT) VALUES('TITLE 1','TXT 1');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_BZ_BOARD_I2
+INSERT INTO BZ_BOARD (TITLE, TXT) VALUES('TITLE 2','TXT 2');
+--]]]
+
+--[[[ INITCODE5DBBYDEV_BZ_BOARD_I3
+INSERT INTO BZ_BOARD (TITLE, TXT) VALUES('TITLE 3','TXT 3');
+--]]]

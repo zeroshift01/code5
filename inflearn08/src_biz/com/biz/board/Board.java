@@ -196,10 +196,12 @@ public class Board implements BizController {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
+	
+	
 	public String listJson() throws Exception {
 
 		execute("callList");
-		return "listjson";
+		return "listJson";
 
 	}
 

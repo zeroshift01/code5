@@ -1,5 +1,11 @@
 package com.biz;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Sql;
 import com.code5.fw.trace.Trace;
@@ -22,6 +28,37 @@ public class InitCode5DBByDev {
 	private static Sql sql = new Sql(InitCode5DBByDev.class);
 
 	/**
+	 * @return
+	 * @throws Exception
+	 */
+	private static List<String> getKey() throws Exception {
+
+		String sqlFileUrl = InitYaml.get().getWebAppDir() + "/WEB-INF/classes/com/biz/InitCode5DBByDev.sql";
+
+		List<String> list = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(sqlFileUrl)));
+
+		while (true) {
+
+			String str = br.readLine();
+
+			if (str == null) {
+				break;
+			}
+
+			if (str.indexOf("--[[[") >= 0) {
+
+				String key = str.replace("--[[[", "").trim();
+				list.add(key);
+			}
+
+		}
+		br.close();
+		return list;
+
+	}
+
+	/**
 	 * @param xx
 	 * @throws Exception
 	 */
@@ -35,11 +72,11 @@ public class InitCode5DBByDev {
 
 		trace.write("[" + initYaml.getAppName() + "]");
 
-		for (int i = 1; i <= 50; i++) {
+		List<String> keys = getKey();
 
-			String x = ("" + (100 + i)).substring(1);
+		for (int i = 0; i < keys.size(); i++) {
 
-			String key = "INITCODE5DBBYDEV_" + x;
+			String key = keys.get(i);
 
 			try {
 				sql.executeSql(key);
