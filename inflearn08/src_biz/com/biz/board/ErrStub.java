@@ -12,7 +12,7 @@ import com.code5.fw.web.LoginException;
  * @author zero
  *
  */
-public class ErrBoard implements BizController {
+public class ErrStub implements BizController {
 	/**
 	 * 
 	 * @return
