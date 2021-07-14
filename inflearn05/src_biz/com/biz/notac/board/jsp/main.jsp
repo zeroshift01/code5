@@ -15,12 +15,7 @@ Box fwView = box.getBox(Box.KEY_FW_VIEW);
 String view = fwView.s("VIEW");
 String title = fwView.s("TITLE");
 
-SessionB user = box.getSessionB();
-
 %>
-
-/WEB-INF/classes/com/code5/biz/board/jsp/
-
 <html>
 <head>
 <title><%=title%></title>
@@ -57,7 +52,7 @@ SessionB user = box.getSessionB();
 	
 </script>
 <body onload='init();'>
-<br>로그인한 아이디 : <%=user.getId() %>, 권한코드 : <%=user.getAuth() %>
+<br>로그인한 아이디 : 없음, 권한코드 : 없음
 <br><button onclick="callWrite()">callWrite</button> <button onclick="callList()">callList</button> <button onclick="exeLogout()">logout</button>
 <hr>
 메뉴명:<%=title%>

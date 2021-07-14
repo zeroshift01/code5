@@ -1,4 +1,4 @@
-package com.biz.board;
+package com.biz.notac.board;
 
 import java.sql.SQLException;
 

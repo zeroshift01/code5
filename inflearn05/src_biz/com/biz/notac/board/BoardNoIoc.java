@@ -1,4 +1,4 @@
-package com.biz.board;
+package com.biz.notac.board;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;

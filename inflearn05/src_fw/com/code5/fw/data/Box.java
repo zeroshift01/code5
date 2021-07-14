@@ -13,6 +13,7 @@ public abstract class Box implements Serializable {
 	public static String KEY_SERVICE = "com.code5.fw.web.KEY_SERVICE";
 	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
 	public static String KEY_CONTENT_TYPE = "com.code5.fw.web.KEY_CONTENT_TYPE";
+	public static String KEY_SERVICEB = "com.code5.fw.web.KEY_SERVICEB";
 
 	public static String KEY_FW_VIEW = "com.code5.fw.web.KEY_FW_VIEW";
 	public static String KEY_FW_CONTROLLER = "com.code5.fw.web.KEY_FW_CONTROLLER";
@@ -42,28 +43,14 @@ public abstract class Box implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param key
-	 * @param object
-	 * 
-	 *
-	 */
 	public abstract void put(String key, Object object);
 
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
+	public void put(String key, boolean t) {
+		put(key, "" + t);
+	}
+
 	public abstract Object get(String key);
 
-	/**
-	 * @param key
-	 * @return
-	 * 
-	 * 
-	 */
 	public int getInt(String key) {
 
 		String s = s(key);
@@ -153,7 +140,6 @@ public abstract class Box implements Serializable {
 	public SessionB getSessionB() {
 
 		try {
-			// return new SessionB("A0", "A0", "1");
 			return (SessionB) get(KEY_SESSIONB);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -403,14 +389,6 @@ public abstract class Box implements Serializable {
 	 */
 	public String getAlertMsg() {
 		return s(KEY_ALERT_MSG);
-	}
-
-	/**
-	 * @param key
-	 * @param b
-	 */
-	public void put(String key, boolean b) {
-		put(key, "" + b);
 	}
 
 }

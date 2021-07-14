@@ -14,4 +14,23 @@
 	</servlet-mapping>
 
 
+	<servlet>
+		<servlet-name>multipart</servlet-name>
+		<servlet-class>com.code5.fw.web.MasterControllerMultipart
+		</servlet-class>
+		<multipart-config>
+			<max-file-size>10240000</max-file-size>
+			<max-request-size>10240000</max-request-size>
+			<file-size-threshold>10240</file-size-threshold>
+		</multipart-config>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>multipart</servlet-name>
+		<url-pattern>/multipart/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
 </web-app>

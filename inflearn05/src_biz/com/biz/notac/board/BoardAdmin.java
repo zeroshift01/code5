@@ -1,49 +1,21 @@
-package com.biz.board;
+package com.biz.notac.board;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
 import com.code5.fw.web.BizController;
-import com.code5.fw.web.BizControllerStartExecute;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.ServiceAnnotation;
 import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
  *
  */
-public class BoardAdmin implements BizController, BizControllerStartExecute {
-
-	/**
-	 *
-	 */
-	public String start() throws Exception {
-
-		Box box = BoxContext.get();
-
-		String service = box.s(Box.KEY_SERVICE);
-
-		if (!service.equals("allDelete")) {
-			return null;
-		}
-
-		String remoteAddr = box.s(Box.KEY_REMOTE_ADDR);
-
-		String adminIP = "0:0:0:0:0:0:0:1";
-
-		if (!remoteAddr.equals(adminIP)) {
-			box.setAlertMsg("알수없는 오류가 발생했습니다.");
-			return "error";
-		}
-
-		return null;
-	}
+public class BoardAdmin implements BizController {
 
 	/**
 	 * @return
 	 * @throws Exception
 	 */
-	@ServiceAnnotation(auth = "A0")
 	public String forceDelete() throws Exception {
 
 		execute("callUpdate");
@@ -58,7 +30,6 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 	 * @return
 	 * @throws Exception
 	 */
-	@ServiceAnnotation(auth = "A0")
 	public String allDelete() throws Exception {
 
 		BoardD dao = new BoardD();
@@ -72,7 +43,10 @@ public class BoardAdmin implements BizController, BizControllerStartExecute {
 		return execute("callList");
 	}
 
-	@ServiceAnnotation(auth = "A0")
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public String allUpdate() throws Exception {
 
 		Box box = BoxContext.get();

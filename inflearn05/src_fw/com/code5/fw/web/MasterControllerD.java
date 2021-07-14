@@ -28,6 +28,9 @@ public class MasterControllerD {
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 		Table table = sql.getTable("MASTERCONTROLLERD_01", box);
+		if (table.size() != 1) {
+			throw new SQLException("KEY [" + KEY + "] 를 확인해주세요.");
+		}
 		return table.getBox();
 	}
 
@@ -41,6 +44,9 @@ public class MasterControllerD {
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
 		Table table = sql.getTable("MASTERCONTROLLERD_02", box);
+		if (table.size() != 1) {
+			throw new SQLException("KEY [" + KEY + "] 를 확인해주세요.");
+		}
 		return table.getBox();
 	}
 

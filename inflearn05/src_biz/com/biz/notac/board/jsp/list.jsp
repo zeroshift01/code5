@@ -9,10 +9,6 @@
 	
 	boolean isLimitRecode = list.isLimitRecode();
 	Box limitBox = list.getLimitBox();
-	
-	boolean isAllDelete = MasterController.checkUrlAuth("allDelete");
-	boolean isAllUpdate = MasterController.checkUrlAuth("allUpdate");
-	boolean isForceDelete = MasterController.checkUrlAuth("forceDelete");
 %>
 
 <script type="text/javascript">
@@ -51,12 +47,6 @@ function forceDelete(TOKEN_N){
 }
 
 function allDelete(){
-	
-	<%if(!isAllDelete){%>
-		alert('권한이 없습니다.');
-		return;
-	<%}%>
-	
 	var form = document.form1;
 	form.action = '/waf/allDelete';
 	form.submit();
@@ -64,11 +54,6 @@ function allDelete(){
 }
 
 function allUpdate(){
-	
-	<%if(!isAllUpdate){%>
-		alert('권한이 없습니다.');
-		return;
-	<%}%>
 	
 	var form = document.form1;
 	form.action = '/waf/allUpdate';
@@ -116,9 +101,7 @@ function allUpdate(){
 		<td>
 		<button onclick="callUpdate('<%=list.s("TOKEN_N", i)%>')">callUpdate</button>
 		<button onclick="exeDelete('<%=list.s("TOKEN_N", i)%>')">exeDelete</button>
-		<%if(isForceDelete) { %>
 		<button onclick="forceDelete('<%=list.s("TOKEN_N", i)%>')">forceDelete</button>
-		<%}%>
 		</td>
 	</tr>
 	<%}%>

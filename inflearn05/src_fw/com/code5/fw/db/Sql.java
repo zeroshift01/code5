@@ -119,38 +119,4 @@ public class Sql {
 		return sqlRunner.getTable(transaction, box, key);
 	}
 
-	/**
-	 * @param key
-	 * @param box
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTableByCache(String key, Box box) throws SQLException {
-		Transaction transaction = TransactionContext.get();
-		return getTableByCache(transaction, key, box);
-	}
-
-	/**
-	 * @param key
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTableByCache(String key) throws SQLException {
-		Transaction transaction = TransactionContext.get();
-		Box box = BoxContext.get();
-		return getTableByCache(transaction, key, box);
-	}
-
-	/**
-	 * @param transaction
-	 * @param key
-	 * @param box
-	 * @return
-	 * @throws SQLException
-	 */
-	public Table getTableByCache(Transaction transaction, String key, Box box) throws SQLException {
-		key = setKey(key);
-		return sqlRunner.getTableByCache(transaction, key, box);
-	}
-
 }

@@ -3,7 +3,6 @@ package com.code5.fw.data;
 import java.io.File;
 
 import com.code5.fw.db.Sql;
-import com.code5.fw.security.CryptFile;
 import com.code5.fw.web.BoxContext;
 
 /**
@@ -120,10 +119,7 @@ public class UploadFileB {
 		Box box = BoxContext.get();
 
 		String from = this.fileUrl;
-		String to = this.fileUrl + ".enc";
-		this.fileUrl = to;
-
-		CryptFile.getCryptFile().encrypt(from, to);
+		this.fileUrl = from;
 
 		box.put("UPLOADFILEB.FILE_ID", this.fileId);
 		box.put("UPLOADFILEB.SIZE", "" + this.size);
@@ -132,8 +128,6 @@ public class UploadFileB {
 		box.put("UPLOADFILEB.FILE_URL", this.fileUrl);
 
 		sql.executeSql(FORM_NO_01);
-
-		(new File(from)).delete();
 
 		this.isSave = true;
 	}

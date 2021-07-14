@@ -1,4 +1,4 @@
-package com.biz.board;
+package com.biz.notac.board;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
@@ -6,7 +6,6 @@ import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.ServiceAnnotation;
 
 /**
  * @author zero
@@ -18,7 +17,6 @@ public class Board implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ServiceAnnotation(isLogin = false)
 	public String callList() throws Exception {
 
 		Box box = BoxContext.get();
@@ -95,7 +93,13 @@ public class Board implements BizController {
 		Box box = BoxContext.get();
 
 		execute("callUpdate");
+
 		Box thisBoard = box.getBox("board");
+
+		if (thisBoard.getBoolean("IS_RG_ID")) {
+			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
+			return execute("callUpdate");
+		}
 
 		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
 		String THIS_FILE_ID_2 = thisBoard.s("FILE_ID_2");
@@ -125,9 +129,7 @@ public class Board implements BizController {
 
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
-
-			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
-			return execute("callUpdate");
+			throw new Exception();
 		}
 
 		if (isChangeFile1) {
@@ -147,7 +149,6 @@ public class Board implements BizController {
 	/**
 	 * @throws Exception
 	 */
-	@ServiceAnnotation(isInternal = true)
 	public void delete() throws Exception {
 
 		Box box = BoxContext.get();
@@ -189,20 +190,6 @@ public class Board implements BizController {
 		execute("delete");
 
 		return execute("callList");
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@ServiceAnnotation(isLogin = false)
-	
-	
-	public String listJson() throws Exception {
-
-		execute("callList");
-		return "listJson";
-
 	}
 
 }
