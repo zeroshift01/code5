@@ -17,11 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
-import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.SessionB;
-import com.code5.fw.data.Table;
-import com.code5.fw.db.Sql;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.trace.TraceRunner;
@@ -209,124 +206,92 @@ public class MasterController extends HttpServlet implements Reload {
 	}
 
 	/**
-	 * @param hm
 	 * @param KEY
-	 * @return
-	 */
-	private static Object getCache(ConcurrentHashMap<String, ?> hm, String KEY) {
-
-		if (!IS_CACHE) {
-			return null;
-		}
-		return hm.get(KEY);
-	}
-
-	/**
-	 * @param controller
 	 * @return
 	 * @throws Exception
 	 */
-	private static ServiceB createService(Box controller) throws Exception {
+	private static ServiceB getServiceB(String KEY) throws Exception {
 
-		String KEY = controller.s("KEY");
+		if (!IS_CACHE) {
+
+			ServiceB serviceB = SERVICEB_MAP.get(KEY);
+			if (serviceB != null) {
+				return serviceB;
+			}
+
+		}
+
+		MasterControllerD dao = new MasterControllerD();
+		Box controller = dao.getController(KEY);
+
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
 		trace.write("execute [" + CLASS_NAME + "][" + METHOD_NAME + "]");
 
-		BizController biz = (BizController) getCache(BIZ_CONTROLLER_MAP, KEY);
+		@SuppressWarnings("rawtypes")
+		Class newClass = Class.forName(CLASS_NAME);
 
-		if (biz == null) {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		Constructor constructor = newClass.getConstructor();
 
-			@SuppressWarnings("rawtypes")
-			Class newClass = Class.forName(CLASS_NAME);
+		Object ins = constructor.newInstance();
 
-			@SuppressWarnings({ "rawtypes", "unchecked" })
-			Constructor constructor = newClass.getConstructor();
-
-			Object ins = constructor.newInstance();
-
-			if (!(ins instanceof BizController)) {
-				throw new AuthException();
-			}
-
-			biz = (BizController) ins;
-
-			BIZ_CONTROLLER_MAP.put(KEY, (BizController) biz);
-
+		if (!(ins instanceof BizController)) {
+			throw new AuthException();
 		}
 
-		String classUrl = (String) getCache(CLASS_URL_MAP, KEY);
+		BizController biz = (BizController) ins;
 
-		if (classUrl == null) {
+		String resource = CLASS_NAME.replaceAll("\\.", "\\/") + ".class";
 
-			String resource = CLASS_NAME.replaceAll("\\.", "\\/") + ".class";
+		ClassLoader cl = MasterController.class.getClassLoader();
+		String path = cl.getResource(resource).getPath();
 
-			ClassLoader cl = MasterController.class.getClassLoader();
-			String path = cl.getResource(resource).getPath();
+		String classUrl = new File(path).getParent();
 
-			classUrl = new File(path).getParent();
-
-			if (!classUrl.startsWith(WEB_APP_DIR)) {
-				throw new AuthException();
-			}
-
-			classUrl = classUrl.replace(WEB_APP_DIR, "");
-
-			CLASS_URL_MAP.put(KEY, classUrl);
-
+		if (!classUrl.startsWith(WEB_APP_DIR)) {
+			throw new AuthException();
 		}
 
-		Method method = (Method) getCache(METHOD_MAP, KEY + "." + METHOD_NAME);
+		classUrl = classUrl.replace(WEB_APP_DIR, "");
 
-		if (method == null) {
+		Method method = biz.getClass().getDeclaredMethod(METHOD_NAME);
 
-			method = biz.getClass().getDeclaredMethod(METHOD_NAME);
-
-			METHOD_MAP.put(KEY + "." + METHOD_NAME, method);
-		}
-
-		ServiceAnnotation sa = (ServiceAnnotation) getCache(SERVICE_ANNOTATION_MAP, KEY + "." + METHOD_NAME);
+		ServiceAnnotation sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
 
 		if (sa == null) {
 
-			sa = (ServiceAnnotation) method.getAnnotation(ServiceAnnotation.class);
+			sa = new ServiceAnnotation() {
 
-			if (sa == null) {
+				@Override
+				public Class<? extends Annotation> annotationType() {
+					return ServiceAnnotation.class;
+				}
 
-				sa = new ServiceAnnotation() {
+				@Override
+				public boolean isLogin() {
+					return true;
+				}
 
-					@Override
-					public Class<? extends Annotation> annotationType() {
-						return ServiceAnnotation.class;
-					}
+				@Override
+				public String errJspKey() {
+					return null;
+				}
 
-					@Override
-					public boolean isLogin() {
-						return true;
-					}
+				@Override
+				public String auth() {
+					return "";
+				}
 
-					@Override
-					public String errJspKey() {
-						return null;
-					}
+				/**
+				 *
+				 */
+				public boolean isInternal() {
+					return false;
+				}
+			};
 
-					@Override
-					public String auth() {
-						return "";
-					}
-
-					/**
-					 *
-					 */
-					public boolean isInternal() {
-						return false;
-					}
-				};
-
-			}
-
-			SERVICE_ANNOTATION_MAP.put(KEY + "." + METHOD_NAME, sa);
 		}
 
 		ServiceB serviceB = new ServiceB();
@@ -335,21 +300,21 @@ public class MasterController extends HttpServlet implements Reload {
 		serviceB.method = method;
 		serviceB.sa = sa;
 		serviceB.classUrl = classUrl;
+
+		SERVICEB_MAP.put(KEY, serviceB);
+
 		return serviceB;
 
 	}
 
 	/**
-	 * 
-	 * @param url
+	 * @param KEY
 	 * @return
 	 * @throws Exception
 	 */
-	public static String executeService(String key) throws Exception {
+	public static String executeService(String KEY) throws Exception {
 
-		Box controller = getController(key);
-
-		ServiceB serviceB = createService(controller);
+		ServiceB serviceB = getServiceB(KEY);
 
 		Object biz = serviceB.biz;
 		Method method = serviceB.method;
@@ -434,9 +399,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 * 
 	 */
 	public static boolean checkUrlAuth(String KEY) throws Exception {
-
-		Box controller = getController(KEY);
-		ServiceB serviceB = createService(controller);
+		ServiceB serviceB = getServiceB(KEY);
 		ServiceAnnotation sa = serviceB.sa;
 		return checkUrlAuth(sa);
 
@@ -503,62 +466,19 @@ public class MasterController extends HttpServlet implements Reload {
 
 		this.transationWas = InitYaml.get().s("TRANSACTION.WAS");
 
-		SERVICE_ANNOTATION_MAP.clear();
-		METHOD_MAP.clear();
-		BIZ_CONTROLLER_MAP.clear();
-		CLASS_URL_MAP.clear();
+		SERVICEB_MAP.clear();
 		FW_VIEW_MAP.clear();
 	}
 
 	/**
 	 * 
 	 */
-	private static ConcurrentHashMap<String, String> CLASS_URL_MAP = new ConcurrentHashMap<String, String>();
-
-	/**
-	 * 
-	 */
-	private static ConcurrentHashMap<String, BizController> BIZ_CONTROLLER_MAP = new ConcurrentHashMap<String, BizController>();
-
-	/**
-	 * 
-	 */
-	private static ConcurrentHashMap<String, Method> METHOD_MAP = new ConcurrentHashMap<String, Method>();
-
-	/**
-	 * 
-	 */
-	private static ConcurrentHashMap<String, ServiceAnnotation> SERVICE_ANNOTATION_MAP = new ConcurrentHashMap<String, ServiceAnnotation>();
+	private static ConcurrentHashMap<String, ServiceB> SERVICEB_MAP = new ConcurrentHashMap<String, ServiceB>();
 
 	/**
 	 * 
 	 */
 	private static ConcurrentHashMap<String, Box> FW_VIEW_MAP = new ConcurrentHashMap<String, Box>();
-
-	/**
-	 * 
-	 */
-	private static Sql SQL = new Sql(MasterController.class);
-
-	/**
-	 * @param KEY
-	 * @return
-	 * @throws Exception
-	 */
-	private static Box getController(String KEY) throws Exception {
-
-		Box box = new BoxLocal();
-		box.put("KEY", KEY);
-		Table table = SQL.getTableByCache("MASTERCONTROLLER_01", box);
-		if (table.size() != 1) {
-			throw new Exception("controller [" + KEY + "] 를 확인해주세요.");
-
-		}
-
-		Box controller = table.getBox();
-		BoxContext.get().put(Box.KEY_FW_CONTROLLER, controller);
-		return controller;
-	}
 
 	/**
 	 * @param KEY
@@ -567,25 +487,16 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static Box getView(String KEY) throws Exception {
 
-		Box fwView = FW_VIEW_MAP.get(KEY);
+		if (IS_CACHE) {
 
-		if (fwView != null) {
-
-			BoxContext.get().put(Box.KEY_FW_VIEW, fwView);
-
-			return fwView;
+			Box fwView = FW_VIEW_MAP.get(KEY);
+			if (fwView != null) {
+				return fwView;
+			}
 		}
 
-		Box box = new BoxLocal();
-		box.put("KEY", KEY);
-
-		Table table = SQL.getTableByCache("MASTERCONTROLLER_02", box);
-		if (table.size() != 1) {
-			throw new Exception("view [" + KEY + "] 를 확인해주세요.");
-
-		}
-
-		fwView = table.getBox();
+		MasterControllerD dao = new MasterControllerD();
+		Box fwView = dao.getView(KEY);
 
 		String view = fwView.s("VIEW");
 		String tmpl = fwView.s("TMPL");
