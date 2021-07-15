@@ -191,18 +191,4 @@ public class Board implements BizController {
 		return execute("callList");
 	}
 
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@ServiceAnnotation(isLogin = false)
-	
-	
-	public String listJson() throws Exception {
-
-		execute("callList");
-		return "listJson";
-
-	}
-
 }

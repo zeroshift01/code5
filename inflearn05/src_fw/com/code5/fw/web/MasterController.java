@@ -328,10 +328,10 @@ public class MasterController extends HttpServlet implements Reload {
 			SessionB user = box.getSessionB();
 
 			if (!user.isLogin()) {
-				// throw new LoginException();
+				throw new LoginException();
 			}
 
-			// throw new AuthException();
+			throw new AuthException();
 		}
 
 		String jspKey = (String) method.invoke(biz);

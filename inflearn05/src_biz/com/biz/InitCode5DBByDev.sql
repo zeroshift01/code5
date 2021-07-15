@@ -103,43 +103,43 @@ KEY
 
 
 --[[[ FW_CONTROLLER_I_01
-INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.notac.board.Board','callList');
+INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
 --]]]
 
 --[[[ FW_CONTROLLER_I_02
-INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.notac.board.Board','callWrite');
+INSERT INTO FW_CONTROLLER VALUES('callWrite','com.biz.board.Board','callWrite');
 --]]]
 
 --[[[ FW_CONTROLLER_I_02_2
-INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.notac.board.Board','exeWrite');
+INSERT INTO FW_CONTROLLER VALUES('exeWrite','com.biz.board.Board','exeWrite');
 --]]]
 
 --[[[ FW_CONTROLLER_I_03
-INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.notac.board.Board','callUpdate');
+INSERT INTO FW_CONTROLLER VALUES('callUpdate','com.biz.board.Board','callUpdate');
 --]]]
 
 --[[[ FW_CONTROLLER_I_04
-INSERT INTO FW_CONTROLLER VALUES('exeUpdate','com.biz.notac.board.Board','exeUpdate');
+INSERT INTO FW_CONTROLLER VALUES('exeUpdate','com.biz.board.Board','exeUpdate');
 --]]]
 
 --[[[ FW_CONTROLLER_I_05
-INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.notac.board.Board','exeDelete');
+INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.board.Board','exeDelete');
 --]]]
 
 --[[[ FW_CONTROLLER_I_06
-INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.notac.board.BoardAdmin','forceDelete');
+INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.BoardAdmin','forceDelete');
 --]]]
 
 --[[[ FW_CONTROLLER_I_07
-INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.notac.board.BoardAdmin','allDelete');
+INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.BoardAdmin','allDelete');
 --]]]
 
 --[[[ FW_CONTROLLER_I_08
-INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.notac.board.BoardAdmin','allUpdate');
+INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.board.BoardAdmin','allUpdate');
 --]]]
 
 --[[[ FW_CONTROLLER_I_09
-INSERT INTO FW_CONTROLLER VALUES('delete','com.biz.notac.board.Board','delete');
+INSERT INTO FW_CONTROLLER VALUES('delete','com.biz.board.Board','delete');
 --]]]
 
 --[[[ FW_CONTROLLER_I_10

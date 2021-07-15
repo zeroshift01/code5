@@ -18,9 +18,6 @@ String title = fwView.s("TITLE");
 SessionB user = box.getSessionB();
 
 %>
-
-/WEB-INF/classes/com/code5/biz/board/jsp/
-
 <html>
 <head>
 <title><%=title%></title>
