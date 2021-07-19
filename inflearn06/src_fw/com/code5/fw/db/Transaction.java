@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 /**
  * @author zero
- * 
- * 
- * 
  *
  */
 public abstract class Transaction {
@@ -179,9 +176,39 @@ public abstract class Transaction {
 			return;
 		}
 
+		if (this.conn == null) {
+
+			this.conn = createConnection();
+		}
+
 		setAutoCommit = true;
 
 		conn.setAutoCommit(false);
+
+		setAutoCommit = true;
+
+		Connection connection = getConnection();
+		connection.setAutoCommit(false);
 	}
 
+	/**
+	 * @param tx
+	 * @return
+	 */
+	public static Transaction createTransaction(String tx) {
+
+		if ("com.code5.fw.db.Transaction_SQLITE_POOL".equals(tx)) {
+			return new Transaction_SQLITE_POOL();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5();
+		}
+
+		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV".equals(tx)) {
+			return new Transaction_SQLITE_JDBC_CODE5_DEV();
+		}
+
+		throw new RuntimeException();
+	}
 }

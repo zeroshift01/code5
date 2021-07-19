@@ -4,10 +4,11 @@ import java.sql.SQLException;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.data.Table;
+import com.code5.fw.db.Sql;
 
 /**
- * @author seuk
+ * @author zero
  *
  */
 public class MasterControllerD {
@@ -15,15 +16,9 @@ public class MasterControllerD {
 	/**
 	 * 
 	 */
-	private static String FORM_NO_01 = "MASTERCONTROLLERD_01";
+	private Sql sql = new Sql(this);
 
 	/**
-	 * 
-	 */
-	private static String FORM_NO_02 = "MASTERCONTROLLERD_02";
-
-	/**
-	 * 
 	 * @param KEY
 	 * @return
 	 * @throws SQLException
@@ -32,7 +27,11 @@ public class MasterControllerD {
 
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return SqlRunner.getSqlRunner().getTable(FORM_NO_01, box).getBox();
+		Table table = sql.getTable("MASTERCONTROLLERD_01", box);
+		if (table.size() != 1) {
+			throw new SQLException("KEY [" + KEY + "] 를 확인해주세요.");
+		}
+		return table.getBox();
 	}
 
 	/**
@@ -44,7 +43,11 @@ public class MasterControllerD {
 
 		Box box = new BoxLocal();
 		box.put("KEY", KEY);
-		return SqlRunner.getSqlRunner().getTable(FORM_NO_02, box).getBox();
+		Table table = sql.getTable("MASTERCONTROLLERD_02", box);
+		if (table.size() != 1) {
+			throw new SQLException("KEY [" + KEY + "] 를 확인해주세요.");
+		}
+		return table.getBox();
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.code5.fw.data;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * @author zero
@@ -21,7 +22,13 @@ public class BoxLocal extends Box {
 	 * 
 	 */
 	public BoxLocal() {
+	}
 
+	/**
+	 * @param isXssConvert
+	 */
+	public BoxLocal(boolean isXssConvert) {
+		this.setXssConvert(isXssConvert);
 	}
 
 	/**
@@ -45,4 +52,19 @@ public class BoxLocal extends Box {
 		hm.put(KEY_SESSIONB, sessionB);
 	}
 
+	/**
+	 *
+	 */
+	public String[] getKeys() {
+		String[] keys = new String[hm.size()];
+		Iterator<String> iterator = hm.keySet().iterator();
+		int i = 0;
+		while (iterator.hasNext()) {
+			keys[i] = iterator.next();
+			i++;
+		}
+
+		return keys;
+
+	}
 }

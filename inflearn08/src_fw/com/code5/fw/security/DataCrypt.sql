@@ -1,6 +1,0 @@
---[[[ DATACRYPT_01
-
-SELECT * FROM FW_SRT WHERE OPT = [OPT]
-
-
---]]]

@@ -2,8 +2,8 @@ package com.code5.fw.web;
 
 import java.sql.SQLException;
 
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 
 /**
  * @author zero
@@ -11,11 +11,10 @@ import com.code5.fw.db.Transaction_SQLITE_JDBC;
  */
 public class TransactionContext {
 
-	// 유틸 클래스, private 생성자
-	// AOP -> ThreadLocal
-	// createDefaultTransaction -> Transaction_SQLITE_JDBC
-	// WAS 환경에선 Transaction_SQLITE_POOL 사용
-	// 개발자가 사용기 편한 commit 과 rollback
+	/**
+	 * 
+	 */
+	private static String TRANSACTION_DEFAULT = InitYaml.get().s("TRANSACTION.JOB");
 
 	/**
 	 * 
@@ -34,15 +33,16 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	public static Transaction getThread() {
+	public static Transaction get() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
+
 			return transaction;
 
 		}
 
 		transaction = createDefaultTransaction();
-		setThread(transaction);
+		set(transaction);
 
 		return transaction;
 	}
@@ -52,14 +52,14 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	static void setThread(Transaction transaction) {
+	static void set(Transaction transaction) {
 		TL.set(transaction);
 	}
 
 	/**
 	 *
 	 */
-	static void removeThread() {
+	static void remove() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 			TL.get().closeConnection();
@@ -70,11 +70,9 @@ public class TransactionContext {
 
 	/**
 	 * @return
-	 * 
-	 *         TODO [2]
 	 */
 	private static Transaction createDefaultTransaction() {
-		return new Transaction_SQLITE_JDBC();
+		return Transaction.createTransaction(TRANSACTION_DEFAULT);
 	}
 
 	/**
@@ -84,10 +82,12 @@ public class TransactionContext {
 
 		Transaction transaction = TL.get();
 		if (transaction == null) {
+
 			return;
 		}
 
 		transaction.commit();
+
 	}
 
 	/**
@@ -97,6 +97,7 @@ public class TransactionContext {
 
 		Transaction transaction = TL.get();
 		if (transaction == null) {
+
 			return;
 		}
 

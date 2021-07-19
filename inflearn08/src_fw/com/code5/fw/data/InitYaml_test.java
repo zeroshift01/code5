@@ -22,5 +22,16 @@ public class InitYaml_test {
 
 		System.out.println(x4);
 
+		String x111 = "1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15";
+		String x222 = "2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15";
+		String x333 = "3,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15";
+
+		System.out.println(InitYaml.get().enc(x111));
+		System.out.println(InitYaml.get().enc(x222));
+		System.out.println(InitYaml.get().enc(x333));
+		
+		System.out.println(InitYaml.get().enc("dev jdbc url + id + pw"));
+		System.out.println(InitYaml.get().enc("pr jdbc url + id + pw"));
+
 	}
 }

@@ -2,10 +2,8 @@ package com.code5.fw.security;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.code5.fw.data.Box;
-import com.code5.fw.data.BoxLocal;
 import com.code5.fw.data.Hex;
-import com.code5.fw.db.SqlRunner;
+import com.code5.fw.data.InitYaml;
 
 /**
  * @author zero
@@ -31,6 +29,29 @@ public class DataCrypt {
 	}
 
 	/**
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	private static byte[] makeKey(String KEY) throws Exception {
+
+		String[] keyx = KEY.split(",");
+
+		if (keyx.length == 1) {
+			return new byte[0];
+		}
+
+		byte key[] = new byte[keyx.length];
+
+		for (int i = 0; i < keyx.length; i++) {
+			key[i] = Byte.parseByte(keyx[i].trim());
+		}
+
+		return key;
+
+	}
+
+	/**
 	 * @return
 	 * 
 	 */
@@ -41,30 +62,28 @@ public class DataCrypt {
 			return dataCrypt;
 		}
 
-		Box thisBox = new BoxLocal();
-		thisBox.put("OPT", OPT);
-		Box cryptInfo = SqlRunner.getSqlRunner().getTable("DATACRYPT_01", thisBox).getBox();
+		InitYaml init = InitYaml.get();
 
-		String MODE = cryptInfo.s("MODE");
-		String KEY = cryptInfo.s("KEY");
-		String IV = cryptInfo.s("IV");
+		String MODE = init.s("SRT." + OPT + ".MODE");
+		String KEY = init.dec("SRT." + OPT + ".KEY");
+		String IV = init.dec("SRT." + OPT + ".IV");
 
-		byte[] keys = decryptKEY(KEY);
-		byte[] ivs = decryptKEY(IV);
+		byte key[] = makeKey(KEY);
+		byte iv[] = makeKey(IV);
 
 		Crypt crypt = null;
 
 		if ("Aes_CBC_PKCS7".equals(MODE)) {
 
-			crypt = new Aes_CBC_PKCS7(keys, ivs);
+			crypt = new Aes_CBC_PKCS7(key, iv);
 
 		} else if ("Aria_CBC_PKCS7".equals(MODE)) {
 
-			crypt = new Aria_CBC_PKCS7(keys, ivs);
+			crypt = new Aria_CBC_PKCS7(key, iv);
 
 		} else if ("Aria_ECB_ZERO".equals(MODE)) {
 
-			crypt = new Aria_ECB_ZERO(keys);
+			crypt = new Aria_ECB_ZERO(key);
 
 		}
 
@@ -103,7 +122,7 @@ public class DataCrypt {
 
 			String ret = new String(plan);
 
-			return ret.trim();
+			return ret;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -147,18 +166,19 @@ public class DataCrypt {
 
 	/**
 	 * 
-	 * 
-	 * @param enc
 	 */
-	private static byte[] decryptKEY(String key) throws Exception {
-
-		byte[] thisKey = new byte[16];
-		thisKey[15] = 5;
-
-		Aria_ECB_ZERO x = new Aria_ECB_ZERO(thisKey);
-
-		byte[] enc = Hex.hexToByte(key);
-		return x.decrypt(enc);
+	public byte[] encrypt(byte[] b) throws Exception {
+		byte[] enc = crypt.encrypt(b);
+		return enc;
 	}
 
+	/**
+	 * @param b
+	 * @return
+	 * @throws Exception
+	 */
+	public byte[] decrypt(byte[] b) throws Exception {
+		byte[] enc = crypt.decrypt(b);
+		return enc;
+	}
 }

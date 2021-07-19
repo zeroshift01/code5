@@ -29,6 +29,29 @@ public class DataCrypt {
 	}
 
 	/**
+	 * @param KEY
+	 * @return
+	 * @throws Exception
+	 */
+	private static byte[] makeKey(String KEY) throws Exception {
+
+		String[] keyx = KEY.split(",");
+
+		if (keyx.length == 1) {
+			return new byte[0];
+		}
+
+		byte key[] = new byte[keyx.length];
+
+		for (int i = 0; i < keyx.length; i++) {
+			key[i] = Byte.parseByte(keyx[i].trim());
+		}
+
+		return key;
+
+	}
+
+	/**
 	 * @return
 	 * 
 	 */
@@ -42,25 +65,25 @@ public class DataCrypt {
 		InitYaml init = InitYaml.get();
 
 		String MODE = init.s("SRT." + OPT + ".MODE");
-		String KEY = init.s("SRT." + OPT + ".KEY");
-		String IV = init.s("SRT." + OPT + ".IV");
+		String KEY = init.dec("SRT." + OPT + ".KEY");
+		String IV = init.dec("SRT." + OPT + ".IV");
 
-		byte[] keys = decryptKEY(KEY);
-		byte[] ivs = decryptKEY(IV);
+		byte key[] = makeKey(KEY);
+		byte iv[] = makeKey(IV);
 
 		Crypt crypt = null;
 
 		if ("Aes_CBC_PKCS7".equals(MODE)) {
 
-			crypt = new Aes_CBC_PKCS7(keys, ivs);
+			crypt = new Aes_CBC_PKCS7(key, iv);
 
 		} else if ("Aria_CBC_PKCS7".equals(MODE)) {
 
-			crypt = new Aria_CBC_PKCS7(keys, ivs);
+			crypt = new Aria_CBC_PKCS7(key, iv);
 
 		} else if ("Aria_ECB_ZERO".equals(MODE)) {
 
-			crypt = new Aria_ECB_ZERO(keys);
+			crypt = new Aria_ECB_ZERO(key);
 
 		}
 
@@ -139,26 +162,6 @@ public class DataCrypt {
 			return "";
 		}
 
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param enc
-	 */
-	private static byte[] decryptKEY(String key) throws Exception {
-
-		if ("".equals(key)) {
-			return new byte[16];
-		}
-
-		byte[] thisKey = new byte[16];
-		thisKey[15] = 5;
-
-		Aria_ECB_ZERO x = new Aria_ECB_ZERO(thisKey);
-
-		byte[] enc = Hex.hexToByte(key);
-		return x.decrypt(enc);
 	}
 
 	/**
