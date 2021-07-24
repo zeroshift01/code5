@@ -22,10 +22,14 @@ LOG :
     DEFAULT : "false"
     PRAP1 : "true"
     PRAP2 : "true"
-  MULTI : 
-    DEFAULT : "true"
+  BUFFER : 
+    DEFAULT : "false"
     PRAP1 : "true"
     PRAP2 : "true"
+  SYSTEM_OUT : 
+    DEFAULT : "true"
+    PRAP1 : "false"
+    PRAP2 : "false"
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 

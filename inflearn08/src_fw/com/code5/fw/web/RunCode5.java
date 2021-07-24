@@ -35,6 +35,10 @@ public class RunCode5 {
 		System.out.println("webPort [" + webPort + "]");
 		System.out.println("tempDir [" + tempDir + "]");
 
+		System.out.println("isCache [" + init.isCache() + "]");
+		System.out.println("isProduct [" + init.isProduct() + "]");
+		System.out.println("LOG.WRITE_LOG [" + init.s("LOG.WRITE_LOG") + "]");
+
 		if (!isWebPort(webPort)) {
 			System.out.println(webPort + " 는 사용중입니다.");
 			return;
