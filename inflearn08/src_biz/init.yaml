@@ -20,14 +20,17 @@ LOG :
   FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
+    goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
-  BUFFER : 
+  BUFFER :
     DEFAULT : "false"
+    goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
   SYSTEM_OUT : 
     DEFAULT : "true"
+    goorm : "false"
     PRAP1 : "false"
     PRAP2 : "false"
 
@@ -40,7 +43,6 @@ UPLOAD_FILE_DIR :
     DEFAULT : "[APP_ROOT]/files"
     PRAP1 : "/contents/files"
     PRAP2 : "/contents/files"
-
 
 TRANSACTION :
   WAS : 
@@ -64,12 +66,14 @@ NOLOG :
 
 PRODUCT :
   DEFAULT : "false"
+  goorm : "true"
   DVAP : "false"
   PRAP1 : "false"
   PRAP2 : "true"
 
 CACHE :
   DEFAULT : "true"
+  goorm : "true"
   DVAP : "false"
   PRAP1 : "false"
   PRAP2 : "true"
