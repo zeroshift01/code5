@@ -212,7 +212,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private static ServiceB getServiceB(String KEY) throws Exception {
 
-		if (!IS_CACHE) {
+		if (IS_CACHE) {
 
 			ServiceB serviceB = SERVICEB_MAP.get(KEY);
 			if (serviceB != null) {
@@ -491,6 +491,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 			Box fwView = FW_VIEW_MAP.get(KEY);
 			if (fwView != null) {
+				BoxContext.get().put(Box.KEY_FW_VIEW, fwView);
 				return fwView;
 			}
 		}

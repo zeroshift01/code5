@@ -84,7 +84,12 @@ public final class TraceRunner implements Reload {
 	/**
 	 * 
 	 */
-	private boolean isMulti = false;
+	private boolean isBuffer = false;
+
+	/**
+	 * 
+	 */
+	private boolean isSystemOut = false;
 
 	/**
 	 * 
@@ -210,7 +215,7 @@ public final class TraceRunner implements Reload {
 			return;
 		}
 
-		if (!this.isMulti) {
+		if (this.isSystemOut) {
 			System.out.println(log);
 		}
 
@@ -230,7 +235,7 @@ public final class TraceRunner implements Reload {
 					rollingLogFile(logFileUrl);
 				}
 
-				traceWriter = new TraceWriter(logKey, logFileUrl, this.isMulti);
+				traceWriter = new TraceWriter(logKey, logFileUrl, this.isBuffer);
 
 				traceWriterMap.put(logKey, traceWriter);
 
@@ -253,7 +258,7 @@ public final class TraceRunner implements Reload {
 
 			rollingLogFile(traceWriter.logFileUrl);
 
-			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, traceWriter.isMulti);
+			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isBuffer);
 			traceWriterMap.put(logKey, traceWriter);
 
 		}
@@ -306,7 +311,8 @@ public final class TraceRunner implements Reload {
 	 */
 	public void reload() {
 
-		this.isMulti = InitYaml.get().is("LOG.MULTI");
+		this.isBuffer = InitYaml.get().is("LOG.BUFFER");
+		this.isSystemOut = InitYaml.get().is("LOG.SYSTEM_OUT");
 
 		this.isWriteLog = InitYaml.get().is("LOG.WRITE_LOG");
 
@@ -328,8 +334,7 @@ public final class TraceRunner implements Reload {
 		noLogMap = thisNoLogMap;
 
 		if (this.isWriteLog) {
-			if (this.isMulti) {
-
+			if (!this.isSystemOut) {
 				if (!(System.out instanceof TraceNotPrintStream)) {
 					System.setOut(new TraceNotPrintStream());
 				}
