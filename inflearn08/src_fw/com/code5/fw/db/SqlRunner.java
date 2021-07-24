@@ -371,6 +371,9 @@ public class SqlRunner implements Reload {
 			for (int i = 0; i < cols.length; i++) {
 
 				String data = rs.getString(colsForResultSet[i]);
+				if (data == null) {
+					data = "";
+				}
 				data = getDataByParam(paramBs[i], box, data);
 				recode[i] = data;
 			}

@@ -1,0 +1,49 @@
+1. 자원 구성
+
+/contents/board/doc  
+/contents/board/files  
+/contents/board/lib  
+/contents/board/logs  
+/contents/board/temp  
+/contents/board/web
+
+
+
+2. CLASSPATH 설정
+
+export CLASSPATH=/contents/board/web/WEB-INF/classes
+export CLASSPATH=$CLASSPATH:/contents/board/lib/snakeyaml/snakeyaml-1.28.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/sqlite/sqlite-jdbc-3.30.1.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/annotations-api.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/ecj-4.6.3.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-dbcp.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-el.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-jasper.jar
+export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-websocket.jar
+
+
+3. 컴파일
+
+javac /contents/board/web/WEB-INF/classes/com/code5/fw/data/*.java
+javac /contents/board/web/WEB-INF/classes/com/code5/fw/db/*.java
+javac /contents/board/web/WEB-INF/classes/com/code5/fw/security/*.java
+javac /contents/board/web/WEB-INF/classes/com/code5/fw/trace/*.java
+javac /contents/board/web/WEB-INF/classes/com/code5/fw/web/*.java
+
+javac /contents/board/web/WEB-INF/classes/com/biz/board/*.java
+javac /contents/board/web/WEB-INF/classes/com/biz/brd/*.java
+javac /contents/board/web/WEB-INF/classes/com/biz/login/*.java
+
+javac /contents/board/web/WEB-INF/classes/com/biz/*.java
+
+
+4. DB 초기화 
+
+java com.biz.InitCode5DBByDev
+
+
+5. WAS 서버 구동
+
+java com.code5.fw.web.RunCode5

@@ -115,7 +115,6 @@ public class Sql {
 	 */
 	public Table getTable(Transaction transaction, Box box, String key) throws SQLException {
 		key = setKey(key);
-		System.out.println(key);
 		return sqlRunner.getTable(transaction, box, key);
 	}
 
