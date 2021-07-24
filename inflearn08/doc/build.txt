@@ -1,5 +1,4 @@
 1. 자원 구성
-
 /contents/board/doc  
 /contents/board/files  
 /contents/board/lib  
@@ -7,6 +6,18 @@
 /contents/board/temp  
 /contents/board/web
 
+
+rm /contents/board/web/WEB-INF/classes/com/biz/board/Board_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/trace/Trace_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/UploadFileB_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/TableColumnBase_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/TableRecodeBase_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/InitYaml_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/CryptPin_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/DataCrypt_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/Aes_test.java
+rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/Aria_ECB_ZERO_test.java
 
 
 2. CLASSPATH 설정
