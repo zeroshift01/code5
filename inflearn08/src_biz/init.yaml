@@ -69,7 +69,7 @@ PRODUCT :
   PRAP2 : "true"
 
 CACHE :
-  DEFAULT : "false"
+  DEFAULT : "true"
   DVAP : "false"
   PRAP1 : "false"
   PRAP2 : "true"
