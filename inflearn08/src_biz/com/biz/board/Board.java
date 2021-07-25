@@ -74,13 +74,6 @@ public class Board implements BizController {
 
 		BoardD dao = new BoardD();
 		Box board = dao.select();
-
-		String RG_ID = board.s("RG_ID");
-		SessionB user = box.getSessionB();
-		if (RG_ID.equals(user.getId())) {
-			board.put("IS_RG_ID", true);
-		}
-
 		box.put("board", board);
 
 		return "update";
@@ -90,11 +83,11 @@ public class Board implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ServiceAnnotation(checkMethod = "readBoardAndCheckRgId")
 	public String exeUpdate() throws Exception {
 
 		Box box = BoxContext.get();
 
-		execute("callUpdate");
 		Box thisBoard = box.getBox("board");
 
 		String THIS_FILE_ID_1 = thisBoard.s("FILE_ID_1");
@@ -125,9 +118,7 @@ public class Board implements BizController {
 
 		BoardD dao = new BoardD();
 		if (dao.update() != 1) {
-
-			box.setAlertMsg("자신의 글만 수정할 수 있습니다.");
-			return execute("callUpdate");
+			throw new Exception("데이터를 수정할 수 없습니다.");
 		}
 
 		if (isChangeFile1) {
@@ -169,22 +160,31 @@ public class Board implements BizController {
 		oldFile2.delete();
 	}
 
+	@ServiceAnnotation(isInternal = true)
+	public String readBoardAndCheckRgId() throws Exception {
+
+		Box box = BoxContext.get();
+		Box board = box.getBox("board");
+		if (board.isNull()) {
+			execute("callUpdate");
+			board = box.getBox("board");
+		}
+
+		String RG_ID = board.s("RG_ID");
+		SessionB user = box.getSessionB();
+		if (RG_ID.equals(user.getId())) {
+			return "true";
+		}
+
+		return "false";
+	}
+
 	/**
 	 * @return
 	 * @throws Exception
 	 */
+	@ServiceAnnotation(checkMethod = "readBoardAndCheckRgId")
 	public String exeDelete() throws Exception {
-
-		Box box = BoxContext.get();
-
-		execute("callUpdate");
-
-		Box thisBoard = box.getBox("board");
-
-		if (!thisBoard.getBoolean("IS_RG_ID")) {
-			box.setAlertMsg("자신의 글만 삭제할 있습니다.");
-			return execute("callList");
-		}
 
 		execute("delete");
 
@@ -196,8 +196,6 @@ public class Board implements BizController {
 	 * @throws Exception
 	 */
 	@ServiceAnnotation(isLogin = false)
-	
-	
 	public String listJson() throws Exception {
 
 		execute("callList");

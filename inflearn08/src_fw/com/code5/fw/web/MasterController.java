@@ -284,11 +284,14 @@ public class MasterController extends HttpServlet implements Reload {
 					return "";
 				}
 
-				/**
-				 *
-				 */
+				@Override
 				public boolean isInternal() {
 					return false;
+				}
+
+				@Override
+				public String checkMethod() {
+					return "";
 				}
 			};
 
@@ -377,17 +380,28 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 		}
 
-		if ("".equals(auth)) {
-			return true;
+		if (!"".equals(auth)) {
+			if (auth.indexOf(user.getAuth()) >= 0) {
+				return true;
+			}
+
+			trace.write("auth false [" + auth + "][" + user.getAuth() + "]");
+			return false;
 		}
 
-		if (auth.indexOf(user.getAuth()) >= 0) {
-			return true;
+		String checkMethod = sa.checkMethod();
+		if (!"".equals(checkMethod)) {
+
+			String key = MasterController.executeService(checkMethod);
+			if ("true".equals(key)) {
+				return true;
+			}
+
+			trace.write("checkMethod false [" + checkMethod + "]");
+			return false;
 		}
 
-		trace.write("checkUrlAuth false [" + auth + "][" + user.getAuth() + "]");
-
-		return false;
+		return true;
 
 	}
 

@@ -114,4 +114,10 @@ public class BoxHttp extends Box {
 
 	}
 
+	/**
+	 *
+	 */
+	public boolean isNull() {
+		return false;
+	}
 }

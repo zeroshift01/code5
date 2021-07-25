@@ -146,6 +146,14 @@ INSERT INTO FW_CONTROLLER VALUES('exeDelete','com.biz.board.Board','exeDelete');
 INSERT INTO FW_CONTROLLER VALUES('delete','com.biz.board.Board','delete');
 
 --]]]
+
+--[[[ INITCODE5DBBYDEV_21_2
+
+INSERT INTO FW_CONTROLLER VALUES('readBoardAndCheckRgId','com.biz.board.Board','readBoardAndCheckRgId');
+
+--]]]
+
+
 --[[[ INITCODE5DBBYDEV_22
 
 INSERT INTO FW_CONTROLLER VALUES('forceDelete','com.biz.board.BoardAdmin','forceDelete');
@@ -159,6 +167,8 @@ INSERT INTO FW_CONTROLLER VALUES('allDelete','com.biz.board.BoardAdmin','allDele
 INSERT INTO FW_CONTROLLER VALUES('allUpdate','com.biz.board.BoardAdmin','allUpdate');
 
 --]]]
+
+
 --[[[ INITCODE5DBBYDEV_25
 
 

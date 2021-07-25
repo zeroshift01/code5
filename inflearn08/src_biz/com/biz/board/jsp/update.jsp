@@ -1,3 +1,4 @@
+<%@page import="com.code5.fw.web.MasterController"%>
 <%@page import="com.code5.fw.data.Table"%>
 <%@page import="com.code5.fw.web.BoxContext"%>
 <%@page import="com.code5.fw.data.Box"%>
@@ -5,11 +6,22 @@
 <%
 	Box box = BoxContext.get();
 	Box board = box.getBox("board");
+	boolean isExeDelete = MasterController.checkUrlAuth("exeDelete");
 %>
 <script type="text/javascript">
 function exeUpdate(){
 	var form = document.form1;
 	form.action = '/multipart/exeUpdate';
+	form.submit();
+}
+
+function exeDelete(){
+	<%if(!isExeDelete){%>
+	alert('자신의 글만 삭제할 수 있습니다.');
+	if(true) return;
+	<%}%>
+	var form = document.form1;
+	form.action = '/waf/exeDelete';
 	form.submit();
 }
 </script>
@@ -29,3 +41,4 @@ post, multipart/form-data
 </form>
 
 <button onclick="exeUpdate()">exeUpdate</button>
+<button onclick="exeDelete()">exeDelete</button>
