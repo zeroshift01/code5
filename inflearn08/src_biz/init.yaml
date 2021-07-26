@@ -81,6 +81,9 @@ CACHE :
 Transaction_SQLITE_JDBC_CODE5_DEV :
   URL : "jdbc:sqlite:[APP_ROOT]/doc/code5.db"
 
+Transaction_MYSQL_JDBC :
+  URL : "3e448cdbbcb6e7f7081ebb8a0012a405c921293ee1f16bd60033d93ababf371fb8729648ae15c7df8543c2a043713390"
+
 Transaction_ORACLE_DV_JDBC :
   URL : "ceabb468ecd8ddefa72e52548bf667e68489ccc71fc9cc4f1b982068fbc1c4a8"
 

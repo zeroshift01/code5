@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-el.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-jasper.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-websocket.jar"/>
+	<classpathentry kind="lib" path="lib/mysql/mysql-connector-java-8.0.25.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

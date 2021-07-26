@@ -32,6 +32,9 @@ public class InitYaml_test {
 		
 		System.out.println(InitYaml.get().enc("dev jdbc url + id + pw"));
 		System.out.println(InitYaml.get().enc("pr jdbc url + id + pw"));
+		System.out.println(InitYaml.get().enc("jdbc:mysql://localhost/code5,user,1"));
+		
+		
 
 	}
 }

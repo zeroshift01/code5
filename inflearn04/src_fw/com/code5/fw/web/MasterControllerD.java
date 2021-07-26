@@ -31,17 +31,4 @@ public class MasterControllerD {
 		return table.getBox();
 	}
 
-	/**
-	 * @param KEY
-	 * @return
-	 * @throws SQLException
-	 */
-	Box getView(String KEY) throws SQLException {
-
-		Box box = new BoxLocal();
-		box.put("KEY", KEY);
-		Table table = sql.getTable("MASTERCONTROLLERD_02", box);
-		return table.getBox();
-	}
-
 }

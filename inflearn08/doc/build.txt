@@ -1,53 +1,59 @@
 1. 자원 구성
-/contents/board/doc  
-/contents/board/files  
-/contents/board/lib  
-/contents/board/logs  
-/contents/board/temp  
-/contents/board/web
+/workspace/BoardByCode5/inflearn08/doc  
+/workspace/BoardByCode5/inflearn08/files  
+/workspace/BoardByCode5/inflearn08/lib  
+/workspace/BoardByCode5/inflearn08/logs  
+/workspace/BoardByCode5/inflearn08/temp  
+/workspace/BoardByCode5/inflearn08/web
 
 
-rm /contents/board/web/WEB-INF/classes/com/biz/board/Board_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/trace/Trace_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/UploadFileB_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/TableColumnBase_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/TableRecodeBase_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/data/InitYaml_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/CryptPin_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/DataCrypt_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/Aes_test.java
-rm /contents/board/web/WEB-INF/classes/com/code5/fw/security/Aria_ECB_ZERO_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/board/Board_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/trace/Trace_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/UploadFileB_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/TableColumnBase_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/TableRecodeBase_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/InitYaml_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/CryptPin_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/DataCrypt_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/Aes_test.java
+rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/Aria_ECB_ZERO_test.java
 
 
 2. CLASSPATH 설정
 
-export CLASSPATH=/contents/board/web/WEB-INF/classes
-export CLASSPATH=$CLASSPATH:/contents/board/lib/snakeyaml/snakeyaml-1.28.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/sqlite/sqlite-jdbc-3.30.1.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-core.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/annotations-api.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/ecj-4.6.3.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-dbcp.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-core.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-el.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-jasper.jar
-export CLASSPATH=$CLASSPATH:/contents/board/lib/tomcat-embed/tomcat-embed-websocket.jar
+export CLASSPATH=/workspace/BoardByCode5/inflearn08/web/WEB-INF/classes
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/snakeyaml/snakeyaml-1.28.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/sqlite/sqlite-jdbc-3.30.1.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/mysql/mysql-connector-java-5.1.49.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/annotations-api.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/ecj-4.6.3.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-dbcp.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-el.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-jasper.jar
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-websocket.jar
+
+export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/src_fw/com/code5/fw/db
+
+
+
 
 
 3. 컴파일
 
-javac /contents/board/web/WEB-INF/classes/com/code5/fw/data/*.java
-javac /contents/board/web/WEB-INF/classes/com/code5/fw/db/*.java
-javac /contents/board/web/WEB-INF/classes/com/code5/fw/security/*.java
-javac /contents/board/web/WEB-INF/classes/com/code5/fw/trace/*.java
-javac /contents/board/web/WEB-INF/classes/com/code5/fw/web/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/db/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/trace/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/web/*.java
 
-javac /contents/board/web/WEB-INF/classes/com/biz/board/*.java
-javac /contents/board/web/WEB-INF/classes/com/biz/brd/*.java
-javac /contents/board/web/WEB-INF/classes/com/biz/login/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/board/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/brd/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/login/*.java
 
-javac /contents/board/web/WEB-INF/classes/com/biz/*.java
+javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/*.java
 
 
 4. DB 초기화 
