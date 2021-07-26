@@ -22,6 +22,10 @@ public class LoginNoIoc implements BizController {
 
 		if (isLogin) {
 
+			// 기다려야 하고
+			// 변경이 있을때 같이 수정해야 하고
+			// 컴파일이 필요함
+
 			BoardNoIoc board = new BoardNoIoc();
 			String key = board.callList();
 			return key;
