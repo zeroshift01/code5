@@ -273,21 +273,10 @@ public class MasterController extends HttpServlet implements Reload {
 				}
 
 				@Override
-				public String errJspKey() {
-					return null;
-				}
-
-				@Override
 				public String auth() {
 					return "";
 				}
 
-				/**
-				 *
-				 */
-				public boolean isInternal() {
-					return false;
-				}
 			};
 
 		}
@@ -351,17 +340,6 @@ public class MasterController extends HttpServlet implements Reload {
 
 		boolean isLogin = sa.isLogin();
 		String auth = sa.auth();
-
-		if (sa.isInternal()) {
-			String checkKey = box.s(Box.KEY_SERVICE);
-			Box checkBox = box.getBox(Box.KEY_FW_CONTROLLER);
-			String checkKey2 = checkBox.s("KEY");
-
-			if (checkKey.equals(checkKey2)) {
-				return false;
-			}
-
-		}
 
 		if (isLogin) {
 			if (!user.isLogin()) {

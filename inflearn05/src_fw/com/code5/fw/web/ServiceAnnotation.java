@@ -13,11 +13,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface ServiceAnnotation {
 
-	String errJspKey() default "err";
-
 	boolean isLogin() default true;
 
 	String auth() default "";
 
-	boolean isInternal() default false;
 }

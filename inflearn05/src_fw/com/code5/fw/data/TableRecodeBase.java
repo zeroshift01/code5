@@ -58,6 +58,8 @@ public class TableRecodeBase extends Table {
 		for (int i = 0; i < colNames.length; i++) {
 			this.colNameMap.put(colNames[i], new BigDecimal(i));
 		}
+		
+		System.out.println(colNameMap.size()+"---------------");
 	}
 
 	/**
