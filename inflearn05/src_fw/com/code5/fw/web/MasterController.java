@@ -341,10 +341,13 @@ public class MasterController extends HttpServlet implements Reload {
 		boolean isLogin = sa.isLogin();
 		String auth = sa.auth();
 
-		if (isLogin) {
-			if (!user.isLogin()) {
-				return false;
-			}
+		if (!isLogin) {
+			return true;
+
+		}
+
+		if (!user.isLogin()) {
+			return false;
 		}
 
 		if ("".equals(auth)) {
