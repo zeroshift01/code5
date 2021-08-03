@@ -17,8 +17,8 @@ function exeUpdate(){
 
 function exeDelete(){
 	<%if(!isExeDelete){%>
-	alert('자신의 글만 삭제할 수 있습니다.');
-	if(true) return;
+		alert('자신의 글만 삭제할 수 있습니다.');
+		if(true) return;
 	<%}%>
 	var form = document.form1;
 	form.action = '/waf/exeDelete';
