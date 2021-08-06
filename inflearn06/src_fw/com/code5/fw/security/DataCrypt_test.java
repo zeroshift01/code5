@@ -16,7 +16,7 @@ public class DataCrypt_test {
 	@Test
 	public void test_한단어테스트() throws Exception {
 
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
+		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S03");
 
 		String plan = "abcd 1234 가나다라 !@#$";
 
@@ -24,13 +24,21 @@ public class DataCrypt_test {
 
 		String plan2 = dataCrypt.decrypt(enc);
 
+		System.out.println(plan);
+		System.out.println(enc);
+		System.out.println(plan2);
+
 		assertEquals(plan, plan2);
 
-		dataCrypt = DataCrypt.getDataCrypt("S01");
+		dataCrypt = DataCrypt.getDataCrypt("S02");
 
 		enc = dataCrypt.encrypt(plan);
 
 		plan2 = dataCrypt.decrypt(enc);
+
+		System.out.println(plan);
+		System.out.println(enc);
+		System.out.println(plan2);
 
 		assertEquals(plan, plan2);
 
@@ -39,7 +47,6 @@ public class DataCrypt_test {
 	/**
 	 * @throws Exception
 	 */
-	@Test
 	public void test_쓰레드안전성() throws Exception {
 
 		DataCrypt_test$[] DataCrypt_test$ = new DataCrypt_test$[20];

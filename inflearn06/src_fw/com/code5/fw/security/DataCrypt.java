@@ -1,5 +1,6 @@
 package com.code5.fw.security;
 
+import java.util.Base64;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.code5.fw.data.Hex;
@@ -24,8 +25,20 @@ public class DataCrypt {
 	/**
 	 * 
 	 */
-	private DataCrypt(Crypt crypt) {
+	private String charcterSet = null;
+
+	/**
+	 * 
+	 */
+	private String encoding = null;
+
+	/**
+	 * 
+	 */
+	private DataCrypt(Crypt crypt, String charcterSet, String encoding) {
 		this.crypt = crypt;
+		this.charcterSet = charcterSet;
+		this.encoding = encoding;
 	}
 
 	/**
@@ -91,7 +104,10 @@ public class DataCrypt {
 			throw new Exception();
 		}
 
-		dataCrypt = new DataCrypt(crypt);
+		String charcterSet = init.s("SRT." + OPT + ".CHARACTER_SET");
+		String encoding = init.s("SRT." + OPT + ".ENCODING");
+
+		dataCrypt = new DataCrypt(crypt, charcterSet, encoding);
 		dataCryptMap.put(OPT, dataCrypt);
 
 		return dataCrypt;
@@ -116,11 +132,25 @@ public class DataCrypt {
 				return "";
 			}
 
-			byte[] enc = Hex.hexToByte(encStr);
+			byte[] enc = null;
+
+			if ("".equals(encoding)) {
+				enc = Hex.hexToByte(encStr);
+			} else if ("BASE64".equals(encoding)) {
+				enc = Base64.getDecoder().decode(encStr);
+			}
 
 			byte[] plan = crypt.decrypt(enc);
 
-			String ret = new String(plan);
+			String ret = null;
+
+			if ("".equals(charcterSet)) {
+				ret = new String(plan);
+			} else {
+				ret = new String(plan, charcterSet);
+			}
+
+			ret = ret.trim();
 
 			return ret;
 
@@ -149,11 +179,22 @@ public class DataCrypt {
 				return "";
 			}
 
-			byte[] plan = planStr.getBytes();
+			byte[] plan = null;
+
+			if ("".equals(charcterSet)) {
+				plan = planStr.getBytes();
+			} else {
+				plan = planStr.getBytes(charcterSet);
+			}
 
 			byte[] enc = crypt.encrypt(plan);
 
-			String ret = Hex.byteToHex(enc);
+			String ret = null;
+			if ("".equals(encoding)) {
+				ret = Hex.byteToHex(enc);
+			} else if ("BASE64".equals(encoding)) {
+				ret = new String(Base64.getEncoder().encode(enc));
+			}
 
 			return ret;
 

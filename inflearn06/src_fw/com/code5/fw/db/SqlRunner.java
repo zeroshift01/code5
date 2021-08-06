@@ -19,6 +19,7 @@ import com.code5.fw.data.TableRecodeBase;
 import com.code5.fw.security.CryptPin;
 import com.code5.fw.security.DataCrypt;
 import com.code5.fw.trace.Trace;
+import com.code5.fw.web.Admin;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.Reload;
 
@@ -47,6 +48,7 @@ public class SqlRunner implements Reload {
 	 *
 	 */
 	SqlRunner() {
+		Admin.addReload(this);
 	}
 
 	/**
@@ -369,6 +371,9 @@ public class SqlRunner implements Reload {
 			for (int i = 0; i < cols.length; i++) {
 
 				String data = rs.getString(colsForResultSet[i]);
+				if (data == null) {
+					data = "";
+				}
 				data = getDataByParam(paramBs[i], box, data);
 				recode[i] = data;
 			}

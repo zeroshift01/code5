@@ -9,7 +9,6 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.security.auth.message.AuthException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -213,15 +212,17 @@ public class MasterController extends HttpServlet implements Reload {
 	private static ServiceB getServiceB(String KEY) throws Exception {
 
 		if (IS_CACHE) {
+
 			ServiceB serviceB = SERVICEB_MAP.get(KEY);
 			if (serviceB != null) {
 				return serviceB;
 			}
+
 		}
 
 		MasterControllerD dao = new MasterControllerD();
-
 		Box controller = dao.getController(KEY);
+
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
@@ -282,11 +283,14 @@ public class MasterController extends HttpServlet implements Reload {
 					return "";
 				}
 
-				/**
-				 *
-				 */
+				@Override
 				public boolean isInternal() {
 					return false;
+				}
+
+				@Override
+				public String checkMethod() {
+					return "";
 				}
 			};
 
@@ -306,14 +310,13 @@ public class MasterController extends HttpServlet implements Reload {
 	}
 
 	/**
-	 * 
-	 * @param url
+	 * @param KEY
 	 * @return
 	 * @throws Exception
 	 */
-	public static String executeService(String key) throws Exception {
+	public static String executeService(String KEY) throws Exception {
 
-		ServiceB serviceB = getServiceB(key);
+		ServiceB serviceB = getServiceB(KEY);
 
 		Object biz = serviceB.biz;
 		Method method = serviceB.method;
@@ -332,6 +335,13 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 
 			throw new AuthException();
+		}
+
+		if (biz instanceof BizControllerStartExecute) {
+			String JSP_KEY = ((BizControllerStartExecute) biz).start();
+			if (JSP_KEY != null) {
+				return JSP_KEY;
+			}
 		}
 
 		String jspKey = (String) method.invoke(biz);
@@ -369,17 +379,28 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 		}
 
-		if ("".equals(auth)) {
-			return true;
+		if (!"".equals(auth)) {
+			if (auth.indexOf(user.getAuth()) >= 0) {
+				return true;
+			}
+
+			trace.write("auth false [" + auth + "][" + user.getAuth() + "]");
+			return false;
 		}
 
-		if (auth.indexOf(user.getAuth()) >= 0) {
-			return true;
+		String checkMethod = sa.checkMethod();
+		if (!"".equals(checkMethod)) {
+
+			String key = MasterController.executeService(checkMethod);
+			if ("true".equals(key)) {
+				return true;
+			}
+
+			trace.write("checkMethod false [" + checkMethod + "]");
+			return false;
 		}
 
-		trace.write("checkUrlAuth false [" + auth + "][" + user.getAuth() + "]");
-
-		return false;
+		return true;
 
 	}
 
@@ -394,6 +415,7 @@ public class MasterController extends HttpServlet implements Reload {
 		ServiceB serviceB = getServiceB(KEY);
 		ServiceAnnotation sa = serviceB.sa;
 		return checkUrlAuth(sa);
+
 	}
 
 	/**
@@ -428,11 +450,6 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	private String transationWas = InitYaml.get().s("TRANSACTION.WAS");
 
-	@Override
-	public void destroy() {
-		super.destroy();
-	}
-
 	/**
 	 * 
 	 */
@@ -446,6 +463,7 @@ public class MasterController extends HttpServlet implements Reload {
 	 */
 	public void init() throws ServletException {
 		reload();
+		Admin.addReload(this);
 	}
 
 	/**
@@ -465,8 +483,8 @@ public class MasterController extends HttpServlet implements Reload {
 	private static ConcurrentHashMap<String, ServiceB> SERVICEB_MAP = new ConcurrentHashMap<String, ServiceB>();
 
 	/**
-	* 
-	*/
+	 * 
+	 */
 	private static ConcurrentHashMap<String, Box> FW_VIEW_MAP = new ConcurrentHashMap<String, Box>();
 
 	/**
@@ -477,8 +495,10 @@ public class MasterController extends HttpServlet implements Reload {
 	private static Box getView(String KEY) throws Exception {
 
 		if (IS_CACHE) {
+
 			Box fwView = FW_VIEW_MAP.get(KEY);
 			if (fwView != null) {
+				BoxContext.get().put(Box.KEY_FW_VIEW, fwView);
 				return fwView;
 			}
 		}

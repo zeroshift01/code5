@@ -72,7 +72,7 @@ public class MasterControllerMultipart extends MasterController implements BizCo
 		}
 
 		if (!sessionB.isLogin()) {
-			// throw new LoginException();
+			throw new LoginException();
 		}
 
 		box.put(Box.KEY_SESSIONB, sessionB);

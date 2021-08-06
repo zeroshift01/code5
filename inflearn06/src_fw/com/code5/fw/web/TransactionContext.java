@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
+import com.code5.fw.trace.Trace;
 
 /**
  * @author zero
@@ -15,6 +16,11 @@ public class TransactionContext {
 	 * 
 	 */
 	private static String TRANSACTION_DEFAULT = InitYaml.get().s("TRANSACTION.JOB");
+
+	/**
+	 * 
+	 */
+	private static Trace trace = new Trace(TransactionContext.class);
 
 	/**
 	 * 
@@ -37,6 +43,7 @@ public class TransactionContext {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 
+			trace.write("getThread");
 			return transaction;
 
 		}
@@ -44,6 +51,7 @@ public class TransactionContext {
 		transaction = createDefaultTransaction();
 		set(transaction);
 
+		trace.write("getThread");
 		return transaction;
 	}
 
@@ -54,6 +62,7 @@ public class TransactionContext {
 	 */
 	static void set(Transaction transaction) {
 		TL.set(transaction);
+		trace.write("setThread");
 	}
 
 	/**
@@ -66,6 +75,7 @@ public class TransactionContext {
 		}
 
 		TL.remove();
+		trace.write("removeThread");
 	}
 
 	/**
@@ -82,12 +92,12 @@ public class TransactionContext {
 
 		Transaction transaction = TL.get();
 		if (transaction == null) {
-
+			trace.write("commit null");
 			return;
 		}
 
 		transaction.commit();
-
+		trace.write("commit");
 	}
 
 	/**
@@ -97,11 +107,12 @@ public class TransactionContext {
 
 		Transaction transaction = TL.get();
 		if (transaction == null) {
-
+			trace.write("rollback null");
 			return;
 		}
 
 		transaction.rollback();
+		trace.write("rollback");
 
 	}
 }

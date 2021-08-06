@@ -67,4 +67,14 @@ public class BoxLocal extends Box {
 		return keys;
 
 	}
+
+	/**
+	 *
+	 */
+	public boolean isNull() {
+		if (hm.size() == 0) {
+			return true;
+		}
+		return false;
+	}
 }

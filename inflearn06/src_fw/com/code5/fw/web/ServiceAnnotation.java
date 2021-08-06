@@ -20,4 +20,6 @@ public @interface ServiceAnnotation {
 	String auth() default "";
 
 	boolean isInternal() default false;
+
+	String checkMethod() default "";
 }

@@ -51,6 +51,8 @@ public abstract class Box implements Serializable {
 
 	public abstract Object get(String key);
 
+	public abstract boolean isNull();
+
 	public int getInt(String key) {
 
 		String s = s(key);
