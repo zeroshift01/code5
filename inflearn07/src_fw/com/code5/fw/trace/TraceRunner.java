@@ -1,29 +1,23 @@
 package com.code5.fw.trace;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.code5.fw.data.Box;
-import com.code5.fw.data.InitProperty;
+import com.code5.fw.data.DateTime;
+import com.code5.fw.data.InitYaml;
+import com.code5.fw.data.MakeRnd;
 import com.code5.fw.data.SessionB;
+import com.code5.fw.web.Admin;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.Reload;
 
 /**
  * @author zero
  *
  */
-public final class TraceRunner {
+public final class TraceRunner implements Reload {
 
 	/**
 	 * 
@@ -36,7 +30,12 @@ public final class TraceRunner {
 	 * 
 	 */
 	private TraceRunner() {
-		readTraceProperties();
+
+		InitYaml init = InitYaml.get();
+		this.hostName = init.getHostName();
+		this.appName = init.getAppName();
+		reload();
+		Admin.addReload(this);
 	}
 
 	/**
@@ -47,17 +46,25 @@ public final class TraceRunner {
 		return TRACE;
 	}
 
+	/**
+	 * 
+	 */
 	private String logDir = null;
 
 	/**
 	 * 
 	 */
-	private boolean isWriteLog = InitProperty.IS_WRITE_LOG();
+	private String logFilePatten = null;
 
 	/**
-	 * 50 Mb
+	 * 
 	 */
-	private final long logFileSizeLimit = 1024 * 1000 * 50;
+	private boolean isWriteLog = false;
+
+	/**
+	 * 
+	 */
+	private final long logFileSizeLimit = 1024 * 1000 * 10;
 
 	/**
 	 * 
@@ -67,121 +74,32 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private String cntr = "notCntr";
+	private String rnd = MakeRnd.createRnd(8);
 
 	/**
 	 * 
 	 */
-	private String host = "notHost";
+	private boolean isLogDir = false;
 
 	/**
 	 * 
 	 */
-	private String rnd = makeRnd(8);
+	private boolean isBuffer = false;
 
 	/**
 	 * 
 	 */
-	private boolean isInit = false;
+	private boolean isSystemOut = false;
 
 	/**
 	 * 
 	 */
-	private boolean isMulti = false;
-
-	/**
-	 * @param request
-	 */
-	public void init(HttpServletRequest request) {
-
-		if (this.isInit) {
-			return;
-		}
-
-		this.isMulti = true;
-		this.cntr = "p" + request.getServerPort();
-
-		init();
-	}
-
-	/**
-	 * @param cntr
-	 */
-	public void init(String cntr) {
-
-		if (this.isInit) {
-			return;
-		}
-
-		this.isMulti = false;
-		this.cntr = cntr;
-
-		init();
-	}
-
-	/**
-	 * @param cntr
-	 */
-	public void init(String cntr, boolean isMulti) {
-
-		if (this.isInit) {
-			return;
-		}
-
-		this.isMulti = isMulti;
-		this.cntr = cntr;
-
-		init();
-	}
+	private String hostName = null;
 
 	/**
 	 * 
 	 */
-	private synchronized void init() {
-
-		try {
-
-			if (this.isInit) {
-				return;
-			}
-			this.isInit = true;
-
-			if (this.isWriteLog) {
-				if (this.isMulti) {
-					System.setOut(new TraceNotPrintStream());
-				}
-			}
-
-			String logDirx = InitProperty.LOG_DIR_PATTERN();
-
-			try {
-				String hostName = InetAddress.getLocalHost().getHostName();
-				if (hostName.contains(".")) {
-					throw new Exception("error hostName [" + hostName + "]");
-				}
-
-				this.host = hostName;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-			logDirx = logDirx.replace("[host]", this.host);
-			logDirx = logDirx.replace("[rnd]", this.rnd);
-			logDirx = logDirx.replace("[cntr]", this.cntr);
-
-			(new File(logDirx)).mkdir();
-
-			if (!(new File(logDirx)).isDirectory()) {
-				throw new Exception("not Directory [" + logDirx + "]");
-			}
-
-			this.logDir = logDirx;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
+	private String appName = null;
 
 	/**
 	 * @param logKey
@@ -189,7 +107,7 @@ public final class TraceRunner {
 	 */
 	private String makeLogFileUrl(String logKey) {
 
-		if (this.logDir == null) {
+		if (!this.isLogDir) {
 			return null;
 		}
 
@@ -198,12 +116,12 @@ public final class TraceRunner {
 			return null;
 		}
 
-		String logFilePatten = InitProperty.LOG_FILE_PATTERN();
+		String logFileName = this.logFilePatten;
 
-		logFilePatten = logFilePatten.replace("[rnd]", this.rnd);
-		logFilePatten = logFilePatten.replace("[name]", logKey);
+		logFileName = logFileName.replace("[RND]", this.rnd);
+		logFileName = logFileName.replace("[NAME]", logKey);
 
-		return this.logDir + File.separatorChar + logFilePatten;
+		return this.logDir + File.separatorChar + logFileName;
 	}
 
 	/**
@@ -212,11 +130,12 @@ public final class TraceRunner {
 	 * @param log
 	 * @return
 	 */
+
 	private String makeLogStr(String className, String log, Box box) {
 
 		String classNameShort = makeClassNameShort(className);
 
-		String dtm = getThisDTMByForm();
+		String dtm = DateTime.getThisDTMByForm();
 
 		int hashCode = box.hashCode();
 
@@ -225,14 +144,16 @@ public final class TraceRunner {
 		sb.append("[" + hashCode + "]");
 		sb.append("[" + classNameShort + "]");
 
-		String serviceKey = box.s(Box.KEY_SERVICE_KEY);
+		String serviceKey = box.s(Box.KEY_SERVICE);
 		if (!"".equals(serviceKey)) {
 			sb.append("[" + serviceKey + "]");
 		}
 
 		SessionB user = box.getSessionB();
 		if (user != null) {
-			sb.append("[" + user.getId() + "]");
+			if (user.isLogin()) {
+				sb.append("[" + user.getId() + "]");
+			}
 		}
 
 		sb.append(log);
@@ -247,7 +168,7 @@ public final class TraceRunner {
 	private void rollingLogFile(String logFileUrl) {
 
 		File file = new File(logFileUrl);
-		String renameLogFileUrl = logFileUrl + "." + getThisDTM();
+		String renameLogFileUrl = logFileUrl + "." + DateTime.getThisDTM();
 		File renameFile = new File(renameLogFileUrl);
 		file.renameTo(renameFile);
 
@@ -281,7 +202,7 @@ public final class TraceRunner {
 	 */
 	void write(String logKey, String className, String log) {
 
-		Box box = BoxContext.getThread();
+		Box box = BoxContext.get();
 
 		boolean isNotLogWrite = isNotLogWrite(className, box);
 		if (isNotLogWrite) {
@@ -295,7 +216,7 @@ public final class TraceRunner {
 			return;
 		}
 
-		if (!this.isMulti) {
+		if (this.isSystemOut) {
 			System.out.println(log);
 		}
 
@@ -315,7 +236,7 @@ public final class TraceRunner {
 					rollingLogFile(logFileUrl);
 				}
 
-				traceWriter = new TraceWriter(logKey, logFileUrl, isMulti);
+				traceWriter = new TraceWriter(logKey, logFileUrl, this.isBuffer);
 
 				traceWriterMap.put(logKey, traceWriter);
 
@@ -338,7 +259,7 @@ public final class TraceRunner {
 
 			rollingLogFile(traceWriter.logFileUrl);
 
-			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isMulti);
+			traceWriter = new TraceWriter(logKey, traceWriter.logFileUrl, this.isBuffer);
 			traceWriterMap.put(logKey, traceWriter);
 
 		}
@@ -365,15 +286,16 @@ public final class TraceRunner {
 	 * @param box
 	 * @return
 	 */
+
 	boolean isNotLogWrite(String className, Box box) {
 
-		String serviceKey = box.s(Box.KEY_SERVICE_KEY);
+		String serviceKey = box.s(Box.KEY_SERVICE);
 
-		if (noLogMap.containsKey("noLog.serviceKey." + serviceKey)) {
+		if (noLogMap.containsKey("NOLOG.SERVICE_KEY." + serviceKey)) {
 			return true;
 		}
 
-		if (noLogMap.containsKey("noLog.className." + className)) {
+		if (noLogMap.containsKey("NOLOG.CLASS_NAME." + className)) {
 			return true;
 		}
 
@@ -389,47 +311,66 @@ public final class TraceRunner {
 	/**
 	 * 
 	 */
-	private void readTraceProperties() {
-
-		BufferedReader br = null;
-		try {
-
-			String url = InitProperty.TRACE_CONFIG_URL();
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(url)));
-
-			for (int i = 0; i < 10000; i++) {
-				String s = br.readLine();
-				if (s == null) {
-					break;
-				}
-
-				s = s.trim();
-
-				if ("".equals(s)) {
-					continue;
-				}
-
-				if (s.startsWith("#")) {
-					continue;
-				}
-
-				if (s.startsWith("noLog")) {
-					noLogMap.put(s, "true");
-				}
-
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	/**
-	 * 
-	 */
 	public void reload() {
-		noLogMap.clear();
-		readTraceProperties();
+
+		this.isBuffer = InitYaml.get().is("LOG.BUFFER");
+		this.isSystemOut = InitYaml.get().is("LOG.SYSTEM_OUT");
+
+		this.isWriteLog = InitYaml.get().is("LOG.WRITE_LOG");
+
+		this.logDir = InitYaml.get().s("LOG.DIR");
+		this.logFilePatten = InitYaml.get().s("LOG.FILE_PATTERN");
+
+		ConcurrentHashMap<String, String> thisNoLogMap = new ConcurrentHashMap<String, String>();
+
+		String[] ss = InitYaml.get().ss("NOLOG.CLASS_NAME");
+		for (int i = 0; i < ss.length; i++) {
+			thisNoLogMap.put("NOLOG.CLASS_NAME." + ss[i], "NOLOG");
+		}
+
+		ss = InitYaml.get().ss("NOLOG.SERVICE_KEY");
+		for (int i = 0; i < ss.length; i++) {
+			thisNoLogMap.put("NOLOG.SERVICE_KEY." + ss[i], "NOLOG");
+		}
+
+		noLogMap = thisNoLogMap;
+
+		if (this.isWriteLog) {
+			if (!this.isSystemOut) {
+				if (!(System.out instanceof TraceNotPrintStream)) {
+					System.setOut(new TraceNotPrintStream());
+				}
+			}
+		}
+
+		this.isLogDir = false;
+
+		String checkLogDir = this.logDir;
+		File checkDir = new File(checkLogDir);
+
+		if (!checkDir.isDirectory()) {
+			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
+			return;
+		}
+
+		if (this.appName == null) {
+			this.logDir = checkLogDir;
+			this.isLogDir = true;
+			return;
+		}
+
+		checkLogDir = checkLogDir + File.separator + this.appName;
+		checkDir = new File(checkLogDir);
+		checkDir.mkdir();
+
+		if (!checkDir.isDirectory()) {
+			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
+			return;
+		}
+
+		this.logDir = checkLogDir;
+		this.isLogDir = true;
+
 	}
 
 	/**
@@ -443,50 +384,6 @@ public final class TraceRunner {
 		}
 
 		return className;
-	}
-
-	/**
-	 * @return
-	 */
-	private static String getThisDTM() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
-		return simpleDateFormat.format(new Date());
-	}
-
-	/**
-	 * @return
-	 */
-	private static String getThisDTMByForm() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.KOREA);
-		return simpleDateFormat.format(new Date());
-	}
-
-	/**
-	 * @param len
-	 * @return
-	 */
-	private static String makeRnd(int len) {
-
-		StringBuffer temp = new StringBuffer();
-		SecureRandom rnd = new SecureRandom();
-		for (int i = 0; i < len; i++) {
-			int rIndex = rnd.nextInt(3);
-			switch (rIndex) {
-			case 0:
-				// a-z
-				temp.append((char) ((int) (rnd.nextInt(26)) + 97));
-				break;
-			case 1:
-				// A-Z
-				temp.append((char) ((int) (rnd.nextInt(26)) + 65));
-				break;
-			case 2:
-				// 0-9
-				temp.append((rnd.nextInt(10)));
-				break;
-			}
-		}
-		return temp.toString();
 	}
 
 }

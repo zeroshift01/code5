@@ -12,25 +12,27 @@ class TraceWriter {
 	String logKey = null;
 	String logFileUrl = null;
 
-	boolean isMulti = false;
+	boolean isBuffer = false;
 
 	int initCnt = 0;
 	int errCnt = 0;
 
 	private BufferedWriter out = null;
 
+	
 	/**
 	 * @param logKey
 	 * @param logFileUrl
-	 * @param isMulti
+	 * @param useBuffer
 	 */
-	TraceWriter(String logKey, String logFileUrl, boolean isMulti) {
+	TraceWriter(String logKey, String logFileUrl, boolean useBuffer) {
 
 		this.logKey = logKey;
 		this.logFileUrl = logFileUrl;
-		this.isMulti = isMulti;
+		this.isBuffer = useBuffer;
 
 		try {
+
 			this.out = new BufferedWriter(new FileWriter(this.logFileUrl, true));
 
 		} catch (Exception ex) {
@@ -49,14 +51,12 @@ class TraceWriter {
 		}
 
 		try {
-
 			this.out.write(log);
 			this.out.newLine();
 
-			if (!isMulti) {
+			if (!isBuffer) {
 				this.out.flush();
 			}
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

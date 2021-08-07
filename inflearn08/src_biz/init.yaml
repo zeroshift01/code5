@@ -16,7 +16,7 @@ LOG :
   DIR : 
     DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
-    PRAP2 : "/logs/prap1"
+    PRAP2 : "/logs/prap2"
   FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
@@ -63,6 +63,9 @@ NOLOG :
   SERVICE_KEY :
     - "loginView"
     - "logout"
+
+
+
 
 PRODUCT :
   DEFAULT : "false"

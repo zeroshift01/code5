@@ -12,7 +12,6 @@ class TraceNotPrintStream extends PrintStream {
 	 * 
 	 */
 	public TraceNotPrintStream() {
-
 		super(new TraceNotOutputStream());
 	}
 }

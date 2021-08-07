@@ -2,8 +2,8 @@ package com.code5.fw.web;
 
 import java.sql.SQLException;
 
+import com.code5.fw.data.InitYaml;
 import com.code5.fw.db.Transaction;
-import com.code5.fw.db.Transaction_SQLITE_JDBC;
 import com.code5.fw.trace.Trace;
 
 /**
@@ -12,6 +12,14 @@ import com.code5.fw.trace.Trace;
  */
 public class TransactionContext {
 
+	/**
+	 * 
+	 */
+	private static String TRANSACTION_DEFAULT = InitYaml.get().s("TRANSACTION.JOB");
+
+	/**
+	 * 
+	 */
 	private static Trace trace = new Trace(TransactionContext.class);
 
 	/**
@@ -31,7 +39,7 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	public static Transaction getThread() {
+	public static Transaction get() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 
@@ -41,7 +49,7 @@ public class TransactionContext {
 		}
 
 		transaction = createDefaultTransaction();
-		setThread(transaction);
+		set(transaction);
 
 		trace.write("getThread");
 		return transaction;
@@ -52,7 +60,7 @@ public class TransactionContext {
 	 * 
 	 * 
 	 */
-	static void setThread(Transaction transaction) {
+	static void set(Transaction transaction) {
 		TL.set(transaction);
 		trace.write("setThread");
 	}
@@ -60,7 +68,7 @@ public class TransactionContext {
 	/**
 	 *
 	 */
-	static void removeThread() {
+	static void remove() {
 		Transaction transaction = TL.get();
 		if (transaction != null) {
 			TL.get().closeConnection();
@@ -72,11 +80,9 @@ public class TransactionContext {
 
 	/**
 	 * @return
-	 * 
-	 *         TODO [2]
 	 */
 	private static Transaction createDefaultTransaction() {
-		return new Transaction_SQLITE_JDBC();
+		return Transaction.createTransaction(TRANSACTION_DEFAULT);
 	}
 
 	/**

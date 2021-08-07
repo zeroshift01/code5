@@ -16,16 +16,23 @@ LOG :
   DIR : 
     DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
-    PRAP2 : "/logs/prap1"
+    PRAP2 : "/logs/prap2"
   FILE_PATTERN : "[RND].[NAME].log"
   WRITE_LOG : 
     DEFAULT : "false"
+    goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
-  MULTI : 
+  BUFFER :
+    DEFAULT : "false"
+    goorm : "true"
+    PRAP1 : "true"
+    PRAP2 : "true"
+  SYSTEM_OUT : 
     DEFAULT : "true"
-    PRAP1 : "true"
-    PRAP2 : "true"
+    goorm : "false"
+    PRAP1 : "false"
+    PRAP2 : "false"
 
 UPLOAD_FILE_DIR :
   TEMP_URL : 
@@ -36,7 +43,6 @@ UPLOAD_FILE_DIR :
     DEFAULT : "[APP_ROOT]/files"
     PRAP1 : "/contents/files"
     PRAP2 : "/contents/files"
-
 
 TRANSACTION :
   WAS : 
@@ -58,20 +64,28 @@ NOLOG :
     - "loginView"
     - "logout"
 
+
+
+
 PRODUCT :
   DEFAULT : "false"
+  goorm : "true"
   DVAP : "false"
   PRAP1 : "false"
   PRAP2 : "true"
 
 CACHE :
-  DEFAULT : "false"
+  DEFAULT : "true"
+  goorm : "true"
   DVAP : "false"
   PRAP1 : "false"
   PRAP2 : "true"
 
 Transaction_SQLITE_JDBC_CODE5_DEV :
   URL : "jdbc:sqlite:[APP_ROOT]/doc/code5.db"
+
+Transaction_MYSQL_JDBC :
+  URL : "3e448cdbbcb6e7f7081ebb8a0012a405c921293ee1f16bd60033d93ababf371fb8729648ae15c7df8543c2a043713390"
 
 Transaction_ORACLE_DV_JDBC :
   URL : "ceabb468ecd8ddefa72e52548bf667e68489ccc71fc9cc4f1b982068fbc1c4a8"
@@ -88,13 +102,14 @@ SRT :
     MODE : Aes_CBC_PKCS7
     KEY : 0c9640c240c35d2b9dc4b456ff59fcd85289d01019bed26a3c748f6ad37e958eb24028766a7900a597d00dac9cbd13a6
     IV : 5f5a2fd91301f46338d85439c4654b7533cada85dc3f3e9e1a792c434100f9004f3f6217a48f01c15b9166c165ec4ac6
+  S03 :
+    MODE : Aria_CBC_PKCS7
+    KEY : 0c9640c240c35d2b9dc4b456ff59fcd85289d01019bed26a3c748f6ad37e958eb24028766a7900a597d00dac9cbd13a6
+    IV : 5f5a2fd91301f46338d85439c4654b7533cada85dc3f3e9e1a792c434100f9004f3f6217a48f01c15b9166c165ec4ac6
+    CHARACTER_SET : EUC-KR
+    ENCODING : BASE64    
   SDB :
     MODE : Aria_CBC_PKCS7
     KEY : 0c9640c240c35d2b9dc4b456ff59fcd85289d01019bed26a3c748f6ad37e958eb24028766a7900a597d00dac9cbd13a6
     IV : 5f5a2fd91301f46338d85439c4654b7533cada85dc3f3e9e1a792c434100f9004f3f6217a48f01c15b9166c165ec4ac6
-
-
-
-
-
 

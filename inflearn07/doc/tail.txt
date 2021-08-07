@@ -1,2 +1,0 @@
-cd C:\public\logs\zero\p18080
-get-content I2OoEkqM.out.log -wait -tail 100

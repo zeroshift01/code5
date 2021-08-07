@@ -1,6 +1,9 @@
 package com.code5.fw.data;
 
 import java.io.Serializable;
+import java.security.SecureRandom;
+
+import com.code5.fw.security.Aria_CBC_PKCS7;
 
 /**
  * @author zero
@@ -11,7 +14,17 @@ public class SessionB implements Serializable {
 	/**
 	 * 
 	 */
+	private static boolean IS_PRODUCT = InitYaml.get().is("PRODUCT");
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
+	private boolean isLogin = false;
 
 	/**
 	 * 
@@ -27,6 +40,11 @@ public class SessionB implements Serializable {
 	 * 
 	 */
 	private String ip = null;
+
+	/**
+	 * 
+	 */
+	private Aria_CBC_PKCS7 aria = null;
 
 	/**
 	 * @return
@@ -50,15 +68,113 @@ public class SessionB implements Serializable {
 	}
 
 	/**
+	 * @throws Exception
+	 * 
+	 */
+	public SessionB(String ip) throws Exception {
+
+		this.ip = ip;
+
+		SecureRandom random = new SecureRandom();
+
+		byte[] iv = new byte[16];
+		byte[] key = new byte[16];
+
+		if (IS_PRODUCT) {
+			random.nextBytes(iv);
+			random.nextBytes(key);
+		}
+
+		aria = new Aria_CBC_PKCS7(iv, key);
+	}
+
+	/**
 	 * @param id
 	 * @param auth
 	 * @param ip
+	 * @throws Exception
 	 */
-	public SessionB(String id, String auth, String ip) {
+	public SessionB(String id, String auth, String ip) throws Exception {
+		this(ip);
+		set(id, auth, ip);
+	}
+
+	/**
+	 * @param id
+	 * @param auth
+	 * @param ip
+	 * @throws Exception
+	 */
+	public void set(String id, String auth, String ip) throws Exception {
 
 		this.id = id;
 		this.auth = auth;
 		this.ip = ip;
+
+		this.isLogin = true;
+
 	}
 
+	/**
+	 * @param nextUrl
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String createToken(String nextUrl, String data) throws Exception {
+		if (data == null) {
+			return "";
+		}
+
+		if ("".equals(data)) {
+			return "";
+		}
+
+		long nonce = System.currentTimeMillis();
+		String key = nonce + "_" + nextUrl + "_" + data;
+		return Hex.byteToHex(aria.encrypt(key.getBytes()));
+
+	}
+
+	/**
+	 * @param nextUrl
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String getDataByToken(String nextUrl, String token) throws Exception {
+
+		if (token == null) {
+			return "";
+		}
+
+		if ("".equals(token)) {
+			return "";
+		}
+
+		byte[] enc = Hex.hexToByte(token);
+
+		String xx = new String(aria.decrypt(enc));
+		long nonce = Long.parseLong(xx.substring(0, 13));
+		String checkUrl = xx.substring(13 + 1, 13 + 1 + nextUrl.length());
+		String data = xx.substring(13 + 1 + nextUrl.length() + 1);
+
+		long t = System.currentTimeMillis();
+		if (t - nonce > 1000 * 60 * 10) {
+			throw new Exception();
+		}
+
+		if (!checkUrl.equals(nextUrl)) {
+			throw new Exception();
+		}
+
+		return data;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isLogin() {
+		return this.isLogin;
+	}
 }

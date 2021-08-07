@@ -1,19 +1,22 @@
 package com.code5.fw.security;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author zero
  *
  */
-public class DataCrypt_test extends TestCase {
+public class DataCrypt_test {
 
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_한단어테스트() throws Exception {
 
-		DataCrypt dataCrypt = DataCrypt.getDataCrypt("S01");
+		DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
 
 		String plan = "abcd 1234 가나다라 !@#$";
 
@@ -36,6 +39,7 @@ public class DataCrypt_test extends TestCase {
 	/**
 	 * @throws Exception
 	 */
+	@Test
 	public void test_쓰레드안전성() throws Exception {
 
 		DataCrypt_test$[] DataCrypt_test$ = new DataCrypt_test$[20];
@@ -63,7 +67,7 @@ class DataCrypt_test$ extends Thread {
 
 			for (int i = 0; i < 100000; i++) {
 
-				DataCrypt dataCrypt = DataCrypt.getDataCrypt("S02");
+				DataCrypt dataCrypt = DataCrypt.getDataCrypt("SDB");
 
 				String plan = i + "abcd 1234 가나다라 !@#$" + i;
 

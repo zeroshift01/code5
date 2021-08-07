@@ -16,13 +16,13 @@ public class CryptPin {
 	 * @return
 	 * 
 	 */
-	public static String cryptPin(String pin, String salt) {
+	public static String cryptPin(String data, String salt) {
 
 		try {
 
-			pin = pin + "-" + salt;
+			data = data + "-" + salt;
 
-			byte[] b = pin.getBytes();
+			byte[] b = data.getBytes();
 
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.reset();
