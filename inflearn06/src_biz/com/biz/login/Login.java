@@ -33,7 +33,10 @@ public class Login implements BizController {
 
 		Box thisUser = user.getBox();
 
-		String INPUT_PIN = thisUser.s("INPUT_PIN");
+		String INPUT_PIN = box.s("PIN");
+		// String INPUT_ID = box.s("ID");
+		// INPUT_PIN = CryptPin.cryptPin(INPUT_PIN, INPUT_ID);
+
 		String PIN = thisUser.s("PIN");
 
 		if (!INPUT_PIN.equals(PIN)) {
