@@ -14,7 +14,7 @@ CHARACTER_SET :
 
 LOG :
   DIR : 
-    DEFAULT : "[APP_ROOT]/logs/[]"
+    DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
   FILE_PATTERN : "[RND].[NAME].log"

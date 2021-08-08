@@ -4,6 +4,7 @@ import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
+import com.code5.fw.security.DataCrypt;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.ServiceAnnotation;
@@ -27,6 +28,15 @@ public class Board implements BizController {
 		Table list = dao.list();
 		box.put("list", list);
 
+		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
+		for (int i = 0; i < list.size(); i++) {
+
+			String EM = list.s("EM", i);
+			EM = crypt.decrypt(EM);
+			list.setData("EM", i, EM);
+
+		}
+
 		return "list";
 	}
 
@@ -45,6 +55,11 @@ public class Board implements BizController {
 	public String exeWrite() throws Exception {
 
 		Box box = BoxContext.get();
+
+		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
+		String EM = box.s("EM");
+		EM = crypt.decrypt(EM);
+		box.put("EM", EM);
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
 		UploadFileB file2 = box.getUploadFileB("FILE_2");
@@ -74,6 +89,12 @@ public class Board implements BizController {
 
 		BoardD dao = new BoardD();
 		Box board = dao.select();
+
+		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
+		String EM = board.s("EM");
+		EM = crypt.decrypt(EM);
+		board.put("EM", EM);
+
 		box.put("board", board);
 
 		return "update";
@@ -87,6 +108,11 @@ public class Board implements BizController {
 	public String exeUpdate() throws Exception {
 
 		Box box = BoxContext.get();
+
+		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
+		String EM = box.s("EM");
+		EM = crypt.decrypt(EM);
+		box.put("EM", EM);
 
 		Box thisBoard = box.getBox("board");
 
