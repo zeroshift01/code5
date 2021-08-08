@@ -3,6 +3,7 @@ package com.biz.login;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.data.Table;
+import com.code5.fw.security.CryptPin;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.ServiceAnnotation;
@@ -34,8 +35,8 @@ public class Login implements BizController {
 		Box thisUser = user.getBox();
 
 		String INPUT_PIN = box.s("PIN");
-		// String INPUT_ID = box.s("ID");
-		// INPUT_PIN = CryptPin.cryptPin(INPUT_PIN, INPUT_ID);
+		String INPUT_ID = box.s("ID");
+		INPUT_PIN = CryptPin.cryptPin(INPUT_PIN, INPUT_ID);
 
 		String PIN = thisUser.s("PIN");
 

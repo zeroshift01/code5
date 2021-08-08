@@ -53,12 +53,16 @@ ID PRIMARY KEY
 
 --]]]
 
+1) DB 유출
+2) 내부사용자 공격
+
+"패스워드는 나만 알고 있어야 하는 정보"
+
 --[[[ BZ_ID_I_01
 
 INSERT INTO BZ_ID VALUES(
 'admin'
-,'1'
---,'413190dd77a132b98077112e493ce5bceef53ef60dfb4360764c1f9ceba85289'
+,'413190dd77a132b98077112e493ce5bceef53ef60dfb4360764c1f9ceba85289'
 ,'A0'
 ,'0'
 ,''
@@ -70,8 +74,7 @@ INSERT INTO BZ_ID VALUES(
 
 INSERT INTO BZ_ID VALUES(
 'user1'
-,'1'
---,'eaab2eac6bfb55c5994efbac5ec6b116a45f53892649c700003fdeeab765a1a3'
+,'eaab2eac6bfb55c5994efbac5ec6b116a45f53892649c700003fdeeab765a1a3'
 ,'U0'
 ,'0'
 ,''
@@ -82,13 +85,13 @@ INSERT INTO BZ_ID VALUES(
 --[[[ BZ_ID_I_03
 INSERT INTO BZ_ID VALUES(
 'user2'
-,'1'
 ,'5ced0bc626a116b6dafbf341db47bad167c444f53c4a769d8d7c09e1c6231c17'
 ,'U0'
 ,'0'
 ,''
 );
 --]]]
+
 
 
 --[[[ FW_CONTROLLER_01

@@ -58,7 +58,7 @@ public class Board implements BizController {
 
 		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
 		String EM = box.s("EM");
-		EM = crypt.decrypt(EM);
+		EM = crypt.encrypt(EM);
 		box.put("EM", EM);
 
 		UploadFileB file1 = box.getUploadFileB("FILE_1");
@@ -92,7 +92,7 @@ public class Board implements BizController {
 
 		DataCrypt crypt = DataCrypt.getDataCrypt("SDB");
 		String EM = board.s("EM");
-		EM = crypt.decrypt(EM);
+		EM = crypt.encrypt(EM);
 		board.put("EM", EM);
 
 		box.put("board", board);
