@@ -17,15 +17,41 @@ import com.code5.fw.web.TransactionContext;
  */
 public class InitCode5DBByDev {
 
-	/**
-	 * 
-	 */
+	static {
+		InitYaml initYaml = InitYaml.get();
+		String appName = InitCode5DBByDev.class.getName();
+		initYaml.setAppName(appName);
+	}
+
 	private static Trace trace = new Trace(InitCode5DBByDev.class);
 
-	/**
-	 * 
-	 */
 	private static Sql sql = new Sql(InitCode5DBByDev.class);
+
+	/**
+	 * @param xx
+	 * @throws Exception
+	 */
+	public static void main(String[] xx) throws Exception {
+
+		List<String> keys = getKey();
+
+		for (int i = 0; i < keys.size(); i++) {
+
+			String key = keys.get(i);
+
+			System.out.println(key + "----------------");
+
+			try {
+				sql.executeSql(key);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+		}
+
+		TransactionContext.get().commit();
+		trace.write("ok");
+	}
 
 	/**
 	 * @return
@@ -56,38 +82,6 @@ public class InitCode5DBByDev {
 		br.close();
 		return list;
 
-	}
-
-	/**
-	 * @param xx
-	 * @throws Exception
-	 */
-	public static void main(String[] xx) throws Exception {
-
-		InitYaml initYaml = InitYaml.get();
-
-		trace.write("[" + initYaml.getAppName() + "]");
-
-		InitYaml.get().setAppName(InitCode5DBByDev.class.getName());
-
-		trace.write("[" + initYaml.getAppName() + "]");
-
-		List<String> keys = getKey();
-
-		for (int i = 0; i < keys.size(); i++) {
-
-			String key = keys.get(i);
-
-			try {
-				sql.executeSql(key);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-		}
-
-		TransactionContext.get().commit();
-		trace.write("ok");
 	}
 
 }

@@ -17,9 +17,9 @@ LOG :
     DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
-  FILE_PATTERN : "[RND].[NAME].log"
+  FILE_PATTERN : "[NAME].log"
   WRITE_LOG : 
-    DEFAULT : "false"
+    DEFAULT : "true"
     goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"

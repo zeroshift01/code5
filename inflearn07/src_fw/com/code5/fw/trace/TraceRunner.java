@@ -156,6 +156,7 @@ public final class TraceRunner implements Reload {
 			}
 		}
 
+		sb.append(" ");
 		sb.append(log);
 
 		return sb.toString();
