@@ -32,7 +32,6 @@ public final class TraceRunner implements Reload {
 	private TraceRunner() {
 
 		InitYaml init = InitYaml.get();
-		this.hostName = init.getHostName();
 		this.appName = init.getAppName();
 		reload();
 		Admin.addReload(this);
@@ -90,11 +89,6 @@ public final class TraceRunner implements Reload {
 	 * 
 	 */
 	private boolean isSystemOut = false;
-
-	/**
-	 * 
-	 */
-	private String hostName = null;
 
 	/**
 	 * 
