@@ -39,7 +39,7 @@ public class InitCode5DBByDev {
 
 			String key = keys.get(i);
 
-			System.out.println(key + "----------------");
+			// System.out.println(key + "----------------");
 
 			try {
 				sql.executeSql(key);
