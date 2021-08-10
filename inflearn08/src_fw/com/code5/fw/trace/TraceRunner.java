@@ -32,7 +32,6 @@ public final class TraceRunner implements Reload {
 	private TraceRunner() {
 
 		InitYaml init = InitYaml.get();
-		this.hostName = init.getHostName();
 		this.appName = init.getAppName();
 		reload();
 		Admin.addReload(this);
@@ -94,11 +93,6 @@ public final class TraceRunner implements Reload {
 	/**
 	 * 
 	 */
-	private String hostName = null;
-
-	/**
-	 * 
-	 */
 	private String appName = null;
 
 	/**
@@ -130,6 +124,7 @@ public final class TraceRunner implements Reload {
 	 * @param log
 	 * @return
 	 */
+
 	private String makeLogStr(String className, String log, Box box) {
 
 		String classNameShort = makeClassNameShort(className);
@@ -155,6 +150,7 @@ public final class TraceRunner implements Reload {
 			}
 		}
 
+		sb.append(" ");
 		sb.append(log);
 
 		return sb.toString();
@@ -285,6 +281,7 @@ public final class TraceRunner implements Reload {
 	 * @param box
 	 * @return
 	 */
+
 	boolean isNotLogWrite(String className, Box box) {
 
 		String serviceKey = box.s(Box.KEY_SERVICE);
@@ -345,21 +342,6 @@ public final class TraceRunner implements Reload {
 
 		String checkLogDir = this.logDir;
 		File checkDir = new File(checkLogDir);
-
-		if (!checkDir.isDirectory()) {
-			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
-			return;
-		}
-
-		if (this.hostName == null) {
-			this.logDir = checkLogDir;
-			this.isLogDir = true;
-			return;
-		}
-
-		checkLogDir = checkLogDir + File.separator + this.hostName;
-		checkDir = new File(checkLogDir);
-		checkDir.mkdir();
 
 		if (!checkDir.isDirectory()) {
 			(new Exception("not Directory [" + checkLogDir + "]")).printStackTrace();
