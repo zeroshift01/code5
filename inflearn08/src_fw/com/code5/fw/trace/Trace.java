@@ -50,6 +50,7 @@ public class Trace {
 	 * @param log
 	 */
 	public void writeErr(String log) {
+		traceRunner.write("out", this.className, log);
 		traceRunner.write("err", this.className, log);
 	}
 

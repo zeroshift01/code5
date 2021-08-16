@@ -49,6 +49,10 @@ public class Trace_test {
 	 */
 	@Test
 	public void test_멀티쓰레드_로그기록() throws Exception {
+		
+		// 상호배제
+		// 점유와대기
+		// 임계영역
 
 		Trace_test$[] t = new Trace_test$[2];
 		for (int i = 0; i < t.length; i++) {

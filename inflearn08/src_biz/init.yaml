@@ -17,19 +17,19 @@ LOG :
     DEFAULT : "[APP_ROOT]/logs"
     PRAP1 : "/logs/prap1"
     PRAP2 : "/logs/prap2"
-  FILE_PATTERN : "[RND].[NAME].log"
+  FILE_PATTERN : "[NAME].log"
   WRITE_LOG : 
-    DEFAULT : "false"
+    DEFAULT : "true"
     goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
   BUFFER :
-    DEFAULT : "false"
+    DEFAULT : "true"
     goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
   SYSTEM_OUT : 
-    DEFAULT : "true"
+    DEFAULT : "false"
     goorm : "false"
     PRAP1 : "false"
     PRAP2 : "false"
@@ -61,11 +61,8 @@ NOLOG :
   CLASS_NAME : 
     - "com.code5.fw.web.TransactionContext"
   SERVICE_KEY :
-    - "loginView"
-    - "logout"
-
-
-
+    - "callLogin"
+    - "exeLogin"
 
 PRODUCT :
   DEFAULT : "false"

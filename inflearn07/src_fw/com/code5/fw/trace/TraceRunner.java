@@ -21,8 +21,6 @@ public final class TraceRunner implements Reload {
 
 	/**
 	 * 
-	 * /**
-	 * 
 	 */
 	private static TraceRunner TRACE = new TraceRunner();
 
@@ -215,6 +213,9 @@ public final class TraceRunner implements Reload {
 			System.out.println(log);
 		}
 
+		// 객체를 통한 임계영역 설정
+		// "log".intern() -> log.log
+		// "err".intern() -> err.log
 		synchronized (logKey.intern()) {
 
 			TraceWriter traceWriter = traceWriterMap.get(logKey);
