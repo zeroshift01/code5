@@ -1,59 +1,77 @@
-1. 자원 구성
-/workspace/BoardByCode5/inflearn08/doc  
-/workspace/BoardByCode5/inflearn08/files  
-/workspace/BoardByCode5/inflearn08/lib  
-/workspace/BoardByCode5/inflearn08/logs  
-/workspace/BoardByCode5/inflearn08/temp  
-/workspace/BoardByCode5/inflearn08/web
+1. 디렉토리 구성
+
+/contents/code5/web : 서비스의 ROOT
+/contents/code5/lib 
+/contents/code5/doc
+/contents/code5/files  
+/contents/code5/logs  
+/contents/code5/temp  
 
 
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/board/Board_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/trace/Trace_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/UploadFileB_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/TableColumnBase_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/TableRecodeBase_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/InitYaml_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/CryptPin_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/DataCrypt_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/Aes_test.java
-rm /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/Aria_ECB_ZERO_test.java
+/contents/code5/web/css
+/contents/code5/web/images
+/contents/code5/web/js
+
+/contents/code5/web/index.jsp
+
+/contents/code5/web/WEB-INF
+/contents/code5/web/WEB-INF/web.xml
+/contents/code5/web/WEB-INF/classes
+
+/contents/code5/web/WEB-INF/classes/com/code5/fw/web/MasterController.java
+/contents/code5/web/WEB-INF/classes/com/code5/fw/web/MasterController.class
+
+/contents/code5/web/WEB-INF/classes/com/biz/board/Board.java
+/contents/code5/web/WEB-INF/classes/com/biz/board/Board.class
+
+/contents/code5/web/WEB-INF/classes/com/biz/board/Board_test.java 삭제
+
+/contents/code5/web/WEB-INF/classes/com/biz/board/jsp/list.jsp
 
 
-2. CLASSPATH 설정
-
-export CLASSPATH=/workspace/BoardByCode5/inflearn08/web/WEB-INF/classes
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/snakeyaml/snakeyaml-1.28.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/sqlite/sqlite-jdbc-3.30.1.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/mysql/mysql-connector-java-5.1.49.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-core.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/annotations-api.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/ecj-4.6.3.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-dbcp.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-core.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-el.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-jasper.jar
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/lib/tomcat-embed/tomcat-embed-websocket.jar
-
-export CLASSPATH=$CLASSPATH:/workspace/BoardByCode5/inflearn08/src_fw/com/code5/fw/db
+/contents/code5/web/WEB-INF/lib/snakeyaml/snakeyaml-1.28.jar
+/contents/code5/web/WEB-INF/lib/sqlite/sqlite-jdbc-3.30.1.jar
+/contents/code5/web/WEB-INF/lib/mysql/mysql-connector-java-5.1.49.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-embed-core.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/annotations-api.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/ecj-4.6.3.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-dbcp.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-embed-core.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-embed-el.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-embed-jasper.jar
+/contents/code5/web/WEB-INF/lib/tomcat-embed/tomcat-embed-websocket.jar
 
 
+
+2. 컴파일 및 실행을 위한 CLASSPATH 설정
+
+export CLASSPATH=/contents/code5/web/WEB-INF/classes
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/snakeyaml/snakeyaml-1.28.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/sqlite/sqlite-jdbc-3.30.1.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/mysql/mysql-connector-java-5.1.49.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/annotations-api.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/ecj-4.6.3.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-dbcp.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-embed-core.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-embed-el.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-embed-jasper.jar
+export CLASSPATH=$CLASSPATH:/contents/code5/lib/tomcat-embed/tomcat-embed-websocket.jar
 
 
 
 3. 컴파일
 
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/data/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/db/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/security/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/trace/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/code5/fw/web/*.java
+javac /contents/code5/web/WEB-INF/classes/com/code5/fw/data/*.java
+javac /contents/code5/web/WEB-INF/classes/com/code5/fw/db/*.java
+javac /contents/code5/web/WEB-INF/classes/com/code5/fw/security/*.java
+javac /contents/code5/web/WEB-INF/classes/com/code5/fw/trace/*.java
+javac /contents/code5/web/WEB-INF/classes/com/code5/fw/web/*.java
 
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/board/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/brd/*.java
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/login/*.java
+javac /contents/code5/web/WEB-INF/classes/com/biz/board/*.java
+javac /contents/code5/web/WEB-INF/classes/com/biz/login/*.java
 
-javac /workspace/BoardByCode5/inflearn08/web/WEB-INF/classes/com/biz/*.java
+javac /contents/code5/web/WEB-INF/classes/com/biz/*.java
 
 
 4. DB 초기화 
