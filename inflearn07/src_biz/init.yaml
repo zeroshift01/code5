@@ -19,7 +19,7 @@ LOG :
     PRAP2 : "/logs/prap2"
   FILE_PATTERN : "[NAME].log"
   WRITE_LOG : 
-    DEFAULT : "true"
+    DEFAULT : "false"
     goorm : "true"
     PRAP1 : "true"
     PRAP2 : "true"
@@ -61,9 +61,7 @@ NOLOG :
   CLASS_NAME : 
     - "com.code5.fw.web.TransactionContext"
   SERVICE_KEY :
-    - "loginView"
-    - "logout"
-
+    - "callLogin"
 
 
 
