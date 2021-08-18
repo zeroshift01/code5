@@ -18,6 +18,8 @@ public class Board implements BizController {
 	 * @return
 	 * @throws Exception
 	 */
+	
+	
 	@ServiceAnnotation(isLogin = false)
 	public String callList() throws Exception {
 

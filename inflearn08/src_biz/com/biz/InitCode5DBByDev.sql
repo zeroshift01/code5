@@ -112,7 +112,14 @@ INSERT INTO FW_CONTROLLER VALUES('callLogin','com.biz.login.Login','callLogin');
 --[[[ INITCODE5DBBYDEV_14
 
 
-INSERT INTO FW_CONTROLLER VALUES('callList','com.biz.board.Board','callList');
+INSERT INTO FW_CONTROLLER VALUES
+(
+'callList'
+,'com.biz.board.Board'
+,'callList'
+);
+
+
 
 --]]]
 --[[[ INITCODE5DBBYDEV_15
