@@ -1,0 +1,32 @@
+rm -rf /contents/code5/web/*
+
+cp -rf /workspace/code5/inflearn08/web /contents/code5/
+cp -rf /workspace/code5/inflearn08/lib /contents/code5/ 
+cp -rf /workspace/code5/inflearn08/doc /contents/code5/
+cp -rf /workspace/code5/inflearn08/files /contents/code5/
+cp -rf /workspace/code5/inflearn08/logs /contents/code5/
+cp -rf /workspace/code5/inflearn08/temp /contents/code5/
+
+rm -rf /contents/code5/web/WEB-INF/classes/*
+
+cp -rf /workspace/code5/inflearn08/src_biz/* /contents/code5/web/WEB-INF/classes/
+cp -rf /workspace/code5/inflearn08/src_fw/* /contents/code5/web/WEB-INF/classes/
+
+mkdir /contents/code5/web/WEB-INF/lib 
+
+cp /contents/code5/lib/snakeyaml/snakeyaml-1.28.jar /contents/code5/web/WEB-INF/lib/
+cp /contents/code5/lib/sqlite/sqlite-jdbc-3.30.1.jar /contents/code5/web/WEB-INF/lib/
+cp /contents/code5/lib/tomcat-embed/tomcat-embed-core.jar /contents/code5/web/WEB-INF/lib/
+
+rm /contents/code5/web/WEB-INF/classes/com/biz/board/Board_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/trace/Trace_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/data/UploadFileB_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/data/TableColumnBase_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/data/TableRecodeBase_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/data/InitYaml_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/db/SqlRunner_test.sql
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/security/CryptPin_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/security/DataCrypt_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/security/Aes_test.java
+rm /contents/code5/web/WEB-INF/classes/com/code5/fw/security/Aria_ECB_ZERO_test.java
