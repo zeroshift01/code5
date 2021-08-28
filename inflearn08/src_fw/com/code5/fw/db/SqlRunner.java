@@ -68,6 +68,13 @@ public class SqlRunner implements Reload {
 	 */
 	SqlRunnerB getSqlRunnerBStep1(String key) throws SQLException {
 
+		SqlRunnerB sqlRunnerB = cacheSqlMap.get(key);
+		if (sqlRunnerB != null) {
+			if (isCache) {
+				return sqlRunnerB;
+			}
+		}
+
 		InputStream is = null;
 		try {
 
@@ -133,7 +140,7 @@ public class SqlRunner implements Reload {
 				sqlOrg = sqlOrg.substring(0, sqlOrg.length() - 1);
 			}
 
-			SqlRunnerB sqlRunnerB = new SqlRunnerB();
+			sqlRunnerB = new SqlRunnerB();
 			sqlRunnerB.key = key;
 			sqlRunnerB.sqlOrg = sqlOrg;
 			sqlRunnerB.sqlKey = sqlKey;
@@ -162,6 +169,8 @@ public class SqlRunner implements Reload {
 			} catch (Exception ex) {
 				trace.writeErr(ex);
 			}
+
+			cacheSqlMap.put(key, sqlRunnerB);
 
 			return sqlRunnerB;
 
@@ -295,18 +304,9 @@ public class SqlRunner implements Reload {
 	 */
 	SqlRunnerB getSqlRunnerB(Transaction transaction, Box box, String key) throws SQLException {
 
-		SqlRunnerB sqlRunnerB = cacheSqlMap.get(key);
-		if (sqlRunnerB != null) {
-			if (isCache) {
-				return sqlRunnerB;
-			}
-		}
-
-		sqlRunnerB = getSqlRunnerBStep1(key);
+		SqlRunnerB sqlRunnerB = getSqlRunnerBStep1(key);
 
 		sqlRunnerB = getSqlRunnerBStep2(transaction, box, sqlRunnerB);
-
-		cacheSqlMap.put(key, sqlRunnerB);
 
 		return sqlRunnerB;
 	}
