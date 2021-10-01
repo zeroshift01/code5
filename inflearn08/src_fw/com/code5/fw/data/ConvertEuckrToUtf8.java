@@ -42,18 +42,19 @@ public class ConvertEuckrToUtf8 {
 
 			if (thisFile.isDirectory()) {
 				xx(thisFile.listFiles());
+				continue;
 			}
 
 			String thisName = thisFile.getAbsolutePath();
 
 			if (thisName.endsWith(".java")) {
 				x(thisName);
-				return;
+				continue;
 			}
 
 			if (thisName.endsWith(".jsp")) {
 				x(thisName);
-				return;
+				continue;
 			}
 
 		}
@@ -65,7 +66,7 @@ public class ConvertEuckrToUtf8 {
 		File file = new File(fileUrl);
 		boolean isRename = file.renameTo(new File(fileUrl + ".euckr"));
 		if (!isRename) {
-			System.out.println(fileUrl);
+			System.out.println("fail backup [" + fileUrl + "]");
 			return;
 		}
 
@@ -82,6 +83,8 @@ public class ConvertEuckrToUtf8 {
 		bw.flush();
 		br.close();
 		bw.close();
+
+		System.out.println("convert [" + fileUrl + "]");
 
 	}
 }
