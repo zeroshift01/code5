@@ -24,12 +24,12 @@
 	<classpathentry kind="lib" path="lib/thymeleaf/attoparser-2.0.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/jackson-core-2.13.2.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/jackson-databind-2.13.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/thymeleaf/jakarta.servlet-api-5.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/ognl-3.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/unbescape-1.1.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/commons-io-2.11.0.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/mockito-core-2.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/jakarta.servlet-api-5.0.0.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
