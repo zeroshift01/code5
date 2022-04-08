@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src_fw"/>
+	<classpathentry kind="src" path="src_thymeleaf-testing"/>
+	<classpathentry kind="src" path="src_thymeleaf"/>
+	<classpathentry kind="src" path="src_biz"/>
+	<classpathentry kind="src" path="src_thymeleafexamples-gtvg"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/snakeyaml/snakeyaml-1.28.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite/sqlite-jdbc-3.30.1.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/annotations-api.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/ecj-4.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-core.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-el.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-jasper.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-embed/tomcat-embed-websocket.jar"/>
+	<classpathentry kind="lib" path="lib/mysql/mysql-connector-java-8.0.25.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/attoparser-2.0.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/jackson-core-2.13.2.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/jackson-databind-2.13.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/jakarta.servlet-api-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/ognl-3.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/unbescape-1.1.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/mockito-core-2.10.0.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="output" path="web/WEB-INF/classes"/>
+</classpath>
