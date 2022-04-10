@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.thymeleaf.web.IWebRequest;
+
 import thymeleafexamples.gtvg.web.controller.HomeController;
 import thymeleafexamples.gtvg.web.controller.IGTVGController;
 import thymeleafexamples.gtvg.web.controller.OrderDetailsController;
@@ -30,36 +31,26 @@ import thymeleafexamples.gtvg.web.controller.OrderListController;
 import thymeleafexamples.gtvg.web.controller.ProductCommentsController;
 import thymeleafexamples.gtvg.web.controller.ProductListController;
 import thymeleafexamples.gtvg.web.controller.SubscribeController;
-import thymeleafexamples.gtvg.web.controller.UserProfileController;
-
 
 public class ControllerMappings {
 
+	public static IGTVGController resolveControllerForRequest(final IWebRequest request) {
 
-    private static Map<String, IGTVGController> controllersByURL;
+		Map<String, IGTVGController> controllersByURL = new HashMap<String, IGTVGController>();
+		controllersByURL.put("/", new HomeController());
+		controllersByURL.put("/test.jsp", new ProductListController());
+		controllersByURL.put("/product/list", new ProductListController());
+		controllersByURL.put("/product/comments", new ProductCommentsController());
+		controllersByURL.put("/order/list", new OrderListController());
+		controllersByURL.put("/order/details", new OrderDetailsController());
+		controllersByURL.put("/subscribe", new SubscribeController());
 
+		final String path = request.getPathWithinApplication();
+		return controllersByURL.get(path);
+	}
 
-    static {
-        controllersByURL = new HashMap<String, IGTVGController>();
-        controllersByURL.put("/", new HomeController());
-        controllersByURL.put("/product/list", new ProductListController());
-        controllersByURL.put("/product/comments", new ProductCommentsController());
-        controllersByURL.put("/order/list", new OrderListController());
-        controllersByURL.put("/order/details", new OrderDetailsController());
-        controllersByURL.put("/subscribe", new SubscribeController());
-        controllersByURL.put("/userprofile", new UserProfileController());
-    }
-    
-
-    
-    public static IGTVGController resolveControllerForRequest(final IWebRequest request) {
-        final String path = request.getPathWithinApplication();
-        return controllersByURL.get(path);
-    }
-
-    private ControllerMappings() {
-        super();
-    }
-
+	private ControllerMappings() {
+		super();
+	}
 
 }

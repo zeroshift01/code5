@@ -31,5 +31,7 @@
 	<classpathentry kind="lib" path="lib/thymeleaf/mockito-core-2.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/commons-lang3-3.12.0.jar"/>
 	<classpathentry kind="lib" path="lib/thymeleaf/jakarta.servlet-api-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/thymeleaf/jackson-annotations-2.13.2.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
