@@ -2,6 +2,7 @@ package com.code5.fw.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -10,10 +11,18 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
+import org.thymeleaf.web.IWebExchange;
+import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
@@ -71,11 +80,7 @@ public class MasterController extends HttpServlet implements Reload {
 		Box box = BoxContext.get();
 		ServiceB serviceB = (ServiceB) box.get(Box.KEY_SERVICEB);
 
-		if (view.endsWith("jsp")) {
-			view = serviceB.classUrl + File.separatorChar + "jsp" + File.separatorChar + view;
-		} else if (view.endsWith("html")) {
-			view = serviceB.classUrl + File.separatorChar + "html" + File.separatorChar + view;
-		}
+		view = serviceB.classUrl + File.separatorChar + "view" + File.separatorChar + view;
 
 		if (File.separatorChar == '\\') {
 			view = view.replace("\\", "/");
@@ -85,12 +90,6 @@ public class MasterController extends HttpServlet implements Reload {
 
 	}
 
-	/**
-	 * @param request
-	 * @param response
-	 * @param box
-	 * @param view
-	 */
 	private void forward(HttpServletRequest request, HttpServletResponse response, Box fwView) {
 
 		try {
@@ -101,6 +100,31 @@ public class MasterController extends HttpServlet implements Reload {
 			trace.write("view [" + view + "]");
 			trace.write("tmpl [" + tmpl + "]");
 
+			if (tmpl.endsWith(".html")) {
+				forwardForTypeLeaf(view, tmpl, request, response, fwView);
+				return;
+			}
+
+			forwardForJsp(view, tmpl, request, response, fwView);
+			return;
+
+		} catch (Exception ex) {
+			trace.write(ex);
+		}
+	}
+
+	/**
+	 * @param view
+	 * @param tmpl
+	 * @param request
+	 * @param response
+	 * @param fwView
+	 */
+	private void forwardForJsp(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
+			Box fwView) {
+
+		try {
+
 			String dispatcherView = tmpl;
 			if ("".equals(dispatcherView)) {
 				dispatcherView = view;
@@ -109,6 +133,47 @@ public class MasterController extends HttpServlet implements Reload {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
 
 			dispatcher.forward(request, response);
+
+		} catch (Exception ex) {
+			trace.write(ex);
+		}
+	}
+
+	private TemplateEngine templateEngine = null;
+	private JavaxServletWebApplication application = null;
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+
+		super.init(config);
+
+		ServletContext servletContext = config.getServletContext();
+		application = JavaxServletWebApplication.buildApplication(servletContext);
+		WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
+		templateEngine = new TemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver);
+	}
+
+	/**
+	 * @param request
+	 * @param response
+	 * @param fwView
+	 */
+	private void forwardForTypeLeaf(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
+			Box fwView) {
+
+		try {
+
+			IWebExchange webExchange = application.buildExchange(request, response);
+			WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
+
+			response.setContentType("text/html;charset=" + this.characterSet);
+			response.setHeader("Pragma", "no-cache");
+			response.setHeader("Cache-Control", "no-cache");
+			response.setDateHeader("Expires", 0);
+
+			Writer writer = response.getWriter();
+			templateEngine.process(view, ctx, writer);
 
 		} catch (Exception ex) {
 			trace.write(ex);

@@ -7,12 +7,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
-import org.thymeleaf.web.IWebApplication;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
@@ -35,23 +32,31 @@ public class Test {
 	public static void process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Box box = new BoxHttp(request);
-		box.put("A", "A-B");
-		box.put("B", "A-C");
+		box.put("A", "aaa");
+		box.put("B", "1");
+		box.put("C", "true");
 
-		String[] cols = new String[] { "A", "B" };
+		String[] cols = new String[] { "N", "A", "B", "C" };
+		String[] data1 = new String[] { "1", "aaa1", "1", "true" };
+		String[] data2 = new String[] { "2", "aaa2", "2", "false" };
+		String[] data3 = new String[] { "3", "aaa3", "3", "true" };
+
 		Table table = new TableRecodeBase(cols);
-		table.addRecode(cols);
-		table.addRecode(cols);
-		table.addRecode(cols);
-		table.addRecode(cols);
+		table.addRecode(data1);
+		table.addRecode(data2);
+		table.addRecode(data3);
+
+		box.put("table", table);
 
 		TableByList list = new TableByList(table);
 		box.put("list", list);
 
 		ServletContext servletContext = request.getServletContext();
-
 		JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(servletContext);
-		ITemplateEngine templateEngine = buildTemplateEngine(application);
+
+		WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
+		TemplateEngine templateEngine = new TemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver);
 
 		IWebExchange webExchange = application.buildExchange(request, response);
 		WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
@@ -67,32 +72,7 @@ public class Test {
 		List<Product> allProducts = productService.findAll();
 
 		ctx.setVariable("prods", allProducts);
-		templateEngine.process("product/list", ctx, writer);
-
-	}
-
-	private static ITemplateEngine buildTemplateEngine(final IWebApplication application) {
-
-		final WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
-
-		// HTML is the default mode, but we will set it anyway for better understanding
-		// of code
-		templateResolver.setTemplateMode(TemplateMode.HTML);
-		// This will convert "home" to "/WEB-INF/templates/home.html"
-		templateResolver.setPrefix("/WEB-INF/templates/");
-		templateResolver.setSuffix(".html");
-		// Set template cache TTL to 1 hour. If not set, entries would live in cache
-		// until expelled by LRU
-		templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
-
-		// Cache is set to true by default. Set to false if you want templates to
-		// be automatically updated when modified.
-		templateResolver.setCacheable(true);
-
-		final TemplateEngine templateEngine = new TemplateEngine();
-		templateEngine.setTemplateResolver(templateResolver);
-
-		return templateEngine;
+		templateEngine.process("/WEB-INF/templates/product/list.html", ctx, writer);
 
 	}
 

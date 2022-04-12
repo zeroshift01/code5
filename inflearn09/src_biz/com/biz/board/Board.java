@@ -205,4 +205,17 @@ public class Board implements BizController {
 
 	}
 
+	
+	@ServiceAnnotation(isLogin = false)
+	public String callListTypeLeaf() throws Exception {
+
+		Box box = BoxContext.get();
+
+		BoardD dao = new BoardD();
+		Table list = dao.list();
+		box.put("list", list);
+
+		return "listForTypeLeaf";
+	}
+
 }

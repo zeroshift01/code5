@@ -194,20 +194,20 @@ KEY PRIMARY KEY
 --[[[ INITCODE5DBBYDEV_27
 
 
-INSERT INTO FW_VIEW VALUES('file001','/WEB-INF/classes/com/code5/fw/web/jsp/file001.jsp','','');
+INSERT INTO FW_VIEW VALUES('file001','/WEB-INF/classes/com/code5/fw/web/view/file001.jsp','','');
 
 --]]]
 --[[[ INITCODE5DBBYDEV_28
-INSERT INTO FW_VIEW VALUES('null','/WEB-INF/classes/com/code5/fw/web/jsp/null.jsp','','');
+INSERT INTO FW_VIEW VALUES('null','/WEB-INF/classes/com/code5/fw/web/view/null.jsp','','');
 
 --]]]
 --[[[ INITCODE5DBBYDEV_29
-INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/jsp/err.jsp','','');
+INSERT INTO FW_VIEW VALUES('err','/WEB-INF/classes/com/code5/fw/web/view/err.jsp','','');
 
 --]]]
 --[[[ INITCODE5DBBYDEV_30
 
-INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/jsp/login.jsp','','');
+INSERT INTO FW_VIEW VALUES('login','/WEB-INF/classes/com/biz/login/view/login.jsp','','');
 
 --]]]
 --[[[ INITCODE5DBBYDEV_31S
@@ -221,8 +221,8 @@ KEY
 )
 VALUES(
 'list'
-,'/WEB-INF/classes/com/biz/board/jsp/list.jsp'
-,'/WEB-INF/classes/com/biz/board/jsp/main.jsp'
+,'/WEB-INF/classes/com/biz/board/view/list.jsp'
+,'/WEB-INF/classes/com/biz/board/view/main.jsp'
 ,'리스트'
 );
 
