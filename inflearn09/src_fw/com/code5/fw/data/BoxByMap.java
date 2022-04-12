@@ -1,5 +1,6 @@
 package com.code5.fw.data;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,11 +28,21 @@ public class BoxByMap implements Map<String, String> {
 	@Override
 	public String get(Object key) {
 
-		if (!(key instanceof String)) {
+		String keyx = null;
+
+		if (key instanceof Character) {
+			keyx = Character.toString((Character) key);
+		}
+
+		if (key instanceof String) {
+			keyx = (String) key;
+		}
+
+		if (keyx == null) {
 			return "";
 		}
 
-		return box.s((String) key);
+		return box.s(keyx);
 	}
 
 	@Override
@@ -78,6 +89,32 @@ public class BoxByMap implements Map<String, String> {
 		return set;
 	}
 
+	private Set<Entry<String, String>> set = null;
+
+	@Override
+	public Set<Entry<String, String>> entrySet() {
+
+		if (set != null) {
+			return set;
+		}
+
+		Set<Entry<String, String>> set = new HashSet<Entry<String, String>>();
+
+		String[] keys = box.getKeys();
+		for (int i = 0; i < keys.length; i++) {
+
+			String key = keys[i];
+			String val = get(keys[i]);
+
+			Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<String, String>(key, val);
+			set.add(entry);
+		}
+
+		this.set = set;
+		return this.set;
+
+	}
+
 	@Override
 	public String put(String key, String value) {
 		throw new RuntimeException();
@@ -101,11 +138,6 @@ public class BoxByMap implements Map<String, String> {
 
 	@Override
 	public Collection<String> values() {
-		throw new RuntimeException();
-	}
-
-	@Override
-	public Set<Entry<String, String>> entrySet() {
 		throw new RuntimeException();
 	}
 
