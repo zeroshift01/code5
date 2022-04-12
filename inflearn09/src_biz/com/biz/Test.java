@@ -1,6 +1,7 @@
-package thymeleafexamples.gtvg.web.filter;
+package com.biz;
 
 import java.io.Writer;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -8,15 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
 import org.thymeleaf.web.IWebApplication;
 import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.IWebRequest;
 import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
-import thymeleafexamples.gtvg.web.controller.IGTVGController;
-import thymeleafexamples.gtvg.web.mapping.ControllerMappings;
+import com.code5.fw.data.Box;
+import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.Table;
+import com.code5.fw.data.TableRecodeBase;
+
+import thymeleafexamples.gtvg.business.entities.Product;
+import thymeleafexamples.gtvg.business.services.ProductService;
 
 public class Test {
 
@@ -27,39 +33,36 @@ public class Test {
 	 */
 	public static void process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		Box box = new BoxHttp(request);
+		box.put("A", "A-B");
+		box.put("B", "A-C");
+		String[] cols = new String[] { "A", "B" };
+		Table table = new TableRecodeBase(cols);
+		table.addRecode(cols);
+		table.addRecode(cols);
+
+		box.put("table", table);
+
 		ServletContext servletContext = request.getServletContext();
 
 		JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(servletContext);
 		ITemplateEngine templateEngine = buildTemplateEngine(application);
 
 		IWebExchange webExchange = application.buildExchange(request, response);
-		IWebRequest webRequest = webExchange.getRequest();
+		WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
 
-		/*
-		 * Query controller/URL mapping and obtain the controller that will process the
-		 * request. If no controller is available, return false and let other
-		 * filters/servlets process the request.
-		 */
-		IGTVGController controller = ControllerMappings.resolveControllerForRequest(webRequest);
-
-		/*
-		 * Write the response headers
-		 */
 		response.setContentType("text/html;charset=UTF-8");
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 
-		/*
-		 * Obtain the response writer
-		 */
 		Writer writer = response.getWriter();
 
-		/*JsonMerge
-		 * Execute the controller and process view template, writing the results to the
-		 * response writer.
-		 */
-		controller.process(webExchange, templateEngine, writer);
+		ProductService productService = new ProductService();
+		List<Product> allProducts = productService.findAll();
+
+		ctx.setVariable("prods", allProducts);
+		templateEngine.process("product/list", ctx, writer);
 
 	}
 

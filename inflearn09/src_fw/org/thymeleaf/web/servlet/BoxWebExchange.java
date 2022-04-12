@@ -1,4 +1,4 @@
-package com.code5.fw.data;
+package org.thymeleaf.web.servlet;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -6,17 +6,13 @@ import java.util.Set;
 
 import org.thymeleaf.web.IWebApplication;
 
+import com.code5.fw.data.Box;
+
 /**
  * @author zero
  *
  */
-public class BoxIWebApplication implements IWebApplication {
-
-	private Box box = null;
-
-	public BoxIWebApplication(Box box) {
-		this.box = box;
-	}
+public class BoxWebExchange implements IWebApplication {
 
 	@Override
 	public boolean containsAttribute(String name) {
@@ -49,7 +45,7 @@ public class BoxIWebApplication implements IWebApplication {
 
 	@Override
 	public void setAttributeValue(String name, Object value) {
-		// TODO Auto-generated method stub
+		box.put(name, value);
 
 	}
 
@@ -69,6 +65,19 @@ public class BoxIWebApplication implements IWebApplication {
 	public InputStream getResourceAsStream(String path) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	// private JavaxServletWebRequest webRequest;
+	private Box box;
+
+	/**
+	 * @param box
+	 * @param request
+	 */
+	public BoxWebExchange(Box box) {
+		this.box = box;
+		// this.webRequest = new JavaxServletWebRequest(request);
+
 	}
 
 }

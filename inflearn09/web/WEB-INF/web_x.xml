@@ -30,4 +30,18 @@
 		<url-pattern>/multipart/*</url-pattern>
 	</servlet-mapping>
 
+	<display-name>thymeleafexamples-gtvg</display-name>
+
+	<filter>
+		<filter-name>gtvgfilter</filter-name>
+		<filter-class>thymeleafexamples.gtvg.web.filter.GTVGFilter
+		</filter-class>
+	</filter>
+
+
+	<filter-mapping>
+		<filter-name>gtvgfilter</filter-name>
+		<url-pattern>/gtvgfilter/*</url-pattern>
+	</filter-mapping>
+
 </web-app>
