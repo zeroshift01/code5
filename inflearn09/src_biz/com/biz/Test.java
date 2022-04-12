@@ -19,6 +19,7 @@ import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.Table;
+import com.code5.fw.data.TableByList;
 import com.code5.fw.data.TableRecodeBase;
 
 import thymeleafexamples.gtvg.business.entities.Product;
@@ -36,12 +37,16 @@ public class Test {
 		Box box = new BoxHttp(request);
 		box.put("A", "A-B");
 		box.put("B", "A-C");
+
 		String[] cols = new String[] { "A", "B" };
 		Table table = new TableRecodeBase(cols);
 		table.addRecode(cols);
 		table.addRecode(cols);
+		table.addRecode(cols);
+		table.addRecode(cols);
 
-		box.put("table", table);
+		TableByList list = new TableByList(table);
+		box.put("list", list);
 
 		ServletContext servletContext = request.getServletContext();
 

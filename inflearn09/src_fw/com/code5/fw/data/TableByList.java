@@ -45,17 +45,25 @@ public class TableByList implements List<Map<String, String>> {
 		return map;
 	}
 
+	Iterator<Map<String, String>> iterator = null;
+
 	@Override
 	public Iterator<Map<String, String>> iterator() {
 
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (this.iterator != null) {
+			return this.iterator;
+		}
+
+		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		for (int i = 0; i < table.size(); i++) {
-			Box thisBox = table.getBox();
+			Box thisBox = table.getBox(i);
 			BoxByMap thisBoxByMap = new BoxByMap(thisBox);
 			list.add(thisBoxByMap);
 		}
 
-		return list.iterator();
+		this.iterator = list.iterator();
+
+		return this.iterator;
 	}
 
 	@Override

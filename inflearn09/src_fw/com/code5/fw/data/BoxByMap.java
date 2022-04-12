@@ -1,5 +1,6 @@
 package com.code5.fw.data;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,16 +28,34 @@ public class BoxByMap implements Map<String, String> {
 	@Override
 	public String get(Object key) {
 
-		if (!(key instanceof String)) {
+		String keyx = null;
+
+		if (key instanceof Character) {
+			keyx = Character.toString((Character) key);
+		}
+
+		if (key instanceof String) {
+			keyx = (String) key;
+		}
+
+		if (keyx == null) {
 			return "";
 		}
 
-		return box.s((String) key);
+		return box.s(keyx);
 	}
+
+	private int size = -1;
 
 	@Override
 	public int size() {
-		return box.getKeys().length;
+
+		if (this.size != -1) {
+			return this.size;
+		}
+
+		this.size = box.getKeys().length;
+		return this.size;
 	}
 
 	@Override
@@ -59,23 +78,47 @@ public class BoxByMap implements Map<String, String> {
 
 	@Override
 	public boolean containsValue(Object value) {
+		Set<String> keyset = keySet();
+		return keyset.contains(value);
+	}
+
+	private Set<String> keySet = null;
+
+	@Override
+	public Set<String> keySet() {
+
+		if (keySet != null) {
+			return keySet;
+		}
+
+		String[] keys = box.getKeys();
+		keySet = new HashSet<>(Arrays.asList(keys));
+		return keySet;
+	}
+
+	private Set<Entry<String, String>> set = null;
+
+	@Override
+	public Set<Entry<String, String>> entrySet() {
+
+		if (set != null) {
+			return set;
+		}
+
+		set = new HashSet<Entry<String, String>>();
 
 		String[] keys = box.getKeys();
 		for (int i = 0; i < keys.length; i++) {
 
-			Object x = box.get(keys[i]);
-			if (x.equals(value)) {
-				return true;
-			}
-		}
-		return false;
-	}
+			String key = keys[i];
+			String val = get(keys[i]);
 
-	@Override
-	public Set<String> keySet() {
-		String[] keys = box.getKeys();
-		Set<String> set = new HashSet<>(Arrays.asList(keys));
-		return set;
+			Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<String, String>(key, val);
+			set.add(entry);
+		}
+
+		return this.set;
+
 	}
 
 	@Override
@@ -101,11 +144,6 @@ public class BoxByMap implements Map<String, String> {
 
 	@Override
 	public Collection<String> values() {
-		throw new RuntimeException();
-	}
-
-	@Override
-	public Set<Entry<String, String>> entrySet() {
 		throw new RuntimeException();
 	}
 
