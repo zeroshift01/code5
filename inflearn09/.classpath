@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src_fw"/>
-	<classpathentry kind="src" path="src_thymeleaf-testing"/>
 	<classpathentry kind="src" path="src_thymeleaf"/>
 	<classpathentry kind="src" path="src_biz"/>
-	<classpathentry kind="src" path="src_thymeleafexamples-gtvg"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
