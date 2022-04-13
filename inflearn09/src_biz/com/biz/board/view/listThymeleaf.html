@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 </head>
 <body>
+
+
+
+	<span th:text="*{isCallListThymeleaf}"></span>
+	<br>
+	<span th:text="*{isForceDelete}"></span>
+	<br>
+	<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}"></span>
+	<br>
+	<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}"></span>
+	<br>
+	<span th:text="*{list.limitRecode}"></span>
+	<br>
+	<span th:text="*{list.limitBox['N']}"></span>
+	<br>	 
 	<table>
-		<thead>
-			<tr>
-				<td>N</td>
-				<td>TITLE</td>
-				<td>EM</td>
-				<td>TOKEN_N</td>
-				<td>service</td>
-			</tr>
-		</thead>
-		
 		<th:block th:each="r:${list}">
 		<tr>
 			<td th:text="${r['N']}"></td>
@@ -26,9 +30,7 @@
 		</th:block>
 		
 	</table>
-
-	<span th:text="*{list.limitRecode}"></span>
-	<span th:text="*{list.limitBox['N']}"></span>
+	
 </body>
 
 </html>

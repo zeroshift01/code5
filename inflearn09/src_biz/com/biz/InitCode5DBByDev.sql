@@ -389,6 +389,6 @@ INSERT INTO FW_CONTROLLER VALUES('callListThymeleaf','com.biz.board.Board','call
 
 
 --[[[ INITCODE5DBBYDEV_TYPELEAF_02
-INSERT INTO FW_VIEW VALUES('listTypeLeaf','mainThymeleaf.html','listThymeleaf.html','게시판리스트');
+INSERT INTO FW_VIEW VALUES('listThymeleaf','listThymeleaf.html','listThymeleaf.html','게시판리스트');
 --]]]
 

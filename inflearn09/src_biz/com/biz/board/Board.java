@@ -6,6 +6,7 @@ import com.code5.fw.data.Table;
 import com.code5.fw.data.UploadFileB;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.MasterController;
 import com.code5.fw.web.ServiceAnnotation;
 
 /**
@@ -208,6 +209,13 @@ public class Board implements BizController {
 	public String callListThymeleaf() throws Exception {
 
 		callList();
+
+		boolean isCallListThymeleaf = MasterController.checkUrlAuth("callListThymeleaf");
+		boolean isForceDelete = MasterController.checkUrlAuth("forceDelete");
+
+		Box box = BoxContext.get();
+		box.put("isCallListThymeleaf", isCallListThymeleaf);
+		box.put("isForceDelete", isForceDelete);
 
 		return "listThymeleaf";
 	}

@@ -174,8 +174,12 @@ public class MasterController extends HttpServlet implements Reload {
 			Box fwView, Box box) throws Exception {
 
 		String[] keys = box.getKeys();
+
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
+
+			System.out.println("---" + key);
+
 			Object obj = box.get(key);
 
 			if (obj instanceof Table) {

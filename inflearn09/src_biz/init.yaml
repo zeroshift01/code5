@@ -72,10 +72,10 @@ PRODUCT :
   PRAP2 : "true"
 
 CACHE :
-  DEFAULT : "true"
+  DEFAULT : "false"
   goorm : "true"
   DVAP : "false"
-  PRAP1 : "false"
+  PRAP1 : "true"
   PRAP2 : "true"
 
 Transaction_SQLITE_JDBC_CODE5_DEV :
