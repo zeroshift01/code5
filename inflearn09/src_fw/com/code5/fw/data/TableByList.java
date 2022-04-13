@@ -14,6 +14,20 @@ import java.util.Map;
 public class TableByList implements List<Map<String, String>> {
 
 	/**
+	 * @return
+	 */
+	public boolean isLimitRecode() {
+		return table.isLimitRecode();
+	}
+
+	/**
+	 * @return
+	 */
+	public Map<String, String> getLimitBox() {
+		return new BoxByMap(table.getLimitBox());
+	}
+
+	/**
 	 * 
 	 */
 	private Table table = null;

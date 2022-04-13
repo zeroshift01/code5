@@ -25,9 +25,12 @@ import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
 import com.code5.fw.data.Box;
+import com.code5.fw.data.BoxByMap;
 import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.InitYaml;
 import com.code5.fw.data.SessionB;
+import com.code5.fw.data.Table;
+import com.code5.fw.data.TableByList;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.trace.Trace;
 import com.code5.fw.trace.TraceRunner;
@@ -90,27 +93,28 @@ public class MasterController extends HttpServlet implements Reload {
 
 	}
 
-	private void forward(HttpServletRequest request, HttpServletResponse response, Box fwView) {
+	/**
+	 * @param request
+	 * @param response
+	 * @param fwView
+	 * @param box
+	 */
+	private void forward(HttpServletRequest request, HttpServletResponse response, Box fwView, Box box)
+			throws Exception {
 
-		try {
+		String view = fwView.s("VIEW");
+		String tmpl = fwView.s("TMPL");
 
-			String view = fwView.s("VIEW");
-			String tmpl = fwView.s("TMPL");
+		trace.write("view [" + view + "]");
+		trace.write("tmpl [" + tmpl + "]");
 
-			trace.write("view [" + view + "]");
-			trace.write("tmpl [" + tmpl + "]");
-
-			if (tmpl.endsWith(".html")) {
-				forwardForTypeLeaf(view, tmpl, request, response, fwView);
-				return;
-			}
-
-			forwardForJsp(view, tmpl, request, response, fwView);
+		if (tmpl.endsWith(".html")) {
+			forwardForThymeleaf(view, tmpl, request, response, fwView, box);
 			return;
-
-		} catch (Exception ex) {
-			trace.write(ex);
 		}
+
+		forwardForJsp(view, tmpl, request, response, fwView, box);
+		return;
 	}
 
 	/**
@@ -119,24 +123,24 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @param request
 	 * @param response
 	 * @param fwView
+	 * @param box
+	 * @throws Exception
 	 */
 	private void forwardForJsp(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
-			Box fwView) {
+			Box fwView, Box box) throws Exception {
 
-		try {
-
-			String dispatcherView = tmpl;
-			if ("".equals(dispatcherView)) {
-				dispatcherView = view;
-			}
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
-
-			dispatcher.forward(request, response);
-
-		} catch (Exception ex) {
-			trace.write(ex);
+		String dispatcherView = tmpl;
+		if ("".equals(dispatcherView)) {
+			dispatcherView = view;
 		}
+
+		if ("".equals(dispatcherView)) {
+			throw new Exception("dispatcherView is null");
+		}
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
+
+		dispatcher.forward(request, response);
 	}
 
 	private TemplateEngine templateEngine = null;
@@ -150,34 +154,56 @@ public class MasterController extends HttpServlet implements Reload {
 		ServletContext servletContext = config.getServletContext();
 		application = JavaxServletWebApplication.buildApplication(servletContext);
 		WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
+
+		templateResolver.setCacheable(false);
+
 		templateEngine = new TemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver);
+
 	}
 
 	/**
+	 * @param view
+	 * @param tmpl
 	 * @param request
 	 * @param response
 	 * @param fwView
+	 * @param box
 	 */
-	private void forwardForTypeLeaf(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
-			Box fwView) {
+	private void forwardForThymeleaf(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
+			Box fwView, Box box) throws Exception {
 
-		try {
+		String[] keys = box.getKeys();
+		for (int i = 0; i < keys.length; i++) {
+			String key = keys[i];
+			Object obj = box.get(key);
 
-			IWebExchange webExchange = application.buildExchange(request, response);
-			WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
+			if (obj instanceof Table) {
+				Table table = (Table) obj;
+				TableByList list = new TableByList(table);
+				box.put(key, list);
+				continue;
+			}
 
-			response.setContentType("text/html;charset=" + this.characterSet);
-			response.setHeader("Pragma", "no-cache");
-			response.setHeader("Cache-Control", "no-cache");
-			response.setDateHeader("Expires", 0);
+			if (obj instanceof Box) {
+				Box thisBox = (Box) obj;
+				BoxByMap map = new BoxByMap(thisBox);
+				box.put(key, map);
+			}
 
-			Writer writer = response.getWriter();
-			templateEngine.process(view, ctx, writer);
-
-		} catch (Exception ex) {
-			trace.write(ex);
 		}
+
+		IWebExchange webExchange = application.buildExchange(request, response);
+		WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
+
+		response.setContentType("text/html;charset=" + this.characterSet);
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+
+		Writer writer = response.getWriter();
+		templateEngine.process(view, ctx, writer);
+
 	}
 
 	@Override
@@ -208,7 +234,7 @@ public class MasterController extends HttpServlet implements Reload {
 
 			box.setXssConvert(true);
 
-			forward(request, response, view);
+			forward(request, response, view, box);
 
 			transaction.commit();
 
@@ -262,8 +288,15 @@ public class MasterController extends HttpServlet implements Reload {
 			}
 
 			box.put(Box.KEY_EXCEPTION, ex);
-			forward(request, response, errView);
-			return;
+
+			String dispatcherView = errView.s("VIEW");
+
+			if ("".equals(dispatcherView)) {
+				throw new Exception("dispatcherView is null");
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
+			dispatcher.forward(request, response);
 
 		} catch (Exception exx) {
 			throw new ServletException(exx);

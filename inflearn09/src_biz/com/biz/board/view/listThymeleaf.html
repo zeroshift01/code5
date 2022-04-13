@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>N</td>
+				<td>TITLE</td>
+				<td>EM</td>
+				<td>TOKEN_N</td>
+				<td>service</td>
+			</tr>
+		</thead>
+		
+		<th:block th:each="r:${list}">
+		<tr>
+			<td th:text="${r['N']}"></td>
+			<td th:text="${r['TITLE']}"></td>
+			<td th:text="${r['EM']}"></td>
+			<td th:text="${r['TOKEN_N']}"></td>
+			<td th:text="${r['service']}"></td>
+		</tr>
+		</th:block>
+		
+	</table>
+
+	<span th:text="*{list.limitRecode}"></span>
+	<span th:text="*{list.limitBox['N']}"></span>
+</body>
+
+</html>
+
