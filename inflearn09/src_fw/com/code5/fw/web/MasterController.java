@@ -1,7 +1,6 @@
 package com.code5.fw.web;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
@@ -110,7 +109,7 @@ public class MasterController extends HttpServlet implements Reload {
 		trace.write("tmpl [" + tmpl + "]");
 
 		if (tmpl.endsWith(".html")) {
-			forwardForThymeleaf(view, tmpl, request, response, fwView, box);
+			forwardForThymeleaf(view, tmpl, request, response, box);
 			return;
 		}
 
@@ -156,7 +155,12 @@ public class MasterController extends HttpServlet implements Reload {
 		application = JavaxServletWebApplication.buildApplication(servletContext);
 		WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
 
-		templateResolver.setCacheable(false);
+		if (IS_CACHE) {
+			templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
+			templateResolver.setCacheable(true);
+		} else {
+			templateResolver.setCacheable(false);
+		}
 
 		templateEngine = new TemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver);
@@ -168,11 +172,11 @@ public class MasterController extends HttpServlet implements Reload {
 	 * @param tmpl
 	 * @param request
 	 * @param response
-	 * @param fwView
 	 * @param box
+	 * @throws Exception
 	 */
 	private void forwardForThymeleaf(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
-			Box fwView, Box box) throws Exception {
+			Box box) throws Exception {
 
 		String[] keys = box.getKeys();
 
