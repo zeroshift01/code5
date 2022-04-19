@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<title th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['TITLE']}"></title>
 <head>
 </head>
-<body>
-	<div th:include="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}"></div>
-</body>
-
+<body th:include="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}" />
 </html>
 
