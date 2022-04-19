@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+<body>
 <span th:text="*{isCallListThymeleaf}"></span>
 <br>
 <span th:text="*{isForceDelete}"></span>
@@ -20,5 +22,5 @@
 			<td th:text="${r['service']}"></td>
 		</tr>
 	</th:block>
-
 </table>
+</body>
