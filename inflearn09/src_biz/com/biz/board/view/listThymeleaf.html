@@ -1,25 +1,18 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-
-
-
-	<span th:text="*{isCallListThymeleaf}"></span>
-	<br>
-	<span th:text="*{isForceDelete}"></span>
-	<br>
-	<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}"></span>
-	<br>
-	<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['TMPL']}"></span>
-	<br>
-	<span th:text="*{list.limitRecode}"></span>
-	<br>
-	<span th:text="*{list.limitBox['N']}"></span>
-	<br>	 
-	<table>
-		<th:block th:each="r:${list}">
+<span th:text="*{isCallListThymeleaf}"></span>
+<br>
+<span th:text="*{isForceDelete}"></span>
+<br>
+<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['VIEW']}"></span>
+<br>
+<span th:text="*{['com.code5.fw.web.KEY_FW_VIEW']['TMPL']}"></span>
+<br>
+<span th:text="*{list.limitRecode}"></span>
+<br>
+<span th:text="*{list.limitBox['N']}"></span>
+<br>
+<table>
+	<th:block th:each="r:${list}">
 		<tr>
 			<td th:text="${r['N']}"></td>
 			<td th:text="${r['TITLE']}"></td>
@@ -27,11 +20,5 @@
 			<td th:text="${r['TOKEN_N']}"></td>
 			<td th:text="${r['service']}"></td>
 		</tr>
-		</th:block>
-		
-	</table>
-	
-</body>
-
-</html>
-
+	</th:block>
+</table>

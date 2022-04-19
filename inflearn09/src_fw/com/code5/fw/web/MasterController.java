@@ -108,27 +108,6 @@ public class MasterController extends HttpServlet implements Reload {
 		trace.write("view [" + view + "]");
 		trace.write("tmpl [" + tmpl + "]");
 
-		if (tmpl.endsWith(".html")) {
-			forwardForThymeleaf(view, tmpl, request, response, box);
-			return;
-		}
-
-		forwardForJsp(view, tmpl, request, response, fwView, box);
-		return;
-	}
-
-	/**
-	 * @param view
-	 * @param tmpl
-	 * @param request
-	 * @param response
-	 * @param fwView
-	 * @param box
-	 * @throws Exception
-	 */
-	private void forwardForJsp(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
-			Box fwView, Box box) throws Exception {
-
 		String dispatcherView = tmpl;
 		if ("".equals(dispatcherView)) {
 			dispatcherView = view;
@@ -137,6 +116,26 @@ public class MasterController extends HttpServlet implements Reload {
 		if ("".equals(dispatcherView)) {
 			throw new Exception("dispatcherView is null");
 		}
+
+		if (dispatcherView.endsWith(".html")) {
+			forwardForThymeleaf(dispatcherView, request, response, box);
+			return;
+		}
+
+		forwardForJsp(dispatcherView, request, response, fwView, box);
+		return;
+	}
+
+	/**
+	 * @param dispatcherView
+	 * @param request
+	 * @param response
+	 * @param fwView
+	 * @param box
+	 * @throws Exception
+	 */
+	private void forwardForJsp(String dispatcherView, HttpServletRequest request, HttpServletResponse response,
+			Box fwView, Box box) throws Exception {
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(dispatcherView);
 
@@ -168,14 +167,13 @@ public class MasterController extends HttpServlet implements Reload {
 	}
 
 	/**
-	 * @param view
-	 * @param tmpl
+	 * @param dispatcherView
 	 * @param request
 	 * @param response
 	 * @param box
 	 * @throws Exception
 	 */
-	private void forwardForThymeleaf(String view, String tmpl, HttpServletRequest request, HttpServletResponse response,
+	private void forwardForThymeleaf(String dispatcherView, HttpServletRequest request, HttpServletResponse response,
 			Box box) throws Exception {
 
 		String[] keys = box.getKeys();
@@ -209,7 +207,7 @@ public class MasterController extends HttpServlet implements Reload {
 		response.setDateHeader("Expires", 0);
 
 		Writer writer = response.getWriter();
-		templateEngine.process(view, ctx, writer);
+		templateEngine.process(dispatcherView, ctx, writer);
 
 	}
 
