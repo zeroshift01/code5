@@ -3,6 +3,6 @@
 SELECT 
 * 
 FROM FW_CONTROLLER 
-WHERE KEY = [KEY]
+WHERE FW_KEY = [KEY]
 
 --]]]
