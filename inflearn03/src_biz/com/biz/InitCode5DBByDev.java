@@ -14,12 +14,12 @@ import com.code5.fw.web.TransactionContext;
  * @author zero
  *
  */
-public class InitCode5DB_SQLITE {
+public class InitCode5DBByDev {
 
 	/**
 	 * 
 	 */
-	private static Sql sql = new Sql(InitCode5DB_SQLITE.class);
+	private static Sql sql = new Sql(InitCode5DBByDev.class);
 
 	/**
 	 * @return
@@ -27,7 +27,7 @@ public class InitCode5DB_SQLITE {
 	 */
 	private static List<String> getKey() throws Exception {
 
-		String sqlFileUrl = InitYaml.get().getWebAppDir() + "/WEB-INF/classes/com/biz/InitCode5DB_SQLITE.sql";
+		String sqlFileUrl = InitYaml.get().getWebAppDir() + "/WEB-INF/classes/com/biz/InitCode5DBByDev.sql";
 
 		List<String> list = new ArrayList<String>();
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(sqlFileUrl)));
@@ -62,7 +62,7 @@ public class InitCode5DB_SQLITE {
 
 		System.out.println("[" + initYaml.getAppName() + "]");
 
-		InitYaml.get().setAppName(InitCode5DB_SQLITE.class.getName());
+		InitYaml.get().setAppName(InitCode5DBByDev.class.getName());
 
 		System.out.println("[" + initYaml.getAppName() + "]");
 
