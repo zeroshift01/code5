@@ -24,9 +24,9 @@ public class Transaction_MYSQL_JDBC extends Transaction {
 	 */
 	protected Connection createConnection() throws SQLException {
 
-		String url = "jdbc:mysql://3.38.252.50:50356/mysql";
-		String id = "code5";
-		String pin = "code55";
+		String url = "jdbc:mysql://10.1.2.3:17777/mysql";
+		String id = "id";
+		String pin = "pin";
 
 		Connection conn = DriverManager.getConnection(url, id, pin);
 		return conn;
