@@ -1,6 +1,9 @@
 2023-02-13
 
 1. MYSQL DBMS 지원, 사용가능한 MYSQL DBMS 를 이용 코드를 실행할 수 있습니다.
+2. 테입블 컬럼명에 KEY 불가능 해서 FW_KEY 로 변경
+3. MYSQL SQL 호환 가능하도록 변경
+3. 메타데이터 조회시 metaData.getColumnName() 에서 metaData.getColumnLabel() 로 변경 
 
 2022-05-22
 
