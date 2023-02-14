@@ -85,6 +85,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/mysql/mysql-connector-j-8.0.31.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/snakeyaml/snakeyaml-1.28.jar!/" />
         </CLASSES>
         <JAVADOC />
