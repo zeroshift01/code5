@@ -28,8 +28,6 @@ N "TOENC__TOKEN_N, list"
 , N
 , TITLE
 , EM DEC__EM
---, RG_DTM DTM__PRN_DTM
---, RG_ID
 FROM
 BZ_BOARD
 WHERE 1 = 1

@@ -39,7 +39,7 @@ public class SqlRunner {
 	/**
 	 * @return
 	 */
-	public static SqlRunner getSqlRunner() {
+	static SqlRunner getSqlRunner() {
 		return sql;
 	}
 
@@ -190,7 +190,7 @@ public class SqlRunner {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Table getTable(Transaction transaction, Box box, String key) throws SQLException {
+	Table getTable(Transaction transaction, Box box, String key) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(key);
 
@@ -246,7 +246,7 @@ public class SqlRunner {
 	 * @return
 	 * @throws SQLException
 	 */
-	public int executeSql(Transaction transaction, Box box, String key) throws SQLException {
+	int executeSql(Transaction transaction, Box box, String key) throws SQLException {
 
 		SqlRunnerB sqlRunnerB = getSqlRunnerB(key);
 

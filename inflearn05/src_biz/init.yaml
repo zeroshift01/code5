@@ -50,11 +50,13 @@ TRANSACTION :
     DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_POOL"
     PRAP1 : "com.code5.fw.db.Transaction_ORACLE_POOL"
     PRAP2 : "com.code5.fw.db.Transaction_ORACLE_POOL"
+    DESKTOP-5ELHQ3S : "com.code5.fw.db.Transaction_MYSQL_JDBC"
   JOB :
     DEFAULT : "com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV"
     DVAP : "com.code5.fw.db.Transaction_ORACLE_DV_JDBC"
     PRAP1 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
     PRAP2 : "com.code5.fw.db.Transaction_ORACLE_JDBC"
+    DESKTOP-5ELHQ3S : "com.code5.fw.db.Transaction_MYSQL_JDBC"
 
 
 NOLOG : 

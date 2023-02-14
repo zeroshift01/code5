@@ -3,7 +3,7 @@
 SELECT 
 * 
 FROM FW_CONTROLLER 
-WHERE KEY = [KEY]
+WHERE FW_KEY = [KEY]
 
 --]]]
 
@@ -12,6 +12,6 @@ WHERE KEY = [KEY]
 SELECT 
 * 
 FROM FW_VIEW 
-WHERE KEY = [KEY]
+WHERE FW_KEY = [KEY]
 
 --]]]

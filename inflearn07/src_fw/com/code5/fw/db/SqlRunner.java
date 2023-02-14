@@ -353,7 +353,7 @@ public class SqlRunner implements Reload {
 		SqlRunnerParamB[] paramBs = new SqlRunnerParamB[columnCount];
 
 		for (int i = 0; i < cols.length; i++) {
-			String x = metaData.getColumnName(i + 1);
+			String x = metaData.getColumnLabel(i + 1);
 			paramBs[i] = paramParsing(x);
 			cols[i] = paramBs[i].key;
 			colsForResultSet[i] = paramBs[i].keyOrg;

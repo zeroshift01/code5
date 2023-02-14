@@ -208,6 +208,11 @@ public abstract class Transaction {
 		if ("com.code5.fw.db.Transaction_SQLITE_JDBC_CODE5_DEV".equals(tx)) {
 			return new Transaction_SQLITE_JDBC_CODE5_DEV();
 		}
+		
+		if ("com.code5.fw.db.Transaction_MYSQL_JDBC".equals(tx)) {
+			return new Transaction_MYSQL_JDBC();
+		}
+
 
 		throw new RuntimeException();
 	}
